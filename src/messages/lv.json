@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "Veidot picas un komplektus pa tālruni",
         "buildPizzaComboHint": "Pēc noklusējuma izslēgts. Kad ieslēgts, Nabil pats saliek picas — izmērus, piedevas, pat puse uz pusi — un aizpilda komplekta slotus, nevis pārslēdz zvanītāju uz darbinieku. Pirms paļaujaties uz šo iespēju, veiciet izmēģinājuma pasūtījumu un pārbaudiet izdrukāto čeku.",
         "offerDayDeals": "Piedāvāt šodienas akcijas bez jautājuma",
-        "offerDayDealsHint": "Pēc noklusējuma izslēgts. Kad ieslēgts un zvanītājs pasūta ko tādu, kam šodien ir lētāks tāda paša izmēra piedāvājums, Nabil to pats piemin. Iegūst labvēlību un maksā maržu — jūsu izvēle."
+        "offerDayDealsHint": "Pēc noklusējuma izslēgts. Kad ieslēgts un zvanītājs pasūta ko tādu, kam šodien ir lētāks tāda paša izmēra piedāvājums, Nabil to pats piemin. Iegūst labvēlību un maksā maržu — jūsu izvēle.",
+        "agentIdentity": "Aģenta vārds",
+        "agentName": "Kā jūsu aģentam būtu jāsauc sevi?",
+        "agentNameHint": "Tiek pateikts katrā zvanā, kad zvanītājs jautā vārdu. Atstājiet tukšu, lai izmantotu \"Nabil\". Tas nepārdēvē pašu Nabil AI — tikai to, kā sevi sauc balss."
       },
       "apiErrors": {
         "featureLocked": "Jūsu plānā vēl nav iekļauts tālruņa pasūtījumu aģents.",
@@ -4616,7 +4619,10 @@
           "operational": "Darbība",
           "deflection": "Pāradresācija",
           "escalation": "Eskalācija"
-        }
+        },
+        "quickStartTemplate": "Ātrās sākšanas veidne",
+        "quickStartTitle": "Pastāstiet aģentam par savu restorānu",
+        "quickStartBody": "Atbildiet uz dažiem biežiem jautājumiem, un mēs tos pārvērtīsim BUJ, ko jūsu aģents var izmantot zvanu laikā."
       },
       "links": {
         "title": "Īsziņu saites",
@@ -4683,14 +4689,55 @@
         "submit": "Iesniegt pieprasījumu",
         "cancelEdit": "Atcelt",
         "errorAlreadyProvisioned": "Jūsu līnija jau ir iestatīta — atsvaidziniet lapu.",
-        "errorGeneric": "Kaut kas nogāja greizi. Mēģiniet vēlreiz."
+        "errorGeneric": "Kaut kas nogāja greizi. Mēģiniet vēlreiz.",
+        "agentNameLabel": "Piešķiriet savam aģentam vārdu",
+        "agentNameHint": "Šis ir vārds, ar kuru jūsu MI atbild pa tālruni (piem., \"Sveiki, šeit Sophia\"). Atstājiet tukšu, lai izmantotu \"Nabil\". Vēlāk to varat mainīt iestatījumos.",
+        "summaryAgentName": "Aģenta vārds: {name}"
       },
       "nowAvailable": "Tagad pieejams",
       "availableHeading": "Nabil AI tālruņa pasūtījumi",
       "availablePrice": "{rate} zvana minūtē · {minimum}/mēnesī minimums · {included} minūtes iekļautas",
       "availableConcierge": "Mūsu komanda iestata jūsu līniju vienas darba dienas laikā. Nav nepieciešams tehnisks darbs.",
       "availableDemo": "Jau maksājošs biedrs? Izmēģiniet bez maksas {days} dienas.",
-      "subscribeCta": "Abonēt un iestatīt"
+      "subscribeCta": "Abonēt un iestatīt",
+      "onboarding": {
+        "wizardTitle": "Iestatīt Nabil AI",
+        "wizardSubtitle": "Daži ātri soļi, un jūsu MI tālruņa aģents būs gatavs pieņemt zvanus.",
+        "step1Label": "Līnija un aģenta vārds",
+        "step2Label": "Restorāna info",
+        "step3Label": "Testēt un palaist",
+        "step2Title": "Pastāstiet aģentam par savu restorānu",
+        "step2Body": "Atbildiet, ko varat — tas kļūs par jūsu aģenta BUJ. Vēlāk vienmēr varat pievienot vairāk.",
+        "dietarySectionTitle": "Uztura iespējas",
+        "dietarySectionHint": "Atstājiet tukšu, ja tas neattiecas uz jūsu restorānu.",
+        "qHalal": "Vai jums ir halal iespējas?",
+        "qVegan": "Vai jums ir vegānu iespējas?",
+        "qVegetarian": "Vai jums ir veģetāro iespējas?",
+        "qGlutenFree": "Vai jums ir bezglutēna iespējas?",
+        "yesNoPlaceholder": "piem., \"Jā\" vai \"Nē, diemžēl\"",
+        "qAllergen": "Vai jums ir politika attiecībā uz alergēniem vai savstarpējo piesārņojumu?",
+        "qParking": "Vai jums ir autostāvvieta?",
+        "websiteLabel": "Tīmekļa vietne (nav obligāti)",
+        "qSpecialInfo": "Kaut kas cits, ko klienti bieži jautā par jūsu restorānu?",
+        "specialInfoPlaceholder": "piem., jūsu vēsture, zīmola ēdieni, sēdvietas, draudzīgs mājdzīvniekiem...",
+        "hoursTitle": "Darba laiks",
+        "hoursBody": "Jūsu aģents jau automātiski nolasa jūsu publicēto darba laiku.",
+        "hoursFixLink": "Labot darba laiku",
+        "qHoursException": "Izņēmumi jūsu darba laikā, kas zvanītājiem būtu jāzina?",
+        "hoursExceptionPlaceholder": "piem., \"svētdienās aizveramies agrāk\"",
+        "orderingLinkTitle": "Tiešsaistes pasūtījumu saite",
+        "orderingLinkHint": "Jau iestatīts — jūsu aģents to var automātiski nosūtīt zvanītājiem ar SMS.",
+        "saving": "Saglabā…",
+        "saveFaq": "Saglabāt",
+        "faqSaved": "Saglabāts",
+        "faqSaveError": "Kaut kas nogāja greizi. Lūdzu, mēģiniet vēlreiz.",
+        "goLiveTitle": "Gatavs testēt Nabil!",
+        "goLiveBody": "Jūsu līnija ir aktīva. Piezvaniet un uzdodiet {agentName} dažus jautājumus, pirms to aktivizējat īstiem klientiem.",
+        "goLiveTryHours": "Pajautājiet par darba laiku",
+        "goLiveTryParking": "Pajautājiet par autostāvvietu",
+        "goLiveTryOrder": "Mēģiniet veikt līdzņemšanas pasūtījumu",
+        "goLiveHint": "Kad esat apmierināts, ieslēdziet slēdzi augstāk, lai sāktu pieņemt īstus zvanus."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "Visi klienti",
@@ -6192,7 +6239,9 @@
       "trackingCta": "Skatīt pasūtījuma statusu",
       "missedTitle": "Pasūtījums netika pieņemts laikā",
       "missedBody": "Diemžēl restorāns nepaspēja laikā pieņemt jūsu pasūtījumu, tāpēc tas netika izpildīts. Ja maksājāt tiešsaistē, jebkura autorizācija tiek automātiski atbrīvota — nauda netiks ieturēta.",
-      "creditReturned": "Summa {amount}, ko samaksājāt ar {label}, ir atgriezta jūsu makā."
+      "creditReturned": "Summa {amount}, ko samaksājāt ar {label}, ir atgriezta jūsu makā.",
+      "cancelledPaymentIncompleteTitle": "Pasūtījums atcelts — maksājums netika pabeigts",
+      "cancelledPaymentIncompleteBody": "Mēs savlaicīgi nesaņēmām maksājumu par šo pasūtījumu, tāpēc tas tika automātiski atcelts. Ja jūsu kartē vai PayPal bija veikta rezervācija, tā tiks atbrīvota — no jums netika iekasēta nauda. Varat veikt jaunu pasūtījumu, tiklīdz būsiet gatavs."
     },
     "orderRejected": {
       "subject": "Pasūtījums #{orderNumber} noraidīts",
@@ -6986,7 +7035,7 @@
       "cta": "Sākt bezmaksas",
       "ctaContact": "Sazināties ar pārdošanu",
       "trialNote": "Nav nepieciešama kredītkarte. Nav līgumu.",
-      "phoneOrderingMinuteNote": "Norēķins 0,60 USD/min ar minimumu 249,99 USD/mēn. (≈ 416 iekļautas minūtes). Detaļas"
+      "phoneOrderingMinuteNote": "Jūsu US$249.99/mēn. plāns ietver aptuveni 499 zvanu minūtes; papildu laiks tiek rēķināts pa US$0.50 par minūti — pa sekundēm. Detaļas"
     },
     "faq": {
       "title": "Biežāk uzdotie jautājumi",
@@ -7138,7 +7187,7 @@
         "trust1": "Veidots picērijām",
         "trust2": "Tā pati kase kā jūsu mājaslapā",
         "trust3": "Ieraksti un transkripcijas",
-        "trust4": "US$0.60 par zvana minūti",
+        "trust4": "US$0.50/min, norēķini pa sekundēm",
         "sampleLabel": "Tiešraides zvana piemērs",
         "sampleCaller": "Zvanītājs",
         "sample1": "Sveiki, vai varu veikt pasūtījumu ar piegādi?",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Vienkārši cenas",
         "title": "Viena cena. Bez pārsteigumiem.",
-        "perMinute": "0,60 USD",
-        "perMinuteLabel": "par zvana minūti",
+        "perMinute": "US$0.50",
+        "perMinuteLabel": "par minūti, norēķini pa sekundēm",
         "minimum": "249,99 USD",
         "minimumLabel": "minimums mēnesī",
-        "rule": "Jūs maksājat augstāko summu: jūsu zvanu minūtes pa 0,60 USD katra, vai mēneša minimumu 249,99 USD. Lielākā daļa restorānu paliek iekļauto 416 minūšu ietvaros.",
+        "rule": "Jūsu ikmēneša plāns par US$249.99 ietver aptuveni 499 zvanu minūtes. Ja runājat vairāk, papildu laiks tiek rēķināts pa US$0.50 par minūti — pa sekundēm, bez noapaļošanas par katru zvanu. Bez atsevišķa līguma, bez negaidītām maksām. Lielākā daļa restorānu nekad nepārsniedz iekļautās minūtes.",
         "demo": "Jau maksājošs Fee Free biedrs? Izmēģiniet Nabil bez maksas 7 dienas — bez saistībām.",
         "include1": "Neierobežoti zvani",
         "include2": "Ieraksti un transkripcijas",
@@ -7384,7 +7433,7 @@
         "q6": "Kas notiek ārpus darba laika?",
         "a6": "Nabil zina jūsu darba laiku un svētku grafiku. Ārpus darba laika informē zvanītāju, kad atverat vēlreiz, un var piedāvāt ieplānotu pasūtījumu, ja tas ir iespējots.",
         "q7": "Kā tiek aprēķināti norēķini?",
-        "a7": "Jūs maksājat 0,60 USD par zvana minūti vai mēneša minimumu 249,99 USD — kas ir augstāks. Minimums ietver aptuveni 416 minūtes. Katrs zvans tiek noapaļots uz augšu. Izsekojiet izmantošanu reāllaikā.",
+        "a7": "Katrs plāns sākas ar US$249.99 mēneša bāzes maksu, kas ietver aptuveni 499 zvanu minūtes. Ja mēnesī runājat vairāk, papildu laiks tiek rēķināts pa US$0.50 par minūti — pa sekundēm, bez noapaļošanas par katru zvanu. Izmantošanu varat sekot reāllaikā savā panelī.",
         "q8": "Vai varu atcelt jebkurā laikā?",
         "a8": "Jā. Nabil tiek fakturēts ikmēneša caur Stripe bez ilgtermiņa līguma. Atceliet no vadības paneļa jebkurā laikā, un jūsu līnija paliek aktīva līdz norēķinu perioda beigām.",
         "q9": "Vai kādreiz atbild reāls cilvēks?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Drošību nodrošina Stripe. Mēs nekad neglabājam jūsu kartes datus.",
       "preparingPayment": "Tiek sagatavots drošs maksājums…",
       "couldNotStartPayment": "Neizdevās sākt šī pasūtījuma apmaksu. Lūdzu, atgriezieties un mēģiniet vēlreiz.",
-      "backToRestaurant": "Atpakaļ uz restorānu"
+      "backToRestaurant": "Atpakaļ uz restorānu",
+      "leaveConfirmTitle": "Iziet nesamaksājot?",
+      "leaveConfirmBody": "Ja tagad atgriezīsieties, šis pasūtījums tiks atcelts — no jums netiks iekasēta nauda.",
+      "leaveConfirmStay": "Turpināt apmaksu",
+      "leaveConfirmCancel": "Atcelt manu pasūtījumu",
+      "paymentInProgressWarning": "Jūsu maksājums tiek apstrādāts — lūdzu, neaizveriet šo lapu.",
+      "cancelUnpaidFailed": "Neizdevās atcelt pasūtījumu. Lūdzu, mēģiniet vēlreiz."
     },
     "paymentPage": {
       "loading": "Ielādē…"

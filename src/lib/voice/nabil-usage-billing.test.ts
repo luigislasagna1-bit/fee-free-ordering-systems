@@ -3,6 +3,8 @@
  * month, on the PLATFORM Stripe customer, guarded three ways against a double
  * bill (ledger row unique on restaurant+period, deterministic Stripe
  * idempotency key, adopt-existing on retry). Comp rows are metered, never billed.
+ *
+ * Price: US$0.50/min billed by the second, US$249.99/month minimum.
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
@@ -54,80 +56,85 @@ describe("nabilUsageIdempotencyKey / nabilUsageDescription", () => {
   it("key is deterministic per restaurant + month", () => {
     expect(nabilUsageIdempotencyKey("r1", "2026-07")).toBe("nabil-usage-r1-2026-07");
   });
-  it("description names the month, minutes, allowance and extra minutes", () => {
-    expect(nabilUsageDescription(JULY, 512)).toBe("Nabil AI call minutes — July 2026: 512 min (416 included) · 96 extra × US$0.60");
-    expect(nabilUsageDescription(JULY, 100)).toBe("Nabil AI call minutes — July 2026: 100 min (416 included) · 0 extra × US$0.60");
+  it("description names the month, seconds, allowance and overage", () => {
+    // 30720s = 512m, included = 29998s = 499m 58s, overage = 722s
+    expect(nabilUsageDescription(JULY, 30720)).toBe(
+      "Nabil AI calls — July 2026: 512m (499m 58s included) · 722s overage @ US$0.50/min",
+    );
+    // 6000s = 100m, under allowance → 0s overage
+    expect(nabilUsageDescription(JULY, 6000)).toBe(
+      "Nabil AI calls — July 2026: 100m (499m 58s included) · 0s overage @ US$0.50/min",
+    );
   });
 });
 
 describe("runNabilUsageBilling — the closed month", () => {
   it("bills July when run on Aug 1: ONE invoice item, platform customer, idempotency key, ledger row invoiced", async () => {
     prismaMock.restaurantAddOn.findMany.mockResolvedValue([paidRow("r1")]);
-    usageMock.mockResolvedValue(new Map([["r1", { calls: 40, minutes: 512 }]]));
+    // 30720 seconds = 512 minutes of call time
+    usageMock.mockResolvedValue(new Map([["r1", { calls: 40, seconds: 30720 }]]));
 
     const out = await runNabilUsageBilling({ now: NOW });
 
     expect(out.period).toBe("2026-07");
     expect(out.monthStart.toISOString()).toBe(JULY.toISOString());
-    // The usage aggregate ran ONCE for the whole set, over [Jul 1, Aug 1).
     expect(usageMock).toHaveBeenCalledTimes(1);
     expect(usageMock).toHaveBeenCalledWith(["r1"], JULY, AUG);
-    // 512 min → 30720¢ − 24999¢ = 5721¢ overage.
+    // 30720s at $0.50/min: ceil(30720 × 50/60) = 25600, overage = 25600 − 24999 = 601¢
     expect(out.results).toEqual([
-      expect.objectContaining({ restaurantId: "r1", period: "2026-07", calls: 40, minutes: 512, overageCents: 5721, status: "invoiced", stripeInvoiceItemId: "ii_1" }),
+      expect.objectContaining({ restaurantId: "r1", period: "2026-07", calls: 40, seconds: 30720, overageCents: 601, status: "invoiced", stripeInvoiceItemId: "ii_1" }),
     ]);
     expect(stripeMock.invoiceItems.create).toHaveBeenCalledTimes(1);
     const [params, opts] = stripeMock.invoiceItems.create.mock.calls[0];
     expect(params).toMatchObject({
       customer: "cus_r1",
-      amount: 5721,
+      amount: 601,
       currency: "usd",
-      description: "Nabil AI call minutes — July 2026: 512 min (416 included) · 96 extra × US$0.60",
+      description: "Nabil AI calls — July 2026: 512m (499m 58s included) · 722s overage @ US$0.50/min",
       period: { start: Math.floor(JULY.getTime() / 1000), end: Math.floor(AUG.getTime() / 1000) },
-      metadata: expect.objectContaining({ type: "nabil_usage", restaurantId: "r1", period: "2026-07", minutes: "512", calls: "40" }),
+      metadata: expect.objectContaining({ type: "nabil_usage", restaurantId: "r1", period: "2026-07", seconds: "30720", calls: "40" }),
     });
-    // Customer-level item: NOT pinned to a subscription (rides the next invoice).
     expect(params.subscription).toBeUndefined();
     expect(opts).toEqual({ idempotencyKey: "nabil-usage-r1-2026-07" });
-    // Ledger: pending first, then stamped invoiced with the item id.
-    expect(prismaMock.nabilUsageCharge.upsert.mock.calls[0][0].create).toMatchObject({ restaurantId: "r1", period: "2026-07", minutes: 512, overageCents: 5721, status: "pending" });
+    expect(prismaMock.nabilUsageCharge.upsert.mock.calls[0][0].create).toMatchObject({ restaurantId: "r1", period: "2026-07", seconds: 30720, overageCents: 601, status: "pending" });
     expect(prismaMock.nabilUsageCharge.update).toHaveBeenCalledWith({
       where: { id: "chg_r1" },
       data: { status: "invoiced", stripeInvoiceItemId: "ii_1", failureReason: null },
     });
   });
 
-  it("≤ 416 minutes → no Stripe call, ledger row 'none' (0 min and exactly 416 min alike)", async () => {
-    prismaMock.restaurantAddOn.findMany.mockResolvedValue([paidRow("r0"), paidRow("r416")]);
-    usageMock.mockResolvedValue(new Map([["r416", { calls: 30, minutes: 416 }]])); // r0 absent = no calls
+  it("≤ 29998 seconds → no Stripe call, ledger row 'none' (0 sec and exactly 29998 sec alike)", async () => {
+    prismaMock.restaurantAddOn.findMany.mockResolvedValue([paidRow("r0"), paidRow("r29998")]);
+    usageMock.mockResolvedValue(new Map([["r29998", { calls: 30, seconds: 29998 }]])); // r0 absent = no calls
 
     const out = await runNabilUsageBilling({ now: NOW });
 
     expect(stripeMock.invoiceItems.create).not.toHaveBeenCalled();
-    expect(out.results.map((r) => [r.restaurantId, r.minutes, r.overageCents, r.status])).toEqual([
+    expect(out.results.map((r) => [r.restaurantId, r.seconds, r.overageCents, r.status])).toEqual([
       ["r0", 0, 0, "none"],
-      ["r416", 416, 0, "none"],
+      ["r29998", 29998, 0, "none"],
     ]);
-    // Both months are still written to the ledger (audit trail).
     expect(prismaMock.nabilUsageCharge.upsert).toHaveBeenCalledTimes(2);
-    expect(prismaMock.nabilUsageCharge.upsert.mock.calls[1][0].create).toMatchObject({ restaurantId: "r416", minutes: 416, overageCents: 0, status: "none" });
+    expect(prismaMock.nabilUsageCharge.upsert.mock.calls[1][0].create).toMatchObject({ restaurantId: "r29998", seconds: 29998, overageCents: 0, status: "none" });
   });
 
-  it("417 minutes → 21¢ overage invoice item", async () => {
+  it("29999 seconds → 1¢ overage invoice item", async () => {
     prismaMock.restaurantAddOn.findMany.mockResolvedValue([paidRow("r1")]);
-    usageMock.mockResolvedValue(new Map([["r1", { calls: 1, minutes: 417 }]]));
+    // ceil(29999 × 50/60) = ceil(24999.17) = 25000, overage = 1¢
+    usageMock.mockResolvedValue(new Map([["r1", { calls: 1, seconds: 29999 }]]));
     const out = await runNabilUsageBilling({ now: NOW });
-    expect(out.results[0]).toMatchObject({ overageCents: 21, status: "invoiced" });
-    expect(stripeMock.invoiceItems.create.mock.calls[0][0].amount).toBe(21);
+    expect(out.results[0]).toMatchObject({ overageCents: 1, status: "invoiced" });
+    expect(stripeMock.invoiceItems.create.mock.calls[0][0].amount).toBe(1);
   });
 
   it("complimentary row (no Stripe sub/customer) with overage is METERED but never billed", async () => {
     prismaMock.restaurantAddOn.findMany.mockResolvedValue([compRow("luigi")]);
-    usageMock.mockResolvedValue(new Map([["luigi", { calls: 90, minutes: 900 }]]));
+    // 54000 seconds = 900 min; ceil(54000 × 50/60) = 45000, overage = 20001¢
+    usageMock.mockResolvedValue(new Map([["luigi", { calls: 90, seconds: 54000 }]]));
     const out = await runNabilUsageBilling({ now: NOW });
     expect(stripeMock.invoiceItems.create).not.toHaveBeenCalled();
-    expect(out.results[0]).toMatchObject({ minutes: 900, overageCents: 29001, status: "none", reason: expect.stringContaining("not billable") });
-    expect(prismaMock.nabilUsageCharge.upsert.mock.calls[0][0].create).toMatchObject({ minutes: 900, overageCents: 29001, status: "none" });
+    expect(out.results[0]).toMatchObject({ seconds: 54000, overageCents: 20001, status: "none", reason: expect.stringContaining("not billable") });
+    expect(prismaMock.nabilUsageCharge.upsert.mock.calls[0][0].create).toMatchObject({ seconds: 54000, overageCents: 20001, status: "none" });
   });
 
   it("only phone_ordering rows in billable statuses are candidates", async () => {
@@ -153,8 +160,8 @@ describe("runNabilUsageBilling — the closed month", () => {
 describe("runNabilUsageBilling — idempotency guards", () => {
   it("a re-run skips a restaurant whose ledger row already holds an invoice item id (no second Stripe call)", async () => {
     prismaMock.restaurantAddOn.findMany.mockResolvedValue([paidRow("r1")]);
-    usageMock.mockResolvedValue(new Map([["r1", { calls: 40, minutes: 512 }]]));
-    prismaMock.nabilUsageCharge.findUnique.mockResolvedValue({ id: "chg_r1", status: "invoiced", stripeInvoiceItemId: "ii_old", calls: 40, minutes: 512, overageCents: 5721 });
+    usageMock.mockResolvedValue(new Map([["r1", { calls: 40, seconds: 30720 }]]));
+    prismaMock.nabilUsageCharge.findUnique.mockResolvedValue({ id: "chg_r1", status: "invoiced", stripeInvoiceItemId: "ii_old", calls: 40, seconds: 30720, overageCents: 601 });
 
     const out = await runNabilUsageBilling({ now: NOW });
 
@@ -165,16 +172,16 @@ describe("runNabilUsageBilling — idempotency guards", () => {
 
   it("a re-run skips a restaurant whose ledger row is 'none' (nothing was owed)", async () => {
     prismaMock.restaurantAddOn.findMany.mockResolvedValue([paidRow("r1")]);
-    prismaMock.nabilUsageCharge.findUnique.mockResolvedValue({ id: "chg_r1", status: "none", stripeInvoiceItemId: null, calls: 3, minutes: 12, overageCents: 0 });
+    prismaMock.nabilUsageCharge.findUnique.mockResolvedValue({ id: "chg_r1", status: "none", stripeInvoiceItemId: null, calls: 3, seconds: 720, overageCents: 0 });
     const out = await runNabilUsageBilling({ now: NOW });
-    expect(out.results[0]).toMatchObject({ status: "skipped", minutes: 12 });
+    expect(out.results[0]).toMatchObject({ status: "skipped", seconds: 720 });
     expect(prismaMock.nabilUsageCharge.upsert).not.toHaveBeenCalled();
   });
 
   it("retry of a PENDING row (crashed after Stripe succeeded) ADOPTS the existing invoice item instead of creating a second one", async () => {
     prismaMock.restaurantAddOn.findMany.mockResolvedValue([paidRow("r1")]);
-    usageMock.mockResolvedValue(new Map([["r1", { calls: 40, minutes: 512 }]]));
-    prismaMock.nabilUsageCharge.findUnique.mockResolvedValue({ id: "chg_r1", status: "pending", stripeInvoiceItemId: null, calls: 40, minutes: 512, overageCents: 5721 });
+    usageMock.mockResolvedValue(new Map([["r1", { calls: 40, seconds: 30720 }]]));
+    prismaMock.nabilUsageCharge.findUnique.mockResolvedValue({ id: "chg_r1", status: "pending", stripeInvoiceItemId: null, calls: 40, seconds: 30720, overageCents: 601 });
     stripeMock.invoiceItems.list.mockResolvedValue({
       data: [
         { id: "ii_other", metadata: { type: "marketplace_settlement" } },
@@ -196,8 +203,8 @@ describe("runNabilUsageBilling — idempotency guards", () => {
 
   it("retry of a FAILED row with nothing on Stripe creates the item (same idempotency key)", async () => {
     prismaMock.restaurantAddOn.findMany.mockResolvedValue([paidRow("r1")]);
-    usageMock.mockResolvedValue(new Map([["r1", { calls: 40, minutes: 512 }]]));
-    prismaMock.nabilUsageCharge.findUnique.mockResolvedValue({ id: "chg_r1", status: "failed", stripeInvoiceItemId: null, calls: 40, minutes: 512, overageCents: 5721 });
+    usageMock.mockResolvedValue(new Map([["r1", { calls: 40, seconds: 30720 }]]));
+    prismaMock.nabilUsageCharge.findUnique.mockResolvedValue({ id: "chg_r1", status: "failed", stripeInvoiceItemId: null, calls: 40, seconds: 30720, overageCents: 601 });
     const out = await runNabilUsageBilling({ now: NOW });
     expect(stripeMock.invoiceItems.list).toHaveBeenCalledTimes(1);
     expect(stripeMock.invoiceItems.create).toHaveBeenCalledTimes(1);
@@ -207,27 +214,29 @@ describe("runNabilUsageBilling — idempotency guards", () => {
 
   it("a fresh row does NOT pay for the Stripe list round-trip", async () => {
     prismaMock.restaurantAddOn.findMany.mockResolvedValue([paidRow("r1")]);
-    usageMock.mockResolvedValue(new Map([["r1", { calls: 40, minutes: 512 }]]));
+    usageMock.mockResolvedValue(new Map([["r1", { calls: 40, seconds: 30720 }]]));
     await runNabilUsageBilling({ now: NOW });
     expect(stripeMock.invoiceItems.list).not.toHaveBeenCalled();
   });
 
   it("Stripe failure → row 'failed' with the reason; other restaurants still processed", async () => {
     prismaMock.restaurantAddOn.findMany.mockResolvedValue([paidRow("r1"), paidRow("r2")]);
-    usageMock.mockResolvedValue(new Map([["r1", { calls: 40, minutes: 512 }], ["r2", { calls: 50, minutes: 600 }]]));
+    // r1: 30720s (512 min), r2: 36000s (600 min)
+    usageMock.mockResolvedValue(new Map([["r1", { calls: 40, seconds: 30720 }], ["r2", { calls: 50, seconds: 36000 }]]));
     stripeMock.invoiceItems.create.mockRejectedValueOnce(new Error("card_declined-ish outage")).mockResolvedValueOnce({ id: "ii_2" });
 
     const out = await runNabilUsageBilling({ now: NOW });
 
     expect(out.results[0]).toMatchObject({ restaurantId: "r1", status: "failed", reason: "card_declined-ish outage" });
-    expect(out.results[1]).toMatchObject({ restaurantId: "r2", status: "invoiced", stripeInvoiceItemId: "ii_2", overageCents: 11001 });
+    // r2: ceil(36000 × 50/60) = 30000, overage = 30000 − 24999 = 5001¢
+    expect(out.results[1]).toMatchObject({ restaurantId: "r2", status: "invoiced", stripeInvoiceItemId: "ii_2", overageCents: 5001 });
     expect(prismaMock.nabilUsageCharge.update).toHaveBeenCalledWith({ where: { id: "chg_r1" }, data: { status: "failed", failureReason: "card_declined-ish outage" } });
   });
 
   it("Stripe not configured → rows 'failed' (never a silent skip)", async () => {
     stripeReadyMock.mockResolvedValue(false);
     prismaMock.restaurantAddOn.findMany.mockResolvedValue([paidRow("r1")]);
-    usageMock.mockResolvedValue(new Map([["r1", { calls: 40, minutes: 512 }]]));
+    usageMock.mockResolvedValue(new Map([["r1", { calls: 40, seconds: 30720 }]]));
     const out = await runNabilUsageBilling({ now: NOW });
     expect(out.results[0]).toMatchObject({ status: "failed", reason: "Stripe not configured on platform" });
   });

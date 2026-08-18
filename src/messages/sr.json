@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "Sastavlja pice i kombinacije glasom",
         "buildPizzaComboHint": "Podrazumevano isključeno. Kada je uključeno, Nabil sastavlja pice — veličine, dodatke, čak i pola-pola — i popunjava mesta u kombinacijama, umesto da pozivaoca prebaci osoblju. Napravite probnu porudžbinu i proverite odštampani račun pre nego što se oslonite na ovu opciju.",
         "offerDayDeals": "Понуди данашње акције без питања",
-        "offerDayDealsHint": "Подразумевано искључено. Када је укључено и позивалац наручи нешто што данас има јефтинију понуду исте величине, Nabil то сам помене. Доноси наклоност и кошта марже — ваша одлука."
+        "offerDayDealsHint": "Подразумевано искључено. Када је укључено и позивалац наручи нешто што данас има јефтинију понуду исте величине, Nabil то сам помене. Доноси наклоност и кошта марже — ваша одлука.",
+        "agentIdentity": "Име агента",
+        "agentName": "Како треба да се зове ваш агент?",
+        "agentNameHint": "Изговара се при сваком позиву када позивалац пита за име. Оставите празно да користите „Nabil\". Ово не мења име самог Nabil AI-а — само како се глас зове."
       },
       "apiErrors": {
         "featureLocked": "Vaš plan još ne uključuje agenta za telefonsko naručivanje.",
@@ -4616,7 +4619,10 @@
           "operational": "Način rada",
           "deflection": "Preusmeravanja",
           "escalation": "Eskalacija"
-        }
+        },
+        "quickStartTemplate": "Шаблон за брзи почетак",
+        "quickStartTitle": "Реците свом агенту о свом ресторану",
+        "quickStartBody": "Одговорите на неколико честих питања и претворићемо их у ЧПП које ваш агент може користити током позива."
       },
       "links": {
         "title": "SMS linkovi",
@@ -4683,14 +4689,55 @@
         "submit": "Пошаљи захтев",
         "cancelEdit": "Откажи",
         "errorAlreadyProvisioned": "Ваша линија је већ подешена — освежите страницу.",
-        "errorGeneric": "Нешто је пошло по злу. Покушајте поново."
+        "errorGeneric": "Нешто је пошло по злу. Покушајте поново.",
+        "agentNameLabel": "Дајте име свом агенту",
+        "agentNameHint": "Ово је име којим се ваш АИ јавља на телефон (нпр. „Здраво, овде Sophia\"). Оставите празно да користите „Nabil\". Касније то можете променити у Подешавањима.",
+        "summaryAgentName": "Име агента: {name}"
       },
       "nowAvailable": "Сада доступно",
       "availableHeading": "Nabil AI телефонске наруџбе",
       "availablePrice": "{rate} по минуту позива · {minimum}/мес. минимум · {included} минута укључено",
       "availableConcierge": "Наш тим подешава вашу линију у року од једног радног дана. Без техничког посла са ваше стране.",
       "availableDemo": "Већ сте претплатник? Испробајте бесплатно {days} дана.",
-      "subscribeCta": "Претплатите се и подесите"
+      "subscribeCta": "Претплатите се и подесите",
+      "onboarding": {
+        "wizardTitle": "Подеси Nabil AI",
+        "wizardSubtitle": "Неколико брзих корака и ваш телефонски АИ агент биће спреман да прима позиве.",
+        "step1Label": "Линија и име агента",
+        "step2Label": "Подаци о ресторану",
+        "step3Label": "Тестирај и покрени",
+        "step2Title": "Реците свом агенту о свом ресторану",
+        "step2Body": "Одговорите колико можете — то постаје ЧПП вашег агента. Увек можете додати више касније.",
+        "dietarySectionTitle": "Опције исхране",
+        "dietarySectionHint": "Оставите празно ако се не односи на ваш ресторан.",
+        "qHalal": "Да ли имате халал опције?",
+        "qVegan": "Да ли имате веган опције?",
+        "qVegetarian": "Да ли имате вегетаријанске опције?",
+        "qGlutenFree": "Да ли имате опције без глутена?",
+        "yesNoPlaceholder": "нпр. „Да\" или „Не, нажалост\"",
+        "qAllergen": "Да ли имате политику о алергенима или укрштеној контаминацији?",
+        "qParking": "Да ли имате паркинг?",
+        "websiteLabel": "Веб-сајт (опционо)",
+        "qSpecialInfo": "Још нешто што муштерије често питају о вашем ресторану?",
+        "specialInfoPlaceholder": "нпр. ваша прича, ауторска јела, места за седење, прихвата кућне љубимце...",
+        "hoursTitle": "Радно време",
+        "hoursBody": "Ваш агент већ аутоматски чита ваше објављено радно време.",
+        "hoursFixLink": "Исправи радно време",
+        "qHoursException": "Изузеци од радног времена које би позиваоци требало да знају?",
+        "hoursExceptionPlaceholder": "нпр. „недељом затварамо раније\"",
+        "orderingLinkTitle": "Веза за онлајн наручивање",
+        "orderingLinkHint": "Већ подешено — ваш агент то може аутоматски послати СМС-ом позиваоцима.",
+        "saving": "Чување…",
+        "saveFaq": "Сачувај",
+        "faqSaved": "Сачувано",
+        "faqSaveError": "Нешто није у реду. Покушајте поново.",
+        "goLiveTitle": "Спремни да тестирате Nabil-а!",
+        "goLiveBody": "Ваша линија је активна. Позовите и поставите {agentName} неколико питања пре него што га активирате за праве муштерије.",
+        "goLiveTryHours": "Питајте за радно време",
+        "goLiveTryParking": "Питајте за паркинг",
+        "goLiveTryOrder": "Покушајте да наручите преузимање",
+        "goLiveHint": "Када будете задовољни, укључите прекидач изнад да почнете да примате праве позиве."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "Svi kupci",
@@ -6192,7 +6239,9 @@
       "trackingCta": "Pogledajte status porudžbine",
       "missedTitle": "Поруџбина није прихваћена на време",
       "missedBody": "Нажалост, ресторан није стигао да прихвати вашу поруџбину на време, па није реализована. Ако сте платили онлајн, свака ауторизација се аутоматски ослобађа — нећете бити наплаћени.",
-      "creditReturned": "Iznos od {amount} plaćen sa {label} vraćen je u vaš novčanik."
+      "creditReturned": "Iznos od {amount} plaćen sa {label} vraćen je u vaš novčanik.",
+      "cancelledPaymentIncompleteTitle": "Наруџбина отказана — плаћање није завршено",
+      "cancelledPaymentIncompleteBody": "Нисмо на време примили уплату за ову наруџбину, па је аутоматски отказана. Ако је на вашој картици или PayPal-у била резервација износа, биће ослобођена — ништа вам није наплаћено. Слободно наручите поново када будете спремни."
     },
     "orderRejected": {
       "subject": "Porudžbina #{orderNumber} odbijena",
@@ -6986,7 +7035,7 @@
       "cta": "Počnite besplatno",
       "ctaContact": "Kontaktirajte prodaju",
       "trialNote": "Nije potrebna kreditna kartica. Bez ugovora.",
-      "phoneOrderingMinuteNote": "Наплата 0,60 USD/мин са минимумом 249,99 USD/мес. (≈ 416 укључених минута). Детаљи на"
+      "phoneOrderingMinuteNote": "Ваш план од US$249.99/мес. укључује око 499 минута позива; додатно време се наплаћује US$0.50/мин у секундама. Детаљи на"
     },
     "faq": {
       "title": "Često postavljana pitanja",
@@ -7138,7 +7187,7 @@
         "trust1": "Направљено за пицерије",
         "trust2": "Иста каса као ваш сајт",
         "trust3": "Снимци и транскрипти",
-        "trust4": "US$0.60 по минуту позива",
+        "trust4": "US$0.50/мин, наплата у секундама",
         "sampleLabel": "Пример позива уживо",
         "sampleCaller": "Позивалац",
         "sample1": "Здраво, могу ли да наручим за доставу?",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Једноставне цене",
         "title": "Једна цена. Без изненађења.",
-        "perMinute": "0,60 USD",
-        "perMinuteLabel": "по минуту позива",
+        "perMinute": "US$0.50",
+        "perMinuteLabel": "по минуту, наплата у секундама",
         "minimum": "249,99 USD",
         "minimumLabel": "минимум месечно",
-        "rule": "Плаћате вишу суму: ваше минуте позива по 0,60 USD, или месечни минимум од 249,99 USD. Већина ресторана остаје у оквиру укључених 416 минута.",
+        "rule": "Ваш месечни план од US$249.99 укључује око 499 минута позива. Ако разговарате више, додатно време се наплаћује US$0.50 по минуту — у секундама, без заокруживања по позиву. Без посебног уговора, без скривених накнада. Већина ресторана никада не пређе укључене минуте.",
         "demo": "Већ сте претплатник Fee Free? Испробајте Nabil бесплатно 7 дана — без обавезе.",
         "include1": "Неограничени позиви",
         "include2": "Снимци и транскрипти",
@@ -7384,7 +7433,7 @@
         "q6": "Шта се дешава ван радног времена?",
         "a6": "Nabil познаје ваше радно време и распоред празника. Ван радног времена обавештава позиваоца када поново отварате и може понудити заказану наруџбу ако је омогућено.",
         "q7": "Како се рачуна фактурисање?",
-        "a7": "Плаћате 0,60 USD по минуту позива или месечни минимум 249,99 USD — вишу суму. Минимум укључује око 416 минута. Сваки позив се заокружује навише. Пратите потрошњу у реалном времену.",
+        "a7": "Сваки план почиње са месечном основицом од US$249.99 која укључује око 499 минута позива. Преко тога, додатно време се наплаћује US$0.50 по минуту — у секундама, без заокруживања по позиву. Потрошњу можете пратити уживо преко свог контролног панела.",
         "q8": "Могу ли да откажем кад год?",
         "a8": "Да. Nabil се наплаћује месечно преко Stripe-а без дугорочног уговора. Откажите са контролне табле и ваша линија остаје активна до краја обрачунског периода.",
         "q9": "Да ли се икада јави стварна особа?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Zaštićeno od strane Stripe. Nikada ne čuvamo podatke vaše kartice.",
       "preparingPayment": "Priprema bezbednog plaćanja…",
       "couldNotStartPayment": "Nismo mogli da pokrenemo plaćanje za ovu narudžbinu. Vratite se i pokušajte ponovo.",
-      "backToRestaurant": "Nazad na restoran"
+      "backToRestaurant": "Nazad na restoran",
+      "leaveConfirmTitle": "Изаћи без плаћања?",
+      "leaveConfirmBody": "Ако се сада вратите, ова наруџбина ће бити отказана — неће вам бити ништа наплаћено.",
+      "leaveConfirmStay": "Настави са плаћањем",
+      "leaveConfirmCancel": "Откажи моју наруџбину",
+      "paymentInProgressWarning": "Ваше плаћање се обрађује — молимо не затварајте ову страницу.",
+      "cancelUnpaidFailed": "Наруџбину није било могуће отказати. Покушајте поново."
     },
     "paymentPage": {
       "loading": "Učitavanje…"

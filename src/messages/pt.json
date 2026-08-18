@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "Criar pizzas e combos por voz",
         "buildPizzaComboHint": "Desativado por predefinição. Quando ativado, o Nabil cria as pizzas — tamanhos, coberturas, até meio a meio — e preenche as posições dos combos, em vez de encaminhar quem liga para uma pessoa. Faça uma encomenda de teste e verifique o talão impresso antes de confiar nesta função.",
         "offerDayDeals": "Oferecer as promoções de hoje sem que peçam",
-        "offerDayDealsHint": "Desativado por predefinição. Quando ativo, se alguém pedir algo que hoje tem uma promoção mais barata do mesmo tamanho, o Nabil menciona sem lhe perguntarem. Gera simpatia e custa margem — a decisão é sua."
+        "offerDayDealsHint": "Desativado por predefinição. Quando ativo, se alguém pedir algo que hoje tem uma promoção mais barata do mesmo tamanho, o Nabil menciona sem lhe perguntarem. Gera simpatia e custa margem — a decisão é sua.",
+        "agentIdentity": "Nome do agente",
+        "agentName": "Como se deve chamar o seu agente?",
+        "agentNameHint": "Dito em cada chamada quando perguntam o seu nome. Deixe em branco para usar \"Nabil\". Isto não renomeia o Nabil AI em si — apenas o nome que a voz usa."
       },
       "apiErrors": {
         "featureLocked": "O seu plano ainda não inclui o agente de pedidos por telefone.",
@@ -4616,7 +4619,10 @@
           "operational": "Funcionamento",
           "deflection": "Redirecionamentos",
           "escalation": "Escalonamento"
-        }
+        },
+        "quickStartTemplate": "Modelo de início rápido",
+        "quickStartTitle": "Conte ao seu agente sobre o seu restaurante",
+        "quickStartBody": "Responda a algumas perguntas comuns e transformamo-las em FAQ que o seu agente pode usar nas chamadas."
       },
       "links": {
         "title": "Links por SMS",
@@ -4683,14 +4689,55 @@
         "submit": "Enviar pedido",
         "cancelEdit": "Cancelar",
         "errorAlreadyProvisioned": "A sua linha já está configurada — atualize a página para ver o seu painel.",
-        "errorGeneric": "Algo correu mal. Tente novamente."
+        "errorGeneric": "Algo correu mal. Tente novamente.",
+        "agentNameLabel": "Dê um nome ao seu agente",
+        "agentNameHint": "Este é o nome com que a sua IA atende ao telefone (ex. \"Olá, fala a Sophia\"). Deixe em branco para usar \"Nabil\". Pode alterá-lo mais tarde nas Definições.",
+        "summaryAgentName": "Nome do agente: {name}"
       },
       "nowAvailable": "Disponível agora",
       "availableHeading": "Encomendas por telefone Nabil AI",
       "availablePrice": "{rate} por minuto de chamada · {minimum}/mês mínimo · {included} minutos incluídos",
       "availableConcierge": "A nossa equipa configura a sua linha num dia útil. Sem trabalho técnico da sua parte.",
       "availableDemo": "Já é membro pagante? Experimente grátis por {days} dias.",
-      "subscribeCta": "Subscrever e configurar"
+      "subscribeCta": "Subscrever e configurar",
+      "onboarding": {
+        "wizardTitle": "Configurar o Nabil AI",
+        "wizardSubtitle": "Poucos passos rápidos e o seu agente telefónico com IA estará pronto para atender chamadas.",
+        "step1Label": "Linha e nome do agente",
+        "step2Label": "Informações do restaurante",
+        "step3Label": "Testar e ativar",
+        "step2Title": "Conte ao seu agente sobre o seu restaurante",
+        "step2Body": "Responda ao que conseguir — isto torna-se a FAQ do seu agente. Pode sempre adicionar mais depois.",
+        "dietarySectionTitle": "Opções alimentares",
+        "dietarySectionHint": "Deixe em branco as que não se aplicam ao seu restaurante.",
+        "qHalal": "Tem opções halal?",
+        "qVegan": "Tem opções veganas?",
+        "qVegetarian": "Tem opções vegetarianas?",
+        "qGlutenFree": "Tem opções sem glúten?",
+        "yesNoPlaceholder": "ex. \"Sim\" ou \"Não, desculpe\"",
+        "qAllergen": "Tem uma política sobre alergénios ou contaminação cruzada?",
+        "qParking": "Tem estacionamento?",
+        "websiteLabel": "Website (opcional)",
+        "qSpecialInfo": "Mais alguma coisa que os clientes costumam perguntar sobre o seu restaurante?",
+        "specialInfoPlaceholder": "ex. a sua história, pratos principais, lugares sentados, aceita animais...",
+        "hoursTitle": "Horário",
+        "hoursBody": "O seu agente já lê automaticamente o seu horário publicado.",
+        "hoursFixLink": "Corrigir horário",
+        "qHoursException": "Alguma exceção ao seu horário que os clientes devam saber?",
+        "hoursExceptionPlaceholder": "ex. \"fechamos mais cedo aos domingos\"",
+        "orderingLinkTitle": "Link de encomenda online",
+        "orderingLinkHint": "Já configurado — o seu agente pode enviá-lo por SMS automaticamente.",
+        "saving": "A guardar…",
+        "saveFaq": "Guardar",
+        "faqSaved": "Guardado",
+        "faqSaveError": "Algo correu mal. Tente novamente.",
+        "goLiveTitle": "Pronto para testar o Nabil!",
+        "goLiveBody": "A sua linha está ativa. Ligue e faça algumas perguntas ao {agentName} antes de o ativar para clientes reais.",
+        "goLiveTryHours": "Pergunte pelo horário",
+        "goLiveTryParking": "Pergunte pelo estacionamento",
+        "goLiveTryOrder": "Experimente fazer um pedido para levantamento",
+        "goLiveHint": "Quando estiver satisfeito, ative o interruptor acima para começar a receber chamadas reais."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "Todos os clientes",
@@ -6192,7 +6239,9 @@
       "trackingCta": "Ver estado da encomenda",
       "missedTitle": "Pedido não aceite a tempo",
       "missedBody": "Infelizmente o restaurante não conseguiu aceitar o seu pedido a tempo, pelo que não foi processado. Se pagou online, qualquer autorização é libertada automaticamente — não será cobrado.",
-      "creditReturned": "O valor de {amount} que pagou com {label} foi devolvido à sua carteira."
+      "creditReturned": "O valor de {amount} que pagou com {label} foi devolvido à sua carteira.",
+      "cancelledPaymentIncompleteTitle": "Encomenda cancelada — pagamento não concluído",
+      "cancelledPaymentIncompleteBody": "Não recebemos o pagamento desta encomenda a tempo, pelo que foi cancelada automaticamente. Se houve alguma retenção no seu cartão ou PayPal, esta será libertada — não lhe foi cobrado nada. Sinta-se à vontade para fazer uma nova encomenda quando estiver pronto."
     },
     "orderRejected": {
       "subject": "Pedido #{orderNumber} recusado",
@@ -6986,7 +7035,7 @@
       "cta": "Começar grátis",
       "ctaContact": "Falar com vendas",
       "trialNote": "Sem cartão de crédito. Sem contratos.",
-      "phoneOrderingMinuteNote": "Faturado a US$ 0,60/min com mínimo de US$ 249,99/mês (≈ 416 minutos incluídos). Detalhes em"
+      "phoneOrderingMinuteNote": "O seu plano de US$249.99/mês inclui cerca de 499 minutos de chamada; os minutos adicionais custam US$0.50 cada, cobrados ao segundo. Detalhes em"
     },
     "faq": {
       "title": "Perguntas frequentes",
@@ -7138,7 +7187,7 @@
         "trust1": "Criado para pizzarias",
         "trust2": "Mesmo checkout do seu site",
         "trust3": "Gravações e transcrições",
-        "trust4": "US$0.60 por minuto de chamada",
+        "trust4": "US$0.50/min, cobrado ao segundo",
         "sampleLabel": "Exemplo de chamada ao vivo",
         "sampleCaller": "Chamador",
         "sample1": "Olá, posso fazer uma encomenda para entrega?",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Preços simples",
         "title": "Um preço. Sem surpresas.",
-        "perMinute": "US$ 0,60",
-        "perMinuteLabel": "por minuto de chamada",
+        "perMinute": "US$0.50",
+        "perMinuteLabel": "por minuto, cobrado ao segundo",
         "minimum": "US$ 249,99",
         "minimumLabel": "mínimo por mês",
-        "rule": "Paga o que for maior: os seus minutos de chamada a US$ 0,60 cada, ou o mínimo mensal de US$ 249,99. A maioria dos restaurantes fica dentro dos 416 minutos incluídos.",
+        "rule": "O seu plano mensal de US$249.99 inclui cerca de 499 minutos de chamada. Se ultrapassar esse limite, o tempo adicional é cobrado a US$0.50 por minuto — ao segundo, sem arredondamento por chamada. Sem contrato separado, sem custos surpresa. A maioria dos restaurantes nunca ultrapassa os minutos incluídos.",
         "demo": "Já é membro pagante Fee Free? Experimente o Nabil grátis durante 7 dias — sem compromisso.",
         "include1": "Chamadas ilimitadas",
         "include2": "Gravações e transcrições",
@@ -7384,7 +7433,7 @@
         "q6": "O que acontece fora do horário?",
         "a6": "O Nabil conhece os seus horários e feriados. Fora do horário, informa o chamador quando reabre e pode oferecer uma encomenda agendada se ativada.",
         "q7": "Como é calculada a faturação?",
-        "a7": "Paga 0,60 USD por minuto de chamada ou o mínimo mensal de 249,99 USD, o que for maior. O mínimo inclui cerca de 416 minutos. Cada chamada é arredondada para o minuto seguinte. Pode acompanhar a utilização em tempo real.",
+        "a7": "Cada plano começa com uma base mensal de US$249.99 que inclui cerca de 499 minutos de chamada. Além disso, o tempo adicional é cobrado a US$0.50 por minuto — ao segundo, sem arredondamento por chamada. Pode acompanhar a utilização em tempo real a partir do seu painel.",
         "q8": "Posso cancelar a qualquer momento?",
         "a8": "Sim. O Nabil é faturado mensalmente via Stripe sem contrato a longo prazo. Cancele no seu painel e a sua linha permanece ativa até ao final do período de faturação.",
         "q9": "Alguma vez atende uma pessoa real?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Seguro por Stripe. Nunca armazenamos os dados do seu cartão.",
       "preparingPayment": "A preparar o pagamento seguro…",
       "couldNotStartPayment": "Não foi possível iniciar o pagamento deste pedido. Volte atrás e tente novamente.",
-      "backToRestaurant": "Voltar ao restaurante"
+      "backToRestaurant": "Voltar ao restaurante",
+      "leaveConfirmTitle": "Sair sem pagar?",
+      "leaveConfirmBody": "Se voltar agora, esta encomenda será cancelada — não lhe será cobrado nada.",
+      "leaveConfirmStay": "Continuar para o pagamento",
+      "leaveConfirmCancel": "Cancelar a minha encomenda",
+      "paymentInProgressWarning": "O seu pagamento está a ser processado — não feche esta página.",
+      "cancelUnpaidFailed": "Não foi possível cancelar a encomenda. Tente novamente."
     },
     "paymentPage": {
       "loading": "A carregar…"

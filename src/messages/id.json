@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "Membuat pizza dan kombo lewat suara",
         "buildPizzaComboHint": "Nonaktif secara bawaan. Saat aktif, Nabil menyusun pizza — ukuran, topping, bahkan setengah & setengah — dan mengisi slot kombo, alih-alih mengalihkan penelepon ke staf. Buat pesanan percobaan dan periksa struk yang tercetak sebelum Anda mengandalkannya.",
         "offerDayDeals": "Tawarkan promo hari ini tanpa diminta",
-        "offerDayDealsHint": "Nonaktif secara bawaan. Saat aktif, jika penelepon memesan sesuatu yang hari ini punya promo lebih murah dengan ukuran sama, Nabil menyebutkannya tanpa diminta. Menambah simpati dan mengurangi margin — keputusan Anda."
+        "offerDayDealsHint": "Nonaktif secara bawaan. Saat aktif, jika penelepon memesan sesuatu yang hari ini punya promo lebih murah dengan ukuran sama, Nabil menyebutkannya tanpa diminta. Menambah simpati dan mengurangi margin — keputusan Anda.",
+        "agentIdentity": "Nama agen",
+        "agentName": "Agen Anda harus menyebut dirinya apa?",
+        "agentNameHint": "Diucapkan di setiap panggilan saat penelepon menanyakan namanya. Biarkan kosong untuk menggunakan \"Nabil\". Ini tidak mengganti nama Nabil AI itu sendiri — hanya nama yang digunakan suara tersebut."
       },
       "apiErrors": {
         "featureLocked": "Paket Anda belum mencakup agen pemesanan telepon.",
@@ -4616,7 +4619,10 @@
           "operational": "Operasional",
           "deflection": "Pengalihan",
           "escalation": "Eskalasi"
-        }
+        },
+        "quickStartTemplate": "Templat mulai cepat",
+        "quickStartTitle": "Beri tahu agen Anda tentang restoran Anda",
+        "quickStartBody": "Jawab beberapa pertanyaan umum dan kami akan mengubahnya menjadi FAQ yang dapat digunakan agen Anda saat panggilan."
       },
       "links": {
         "title": "Tautan SMS",
@@ -4683,14 +4689,55 @@
         "submit": "Kirim permintaan",
         "cancelEdit": "Batal",
         "errorAlreadyProvisioned": "Saluran Anda sudah siap — segarkan halaman.",
-        "errorGeneric": "Terjadi kesalahan. Silakan coba lagi."
+        "errorGeneric": "Terjadi kesalahan. Silakan coba lagi.",
+        "agentNameLabel": "Beri nama agen Anda",
+        "agentNameHint": "Ini adalah nama yang digunakan AI Anda saat menjawab telepon (mis. \"Halo, ini Sophia\"). Biarkan kosong untuk menggunakan \"Nabil\". Anda bisa mengubahnya nanti di Pengaturan.",
+        "summaryAgentName": "Nama agen: {name}"
       },
       "nowAvailable": "Tersedia sekarang",
       "availableHeading": "Nabil AI pesanan telepon",
       "availablePrice": "{rate} per menit panggilan · {minimum}/bulan minimum · {included} menit termasuk",
       "availableConcierge": "Tim kami menyiapkan saluran dalam satu hari kerja. Tanpa pekerjaan teknis dari Anda.",
       "availableDemo": "Sudah anggota berbayar? Coba gratis {days} hari.",
-      "subscribeCta": "Berlangganan & siapkan"
+      "subscribeCta": "Berlangganan & siapkan",
+      "onboarding": {
+        "wizardTitle": "Siapkan Nabil AI",
+        "wizardSubtitle": "Beberapa langkah cepat dan agen telepon AI Anda akan siap menerima panggilan.",
+        "step1Label": "Saluran & nama agen",
+        "step2Label": "Info restoran",
+        "step3Label": "Uji & aktifkan",
+        "step2Title": "Beri tahu agen Anda tentang restoran Anda",
+        "step2Body": "Jawab sebisa Anda — ini akan menjadi FAQ agen Anda. Anda selalu bisa menambahkan lebih banyak nanti.",
+        "dietarySectionTitle": "Opsi diet",
+        "dietarySectionHint": "Biarkan kosong jika tidak berlaku untuk restoran Anda.",
+        "qHalal": "Apakah Anda punya opsi halal?",
+        "qVegan": "Apakah Anda punya opsi vegan?",
+        "qVegetarian": "Apakah Anda punya opsi vegetarian?",
+        "qGlutenFree": "Apakah Anda punya opsi bebas gluten?",
+        "yesNoPlaceholder": "mis. \"Ya\" atau \"Maaf, tidak\"",
+        "qAllergen": "Apakah Anda punya kebijakan tentang alergen atau kontaminasi silang?",
+        "qParking": "Apakah Anda punya tempat parkir?",
+        "websiteLabel": "Situs web (opsional)",
+        "qSpecialInfo": "Ada hal lain yang sering ditanyakan pelanggan tentang restoran Anda?",
+        "specialInfoPlaceholder": "mis. sejarah Anda, hidangan andalan, tempat duduk, ramah hewan peliharaan...",
+        "hoursTitle": "Jam buka",
+        "hoursBody": "Agen Anda sudah otomatis membaca jam buka yang Anda publikasikan.",
+        "hoursFixLink": "Perbaiki jam buka",
+        "qHoursException": "Pengecualian jam buka yang perlu diketahui penelepon?",
+        "hoursExceptionPlaceholder": "mis. \"kami tutup lebih awal pada hari Minggu\"",
+        "orderingLinkTitle": "Tautan pemesanan online",
+        "orderingLinkHint": "Sudah diatur — agen Anda bisa mengirimkannya secara otomatis via SMS ke penelepon.",
+        "saving": "Menyimpan…",
+        "saveFaq": "Simpan",
+        "faqSaved": "Tersimpan",
+        "faqSaveError": "Terjadi kesalahan. Silakan coba lagi.",
+        "goLiveTitle": "Siap menguji Nabil!",
+        "goLiveBody": "Saluran Anda sudah aktif. Telepon dan ajukan beberapa pertanyaan ke {agentName} sebelum mengaktifkannya untuk pelanggan sungguhan.",
+        "goLiveTryHours": "Tanyakan jam buka",
+        "goLiveTryParking": "Tanyakan tempat parkir",
+        "goLiveTryOrder": "Coba lakukan pemesanan untuk diambil",
+        "goLiveHint": "Setelah Anda puas, aktifkan sakelar di atas untuk mulai menerima panggilan sungguhan."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "Semua pelanggan",
@@ -6192,7 +6239,9 @@
       "trackingCta": "Lihat status pesanan",
       "missedTitle": "Pesanan tidak diterima tepat waktu",
       "missedBody": "Sayangnya restoran tidak sempat menerima pesanan Anda tepat waktu, jadi pesanan tidak diproses. Jika Anda membayar online, otorisasi apa pun dilepas otomatis — Anda tidak akan ditagih.",
-      "creditReturned": "Jumlah {amount} yang Anda bayar dengan {label} telah dikembalikan ke dompet Anda."
+      "creditReturned": "Jumlah {amount} yang Anda bayar dengan {label} telah dikembalikan ke dompet Anda.",
+      "cancelledPaymentIncompleteTitle": "Pesanan dibatalkan — pembayaran tidak selesai",
+      "cancelledPaymentIncompleteBody": "Kami tidak menerima pembayaran untuk pesanan ini tepat waktu, sehingga dibatalkan secara otomatis. Jika ada penahanan dana pada kartu atau PayPal Anda, itu akan dilepaskan — Anda tidak dikenakan biaya. Silakan buat pesanan baru kapan pun Anda siap."
     },
     "orderRejected": {
       "subject": "Pesanan #{orderNumber} ditolak",
@@ -6986,7 +7035,7 @@
       "cta": "Mulai Gratis",
       "ctaContact": "Hubungi tim penjualan",
       "trialNote": "Tidak perlu kartu kredit. Tidak ada kontrak.",
-      "phoneOrderingMinuteNote": "Ditagih US$0,60/menit dengan minimum US$249,99/bulan (≈ 416 menit termasuk). Detail di"
+      "phoneOrderingMinuteNote": "Paket US$249,99/bulan Anda mencakup sekitar 499 menit panggilan; menit tambahan masing-masing US$0,50. Lihat detail di"
     },
     "faq": {
       "title": "Pertanyaan yang Sering Diajukan",
@@ -7138,7 +7187,7 @@
         "trust1": "Dibuat untuk pizzeria",
         "trust2": "Checkout sama seperti situs web Anda",
         "trust3": "Rekaman & transkrip",
-        "trust4": "US$0.60 per menit panggilan",
+        "trust4": "US$0,50 per menit panggilan",
         "sampleLabel": "Contoh panggilan langsung",
         "sampleCaller": "Penelepon",
         "sample1": "Halo, bisakah saya memesan untuk pengiriman?",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Harga sederhana",
         "title": "Satu harga. Tanpa kejutan.",
-        "perMinute": "US$0,60",
+        "perMinute": "US$0,50",
         "perMinuteLabel": "per menit panggilan",
         "minimum": "US$249,99",
         "minimumLabel": "minimum per bulan",
-        "rule": "Anda membayar mana yang lebih tinggi: menit panggilan Anda masing-masing US$0,60, atau minimum bulanan US$249,99. Kebanyakan restoran tetap dalam 416 menit yang termasuk.",
+        "rule": "Paket bulanan US$249,99 Anda mencakup sekitar 499 menit panggilan. Jika Anda menggunakan lebih dari itu, menit tambahan hanya US$0,50 per menit — tanpa kontrak terpisah, tanpa biaya tersembunyi. Kebanyakan restoran tidak pernah melebihi menit yang termasuk.",
         "demo": "Sudah anggota berbayar Fee Free? Coba Nabil gratis selama 7 hari — tanpa komitmen.",
         "include1": "Panggilan tanpa batas",
         "include2": "Rekaman & transkrip",
@@ -7384,7 +7433,7 @@
         "q6": "Apa yang terjadi di luar jam kerja?",
         "a6": "Nabil mengetahui jam buka dan jadwal libur Anda. Di luar jam kerja, memberi tahu penelepon kapan Anda buka lagi dan bisa menawarkan pesanan terjadwal jika diaktifkan.",
         "q7": "Bagaimana penagihan dihitung?",
-        "a7": "Anda membayar US$0,60 per menit panggilan atau minimum bulanan US$249,99 — mana yang lebih tinggi. Minimum mencakup sekitar 416 menit. Setiap panggilan dibulatkan ke atas. Lacak penggunaan secara real-time.",
+        "a7": "Setiap paket dimulai dengan biaya dasar bulanan US$249,99 yang mencakup sekitar 499 menit panggilan. Jika Anda menggunakan lebih dari itu dalam sebulan, menit tambahan dikenakan biaya US$0,50 per menit. Setiap panggilan dibulatkan ke menit penuh berikutnya, dan Anda dapat melacak penggunaan secara langsung dari dashboard Anda.",
         "q8": "Bisakah saya membatalkan kapan saja?",
         "a8": "Ya. Nabil ditagih bulanan melalui Stripe tanpa kontrak jangka panjang. Batalkan dari dasbor kapan saja dan saluran Anda tetap aktif hingga akhir periode penagihan.",
         "q9": "Apakah pernah ada orang sungguhan yang menjawab?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Diamankan oleh Stripe. Kami tidak pernah menyimpan detail kartu Anda.",
       "preparingPayment": "Menyiapkan pembayaran aman…",
       "couldNotStartPayment": "Kami tidak dapat memulai pembayaran untuk pesanan ini. Silakan kembali dan coba lagi.",
-      "backToRestaurant": "Kembali ke restoran"
+      "backToRestaurant": "Kembali ke restoran",
+      "leaveConfirmTitle": "Keluar tanpa membayar?",
+      "leaveConfirmBody": "Kembali sekarang akan membatalkan pesanan ini — Anda tidak akan dikenakan biaya apa pun.",
+      "leaveConfirmStay": "Lanjutkan pembayaran",
+      "leaveConfirmCancel": "Batalkan pesanan saya",
+      "paymentInProgressWarning": "Pembayaran Anda sedang diproses — mohon jangan tutup halaman ini.",
+      "cancelUnpaidFailed": "Pesanan tidak dapat dibatalkan. Silakan coba lagi."
     },
     "paymentPage": {
       "loading": "Memuat…"

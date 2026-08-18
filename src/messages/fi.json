@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "Kokoa pizzat ja combot puhelun aikana",
         "buildPizzaComboHint": "Oletuksena pois päältä. Kun asetus on päällä, Nabil kokoaa pizzat — koot, täytteet, jopa puoliksi & puoliksi — ja täyttää combon paikat sen sijaan, että siirtäisi soittajan ihmiselle. Tee testitilaus ja tarkista tulostettu kuitti, ennen kuin luotat tähän.",
         "offerDayDeals": "Tarjoa päivän tarjouksia oma-aloitteisesti",
-        "offerDayDealsHint": "Oletuksena pois. Kun päällä ja soittaja tilaa jotain, josta on tänään halvempi samankokoinen tarjous, Nabil mainitsee sen pyytämättä. Tuo hyvää tahtoa ja maksaa katetta — sinun päätöksesi."
+        "offerDayDealsHint": "Oletuksena pois. Kun päällä ja soittaja tilaa jotain, josta on tänään halvempi samankokoinen tarjous, Nabil mainitsee sen pyytämättä. Tuo hyvää tahtoa ja maksaa katetta — sinun päätöksesi.",
+        "agentIdentity": "Avustajan nimi",
+        "agentName": "Miksi avustajasi tulisi kutsua itseään?",
+        "agentNameHint": "Sanotaan jokaisessa puhelussa, kun nimeä kysytään. Jätä tyhjäksi käyttääksesi nimeä \"Nabil\". Tämä ei nimeä Nabil AI:ta itseään uudelleen — vain sitä, mitä ääni kutsuu itseään."
       },
       "apiErrors": {
         "featureLocked": "Tilauspakettisi ei vielä sisällä puhelintilausagenttia.",
@@ -4616,7 +4619,10 @@
           "operational": "Toiminta",
           "deflection": "Uudelleenohjaukset",
           "escalation": "Eskalointi"
-        }
+        },
+        "quickStartTemplate": "Pikakäynnistysmalli",
+        "quickStartTitle": "Kerro avustajallesi ravintolastasi",
+        "quickStartBody": "Vastaa muutamaan yleiseen kysymykseen, niin muutamme ne UKK:ksi, joita avustajasi voi käyttää puheluissa."
       },
       "links": {
         "title": "Tekstiviestilinkit",
@@ -4683,14 +4689,55 @@
         "submit": "Lähetä pyyntö",
         "cancelEdit": "Peruuta",
         "errorAlreadyProvisioned": "Linjasi on jo asennettu — päivitä sivu.",
-        "errorGeneric": "Jokin meni vikaan. Yritä uudelleen."
+        "errorGeneric": "Jokin meni vikaan. Yritä uudelleen.",
+        "agentNameLabel": "Anna avustajallesi nimi",
+        "agentNameHint": "Tämä on nimi, jolla tekoälysi vastaa puhelimeen (esim. \"Hei, täällä Sophia\"). Jätä tyhjäksi käyttääksesi nimeä \"Nabil\". Voit muuttaa sitä myöhemmin Asetuksissa.",
+        "summaryAgentName": "Avustajan nimi: {name}"
       },
       "nowAvailable": "Nyt saatavilla",
       "availableHeading": "Nabil AI puhelintilaukset",
       "availablePrice": "{rate} puheluminuutilta · {minimum}/kk minimi · {included} minuuttia sisältyy",
       "availableConcierge": "Tiimimme asettaa linjasi yhden arkipäivän kuluessa. Ei teknistä työtä sinulta.",
       "availableDemo": "Jo maksava jäsen? Kokeile ilmaiseksi {days} päivää.",
-      "subscribeCta": "Tilaa ja asenna"
+      "subscribeCta": "Tilaa ja asenna",
+      "onboarding": {
+        "wizardTitle": "Määritä Nabil AI",
+        "wizardSubtitle": "Muutama nopea vaihe, niin tekoälypuhelinavustajasi on valmis vastaanottamaan puheluita.",
+        "step1Label": "Linja & avustajan nimi",
+        "step2Label": "Ravintolan tiedot",
+        "step3Label": "Testaa & julkaise",
+        "step2Title": "Kerro avustajallesi ravintolastasi",
+        "step2Body": "Vastaa siihen, mihin pystyt — tästä tulee avustajasi UKK. Voit aina lisätä lisää myöhemmin.",
+        "dietarySectionTitle": "Ruokavaliovaihtoehdot",
+        "dietarySectionHint": "Jätä nämä tyhjäksi, jos ne eivät koske ravintolaasi.",
+        "qHalal": "Onko teillä halal-vaihtoehtoja?",
+        "qVegan": "Onko teillä vegaanivaihtoehtoja?",
+        "qVegetarian": "Onko teillä kasvisvaihtoehtoja?",
+        "qGlutenFree": "Onko teillä gluteenittomia vaihtoehtoja?",
+        "yesNoPlaceholder": "esim. \"Kyllä\" tai \"Ei valitettavasti\"",
+        "qAllergen": "Onko teillä allergeeni- tai ristikontaminaatiokäytäntöä?",
+        "qParking": "Onko teillä pysäköintiä?",
+        "websiteLabel": "Verkkosivu (valinnainen)",
+        "qSpecialInfo": "Jotain muuta, mitä asiakkaat usein kysyvät ravintolastanne?",
+        "specialInfoPlaceholder": "esim. tarinanne, tunnusruoat, istumapaikat, lemmikkiystävällinen...",
+        "hoursTitle": "Aukioloajat",
+        "hoursBody": "Avustajasi lukee jo automaattisesti julkaistut aukioloaikanne.",
+        "hoursFixLink": "Korjaa aukioloajat",
+        "qHoursException": "Poikkeuksia aukioloaikoihinne, jotka soittajien tulisi tietää?",
+        "hoursExceptionPlaceholder": "esim. \"suljemme aiemmin sunnuntaisin\"",
+        "orderingLinkTitle": "Verkkotilauslinkki",
+        "orderingLinkHint": "Jo asetettu — avustajasi voi lähettää tämän soittajille tekstiviestillä automaattisesti.",
+        "saving": "Tallennetaan…",
+        "saveFaq": "Tallenna",
+        "faqSaved": "Tallennettu",
+        "faqSaveError": "Jokin meni pieleen. Yritä uudelleen.",
+        "goLiveTitle": "Valmis testaamaan Nabilia!",
+        "goLiveBody": "Linjasi on käytössä. Soita ja kysy {agentName}ilta muutama kysymys ennen kuin otat sen käyttöön oikeille asiakkaille.",
+        "goLiveTryHours": "Kysy aukioloajoista",
+        "goLiveTryParking": "Kysy pysäköinnistä",
+        "goLiveTryOrder": "Kokeile tehdä noutotilaus",
+        "goLiveHint": "Kun olet tyytyväinen, kytke yläpuolella oleva kytkin päälle aloittaaksesi oikeiden puheluiden vastaanottamisen."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "Kaikki asiakkaat",
@@ -6192,7 +6239,9 @@
       "trackingCta": "Näytä tilauksen tila",
       "missedTitle": "Tilausta ei hyväksytty ajoissa",
       "missedBody": "Valitettavasti ravintola ei ehtinyt hyväksyä tilaustasi ajoissa, joten se ei mennyt läpi. Jos maksoit verkossa, mahdollinen varaus vapautetaan automaattisesti — sinulta ei veloiteta mitään.",
-      "creditReturned": "Summa {amount}, jonka maksoit {label}-saldolla, on palautettu lompakkoosi."
+      "creditReturned": "Summa {amount}, jonka maksoit {label}-saldolla, on palautettu lompakkoosi.",
+      "cancelledPaymentIncompleteTitle": "Tilaus peruttu — maksua ei suoritettu loppuun",
+      "cancelledPaymentIncompleteBody": "Emme saaneet maksua tästä tilauksesta ajoissa, joten se peruttiin automaattisesti. Jos kortillesi tai PayPaliisi tehtiin varaus, se vapautetaan — sinulta ei ole veloitettu mitään. Voit tehdä uuden tilauksen milloin tahansa."
     },
     "orderRejected": {
       "subject": "Tilaus #{orderNumber} hylätty",
@@ -6986,7 +7035,7 @@
       "cta": "Aloita ilmaiseksi",
       "ctaContact": "Ota yhteyttä myyntiin",
       "trialNote": "Ei luottokorttia tarvita. Ei sopimuksia.",
-      "phoneOrderingMinuteNote": "Laskutetaan 0,60 USD/min, minimi 249,99 USD/kk (≈ 416 sisältyvää minuuttia). Lisätiedot"
+      "phoneOrderingMinuteNote": "249,99 USD/kk -pakettiisi sisältyy noin 499 puheluminuuttia; lisäaika laskutetaan 0,50 USD/min sekunneittain. Lisätiedot"
     },
     "faq": {
       "title": "Usein kysytyt kysymykset",
@@ -7138,7 +7187,7 @@
         "trust1": "Rakennettu pizzerioille",
         "trust2": "Sama kassa kuin verkkosivustollasi",
         "trust3": "Tallenteet ja litteraatiot",
-        "trust4": "US$0.60 per puheluminuutti",
+        "trust4": "US$0.50/min, laskutus sekunneittain",
         "sampleLabel": "Esimerkki livepuhelusta",
         "sampleCaller": "Soittaja",
         "sample1": "Hei, voinko tehdä tilauksen kotiinkuljetuksella?",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Yksinkertainen hinnoittelu",
         "title": "Yksi hinta. Ei yllätyksiä.",
-        "perMinute": "0,60 USD",
-        "perMinuteLabel": "puheluminuutilta",
+        "perMinute": "0,50 USD",
+        "perMinuteLabel": "minuutilta, laskutus sekunneittain",
         "minimum": "249,99 USD",
         "minimumLabel": "minimi kuukaudessa",
-        "rule": "Maksat sen, kumpi on korkeampi: puheluminuuttisi á 0,60 USD, tai kuukausittainen 249,99 USD minimi. Useimmat ravintolat pysyvät sisältyvissä 416 minuutissa.",
+        "rule": "Kuukausittaiseen 249,99 USD -pakettiisi sisältyy noin 499 puheluminuuttia. Jos puhut enemmän, lisäaika laskutetaan 0,50 USD minuutilta — sekunneittain, ilman puhelukohtaista pyöristystä. Ei erillistä sopimusta, ei yllättäviä maksuja. Useimmat ravintolat eivät koskaan käytä sisältyviä minuutteja loppuun.",
         "demo": "Jo maksava Fee Free-jäsen? Kokeile Nabilia ilmaiseksi 7 päivää — ilman sitoumusta.",
         "include1": "Rajattomat puhelut",
         "include2": "Tallenteet ja transkriptiot",
@@ -7384,7 +7433,7 @@
         "q6": "Mitä tapahtuu aukioloaikojen ulkopuolella?",
         "a6": "Nabil tietää aukioloaikasi ja lomapäiväsi. Aukioloaikojen ulkopuolella se kertoo soittajalle, milloin avaat uudelleen, ja voi tarjota ajastetun tilauksen, jos se on käytössä.",
         "q7": "Miten laskutus lasketaan?",
-        "a7": "Maksat 0,60 USD puheluminuutilta tai kuukausittaisen 249,99 USD minimin — kumpi on suurempi. Minimi sisältää noin 416 minuuttia. Jokainen puhelu pyöristetään ylöspäin. Seuraa käyttöäsi reaaliajassa.",
+        "a7": "Jokainen paketti alkaa 249,99 USD:n kuukausittaisella perusmaksulla, johon sisältyy noin 499 puheluminuuttia. Sen yli menevä lisäaika veloitetaan 0,50 USD minuutilta — sekunneittain, ilman puhelukohtaista pyöristystä. Voit seurata käyttöäsi reaaliajassa kojelaudastasi.",
         "q8": "Voinko peruuttaa milloin tahansa?",
         "a8": "Kyllä. Nabil laskutetaan kuukausittain Stripen kautta ilman pitkäaikaista sopimusta. Peru kojelaudalta milloin tahansa, ja linjasi pysyy aktiivisena laskutuskauden loppuun.",
         "q9": "Vastaako koskaan oikea ihminen?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Suojattu Stripe-palvelulla. Emme koskaan tallenna korttitietojasi.",
       "preparingPayment": "Valmistellaan turvallista maksua…",
       "couldNotStartPayment": "Tämän tilauksen maksua ei voitu aloittaa. Palaa takaisin ja yritä uudelleen.",
-      "backToRestaurant": "Takaisin ravintolaan"
+      "backToRestaurant": "Takaisin ravintolaan",
+      "leaveConfirmTitle": "Poistu maksamatta?",
+      "leaveConfirmBody": "Jos palaat nyt takaisin, tilaus perutaan — sinulta ei veloiteta mitään.",
+      "leaveConfirmStay": "Jatka maksamiseen",
+      "leaveConfirmCancel": "Peru tilaukseni",
+      "paymentInProgressWarning": "Maksuasi käsitellään — älä sulje tätä sivua.",
+      "cancelUnpaidFailed": "Tilauksen peruuttaminen epäonnistui. Yritä uudelleen."
     },
     "paymentPage": {
       "loading": "Ladataan…"

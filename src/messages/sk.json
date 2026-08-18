@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "Zostavovanie pízz a combo ponúk hlasom",
         "buildPizzaComboHint": "Predvolene vypnuté. Keď je zapnuté, Nabil zostaví pizzu — veľkosti, ingrediencie, dokonca aj polovica & polovica — a vyplní sloty v combo ponuke namiesto toho, aby volajúceho prepojil na človeka. Zadajte skúšobnú objednávku a skontrolujte vytlačenú účtenku, skôr než sa na to začnete spoliehať.",
         "offerDayDeals": "Ponúkať dnešné akcie bez vyzvania",
-        "offerDayDealsHint": "Predvolene vypnuté. Keď je zapnuté a volajúci si objedná niečo, na čo dnes beží lacnejšia akcia v rovnakej veľkosti, Nabil to sám spomenie. Získa priazeň a stojí to maržu — rozhodnutie je na vás."
+        "offerDayDealsHint": "Predvolene vypnuté. Keď je zapnuté a volajúci si objedná niečo, na čo dnes beží lacnejšia akcia v rovnakej veľkosti, Nabil to sám spomenie. Získa priazeň a stojí to maržu — rozhodnutie je na vás.",
+        "agentIdentity": "Meno agenta",
+        "agentName": "Ako by sa mal váš agent volať?",
+        "agentNameHint": "Vyslovuje sa pri každom hovore, keď sa volajúci opýta na meno. Nechajte prázdne pre použitie \"Nabil\". Toto nepremenuje samotné Nabil AI — len ako sa hlas nazýva."
       },
       "apiErrors": {
         "featureLocked": "Váš plán zatiaľ nezahŕňa agenta pre telefonické objednávky.",
@@ -4616,7 +4619,10 @@
           "operational": "Prevádzka",
           "deflection": "Presmerovania",
           "escalation": "Eskalácia"
-        }
+        },
+        "quickStartTemplate": "Šablóna rýchleho štartu",
+        "quickStartTitle": "Povedzte svojmu agentovi o vašej reštaurácii",
+        "quickStartBody": "Odpovedzte na niekoľko bežných otázok a my z nich vytvoríme FAQ, ktoré váš agent môže použiť počas hovorov."
       },
       "links": {
         "title": "SMS odkazy",
@@ -4683,14 +4689,55 @@
         "submit": "Odoslať žiadosť",
         "cancelEdit": "Zrušiť",
         "errorAlreadyProvisioned": "Vaša linka je už nastavená — obnovte stránku.",
-        "errorGeneric": "Niečo sa pokazilo. Skúste to znova."
+        "errorGeneric": "Niečo sa pokazilo. Skúste to znova.",
+        "agentNameLabel": "Pomenujte svojho agenta",
+        "agentNameHint": "Toto je meno, ktorým vaša AI odpovedá po telefóne (napr. \"Dobrý deň, tu Sophia\"). Nechajte prázdne pre použitie \"Nabil\". Môžete to neskôr zmeniť v Nastaveniach.",
+        "summaryAgentName": "Meno agenta: {name}"
       },
       "nowAvailable": "Teraz dostupné",
       "availableHeading": "Nabil AI telefónne objednávky",
       "availablePrice": "{rate} za minútu hovoru · {minimum}/mes. minimum · {included} minút zahrnutých",
       "availableConcierge": "Náš tím nastaví linku do jedného pracovného dňa. Žiadna technická práca na vašej strane.",
       "availableDemo": "Už platiaci člen? Vyskúšajte zadarmo na {days} dní.",
-      "subscribeCta": "Predplaťte si a nastavte"
+      "subscribeCta": "Predplaťte si a nastavte",
+      "onboarding": {
+        "wizardTitle": "Nastaviť Nabil AI",
+        "wizardSubtitle": "Pár rýchlych krokov a váš telefónny AI agent bude pripravený prijímať hovory.",
+        "step1Label": "Linka a meno agenta",
+        "step2Label": "Informácie o reštaurácii",
+        "step3Label": "Otestovať a spustiť",
+        "step2Title": "Povedzte svojmu agentovi o vašej reštaurácii",
+        "step2Body": "Odpovedzte, čo môžete — toto sa stane FAQ vášho agenta. Vždy môžete pridať viac neskôr.",
+        "dietarySectionTitle": "Stravovacie možnosti",
+        "dietarySectionHint": "Ponechajte prázdne, ak sa na vašu reštauráciu nevzťahujú.",
+        "qHalal": "Máte halal možnosti?",
+        "qVegan": "Máte vegánske možnosti?",
+        "qVegetarian": "Máte vegetariánske možnosti?",
+        "qGlutenFree": "Máte bezlepkové možnosti?",
+        "yesNoPlaceholder": "napr. \"Áno\" alebo \"Nie, bohužiaľ\"",
+        "qAllergen": "Máte zásady týkajúce sa alergénov alebo krížovej kontaminácie?",
+        "qParking": "Máte parkovisko?",
+        "websiteLabel": "Webová stránka (voliteľné)",
+        "qSpecialInfo": "Ešte niečo, na čo sa zákazníci často pýtajú ohľadom vašej reštaurácie?",
+        "specialInfoPlaceholder": "napr. váš príbeh, signature jedlá, možnosť posedenia, vhodné pre domáce zvieratá...",
+        "hoursTitle": "Otváracie hodiny",
+        "hoursBody": "Váš agent už automaticky číta vaše zverejnené otváracie hodiny.",
+        "hoursFixLink": "Opraviť otváracie hodiny",
+        "qHoursException": "Výnimky z otváracích hodín, ktoré by volajúci mali poznať?",
+        "hoursExceptionPlaceholder": "napr. \"v nedeľu zatvárame skôr\"",
+        "orderingLinkTitle": "Odkaz na online objednávky",
+        "orderingLinkHint": "Už nastavené — váš agent to môže automaticky poslať volajúcim SMS správou.",
+        "saving": "Ukladá sa…",
+        "saveFaq": "Uložiť",
+        "faqSaved": "Uložené",
+        "faqSaveError": "Niečo sa pokazilo. Skúste to prosím znova.",
+        "goLiveTitle": "Pripravení otestovať Nabila!",
+        "goLiveBody": "Vaša linka je aktívna. Zavolajte a položte {agentName} pár otázok, kým ju aktivujete pre skutočných zákazníkov.",
+        "goLiveTryHours": "Opýtajte sa na otváracie hodiny",
+        "goLiveTryParking": "Opýtajte sa na parkovanie",
+        "goLiveTryOrder": "Skúste zadať objednávku na vyzdvihnutie",
+        "goLiveHint": "Keď budete spokojní, zapnite prepínač vyššie a začnite prijímať skutočné hovory."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "Všetci zákazníci",
@@ -6192,7 +6239,9 @@
       "trackingCta": "Zobraziť stav objednávky",
       "missedTitle": "Objednávka nebola prijatá včas",
       "missedBody": "Reštaurácia bohužiaľ nestihla vašu objednávku včas prijať, takže neprebehla. Ak ste platili online, prípadná autorizácia sa automaticky uvoľní — nič vám nebude účtované.",
-      "creditReturned": "Suma {amount} zaplatená pomocou {label} bola vrátená do vašej peňaženky."
+      "creditReturned": "Suma {amount} zaplatená pomocou {label} bola vrátená do vašej peňaženky.",
+      "cancelledPaymentIncompleteTitle": "Objednávka zrušená — platba nebola dokončená",
+      "cancelledPaymentIncompleteBody": "Platbu za túto objednávku sme včas nedostali, preto bola automaticky zrušená. Ak bola na vašej karte alebo PayPal vykonaná rezervácia sumy, bude uvoľnená — nič vám nebolo účtované. Novú objednávku môžete zadať kedykoľvek budete pripravení."
     },
     "orderRejected": {
       "subject": "Objednávka č. {orderNumber} odmietnutá",
@@ -6986,7 +7035,7 @@
       "cta": "Začať zadarmo",
       "ctaContact": "Kontaktovať obchodný tím",
       "trialNote": "Nevyžaduje sa platobná karta. Žiadne zmluvy.",
-      "phoneOrderingMinuteNote": "Účtované 0,60 USD/min s minimom 249,99 USD/mes. (≈ 416 zahrnutých minút). Podrobnosti na"
+      "phoneOrderingMinuteNote": "Váš plán US$249.99/mes. zahŕňa približne 499 minút hovorov; ďalší čas je účtovaný US$0.50/min po sekundách. Podrobnosti na"
     },
     "faq": {
       "title": "Často kladené otázky",
@@ -7138,7 +7187,7 @@
         "trust1": "Vytvorené pre pizzérie",
         "trust2": "Rovnaká pokladňa ako váš web",
         "trust3": "Nahrávky a prepisy",
-        "trust4": "US$0.60 za minútu hovoru",
+        "trust4": "US$0.50/min, účtované po sekundách",
         "sampleLabel": "Príklad živého hovoru",
         "sampleCaller": "Volajúci",
         "sample1": "Dobrý deň, môžem si objednať s dovozom?",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Jednoduché ceny",
         "title": "Jedna cena. Žiadne prekvapenia.",
-        "perMinute": "0,60 USD",
-        "perMinuteLabel": "za minútu hovoru",
+        "perMinute": "US$0.50",
+        "perMinuteLabel": "za minútu, účtované po sekundách",
         "minimum": "249,99 USD",
         "minimumLabel": "minimum mesačne",
-        "rule": "Platíte vyššiu čiastku: vaše minúty hovorov po 0,60 USD, alebo mesačné minimum 249,99 USD. Väčšina reštaurácií sa zmestí do 416 zahrnutých minút.",
+        "rule": "Váš mesačný plán US$249.99 zahŕňa približne 499 minút hovorov. Ak hovoríte viac, ďalší čas je účtovaný US$0.50 za minútu — po sekundách, bez zaokrúhľovania za hovor. Žiadna samostatná zmluva, žiadne skryté poplatky. Väčšina reštaurácií nikdy neprekročí zahrnuté minúty.",
         "demo": "Už platiaci člen Fee Free? Vyskúšajte Nabil zadarmo na 7 dní — bez záväzku.",
         "include1": "Neobmedzené hovory",
         "include2": "Nahrávky a prepisy",
@@ -7384,7 +7433,7 @@
         "q6": "Čo sa deje mimo otváracích hodín?",
         "a6": "Nabil pozná vaše otváracie hodiny a sviatky. Mimo prevádzkový čas informuje volajúceho o znovuotvorení a môže ponúknuť plánovanú objednávku, ak je funkcia povolená.",
         "q7": "Ako sa počíta fakturácia?",
-        "a7": "Platíte 0,60 USD za minútu hovoru alebo mesačné minimum 249,99 USD — čo je vyššie. Minimum zahŕňa asi 416 minút. Každý hovor sa zaokrúhľuje nahor. Sledujte spotrebu v reálnom čase.",
+        "a7": "Každý plán začína mesačným základom US$249.99, ktorý zahŕňa približne 499 minút hovorov. Ak v danom mesiaci hovoríte viac, ďalší čas je účtovaný US$0.50 za minútu — po sekundách, bez zaokrúhľovania za hovor. Spotrebu môžete sledovať v reálnom čase vo svojom paneli.",
         "q8": "Môžem zrušiť kedykoľvek?",
         "a8": "Áno. Nabil je fakturovaný mesačne cez Stripe bez dlhodobej zmluvy. Zrušte z panelu kedykoľvek a vaša linka zostane aktívna do konca fakturačného obdobia.",
         "q9": "Zdvihne niekedy hovor skutočný človek?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Zabezpečené cez Stripe. Vaše údaje o karte nikdy neukladáme.",
       "preparingPayment": "Pripravuje sa zabezpečená platba…",
       "couldNotStartPayment": "Platbu za túto objednávku sa nepodarilo spustiť. Vráťte sa späť a skúste to znova.",
-      "backToRestaurant": "Späť na reštauráciu"
+      "backToRestaurant": "Späť na reštauráciu",
+      "leaveConfirmTitle": "Odísť bez zaplatenia?",
+      "leaveConfirmBody": "Ak sa teraz vrátite, táto objednávka bude zrušená — nebude vám nič účtované.",
+      "leaveConfirmStay": "Pokračovať k platbe",
+      "leaveConfirmCancel": "Zrušiť moju objednávku",
+      "paymentInProgressWarning": "Vaša platba sa spracováva — túto stránku prosím nezatvárajte.",
+      "cancelUnpaidFailed": "Objednávku sa nepodarilo zrušiť. Skúste to prosím znova."
     },
     "paymentPage": {
       "loading": "Načítava sa…"

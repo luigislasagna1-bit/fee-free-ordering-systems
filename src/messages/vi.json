@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "Tạo pizza và combo bằng giọng nói",
         "buildPizzaComboHint": "Mặc định tắt. Khi bật, Nabil sẽ tự tạo pizza — kích cỡ, topping, kể cả pizza nửa vị này nửa vị kia — và điền các vị trí trong combo, thay vì chuyển người gọi đến nhân viên. Hãy đặt một đơn thử và kiểm tra phiếu in ra trước khi tin dùng tính năng này.",
         "offerDayDeals": "Chủ động giới thiệu ưu đãi hôm nay",
-        "offerDayDealsHint": "Mặc định tắt. Khi bật, nếu khách gọi đặt món mà hôm nay có ưu đãi rẻ hơn cùng kích cỡ, Nabil sẽ chủ động nhắc. Được lòng khách nhưng giảm lợi nhuận — bạn quyết định."
+        "offerDayDealsHint": "Mặc định tắt. Khi bật, nếu khách gọi đặt món mà hôm nay có ưu đãi rẻ hơn cùng kích cỡ, Nabil sẽ chủ động nhắc. Được lòng khách nhưng giảm lợi nhuận — bạn quyết định.",
+        "agentIdentity": "Tên trợ lý",
+        "agentName": "Trợ lý của bạn nên tự xưng là gì?",
+        "agentNameHint": "Được nói ra trong mỗi cuộc gọi khi người gọi hỏi tên. Để trống để dùng \"Nabil\". Điều này không đổi tên chính Nabil AI — chỉ đổi tên mà giọng nói tự xưng."
       },
       "apiErrors": {
         "featureLocked": "Gói của bạn chưa bao gồm trợ lý nhận đơn qua điện thoại.",
@@ -4616,7 +4619,10 @@
           "operational": "Vận hành",
           "deflection": "Chuyển hướng",
           "escalation": "Chuyển cấp xử lý"
-        }
+        },
+        "quickStartTemplate": "Mẫu khởi động nhanh",
+        "quickStartTitle": "Cho trợ lý của bạn biết về nhà hàng",
+        "quickStartBody": "Trả lời một vài câu hỏi thường gặp và chúng tôi sẽ biến chúng thành FAQ mà trợ lý của bạn có thể dùng trong cuộc gọi."
       },
       "links": {
         "title": "Liên kết SMS",
@@ -4683,14 +4689,55 @@
         "submit": "Gửi yêu cầu",
         "cancelEdit": "Hủy",
         "errorAlreadyProvisioned": "Đường dây của bạn đã được thiết lập — tải lại trang.",
-        "errorGeneric": "Đã xảy ra lỗi. Vui lòng thử lại."
+        "errorGeneric": "Đã xảy ra lỗi. Vui lòng thử lại.",
+        "agentNameLabel": "Đặt tên cho trợ lý của bạn",
+        "agentNameHint": "Đây là tên mà AI của bạn dùng khi trả lời điện thoại (vd. \"Xin chào, tôi là Sophia\"). Để trống để dùng \"Nabil\". Bạn có thể đổi sau trong Cài đặt.",
+        "summaryAgentName": "Tên trợ lý: {name}"
       },
       "nowAvailable": "Hiện đã có",
       "availableHeading": "Nabil AI đặt hàng qua điện thoại",
       "availablePrice": "{rate} mỗi phút gọi · tối thiểu {minimum}/tháng · bao gồm {included} phút",
       "availableConcierge": "Đội ngũ chúng tôi thiết lập đường dây trong một ngày làm việc. Không cần công việc kỹ thuật.",
       "availableDemo": "Đã là thành viên trả phí? Dùng thử miễn phí {days} ngày.",
-      "subscribeCta": "Đăng ký & thiết lập"
+      "subscribeCta": "Đăng ký & thiết lập",
+      "onboarding": {
+        "wizardTitle": "Thiết lập Nabil AI",
+        "wizardSubtitle": "Vài bước nhanh và trợ lý điện thoại AI của bạn sẽ sẵn sàng nhận cuộc gọi.",
+        "step1Label": "Đường dây & tên trợ lý",
+        "step2Label": "Thông tin nhà hàng",
+        "step3Label": "Kiểm tra & kích hoạt",
+        "step2Title": "Cho trợ lý của bạn biết về nhà hàng",
+        "step2Body": "Trả lời những gì bạn có thể — điều này sẽ trở thành FAQ của trợ lý. Bạn luôn có thể thêm sau.",
+        "dietarySectionTitle": "Tùy chọn ăn kiêng",
+        "dietarySectionHint": "Để trống nếu không áp dụng cho nhà hàng của bạn.",
+        "qHalal": "Bạn có món halal không?",
+        "qVegan": "Bạn có món thuần chay không?",
+        "qVegetarian": "Bạn có món chay không?",
+        "qGlutenFree": "Bạn có món không chứa gluten không?",
+        "yesNoPlaceholder": "vd. \"Có\" hoặc \"Rất tiếc là không\"",
+        "qAllergen": "Bạn có chính sách về dị ứng hoặc lây nhiễm chéo không?",
+        "qParking": "Bạn có chỗ đỗ xe không?",
+        "websiteLabel": "Trang web (tùy chọn)",
+        "qSpecialInfo": "Điều gì khác mà khách hàng thường hỏi về nhà hàng của bạn?",
+        "specialInfoPlaceholder": "vd. câu chuyện của bạn, món đặc trưng, chỗ ngồi, thân thiện với thú cưng...",
+        "hoursTitle": "Giờ mở cửa",
+        "hoursBody": "Trợ lý của bạn đã tự động đọc giờ mở cửa đã đăng của bạn.",
+        "hoursFixLink": "Sửa giờ mở cửa",
+        "qHoursException": "Có ngoại lệ nào về giờ mở cửa mà người gọi nên biết không?",
+        "hoursExceptionPlaceholder": "vd. \"chúng tôi đóng cửa sớm hơn vào Chủ nhật\"",
+        "orderingLinkTitle": "Liên kết đặt hàng trực tuyến",
+        "orderingLinkHint": "Đã được thiết lập — trợ lý của bạn có thể tự động nhắn liên kết này cho người gọi.",
+        "saving": "Đang lưu…",
+        "saveFaq": "Lưu",
+        "faqSaved": "Đã lưu",
+        "faqSaveError": "Đã xảy ra lỗi. Vui lòng thử lại.",
+        "goLiveTitle": "Sẵn sàng kiểm tra Nabil!",
+        "goLiveBody": "Đường dây của bạn đã hoạt động. Hãy gọi và hỏi {agentName} vài câu trước khi kích hoạt cho khách hàng thật.",
+        "goLiveTryHours": "Hỏi về giờ mở cửa",
+        "goLiveTryParking": "Hỏi về chỗ đỗ xe",
+        "goLiveTryOrder": "Thử đặt một đơn hàng mang đi",
+        "goLiveHint": "Khi bạn hài lòng, hãy bật công tắc phía trên để bắt đầu nhận cuộc gọi thật."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "Tất cả khách hàng",
@@ -6192,7 +6239,9 @@
       "trackingCta": "Xem trạng thái đơn hàng",
       "missedTitle": "Đơn hàng không được chấp nhận kịp thời",
       "missedBody": "Rất tiếc, nhà hàng không kịp chấp nhận đơn hàng của bạn nên đơn không được thực hiện. Nếu bạn thanh toán trực tuyến, mọi khoản tạm giữ sẽ tự động được giải phóng — bạn sẽ không bị trừ tiền.",
-      "creditReturned": "Số tiền {amount} bạn đã thanh toán bằng {label} đã được hoàn lại vào ví của bạn."
+      "creditReturned": "Số tiền {amount} bạn đã thanh toán bằng {label} đã được hoàn lại vào ví của bạn.",
+      "cancelledPaymentIncompleteTitle": "Đơn hàng đã bị hủy — thanh toán chưa hoàn tất",
+      "cancelledPaymentIncompleteBody": "Chúng tôi không nhận được thanh toán cho đơn hàng này kịp thời, vì vậy đơn hàng đã tự động bị hủy. Nếu có khoản tạm giữ trên thẻ hoặc PayPal của bạn, khoản đó sẽ được giải phóng — bạn chưa bị tính phí. Vui lòng đặt đơn hàng mới bất cứ khi nào bạn sẵn sàng."
     },
     "orderRejected": {
       "subject": "Đơn #{orderNumber} bị từ chối",
@@ -6986,7 +7035,7 @@
       "cta": "Bắt đầu miễn phí",
       "ctaContact": "Liên hệ sales",
       "trialNote": "Không cần thẻ tín dụng. Không hợp đồng.",
-      "phoneOrderingMinuteNote": "Tính phí 0,60 USD/phút, tối thiểu 249,99 USD/tháng (≈ 416 phút đã bao gồm). Chi tiết tại"
+      "phoneOrderingMinuteNote": "Gói US$249.99/tháng của bạn bao gồm khoảng 499 phút gọi; thời gian vượt quá được tính US$0.50/phút theo giây. Xem chi tiết tại"
     },
     "faq": {
       "title": "Câu hỏi thường gặp",
@@ -7138,7 +7187,7 @@
         "trust1": "Được xây dựng cho tiệm pizza",
         "trust2": "Cùng quy trình thanh toán với trang web",
         "trust3": "Bản ghi âm & bản ghi chép",
-        "trust4": "US$0.60 mỗi phút gọi",
+        "trust4": "US$0.50/phút, tính theo giây",
         "sampleLabel": "Ví dụ cuộc gọi thực",
         "sampleCaller": "Người gọi",
         "sample1": "Xin chào, tôi có thể đặt hàng giao tận nơi không?",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Giá đơn giản",
         "title": "Một giá. Không bất ngờ.",
-        "perMinute": "0,60 USD",
-        "perMinuteLabel": "mỗi phút gọi",
+        "perMinute": "US$0.50",
+        "perMinuteLabel": "mỗi phút, tính theo giây",
         "minimum": "249,99 USD",
         "minimumLabel": "tối thiểu mỗi tháng",
-        "rule": "Bạn trả mức cao hơn: phút gọi của bạn với giá 0,60 USD mỗi phút, hoặc mức tối thiểu hàng tháng 249,99 USD. Hầu hết nhà hàng nằm trong 416 phút bao gồm.",
+        "rule": "Gói hàng tháng US$249.99 của bạn bao gồm khoảng 499 phút gọi. Nếu gọi nhiều hơn, thời gian vượt quá được tính US$0.50 mỗi phút — theo giây, không làm tròn theo cuộc gọi. Không hợp đồng riêng, không phí bất ngờ. Hầu hết nhà hàng không bao giờ vượt quá số phút đã bao gồm.",
         "demo": "Đã là thành viên trả phí Fee Free? Dùng thử Nabil miễn phí 7 ngày — không ràng buộc.",
         "include1": "Cuộc gọi không giới hạn",
         "include2": "Bản ghi âm & bản ghi",
@@ -7384,7 +7433,7 @@
         "q6": "Điều gì xảy ra ngoài giờ?",
         "a6": "Nabil biết giờ mở cửa và lịch nghỉ lễ của bạn. Ngoài giờ, nó cho người gọi biết khi nào bạn mở lại và có thể đề nghị đặt hàng cho lần mở cửa tiếp theo nếu bật lịch hẹn.",
         "q7": "Hóa đơn được tính như thế nào?",
-        "a7": "Bạn trả 0,60 USD mỗi phút gọi hoặc tối thiểu hàng tháng 249,99 USD — tùy mức nào cao hơn. Mức tối thiểu bao gồm khoảng 416 phút. Mỗi cuộc gọi được làm tròn lên. Theo dõi sử dụng theo thời gian thực.",
+        "a7": "Mỗi gói bắt đầu với mức phí cơ bản hàng tháng US$249.99, bao gồm khoảng 499 phút gọi. Vượt quá đó, thời gian phát sinh được tính US$0.50 mỗi phút — theo giây, không làm tròn theo cuộc gọi. Bạn có thể theo dõi mức sử dụng theo thời gian thực trên trang tổng quan.",
         "q8": "Tôi có thể hủy bất cứ lúc nào không?",
         "a8": "Có. Nabil được thanh toán hàng tháng qua Stripe không có hợp đồng dài hạn. Hủy từ bảng điều khiển bất cứ lúc nào và đường dây của bạn vẫn hoạt động cho đến cuối kỳ thanh toán.",
         "q9": "Có bao giờ một người thật trả lời không?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Bảo mật bởi Stripe. Chúng tôi không lưu thông tin thẻ của bạn.",
       "preparingPayment": "Đang chuẩn bị thanh toán an toàn…",
       "couldNotStartPayment": "Chúng tôi không thể bắt đầu thanh toán cho đơn hàng này. Vui lòng quay lại và thử lại.",
-      "backToRestaurant": "Quay lại nhà hàng"
+      "backToRestaurant": "Quay lại nhà hàng",
+      "leaveConfirmTitle": "Rời đi mà không thanh toán?",
+      "leaveConfirmBody": "Nếu bạn quay lại bây giờ, đơn hàng này sẽ bị hủy — bạn sẽ không bị tính phí.",
+      "leaveConfirmStay": "Tiếp tục thanh toán",
+      "leaveConfirmCancel": "Hủy đơn hàng của tôi",
+      "paymentInProgressWarning": "Khoản thanh toán của bạn đang được xử lý — vui lòng không đóng trang này.",
+      "cancelUnpaidFailed": "Không thể hủy đơn hàng. Vui lòng thử lại."
     },
     "paymentPage": {
       "loading": "Đang tải…"

@@ -30,7 +30,8 @@ export type CompetitorCategory =
   | "delivery_aggregator"    // takes 30% (UberEats, DoorDash, Skip, Foodpanda)
   | "pos_first"              // POS with ordering bolted on (Toast, Square)
   | "website_builder"        // builders with restaurant module (Wix Restaurants)
-  | "reservations";          // reservations-focused (OpenTable, Resy)
+  | "reservations"           // reservations-focused (OpenTable, Resy)
+  | "ai_phone_agent";        // AI phone-answering agents for restaurants (Loman AI, Certus AI)
 
 export type Competitor = {
   slug: string;
@@ -1157,6 +1158,110 @@ export const COMPETITORS: Competitor[] = [
       { q: "How much does Town (town.club) cost?", a: "Town is sold at a flat $300/mo through a demo — it has no published pricing page — and its own competitor compare table lists a $500 setup fee while its blog says there are no setup fees. Fee Free Ordering's core is free with your first 100 orders/month free and all pricing public at /pricing." },
       { q: "Is there a Town alternative with public pricing and no demo?", a: "Yes — Fee Free Ordering. Pricing is fully public at /pricing, you can paste your menu and go live in minutes with no demo call, the core is free, and you get true white-label on your own domain instead of a town.club subdomain." },
       { q: "What does Fee Free Ordering do that Town doesn't?", a: "A native Kitchen Order App that rings even with the phone locked, missed-order phone call and WiFi thermal printing; 38 languages versus English-only; true white-label versus town.club subdomains; and deeper promotions, Reward Dollars loyalty and reserve-then-order — all on public pricing." },
+    ],
+  },
+  {
+    slug: "loman-ai",
+    name: "Loman AI",
+    brandColor: "#0F172A",
+    category: "ai_phone_agent",
+    tagline: "Loman AI alternative",
+    costSummary: "Loman AI's own pricing page (loman.ai/pricing) lists two tiers, \"Starter\" and \"Premium\", with no dollar figures — both are gated behind a \"Contact Us\" quote as of 2026-08-18. A Loman blog post separately cites plans \"starting at $199/month,\" but that figure isn't confirmed on their live rate card. Loman states it charges \"no per-minute fees,\" so its real cost in a busy month is whatever the sales team quotes.",
+    whatTheyAre: "Loman AI is a US voice AI phone agent for restaurants that answers calls, takes pickup/delivery orders and phone payments, books reservations, and syncs orders to the restaurant's POS.",
+    notice: {
+      text: "Loman AI's pricing page shows no rates — both tiers require a sales call. A company blog post cites a starting figure of $199/month, unconfirmed on their current rate card as of 2026-08-18.",
+      href: "/nabil-ai",
+      linkLabel: "See Nabil AI's public per-minute pricing instead",
+    },
+    pricingTable: {
+      rows: [
+        { label: "Setup fee", feefree: "$0", competitor: "Not published — a third-party listing cites ~$149, unconfirmed on Loman's own site" },
+        { label: "Monthly cost", feefree: "US$249.99/mo minimum, published at /nabil-ai", competitor: "Not published — \"Contact Us\" for both tiers; a Loman blog post cites \"starting at $199/mo,\" unconfirmed on the current rate card" },
+        { label: "Per-minute / usage charge", feefree: "US$0.50/min (billed by the second) after ~499 included minutes", competitor: "Loman states \"no per-minute fees\" — any usage-based cost is quote-only" },
+        { label: "Hidden / customer-side fees", feefree: "None", competitor: "None claimed" },
+        { label: "Contract / commitment", feefree: "None — cancel anytime", competitor: "Sales-quoted; confirm term" },
+        { label: "Free to try (no demo call)", feefree: "Yes — 7-day free demo for paying Fee Free members, no sales call to see the price", competitor: "No — every price requires \"Contact Us\"" },
+      ],
+      footnote: "Loman AI publishes no pricing figures on its own pricing page as of 2026-08-18; the $199/mo figure comes from a Loman blog post, not their rate card. Our numbers are public at /nabil-ai.",
+    },
+    whyFeeFree: [
+      { title: "Published pricing vs. a sales-quote funnel",
+        body: "Nabil AI's exact rate — US$249.99/month minimum, US$0.50/min billed by the second after about 499 included minutes — is public at /nabil-ai with no demo required to see it. Loman AI's pricing page gates both of its tiers behind \"Contact Us.\"" },
+      { title: "Built by pizzeria owners, not just engineers",
+        body: "Nabil AI comes out of Fee Free Ordering's own kitchen and delivery-ops experience — half-and-half pizzas, toppings by name, combos and delivery zones are core cases, not add-ons. It runs through the same checkout your website already uses, so the kitchen sees one order stream." },
+      { title: "One order pipeline, not a separate POS sync",
+        body: "Phone orders from Nabil AI go through the exact online-ordering checkout your restaurant already uses — same kitchen display, same printer, same reports. Loman AI syncs into your POS as a separate integration, which is one more system that can drift out of step." },
+      { title: "Every call recorded, transcribed, and timelined",
+        body: "Every Nabil AI call gets a recording, a full transcript and a per-call timeline you can review from your dashboard, with a one-click \"Report\" button if something sounds off." },
+      { title: "Where Loman AI is genuinely strong",
+        body: "Loman AI has real venture backing (~$4.1M raised) and a wider named POS integration list — Toast, SpotOn, OpenTable, Resy, Clover, Shift4, Square, Aloha, Olo and Stream — which matters if your restaurant already runs on one of those systems and needs a certified two-way sync rather than a shared checkout. If deep third-party POS integration outweighs seeing the exact price up front, that's a real trade-off worth weighing." },
+    ],
+    comparison: [
+      { feature: "Published pricing", feefree: "Yes — public at /nabil-ai", competitor: "No — \"Contact Us\" for every tier" },
+      { feature: "Per-minute rate disclosed", feefree: "Yes — US$0.50/min (per second) after ~499 included minutes", competitor: "Not disclosed; site claims \"no per-minute fees\"" },
+      { feature: "Free trial without a sales call", feefree: "Yes — 7-day demo for paying members", competitor: "No — demo requires booking a call" },
+      { feature: "Same checkout as your website", feefree: "Yes — one order pipeline", competitor: "Separate POS sync integration" },
+      { feature: "Half-and-half pizza handling", feefree: "Yes — core feature, confirmed by read-back", competitor: "Not specifically documented" },
+      { feature: "Call recordings + transcripts + timeline", feefree: "Yes, every call", competitor: "Live transcripts/analytics claimed" },
+      { feature: "Named POS integrations", feefree: "Runs through Fee Free's own checkout", competitor: "Toast, SpotOn, OpenTable, Resy, Clover, Shift4, Square, Aloha, Olo, Stream" },
+      { feature: "Contract / commitment", feefree: "None — cancel anytime", competitor: "Sales-quoted; confirm term" },
+    ],
+    faqs: [
+      { q: "How much does Loman AI cost?", a: "Loman AI does not publish pricing — both its \"Starter\" and \"Premium\" tiers require a \"Contact Us\" quote as of 2026-08-18. A company blog post separately cites plans \"starting at $199/month,\" unconfirmed on their live rate card. Nabil AI publishes its exact rate — US$249.99/month minimum, US$0.50/min billed by the second after about 499 included minutes — at /nabil-ai." },
+      { q: "Is there a Loman AI alternative with public pricing?", a: "Yes — Nabil AI from Fee Free Ordering. The exact per-minute rate and monthly minimum are public at /nabil-ai, with no sales call required to see them, and a 7-day free demo for restaurants already on a paid Fee Free add-on." },
+      { q: "Does Nabil AI integrate with my POS like Loman AI does?", a: "Nabil AI takes orders through the same online-ordering checkout your restaurant's website already uses, rather than syncing into a separate POS. Loman AI lists integrations with Toast, SpotOn, OpenTable, Resy, Clover, Shift4, Square, Aloha, Olo and Stream — worth checking if you need a certified sync into one of those specific systems." },
+    ],
+  },
+  {
+    slug: "certus-ai",
+    name: "Certus AI",
+    brandColor: "#1D4ED8",
+    category: "ai_phone_agent",
+    tagline: "Certus AI alternative",
+    costSummary: "Certus AI (a 2025 Y Combinator company) publishes no pricing anywhere on its site — there is no /pricing page as of 2026-08-18, and every call to action leads to a \"Book a Demo\" form. The dollar figures on their site (claimed customer savings of \"$9,051/month\" or \"$15,000–$25,000 in additional annual revenue\") describe outcomes Certus says its customers saw, not what Certus itself charges.",
+    whatTheyAre: "Certus AI is a US voice AI phone agent for restaurants, launched out of Y Combinator's Summer 2025 batch, that answers calls 24/7, takes orders directly into a POS, and handles reservations and complaints.",
+    notice: {
+      text: "Certus AI publishes no pricing at all — no plans, no starting price, no per-minute rate. Every price is demo-gated as of 2026-08-18.",
+      href: "/nabil-ai",
+      linkLabel: "See Nabil AI's public per-minute pricing instead",
+    },
+    pricingTable: {
+      rows: [
+        { label: "Setup fee", feefree: "$0", competitor: "Not published" },
+        { label: "Monthly cost", feefree: "US$249.99/mo minimum, published at /nabil-ai", competitor: "Not published — demo required" },
+        { label: "Per-minute / usage charge", feefree: "US$0.50/min (billed by the second) after ~499 included minutes", competitor: "Not published — one unverified blog snippet mentions a possible flat-rate model, not confirmed on their own site" },
+        { label: "Hidden / customer-side fees", feefree: "None", competitor: "Not published" },
+        { label: "Contract / commitment", feefree: "None — cancel anytime", competitor: "Not published; confirm at demo" },
+        { label: "Free to try (no demo call)", feefree: "Yes — 7-day free demo for paying Fee Free members, no sales call to see the price", competitor: "No — every interaction starts with \"Book a Demo\"" },
+      ],
+      footnote: "Certus AI has no public pricing page as of 2026-08-18 — checked directly on certus-ai.com. Our numbers are public at /nabil-ai.",
+    },
+    whyFeeFree: [
+      { title: "A real price you can read, not a demo you have to book",
+        body: "Nabil AI's rate is public at /nabil-ai: US$249.99/month minimum, US$0.50/min billed by the second after about 499 included minutes. Certus AI shows no numbers anywhere on its site — every path leads to \"Book a Demo.\"" },
+      { title: "One order pipeline, from phone to kitchen",
+        body: "A Nabil AI order goes straight through the same checkout your website already uses — the same kitchen display, the same printer, the same reports. No separate system to reconcile." },
+      { title: "Built specifically for pizza and independent restaurants",
+        body: "Half-and-half pizzas, toppings by name, combos and delivery zones are handled as core cases, built by a team with real pizzeria-ownership experience — not retrofitted onto a general restaurant-AI product." },
+      { title: "A track record you can verify",
+        body: "Fee Free Ordering is an established, live ordering platform with public pricing and real restaurants on it today. Certus AI is one Y Combinator batch old (Summer 2025), with testimonials on its own site but no independently verifiable case studies yet." },
+      { title: "Where Certus AI is genuinely worth a look",
+        body: "Certus AI claims broader complaint-handling and multi-language accent support (English, Spanish, and others) plus direct delivery-platform integrations (UberEats, DoorDash) alongside POS integrations (Toast, Square, Clover, SkyTab). If those specific integrations matter more to you than seeing an exact price up front, it's worth a demo to compare." },
+    ],
+    comparison: [
+      { feature: "Published pricing", feefree: "Yes — public at /nabil-ai", competitor: "No pricing published anywhere" },
+      { feature: "Per-minute rate disclosed", feefree: "Yes — US$0.50/min (per second) after ~499 included minutes", competitor: "Not disclosed" },
+      { feature: "Free trial without a sales call", feefree: "Yes — 7-day demo for paying members", competitor: "No — every CTA is \"Book a Demo\"" },
+      { feature: "Same checkout as your website", feefree: "Yes — one order pipeline", competitor: "Separate POS integration" },
+      { feature: "Half-and-half pizza handling", feefree: "Yes — core feature, confirmed by read-back", competitor: "Not specifically documented" },
+      { feature: "Call recordings + transcripts + timeline", feefree: "Yes, every call", competitor: "Not documented on their site" },
+      { feature: "Named POS / delivery integrations", feefree: "Runs through Fee Free's own checkout", competitor: "Toast, Square, Clover, SkyTab; UberEats, DoorDash mentioned" },
+      { feature: "Company track record", feefree: "Live platform, public pricing today", competitor: "Y Combinator S25 — one batch old as of 2026" },
+    ],
+    faqs: [
+      { q: "How much does Certus AI cost?", a: "Certus AI publishes no pricing anywhere on its site as of 2026-08-18 — there's no pricing page, and every call to action leads to a demo booking. Nabil AI publishes its exact rate — US$249.99/month minimum, US$0.50/min billed by the second after about 499 included minutes — at /nabil-ai." },
+      { q: "Is there a Certus AI alternative with public pricing?", a: "Yes — Nabil AI from Fee Free Ordering. The exact per-minute rate and monthly minimum are public at /nabil-ai with no demo required to see them, plus a 7-day free demo for restaurants already on a paid Fee Free add-on." },
+      { q: "Is Certus AI a real, established product?", a: "Certus AI launched out of Y Combinator's Summer 2025 batch, so as of 2026 it's roughly one batch old with on-site testimonials but no independently verifiable case studies yet. Fee Free Ordering and Nabil AI are a live, public-pricing platform already running for real restaurants." },
     ],
   },
 ];

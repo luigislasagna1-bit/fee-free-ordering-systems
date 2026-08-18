@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "Construiește pizza și combo-uri prin voce",
         "buildPizzaComboHint": "Dezactivat implicit. Când este activ, Nabil construiește pizza — mărimi, toppinguri, chiar și jumătate-jumătate — și completează sloturile de combo, în loc să transfere apelantul unei persoane. Plasează o comandă de test și verifică bonul tipărit înainte să te bazezi pe această funcție.",
         "offerDayDeals": "Propune ofertele de azi din proprie inițiativă",
-        "offerDayDealsHint": "Dezactivat implicit. Când e activ și apelantul comandă ceva ce are azi o ofertă mai ieftină la aceeași mărime, Nabil o menționează singur. Câștigă simpatie și costă marjă — decizia vă aparține."
+        "offerDayDealsHint": "Dezactivat implicit. Când e activ și apelantul comandă ceva ce are azi o ofertă mai ieftină la aceeași mărime, Nabil o menționează singur. Câștigă simpatie și costă marjă — decizia vă aparține.",
+        "agentIdentity": "Nume agent",
+        "agentName": "Cum ar trebui să se numească agentul dvs.?",
+        "agentNameHint": "Rostit la fiecare apel când i se cere numele. Lăsați gol pentru a folosi „Nabil\". Aceasta nu redenumește Nabil AI în sine — doar cum se numește vocea."
       },
       "apiErrors": {
         "featureLocked": "Planul dumneavoastră nu include încă agentul de comenzi telefonice.",
@@ -4616,7 +4619,10 @@
           "operational": "Operațiuni",
           "deflection": "Redirecționări",
           "escalation": "Escaladare"
-        }
+        },
+        "quickStartTemplate": "Șablon de pornire rapidă",
+        "quickStartTitle": "Spuneți agentului despre restaurantul dvs.",
+        "quickStartBody": "Răspundeți la câteva întrebări frecvente și le vom transforma în întrebări frecvente pe care agentul le poate folosi în apeluri."
       },
       "links": {
         "title": "Linkuri prin SMS",
@@ -4683,14 +4689,55 @@
         "submit": "Trimite cererea",
         "cancelEdit": "Anulează",
         "errorAlreadyProvisioned": "Linia dvs. este deja configurată — reîmprospătați pagina.",
-        "errorGeneric": "Ceva nu a mers. Încercați din nou."
+        "errorGeneric": "Ceva nu a mers. Încercați din nou.",
+        "agentNameLabel": "Dați un nume agentului dvs.",
+        "agentNameHint": "Acesta este numele cu care IA răspunde la telefon (ex. „Bună, sunt Sophia\"). Lăsați gol pentru a folosi „Nabil\". Îl puteți schimba ulterior din Setări.",
+        "summaryAgentName": "Nume agent: {name}"
       },
       "nowAvailable": "Disponibil acum",
       "availableHeading": "Comenzi telefonice Nabil AI",
       "availablePrice": "{rate} pe minut de apel · {minimum}/lună minim · {included} minute incluse",
       "availableConcierge": "Echipa noastră configurează linia dvs. într-o zi lucrătoare. Fără intervenție tehnică din partea dvs.",
       "availableDemo": "Deja membru plătitor? Încercați gratuit {days} zile.",
-      "subscribeCta": "Abonare și configurare"
+      "subscribeCta": "Abonare și configurare",
+      "onboarding": {
+        "wizardTitle": "Configurați Nabil AI",
+        "wizardSubtitle": "Câțiva pași rapizi și agentul dvs. telefonic cu IA va fi gata să preia apeluri.",
+        "step1Label": "Linie și nume agent",
+        "step2Label": "Informații restaurant",
+        "step3Label": "Testați și activați",
+        "step2Title": "Spuneți agentului despre restaurantul dvs.",
+        "step2Body": "Răspundeți la ce puteți — acestea devin întrebările frecvente ale agentului. Puteți adăuga oricând mai multe ulterior.",
+        "dietarySectionTitle": "Opțiuni alimentare",
+        "dietarySectionHint": "Lăsați goale câmpurile care nu se aplică restaurantului dvs.",
+        "qHalal": "Aveți opțiuni halal?",
+        "qVegan": "Aveți opțiuni vegane?",
+        "qVegetarian": "Aveți opțiuni vegetariene?",
+        "qGlutenFree": "Aveți opțiuni fără gluten?",
+        "yesNoPlaceholder": "ex. „Da\" sau „Nu, ne pare rău\"",
+        "qAllergen": "Aveți o politică privind alergenii sau contaminarea încrucișată?",
+        "qParking": "Aveți parcare?",
+        "websiteLabel": "Website (opțional)",
+        "qSpecialInfo": "Altceva ce întreabă des clienții despre restaurantul dvs.?",
+        "specialInfoPlaceholder": "ex. povestea dvs., preparate semnătură, locuri la masă, acceptă animale...",
+        "hoursTitle": "Program",
+        "hoursBody": "Agentul dvs. citește deja automat programul publicat.",
+        "hoursFixLink": "Corectați programul",
+        "qHoursException": "Excepții de la programul dvs. pe care apelanții ar trebui să le știe?",
+        "hoursExceptionPlaceholder": "ex. „duminica închidem mai devreme\"",
+        "orderingLinkTitle": "Link de comandă online",
+        "orderingLinkHint": "Deja configurat — agentul dvs. îl poate trimite automat prin SMS apelanților.",
+        "saving": "Se salvează…",
+        "saveFaq": "Salvați",
+        "faqSaved": "Salvat",
+        "faqSaveError": "Ceva nu a funcționat. Vă rugăm încercați din nou.",
+        "goLiveTitle": "Gata să testați Nabil!",
+        "goLiveBody": "Linia dvs. este activă. Sunați și puneți-i câteva întrebări lui {agentName} înainte de a-l activa pentru clienți reali.",
+        "goLiveTryHours": "Întrebați despre program",
+        "goLiveTryParking": "Întrebați despre parcare",
+        "goLiveTryOrder": "Încercați să plasați o comandă pentru ridicare",
+        "goLiveHint": "Când sunteți mulțumit, activați comutatorul de mai sus pentru a prelua apeluri reale."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "Toți clienții",
@@ -6192,7 +6239,9 @@
       "trackingCta": "Vezi statusul comenzii",
       "missedTitle": "Comandă neacceptată la timp",
       "missedBody": "Din păcate, restaurantul nu a putut accepta comanda la timp, așa că nu a fost procesată. Dacă ați plătit online, orice autorizare este eliberată automat — nu veți fi taxat.",
-      "creditReturned": "Suma de {amount} plătită cu {label} a fost returnată în portofelul tău."
+      "creditReturned": "Suma de {amount} plătită cu {label} a fost returnată în portofelul tău.",
+      "cancelledPaymentIncompleteTitle": "Comandă anulată — plata nu a fost finalizată",
+      "cancelledPaymentIncompleteBody": "Nu am primit plata pentru această comandă la timp, așa că a fost anulată automat. Dacă a existat o rezervare pe cardul tău sau PayPal, aceasta va fi eliberată — nu ai fost taxat cu nimic. Poți plasa o comandă nouă oricând ești pregătit."
     },
     "orderRejected": {
       "subject": "Comanda #{orderNumber} respinsă",
@@ -6986,7 +7035,7 @@
       "cta": "Începe gratuit",
       "ctaContact": "Contactează vânzări",
       "trialNote": "Nu e necesar un card de credit. Fără contracte.",
-      "phoneOrderingMinuteNote": "Facturat la 0,60 USD/min cu un minim de 249,99 USD/luna (≈ 416 minute incluse). Detalii pe"
+      "phoneOrderingMinuteNote": "Planul dumneavoastră de US$249.99/lună include aproximativ 499 minute de apel; timpul suplimentar este facturat la US$0.50/min pe secundă. Detalii pe"
     },
     "faq": {
       "title": "Întrebări frecvente",
@@ -7138,7 +7187,7 @@
         "trust1": "Creat pentru pizzerii",
         "trust2": "Același checkout ca site-ul tău",
         "trust3": "Înregistrări și transcrieri",
-        "trust4": "US$0.60 pe minut de apel",
+        "trust4": "US$0.50/min, facturat pe secundă",
         "sampleLabel": "Exemplu de apel în direct",
         "sampleCaller": "Apelant",
         "sample1": "Bună, pot plasa o comandă pentru livrare?",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Preturi simple",
         "title": "Un pret. Fara surprize.",
-        "perMinute": "0,60 USD",
-        "perMinuteLabel": "pe minut de apel",
+        "perMinute": "US$0.50",
+        "perMinuteLabel": "pe minut, facturat pe secundă",
         "minimum": "249,99 USD",
         "minimumLabel": "minim pe luna",
-        "rule": "Platiti suma mai mare: minutele de apel la 0,60 USD fiecare, sau minimul lunar de 249,99 USD. Majoritatea restaurantelor raman in cele 416 minute incluse.",
+        "rule": "Planul dumneavoastră lunar de US$249.99 include aproximativ 499 minute de apel. Dacă depășiți această limită, timpul suplimentar este facturat la US$0.50 pe minut — pe secundă, fără rotunjire per apel. Fără contract separat, fără taxe surpriză. Majoritatea restaurantelor nu depășesc niciodată minutele incluse.",
         "demo": "Deja membru platitor Fee Free? Incercati Nabil gratuit timp de 7 zile — fara angajament.",
         "include1": "Apeluri nelimitate",
         "include2": "Inregistrari si transcrieri",
@@ -7384,7 +7433,7 @@
         "q6": "Ce se intampla in afara orelor?",
         "a6": "Nabil cunoaste programul si sarbatorile. In afara orelor, informeaza apelantul cand redeschideti si poate oferi o comanda programata daca este activat.",
         "q7": "Cum se calculeaza facturarea?",
-        "a7": "Platiti 0,60 USD pe minut sau minimul lunar de 249,99 USD, suma mai mare. Minimul include aproximativ 416 minute. Fiecare apel se rotunjeste in sus. Urmariti utilizarea in timp real.",
+        "a7": "Fiecare plan începe cu o bază lunară de US$249.99 care include aproximativ 499 minute de apel. Dincolo de aceasta, timpul suplimentar este facturat la US$0.50 pe minut — pe secundă, fără rotunjire per apel. Puteți urmări utilizarea în timp real din tabloul de bord.",
         "q8": "Pot anula oricand?",
         "a8": "Da. Nabil este facturat lunar prin Stripe fara contract pe termen lung. Anulati din tabloul de bord si linia ramane activa pana la sfarsitul perioadei de facturare.",
         "q9": "Răspunde vreodată o persoană reală?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Securizat de Stripe. Nu stocăm niciodată datele cardului tău.",
       "preparingPayment": "Se pregătește plata securizată…",
       "couldNotStartPayment": "Nu am putut iniția plata pentru această comandă. Întoarce-te și încearcă din nou.",
-      "backToRestaurant": "Înapoi la restaurant"
+      "backToRestaurant": "Înapoi la restaurant",
+      "leaveConfirmTitle": "Pleci fără să plătești?",
+      "leaveConfirmBody": "Dacă revii acum, această comandă va fi anulată — nu vei fi taxat cu nimic.",
+      "leaveConfirmStay": "Continuă plata",
+      "leaveConfirmCancel": "Anulează comanda mea",
+      "paymentInProgressWarning": "Plata ta este în curs de procesare — te rugăm să nu închizi această pagină.",
+      "cancelUnpaidFailed": "Comanda nu a putut fi anulată. Te rugăm să încerci din nou."
     },
     "paymentPage": {
       "loading": "Se încarcă…"

@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "Pizzák és kombók összeállítása telefonon",
         "buildPizzaComboHint": "Alapértelmezetten kikapcsolva. Bekapcsolva a Nabil maga állítja össze a pizzákat — méret, feltétek, akár Fél & Fél is —, és kitölti a kombó helyeit, ahelyett, hogy munkatársnak adná át a hívót. Adjon le egy tesztrendelést, és ellenőrizze a kinyomtatott nyugtát, mielőtt élesben használná.",
         "offerDayDeals": "Ajánlja fel a mai akciókat magától",
-        "offerDayDealsHint": "Alapból kikapcsolva. Ha be van kapcsolva, és a hívó olyat rendel, amire ma ugyanabban a méretben olcsóbb ajánlat fut, Nabil magától szól. Jóindulatot szerez és árrésbe kerül — az Ön döntése."
+        "offerDayDealsHint": "Alapból kikapcsolva. Ha be van kapcsolva, és a hívó olyat rendel, amire ma ugyanabban a méretben olcsóbb ajánlat fut, Nabil magától szól. Jóindulatot szerez és árrésbe kerül — az Ön döntése.",
+        "agentIdentity": "Ügynök neve",
+        "agentName": "Hogyan nevezze magát az ügynöke?",
+        "agentNameHint": "Minden híváskor elhangzik, amikor a hívó a nevét kérdezi. Hagyja üresen a \"Nabil\" használatához. Ez nem nevezi át magát a Nabil AI-t — csak azt, hogy a hang minek nevezi magát."
       },
       "apiErrors": {
         "featureLocked": "Az Ön csomagja még nem tartalmazza a telefonos rendelésfelvevő asszisztenst.",
@@ -4616,7 +4619,10 @@
           "operational": "Működés",
           "deflection": "Átirányítások",
           "escalation": "Eszkaláció"
-        }
+        },
+        "quickStartTemplate": "Gyorsindítási sablon",
+        "quickStartTitle": "Mesélje el ügynökének éttermét",
+        "quickStartBody": "Válaszoljon néhány gyakori kérdésre, és GYIK-ké alakítjuk őket, amelyeket ügynöke használhat hívások során."
       },
       "links": {
         "title": "SMS-linkek",
@@ -4683,14 +4689,55 @@
         "submit": "Kérés küldése",
         "cancelEdit": "Mégse",
         "errorAlreadyProvisioned": "Vonala már be van állítva — frissítse az oldalt.",
-        "errorGeneric": "Hiba történt. Próbálja újra."
+        "errorGeneric": "Hiba történt. Próbálja újra.",
+        "agentNameLabel": "Adjon nevet ügynökének",
+        "agentNameHint": "Ez az a név, amellyel az AI telefonon válaszol (pl. \"Üdvözlöm, itt Sophia\"). Hagyja üresen a \"Nabil\" használatához. Később megváltoztathatja a Beállításokban.",
+        "summaryAgentName": "Ügynök neve: {name}"
       },
       "nowAvailable": "Már elérhető",
       "availableHeading": "Nabil AI telefonos rendelés",
       "availablePrice": "{rate} híváspercenként · {minimum}/hó minimum · {included} perc benne",
       "availableConcierge": "Csapatunk egy munkanapon belül beállítja vonalát. Nem igényel technikai munkát az Ön részéről.",
       "availableDemo": "Már fizető tag? Próbálja ki ingyen {days} napig.",
-      "subscribeCta": "Előfizetés és beállítás"
+      "subscribeCta": "Előfizetés és beállítás",
+      "onboarding": {
+        "wizardTitle": "Nabil AI beállítása",
+        "wizardSubtitle": "Néhány gyors lépés, és AI telefonos ügynöke készen áll a hívások fogadására.",
+        "step1Label": "Vonal és ügynök neve",
+        "step2Label": "Étterem adatai",
+        "step3Label": "Tesztelés és élesítés",
+        "step2Title": "Mesélje el ügynökének éttermét",
+        "step2Body": "Válaszoljon, amennyire tud — ez lesz ügynöke GYIK-je. Később mindig hozzáadhat többet.",
+        "dietarySectionTitle": "Diétás lehetőségek",
+        "dietarySectionHint": "Hagyja üresen, ha nem vonatkoznak az éttermére.",
+        "qHalal": "Van halal lehetőségük?",
+        "qVegan": "Van vegán lehetőségük?",
+        "qVegetarian": "Van vegetáriánus lehetőségük?",
+        "qGlutenFree": "Van gluténmentes lehetőségük?",
+        "yesNoPlaceholder": "pl. \"Igen\" vagy \"Nem, sajnos\"",
+        "qAllergen": "Van allergén vagy keresztszennyeződési politikájuk?",
+        "qParking": "Van parkolójuk?",
+        "websiteLabel": "Weboldal (opcionális)",
+        "qSpecialInfo": "Van még valami, amit a vendégek gyakran kérdeznek az étteremről?",
+        "specialInfoPlaceholder": "pl. története, jellegzetes ételei, ülőhelyek, kisállatbarát...",
+        "hoursTitle": "Nyitvatartás",
+        "hoursBody": "Ügynöke már automatikusan beolvassa a közzétett nyitvatartását.",
+        "hoursFixLink": "Nyitvatartás javítása",
+        "qHoursException": "Kivételek a nyitvatartásban, amelyeket a hívóknak tudniuk kellene?",
+        "hoursExceptionPlaceholder": "pl. \"vasárnaponként korábban zárunk\"",
+        "orderingLinkTitle": "Online rendelési link",
+        "orderingLinkHint": "Már beállítva — ügynöke automatikusan elküldheti SMS-ben a hívóknak.",
+        "saving": "Mentés…",
+        "saveFaq": "Mentés",
+        "faqSaved": "Mentve",
+        "faqSaveError": "Valami hiba történt. Kérjük, próbálja újra.",
+        "goLiveTitle": "Készen áll a Nabil tesztelésére!",
+        "goLiveBody": "Vonala él. Hívja fel, és tegyen fel néhány kérdést {agentName}-nak, mielőtt aktiválja valódi ügyfelek számára.",
+        "goLiveTryHours": "Kérdezzen rá a nyitvatartásra",
+        "goLiveTryParking": "Kérdezzen rá a parkolásra",
+        "goLiveTryOrder": "Próbáljon meg elvitelre rendelni",
+        "goLiveHint": "Ha elégedett, kapcsolja be a fenti kapcsolót, hogy valódi hívásokat fogadjon."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "Minden vásárló",
@@ -6192,7 +6239,9 @@
       "trackingCta": "Rendelés állapotának megtekintése",
       "missedTitle": "A rendelést nem fogadták el időben",
       "missedBody": "Sajnos az étterem nem tudta időben elfogadni a rendelését, így az nem valósult meg. Ha online fizetett, az esetleges zárolás automatikusan feloldódik — nem terheljük meg.",
-      "creditReturned": "A {label} egyenlegből fizetett {amount} összeg visszakerült a tárcájába."
+      "creditReturned": "A {label} egyenlegből fizetett {amount} összeg visszakerült a tárcájába.",
+      "cancelledPaymentIncompleteTitle": "Rendelés törölve — a fizetés nem fejeződött be",
+      "cancelledPaymentIncompleteBody": "Nem érkezett meg időben a fizetés ehhez a rendeléshez, ezért automatikusan törlésre került. Ha a kártyádon vagy PayPal fiókodon zárolás történt, az feloldásra kerül — nem terheltünk semmit. Bármikor leadhatsz új rendelést."
     },
     "orderRejected": {
       "subject": "#{orderNumber}. rendelés visszautasítva",
@@ -6986,7 +7035,7 @@
       "cta": "Ingyenes kezdés",
       "ctaContact": "Értékesítési kapcsolat",
       "trialNote": "Nem szükséges bankkártya. Nincs szerződés.",
-      "phoneOrderingMinuteNote": "Díja 0,60 USD/perc, minimum 249,99 USD/hó (≈ 416 perc benne). Részletek:"
+      "phoneOrderingMinuteNote": "Az Ön havi US$249.99 csomagja körülbelül 499 híváspercet tartalmaz; a további percek díja US$0.50 percenként, másodpercre számlázva. Részletek:"
     },
     "faq": {
       "title": "Gyakran ismételt kérdések",
@@ -7138,7 +7187,7 @@
         "trust1": "Pizzériáknak készült",
         "trust2": "Ugyanaz a fizetés, mint a weboldalon",
         "trust3": "Felvételek és leiratok",
-        "trust4": "US$0.60 híváspercenként",
+        "trust4": "US$0.50/perc, másodpercre számlázva",
         "sampleLabel": "Élő hívás példa",
         "sampleCaller": "Hívó",
         "sample1": "Szia, szeretnék rendelni házhozszállítással.",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Egyszerű árazás",
         "title": "Egy ár. Nincs meglepetés.",
-        "perMinute": "0,60 USD",
-        "perMinuteLabel": "híváspercenként",
+        "perMinute": "US$0.50",
+        "perMinuteLabel": "percenként, másodpercre számlázva",
         "minimum": "249,99 USD",
         "minimumLabel": "minimum havonta",
-        "rule": "A magasabb összeget fizeti: a híváspercekeit 0,60 USD-ért percenként, vagy a havi 249,99 USD minimumot. A legtöbb étterem a benne foglalt 416 percen belül marad.",
+        "rule": "Az Ön havi US$249.99 csomagja körülbelül 499 híváspercet tartalmaz. Ha ennél többet beszél, a további idő díja US$0.50 percenként — másodpercre számlázva, hívásonkénti kerekítés nélkül. Nincs külön szerződés, nincs meglepetésszerű díj. A legtöbb étterem soha nem lépi túl a benne foglalt perceket.",
         "demo": "Már fizető Fee Free tag? Próbálja ki a Nabilt ingyen 7 napig — kötelezettség nélkül.",
         "include1": "Korlátlan hívások",
         "include2": "Felvételek és átiratók",
@@ -7384,7 +7433,7 @@
         "q6": "Mi történik nyitvatartáson kívül?",
         "a6": "A Nabil ismeri nyitvatartását és ünnepi rendjét. Nyitvatartáson kívül tájékoztatja a hívót az újranyitásról, és ha az ütemezés be van kapcsolva, felajánlhat rendelést a következő nyitásra.",
         "q7": "Hogyan számítják ki a számlázást?",
-        "a7": "0,60 USD-t fizet híváspercenként vagy a havi 249,99 USD minimumot — amelyik magasabb. A minimum körülbelül 416 percet tartalmaz. Minden hívás a következő egész percre kerekítődik. Kövesse nyomon használatát valós időben.",
+        "a7": "Minden csomag havi US$249.99 alapdíjjal indul, amely körülbelül 499 híváspercet tartalmaz. Ezen felül a további idő díja US$0.50 percenként — másodpercre számlázva, hívásonkénti kerekítés nélkül. A felhasználást valós időben követheti nyomon az irányítópultján.",
         "q8": "Bármikor lemondhatom?",
         "a8": "Igen. A Nabil havonta kerül számlázásra a Stripe-on keresztül, hosszú távú szerződés nélkül. Mondja le az irányítópulton bármikor, és vonala az elszámolási időszak végéig aktív marad.",
         "q9": "Felveszi valaha egy valódi ember a telefont?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Stripe-védelemmel ellátva. Kártyaadataidat soha nem tároljuk.",
       "preparingPayment": "Biztonságos fizetés előkészítése…",
       "couldNotStartPayment": "Nem tudtuk elindítani a fizetést ehhez a rendeléshez. Lépjen vissza, és próbálja újra.",
-      "backToRestaurant": "Vissza az étteremhez"
+      "backToRestaurant": "Vissza az étteremhez",
+      "leaveConfirmTitle": "Fizetés nélkül távozol?",
+      "leaveConfirmBody": "Ha most visszalépsz, ez a rendelés törlődik — nem terhelünk semmit.",
+      "leaveConfirmStay": "Fizetés folytatása",
+      "leaveConfirmCancel": "Rendelés törlése",
+      "paymentInProgressWarning": "A fizetésed feldolgozás alatt van — kérjük, ne zárd be ezt az oldalt.",
+      "cancelUnpaidFailed": "A rendelést nem sikerült törölni. Kérjük, próbáld újra."
     },
     "paymentPage": {
       "loading": "Betöltés…"

@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "通过语音定制披萨和套餐",
         "buildPizzaComboHint": "默认关闭。开启后，Nabil 会直接为来电者定制披萨——大小、配料，甚至半半拼——并完成套餐中的各项选择，而不是把电话转给员工。正式启用前，请先下一笔测试订单，并核对打印出的小票。",
         "offerDayDeals": "主动介绍今日优惠",
-        "offerDayDealsHint": "默认关闭。开启后，若来电者点的商品今天有同规格更便宜的优惠，Nabil 会主动告知。赢得好感但会减少利润——由您决定。"
+        "offerDayDealsHint": "默认关闭。开启后，若来电者点的商品今天有同规格更便宜的优惠，Nabil 会主动告知。赢得好感但会减少利润——由您决定。",
+        "agentIdentity": "助理名称",
+        "agentName": "您的助理应该如何称呼自己？",
+        "agentNameHint": "当来电者询问名字时，每次通话都会说出此名称。留空则使用\"Nabil\"。这不会重命名 Nabil AI 本身——只改变语音自称的名字。"
       },
       "apiErrors": {
         "featureLocked": "您的套餐尚未包含电话点餐助理。",
@@ -4616,7 +4619,10 @@
           "operational": "运营",
           "deflection": "转接",
           "escalation": "升级处理"
-        }
+        },
+        "quickStartTemplate": "快速入门模板",
+        "quickStartTitle": "告诉您的助理关于您餐厅的信息",
+        "quickStartBody": "回答几个常见问题，我们会将其转换为您的助理在通话中可以使用的常见问题解答。"
       },
       "links": {
         "title": "短信链接",
@@ -4683,14 +4689,55 @@
         "submit": "提交请求",
         "cancelEdit": "取消",
         "errorAlreadyProvisioned": "您的线路已设置完成——刷新页面查看仪表板。",
-        "errorGeneric": "出了点问题，请重试。"
+        "errorGeneric": "出了点问题，请重试。",
+        "agentNameLabel": "给您的智能助理起个名字",
+        "agentNameHint": "这是您的 AI 接听电话时使用的名字（例如\"您好，我是 Sophia\"）。留空则使用\"Nabil\"。您之后可以在设置中修改。",
+        "summaryAgentName": "助理名称：{name}"
       },
       "nowAvailable": "现已推出",
       "availableHeading": "Nabil AI 电话订餐",
       "availablePrice": "{rate}/通话分钟 · {minimum}/月最低消费 · 包含 {included} 分钟",
       "availableConcierge": "我们的团队会在一个工作日内设置您的线路。无需您进行技术工作。",
       "availableDemo": "已是付费会员？免费试用 {days} 天。",
-      "subscribeCta": "订阅并设置"
+      "subscribeCta": "订阅并设置",
+      "onboarding": {
+        "wizardTitle": "设置 Nabil AI",
+        "wizardSubtitle": "只需几个简单步骤，您的 AI 电话助理即可准备好接听来电。",
+        "step1Label": "线路和助理名称",
+        "step2Label": "餐厅信息",
+        "step3Label": "测试并上线",
+        "step2Title": "告诉您的助理关于您餐厅的信息",
+        "step2Body": "尽您所能回答——这将成为助理的常见问题解答。您可以随时在之后添加更多内容。",
+        "dietarySectionTitle": "饮食选项",
+        "dietarySectionHint": "如果不适用于您的餐厅，可留空。",
+        "qHalal": "您有清真选项吗？",
+        "qVegan": "您有纯素选项吗？",
+        "qVegetarian": "您有素食选项吗？",
+        "qGlutenFree": "您有无麸质选项吗？",
+        "yesNoPlaceholder": "例如\"有\"或\"抱歉，没有\"",
+        "qAllergen": "您是否有关于过敏原或交叉污染的政策？",
+        "qParking": "您有停车场吗？",
+        "websiteLabel": "网站（可选）",
+        "qSpecialInfo": "顾客还经常询问关于您餐厅的其他事情吗？",
+        "specialInfoPlaceholder": "例如您的故事、招牌菜、座位安排、是否欢迎宠物……",
+        "hoursTitle": "营业时间",
+        "hoursBody": "您的助理已经自动读取您发布的营业时间。",
+        "hoursFixLink": "修改营业时间",
+        "qHoursException": "您的营业时间有哪些例外情况需要来电者知道？",
+        "hoursExceptionPlaceholder": "例如\"我们周日提前打烊\"",
+        "orderingLinkTitle": "在线订购链接",
+        "orderingLinkHint": "已经设置好——您的助理可以自动通过短信发送给来电者。",
+        "saving": "正在保存…",
+        "saveFaq": "保存",
+        "faqSaved": "已保存",
+        "faqSaveError": "出现问题，请重试。",
+        "goLiveTitle": "准备好测试 Nabil 了！",
+        "goLiveBody": "您的线路已上线。在为真实顾客启用之前，请拨打电话，问问 {agentName} 几个问题。",
+        "goLiveTryHours": "询问营业时间",
+        "goLiveTryParking": "询问停车场",
+        "goLiveTryOrder": "尝试下一个自取订单",
+        "goLiveHint": "当您满意后，打开上方的开关即可开始接听真实来电。"
+      }
     },
     "customerDetailPage": {
       "allCustomers": "所有顾客",
@@ -6192,7 +6239,9 @@
       "trackingCta": "查看订单状态",
       "missedTitle": "订单未能及时被接受",
       "missedBody": "很抱歉，餐厅未能及时接受您的订单，因此订单未成立。如您已在线支付，任何预授权都会自动解除——不会向您收费。",
-      "creditReturned": "您使用{label}支付的 {amount} 已退回您的钱包。"
+      "creditReturned": "您使用{label}支付的 {amount} 已退回您的钱包。",
+      "cancelledPaymentIncompleteTitle": "订单已取消 — 付款未完成",
+      "cancelledPaymentIncompleteBody": "我们未能及时收到此订单的付款，因此已自动取消。如果您的卡或PayPal上有任何预留金额，将被释放 — 您未被收取任何费用。准备好后，欢迎随时下新订单。"
     },
     "orderRejected": {
       "subject": "订单 #{orderNumber} 已拒绝",
@@ -6986,7 +7035,7 @@
       "cta": "免费开始",
       "ctaContact": "联系销售",
       "trialNote": "无需信用卡，无需合同。",
-      "phoneOrderingMinuteNote": "按 0.60 美元/分钟计费，月最低 249.99 美元（≈ 含 416 分钟）。详情见"
+      "phoneOrderingMinuteNote": "您的套餐为每月 US$249.99，包含约 499 分钟通话；超出部分按 US$0.50/分钟按秒计费。详情见"
     },
     "faq": {
       "title": "常见问题",
@@ -7138,7 +7187,7 @@
         "trust1": "专为比萨店打造",
         "trust2": "与网站相同的结账流程",
         "trust3": "录音和文字记录",
-        "trust4": "每分钟通话 US$0.60",
+        "trust4": "US$0.50/分钟，按秒计费",
         "sampleLabel": "实时通话示例",
         "sampleCaller": "来电者",
         "sample1": "你好，我可以下一个外送订单吗？",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "简单定价",
         "title": "一个价格。没有意外。",
-        "perMinute": "0.60 美元",
-        "perMinuteLabel": "每通话分钟",
+        "perMinute": "US$0.50",
+        "perMinuteLabel": "每分钟，按秒计费",
         "minimum": "249.99 美元",
         "minimumLabel": "每月最低消费",
-        "rule": "您支付较高的金额：每通话分钟 0.60 美元，或每月最低消费 249.99 美元。大多数餐厅保持在包含的 416 分钟以内。",
+        "rule": "您的每月套餐为 US$249.99，包含约 499 分钟通话。超出部分按 US$0.50 每分钟计费——按秒计算，无单次通话取整。无需额外合同，没有意外费用。大多数餐厅从未用完包含的通话分钟数。",
         "demo": "已是 Fee Free 付费会员？免费试用 Nabil 7 天——无需承诺。",
         "include1": "无限来电",
         "include2": "录音和文字记录",
@@ -7384,7 +7433,7 @@
         "q6": "营业时间外会怎样？",
         "a6": "Nabil 知道您的营业时间和假日安排。营业时间外，它会告知来电者何时重新开业，如果启用了预约功能，还可以接受下次营业时间的订单。",
         "q7": "账单如何计算？",
-        "a7": "您支付每通话分钟 0.60 美元或 249.99 美元月度最低消费（以较高者为准）。最低消费包含约 416 分钟。每次通话向上取整到下一个完整分钟。您可以在仪表板上实时跟踪使用情况。",
+        "a7": "每个套餐都从每月 US$249.99 的基础费用开始，包含约 499 分钟通话。超出部分按 US$0.50 每分钟计费——按秒计算，无单次通话取整。您可以在仪表板上实时跟踪使用情况。",
         "q8": "我可以随时取消吗？",
         "a8": "是的。Nabil 通过 Stripe 按月计费，没有长期合同。随时从仪表板取消，您的线路在计费期结束前保持活跃。",
         "q9": "会有真人接听吗？",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "由 Stripe 安全加密，我们不会保存您的银行卡信息。",
       "preparingPayment": "正在准备安全支付…",
       "couldNotStartPayment": "无法为此订单启动支付。请返回后重试。",
-      "backToRestaurant": "返回餐厅"
+      "backToRestaurant": "返回餐厅",
+      "leaveConfirmTitle": "不付款就离开吗？",
+      "leaveConfirmBody": "现在返回将取消此订单 — 不会向您收取任何费用。",
+      "leaveConfirmStay": "继续付款",
+      "leaveConfirmCancel": "取消我的订单",
+      "paymentInProgressWarning": "您的付款正在处理中 — 请不要关闭此页面。",
+      "cancelUnpaidFailed": "无法取消订单，请重试。"
     },
     "paymentPage": {
       "loading": "加载中…"

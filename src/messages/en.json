@@ -4649,7 +4649,10 @@
         "buildPizzaCombo": "Build pizzas and combos by voice",
         "buildPizzaComboHint": "Off by default. When on, Nabil builds pizzas — sizes, toppings, even half-and-half — and fills combo slots, instead of passing the caller to a person. Place a test order and check the printed receipt before you rely on it.",
         "offerDayDeals": "Offer today's deals unprompted",
-        "offerDayDealsHint": "Off by default. When on, if a caller orders something that has a cheaper same-size deal running today, Nabil mentions it without being asked. It wins goodwill and costs margin — your call."
+        "offerDayDealsHint": "Off by default. When on, if a caller orders something that has a cheaper same-size deal running today, Nabil mentions it without being asked. It wins goodwill and costs margin — your call.",
+        "agentIdentity": "Agent name",
+        "agentName": "What should your agent call itself?",
+        "agentNameHint": "Spoken on every call when a caller asks its name. Leave blank to use \"Nabil\". This doesn't rename Nabil AI itself — just what the voice calls itself."
       },
       "apiErrors": {
         "featureLocked": "Your plan doesn't include the phone ordering agent yet.",
@@ -4697,7 +4700,7 @@
         "meterMinutes": "{minutes} minutes used",
         "meterCharge": "Current: {amount} · Projected: {projected}",
         "meterOver": "{minutes} minutes over included",
-        "meterIncluded": "{included} min included in the {minimum}/month minimum ({rate}/min)"
+        "meterIncluded": "{included} min included in the {minimum}/month minimum ({rate}/min, billed by the second)"
       },
       "callLog": {
         "searchPlaceholder": "Search phone, name, or summary…",
@@ -4944,7 +4947,10 @@
           "operational": "Operations",
           "deflection": "Redirects",
           "escalation": "Escalation"
-        }
+        },
+        "quickStartTemplate": "Quick-start template",
+        "quickStartTitle": "Tell your agent about your restaurant",
+        "quickStartBody": "Answer a few common questions and we'll turn them into FAQs your agent can use on calls."
       },
       "links": {
         "title": "Text links",
@@ -5011,14 +5017,55 @@
         "submit": "Submit request",
         "cancelEdit": "Cancel",
         "errorAlreadyProvisioned": "Your phone line is already set up — refresh the page to see your dashboard.",
-        "errorGeneric": "Something went wrong. Please try again."
+        "errorGeneric": "Something went wrong. Please try again.",
+        "agentNameLabel": "Give your agent a name",
+        "agentNameHint": "This is the name your AI answers to on the phone (e.g. \"Hi, this is Sophia\"). Leave blank to use \"Nabil\". You can change it later in Settings.",
+        "summaryAgentName": "Agent name: {name}"
       },
       "nowAvailable": "Now Available",
       "availableHeading": "Nabil AI Phone Ordering",
-      "availablePrice": "{rate} per call-minute · {minimum}/month minimum · {included} minutes included",
+      "availablePrice": "{rate}/min (billed by the second) · {minimum}/month minimum · {included} minutes included",
       "availableConcierge": "Our team sets up your phone line within one business day. No technical work on your end.",
       "availableDemo": "Already a paying member? Try it free for {days} days.",
-      "subscribeCta": "Subscribe & Set Up"
+      "subscribeCta": "Subscribe & Set Up",
+      "onboarding": {
+        "wizardTitle": "Set up Nabil AI",
+        "wizardSubtitle": "A few quick steps and your AI phone agent will be ready to take calls.",
+        "step1Label": "Line & agent name",
+        "step2Label": "Restaurant info",
+        "step3Label": "Test & go live",
+        "step2Title": "Tell your agent about your restaurant",
+        "step2Body": "Answer what you can — this becomes your agent's FAQ. You can always add more later.",
+        "dietarySectionTitle": "Dietary options",
+        "dietarySectionHint": "Leave any of these blank if they don't apply to your restaurant.",
+        "qHalal": "Do you have halal options?",
+        "qVegan": "Do you have vegan options?",
+        "qVegetarian": "Do you have vegetarian options?",
+        "qGlutenFree": "Do you have gluten-free options?",
+        "yesNoPlaceholder": "e.g. \"Yes\" or \"No, sorry\"",
+        "qAllergen": "Do you have an allergen or cross-contamination policy?",
+        "qParking": "Do you have parking?",
+        "websiteLabel": "Website (optional)",
+        "qSpecialInfo": "Anything else customers often ask about your restaurant?",
+        "specialInfoPlaceholder": "e.g. your story, signature dishes, seating, pet-friendly...",
+        "hoursTitle": "Hours",
+        "hoursBody": "Your agent already reads your posted hours automatically.",
+        "hoursFixLink": "Fix hours",
+        "qHoursException": "Any exceptions to your posted hours callers should know about?",
+        "hoursExceptionPlaceholder": "e.g. \"we close early on Sundays\"",
+        "orderingLinkTitle": "Online ordering link",
+        "orderingLinkHint": "Already set up — your agent can text this to callers automatically.",
+        "saving": "Saving…",
+        "saveFaq": "Save",
+        "faqSaved": "Saved",
+        "faqSaveError": "Something went wrong. Please try again.",
+        "goLiveTitle": "Ready to test Nabil!",
+        "goLiveBody": "Your line is live. Give it a call and ask {agentName} a few questions before you turn it on for real customers.",
+        "goLiveTryHours": "Ask about your hours",
+        "goLiveTryParking": "Ask about parking",
+        "goLiveTryOrder": "Try placing a pickup order",
+        "goLiveHint": "When you're happy with what you hear, flip the switch above to start taking real calls."
+      }
     },
     "reportOrdersList": {
       "noRestaurantContext": "No restaurant context.",
@@ -6195,7 +6242,9 @@
       "trackingCta": "View order status",
       "missedTitle": "Order not accepted in time",
       "missedBody": "Unfortunately the restaurant wasn't able to accept your order in time, so it didn't go through. If you paid online, any authorization is released automatically — you won't be charged.",
-      "creditReturned": "The {amount} you paid with {label} has been returned to your wallet."
+      "creditReturned": "The {amount} you paid with {label} has been returned to your wallet.",
+      "cancelledPaymentIncompleteTitle": "Order cancelled — payment wasn't completed",
+      "cancelledPaymentIncompleteBody": "We didn't receive payment for this order in time, so it was cancelled automatically. If any hold was placed on your card or PayPal, it will be released — you have not been charged. Feel free to place a new order whenever you're ready."
     },
     "orderRejected": {
       "subject": "Order #{orderNumber} rejected",
@@ -6986,7 +7035,7 @@
       "cta": "Get Started Free",
       "ctaContact": "Contact sales",
       "trialNote": "No credit card required. No contracts.",
-      "phoneOrderingMinuteNote": "Billed at US$0.60/min with a US$249.99/mo minimum (≈ 416 included minutes). See details on"
+      "phoneOrderingMinuteNote": "Your US$249.99/mo plan includes about 499 call-minutes; extra time is billed at US$0.50/min by the second. See details on"
     },
     "faq": {
       "title": "Frequently Asked Questions",
@@ -7138,7 +7187,7 @@
         "trust1": "Built for pizzerias",
         "trust2": "Same checkout as your website",
         "trust3": "Recordings & transcripts",
-        "trust4": "US$0.60 per call-minute",
+        "trust4": "US$0.50/min, billed by the second",
         "sampleLabel": "Live call example",
         "sampleCaller": "Caller",
         "sample1": "Hi, can I place an order for delivery?",
@@ -7328,7 +7377,7 @@
         },
         "roi": {
           "title": "ROI tracking",
-          "body": "Track revenue per call-minute so you know exactly what Nabil is earning for your store."
+          "body": "Track revenue per call so you know exactly what Nabil is earning for your store."
         }
       },
       "same": {
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Simple Pricing",
         "title": "One price. No surprises.",
-        "perMinute": "US$0.60",
-        "perMinuteLabel": "per call-minute",
+        "perMinute": "US$0.50",
+        "perMinuteLabel": "per minute, billed by the second",
         "minimum": "US$249.99",
         "minimumLabel": "per month minimum",
-        "rule": "You pay whichever is higher: your call minutes at US$0.60 each, or the US$249.99 monthly minimum. Most restaurants stay within the included 416 minutes.",
+        "rule": "Your US$249.99 monthly plan includes about 499 call-minutes. Talk more than that, and extra time is billed at US$0.50 per minute — by the second, with no per-call rounding. No separate contract, no surprise fees. Most restaurants never leave the included minutes.",
         "demo": "Already a paying Fee Free member? Try Nabil free for 7 days — no commitment.",
         "include1": "Unlimited calls",
         "include2": "Recordings & transcripts",
@@ -7384,7 +7433,7 @@
         "q6": "What happens after hours?",
         "a6": "Nabil knows your opening hours and holiday schedule. After hours, it lets the caller know when you reopen and can offer to take an order for the next opening time if you have scheduling enabled.",
         "q7": "How is billing calculated?",
-        "a7": "You pay US$0.60 per call-minute or the US$249.99 monthly minimum, whichever is higher. The minimum includes about 416 minutes. Each call is rounded up to the next whole minute. You can track your usage on your dashboard in real time.",
+        "a7": "Every plan starts with a US$249.99 monthly base that includes about 499 call-minutes. Beyond that, extra time is billed at US$0.50 per minute — by the second, with no per-call rounding. You can track usage live from your dashboard.",
         "q8": "Can I cancel any time?",
         "a8": "Yes. Nabil is billed monthly through Stripe with no long-term contract. Cancel from your dashboard any time and your line stays active until the end of the billing period.",
         "q9": "Does a real person ever pick up?",
@@ -7787,7 +7836,13 @@
       "securedByStripe": "Secured by Stripe. We never store your card details.",
       "preparingPayment": "Preparing secure payment…",
       "couldNotStartPayment": "We couldn't start the payment for this order. Please go back and try again.",
-      "backToRestaurant": "Back to restaurant"
+      "backToRestaurant": "Back to restaurant",
+      "leaveConfirmTitle": "Leave without paying?",
+      "leaveConfirmBody": "Going back now cancels this order — you won't be charged anything.",
+      "leaveConfirmStay": "Continue to payment",
+      "leaveConfirmCancel": "Cancel my order",
+      "paymentInProgressWarning": "Your payment is processing — please don't close this page.",
+      "cancelUnpaidFailed": "Couldn't cancel the order. Please try again."
     },
     "paymentPage": {
       "loading": "Loading…"

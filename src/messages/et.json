@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "Pitsade ja kombode koostamine häälega",
         "buildPizzaComboHint": "Vaikimisi väljas. Kui see on sees, koostab Nabil pitsasid — suurused, täidised, isegi pool ja pool — ning valib kombodesse kuuluvad road, selle asemel et suunata helistaja töötajale. Esita testtellimus ja kontrolli väljaprinditud kviitungit, enne kui hakkad sellele lootma.",
         "offerDayDeals": "Paku tänaseid pakkumisi ise",
-        "offerDayDealsHint": "Vaikimisi väljas. Kui sisse lülitatud ja helistaja tellib midagi, millel on täna sama suurusega odavam pakkumine, mainib Nabil seda ise. Võidab poolehoidu ja maksab marginaali — otsus on teie."
+        "offerDayDealsHint": "Vaikimisi väljas. Kui sisse lülitatud ja helistaja tellib midagi, millel on täna sama suurusega odavam pakkumine, mainib Nabil seda ise. Võidab poolehoidu ja maksab marginaali — otsus on teie.",
+        "agentIdentity": "Agendi nimi",
+        "agentName": "Kuidas peaks teie agent end nimetama?",
+        "agentNameHint": "Öeldakse igal kõnel, kui helistaja küsib nime. Jätke tühjaks, et kasutada nime \"Nabil\". See ei nimeta ümber Nabil AI-d ennast — ainult seda, kuidas hääl end nimetab."
       },
       "apiErrors": {
         "featureLocked": "Sinu pakett ei sisalda veel telefonitellimuste agenti.",
@@ -4616,7 +4619,10 @@
           "operational": "Töökorraldus",
           "deflection": "Suunamised",
           "escalation": "Eskaleerimine"
-        }
+        },
+        "quickStartTemplate": "Kiirstardi mall",
+        "quickStartTitle": "Rääkige oma agendile oma restoranist",
+        "quickStartBody": "Vastake mõnele levinud küsimusele ja muudame need KKK-ks, mida teie agent saab kõnede ajal kasutada."
       },
       "links": {
         "title": "SMS-lingid",
@@ -4683,14 +4689,55 @@
         "submit": "Esita taotlus",
         "cancelEdit": "Tühista",
         "errorAlreadyProvisioned": "Teie liin on juba seadistatud — värskendage lehte.",
-        "errorGeneric": "Midagi läks valesti. Proovige uuesti."
+        "errorGeneric": "Midagi läks valesti. Proovige uuesti.",
+        "agentNameLabel": "Andke oma agendile nimi",
+        "agentNameHint": "See on nimi, millega teie tehisintellekt telefonile vastab (nt \"Tere, siin Sophia\"). Jätke tühjaks, et kasutada nime \"Nabil\". Saate seda hiljem seadetes muuta.",
+        "summaryAgentName": "Agendi nimi: {name}"
       },
       "nowAvailable": "Nüüd saadaval",
       "availableHeading": "Nabil AI telefonitellimused",
       "availablePrice": "{rate} kõneminuti kohta · {minimum}/kuu miinimum · {included} minutit kaasas",
       "availableConcierge": "Meie meeskond seadistab teie liini ühe tööpäeva jooksul. Tehnilist tööd teie poolt pole vaja.",
       "availableDemo": "Juba maksev liige? Proovige tasuta {days} päeva.",
-      "subscribeCta": "Telli ja seadista"
+      "subscribeCta": "Telli ja seadista",
+      "onboarding": {
+        "wizardTitle": "Seadista Nabil AI",
+        "wizardSubtitle": "Paar kiiret sammu ja teie tehisintellekti telefoniagent on valmis kõnesid vastu võtma.",
+        "step1Label": "Liin ja agendi nimi",
+        "step2Label": "Restorani info",
+        "step3Label": "Testi ja käivita",
+        "step2Title": "Rääkige oma agendile oma restoranist",
+        "step2Body": "Vastake, mida saate — sellest saab teie agendi KKK. Saate hiljem alati rohkem lisada.",
+        "dietarySectionTitle": "Toitumisvõimalused",
+        "dietarySectionHint": "Jätke need tühjaks, kui need ei kehti teie restorani kohta.",
+        "qHalal": "Kas teil on halal-valikuid?",
+        "qVegan": "Kas teil on veganivalikuid?",
+        "qVegetarian": "Kas teil on taimetoiduvalikuid?",
+        "qGlutenFree": "Kas teil on gluteenivabu valikuid?",
+        "yesNoPlaceholder": "nt \"Jah\" või \"Ei, kahjuks\"",
+        "qAllergen": "Kas teil on allergeenide või ristsaastumise poliitika?",
+        "qParking": "Kas teil on parkimine?",
+        "websiteLabel": "Veebisait (valikuline)",
+        "qSpecialInfo": "Midagi muud, mida kliendid teie restorani kohta sageli küsivad?",
+        "specialInfoPlaceholder": "nt teie lugu, signatuurroad, istekohad, lemmikloomasõbralik...",
+        "hoursTitle": "Lahtiolekuajad",
+        "hoursBody": "Teie agent loeb juba automaatselt teie avaldatud lahtiolekuaegu.",
+        "hoursFixLink": "Paranda lahtiolekuajad",
+        "qHoursException": "Erandid teie lahtiolekuaegades, mida helistajad peaksid teadma?",
+        "hoursExceptionPlaceholder": "nt \"pühapäeviti sulgeme varem\"",
+        "orderingLinkTitle": "Veebitellimuse link",
+        "orderingLinkHint": "Juba seadistatud — teie agent saab selle helistajatele automaatselt SMS-iga saata.",
+        "saving": "Salvestamine…",
+        "saveFaq": "Salvesta",
+        "faqSaved": "Salvestatud",
+        "faqSaveError": "Midagi läks valesti. Palun proovige uuesti.",
+        "goLiveTitle": "Valmis Nabilit testima!",
+        "goLiveBody": "Teie liin on aktiivne. Helistage ja esitage {agentName}-le mõned küsimused, enne kui selle päris klientidele aktiveerite.",
+        "goLiveTryHours": "Küsige lahtiolekuaegade kohta",
+        "goLiveTryParking": "Küsige parkimise kohta",
+        "goLiveTryOrder": "Proovige teha kaasavõtutellimus",
+        "goLiveHint": "Kui olete rahul, lülitage ülal olev lüliti sisse, et hakata vastu võtma päris kõnesid."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "Kõik kliendid",
@@ -6192,7 +6239,9 @@
       "trackingCta": "Vaata tellimuse olekut",
       "missedTitle": "Tellimust ei võetud õigel ajal vastu",
       "missedBody": "Kahjuks ei jõudnud restoran teie tellimust õigel ajal vastu võtta, seega see ei läinud läbi. Kui maksite veebis, vabastatakse võimalik broneering automaatselt — teilt ei võeta tasu.",
-      "creditReturned": "Summa {amount}, mille tasusite {label} abil, on tagastatud teie rahakotti."
+      "creditReturned": "Summa {amount}, mille tasusite {label} abil, on tagastatud teie rahakotti.",
+      "cancelledPaymentIncompleteTitle": "Tellimus tühistatud — makse ei õnnestunud",
+      "cancelledPaymentIncompleteBody": "Me ei saanud selle tellimuse eest õigeaegselt makset, seega tühistati see automaatselt. Kui teie kaardil või PayPalis oli reserveering, see vabastatakse — teilt ei ole midagi maha võetud. Võite igal ajal uue tellimuse esitada."
     },
     "orderRejected": {
       "subject": "Tellimus #{orderNumber} tagasi lükatud",
@@ -6986,7 +7035,7 @@
       "cta": "Alusta tasuta",
       "ctaContact": "Võta müügiga ühendust",
       "trialNote": "Krediitkaarti ei nõuta. Lepinguid pole.",
-      "phoneOrderingMinuteNote": "Arveldus 0,60 USD/min, miinimum 249,99 USD/kuu (≈ 416 sisalduvat minutit). Üksikasjad"
+      "phoneOrderingMinuteNote": "Teie 249,99 USD/kuu pakett sisaldab ligikaudu 499 kõneminutit; lisaaeg arveldatakse 0,50 USD/min sekundipõhiselt. Üksikasjad"
     },
     "faq": {
       "title": "Korduma kippuvad küsimused",
@@ -7138,7 +7187,7 @@
         "trust1": "Loodud pitsarestoranidele",
         "trust2": "Sama kassa nagu teie veebisaidil",
         "trust3": "Salvestised ja üleskirjutused",
-        "trust4": "US$0.60 kõneminuti kohta",
+        "trust4": "US$0.50/min, arveldatakse sekundipõhiselt",
         "sampleLabel": "Näide reaalajas kõnest",
         "sampleCaller": "Helistaja",
         "sample1": "Tere, kas ma saan esitada tellimuse kohaletoimetamisega?",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Lihtne hinnastik",
         "title": "Üks hind. Üllatusi pole.",
-        "perMinute": "0,60 USD",
-        "perMinuteLabel": "kõneminuti kohta",
+        "perMinute": "0,50 USD",
+        "perMinuteLabel": "minutis, arveldatakse sekundipõhiselt",
         "minimum": "249,99 USD",
         "minimumLabel": "miinimum kuus",
-        "rule": "Maksate suurema summa: teie kõneminutid á 0,60 USD, või kuumiinimum 249,99 USD. Enamik restorane jääb kaasaarvatud 416 minuti piiresse.",
+        "rule": "Teie 249,99 USD kuupakett sisaldab ligikaudu 499 kõneminutit. Kui räägite rohkem, arveldatakse lisaaeg 0,50 USD minutis — sekundipõhiselt, ilma kõnepõhise ümardamiseta. Ei mingit eraldi lepingut ega üllatusi arvel. Enamik restorane ei ületa kunagi kaasaarvatud minutite piiri.",
         "demo": "Juba maksev Fee Free liige? Proovige Nabili tasuta 7 päeva — ilma kohustuseta.",
         "include1": "Piiramatult kõnesid",
         "include2": "Salvestised ja ärakirjad",
@@ -7384,7 +7433,7 @@
         "q6": "Mis juhtub väljaspool tööaega?",
         "a6": "Nabil teab teie lahtiolekuaegu ja pühade graafikut. Väljaspool tööaega teavitab helistajat, millal uuesti avate, ja võib pakkuda ajastatud tellimust, kui see on lubatud.",
         "q7": "Kuidas arveldust arvutatakse?",
-        "a7": "Maksate 0,60 USD kõneminuti kohta või kuumiinimumi 249,99 USD — kumb on suurem. Miinimum sisaldab umbes 416 minutit. Iga kõne ümardatakse ülespoole. Jälgige kasutust reaalajas.",
+        "a7": "Iga pakett algab 249,99 USD kuupõhisest baasist, mis sisaldab umbes 499 kõneminutit. Üle selle arveldatakse lisaaeg 0,50 USD minutis — sekundipõhiselt, ilma kõnepõhise ümardamiseta. Kasutust saate jälgida reaalajas oma juhtpaneelilt.",
         "q8": "Kas saan igal ajal tühistada?",
         "a8": "Jah. Nabili arveldatakse igakuiselt Stripe'i kaudu ilma pikaajalise lepinguta. Tühistage juhtpaneelil igal ajal ja teie liin jääb aktiivseks kuni arveldusperioodi lõpuni.",
         "q9": "Kas mõnikord vastab päris inimene?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Kaitstud Stripe'iga. Me ei salvesta kunagi sinu kaardi andmeid.",
       "preparingPayment": "Turvalise makse ettevalmistamine…",
       "couldNotStartPayment": "Selle tellimuse makset ei õnnestunud alustada. Mine tagasi ja proovi uuesti.",
-      "backToRestaurant": "Tagasi restorani juurde"
+      "backToRestaurant": "Tagasi restorani juurde",
+      "leaveConfirmTitle": "Lahkuda ilma maksmata?",
+      "leaveConfirmBody": "Kui lähed nüüd tagasi, tühistatakse see tellimus — sinult ei võeta midagi.",
+      "leaveConfirmStay": "Jätka maksmist",
+      "leaveConfirmCancel": "Tühista mu tellimus",
+      "paymentInProgressWarning": "Sinu makset töödeldakse — palun ära sulge seda lehte.",
+      "cancelUnpaidFailed": "Tellimust ei õnnestunud tühistada. Palun proovi uuesti."
     },
     "paymentPage": {
       "loading": "Laadimine…"

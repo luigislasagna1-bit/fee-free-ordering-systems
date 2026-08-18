@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "음성으로 피자와 콤보 구성하기",
         "buildPizzaComboHint": "기본값은 꺼짐입니다. 켜면 Nabil이 발신자를 직원에게 연결하는 대신 직접 피자를 구성하고 — 크기, 토핑, 반반 피자까지 — 콤보 구성 항목도 채웁니다. 실제로 사용하기 전에 테스트 주문을 한 번 넣어 보고 인쇄된 영수증을 확인하세요.",
         "offerDayDeals": "오늘의 특가를 먼저 안내",
-        "offerDayDealsHint": "기본값은 꺼짐. 켜면 같은 크기로 더 저렴한 오늘의 특가가 있을 때 Nabil이 묻지 않아도 알려줍니다. 호감은 얻고 마진은 줄어듭니다 — 사장님 선택입니다."
+        "offerDayDealsHint": "기본값은 꺼짐. 켜면 같은 크기로 더 저렴한 오늘의 특가가 있을 때 Nabil이 묻지 않아도 알려줍니다. 호감은 얻고 마진은 줄어듭니다 — 사장님 선택입니다.",
+        "agentIdentity": "상담원 이름",
+        "agentName": "상담원이 스스로를 뭐라고 불러야 하나요?",
+        "agentNameHint": "발신자가 이름을 물으면 매 통화마다 말해집니다. 비워두면 \"Nabil\"이 사용됩니다. 이는 Nabil AI 자체의 이름을 바꾸는 것이 아니라 음성이 자신을 부르는 이름만 바꿉니다."
       },
       "apiErrors": {
         "featureLocked": "현재 플랜에는 전화 주문 에이전트가 아직 포함되어 있지 않습니다.",
@@ -4616,7 +4619,10 @@
           "operational": "운영",
           "deflection": "전화 전달",
           "escalation": "직원 연결"
-        }
+        },
+        "quickStartTemplate": "빠른 시작 템플릿",
+        "quickStartTitle": "상담원에게 레스토랑에 대해 알려주세요",
+        "quickStartBody": "몇 가지 흔한 질문에 답해 주시면 상담원이 통화 중 사용할 수 있는 FAQ로 변환해 드립니다."
       },
       "links": {
         "title": "문자 링크",
@@ -4683,14 +4689,55 @@
         "submit": "요청 제출",
         "cancelEdit": "취소",
         "errorAlreadyProvisioned": "전화 회선이 이미 설정되었습니다 — 페이지를 새로고침하세요.",
-        "errorGeneric": "문제가 발생했습니다. 다시 시도해주세요."
+        "errorGeneric": "문제가 발생했습니다. 다시 시도해주세요.",
+        "agentNameLabel": "상담원 이름을 지어주세요",
+        "agentNameHint": "이것은 AI가 전화를 받을 때 사용하는 이름입니다 (예: \"안녕하세요, Sophia입니다\"). 비워두면 \"Nabil\"이 사용됩니다. 나중에 설정에서 변경할 수 있습니다.",
+        "summaryAgentName": "상담원 이름: {name}"
       },
       "nowAvailable": "지금 사용 가능",
       "availableHeading": "Nabil AI 전화 주문",
       "availablePrice": "통화분당 {rate} · 월 최소 {minimum} · {included}분 포함",
       "availableConcierge": "저희 팀이 1영업일 이내에 회선을 설정합니다. 기술적 작업이 필요 없습니다.",
       "availableDemo": "이미 유료 회원이신가요? {days}일 무료 체험하세요.",
-      "subscribeCta": "구독 및 설정"
+      "subscribeCta": "구독 및 설정",
+      "onboarding": {
+        "wizardTitle": "Nabil AI 설정",
+        "wizardSubtitle": "몇 가지 빠른 단계를 거치면 AI 전화 상담원이 통화를 받을 준비가 됩니다.",
+        "step1Label": "회선 및 상담원 이름",
+        "step2Label": "레스토랑 정보",
+        "step3Label": "테스트 및 활성화",
+        "step2Title": "상담원에게 레스토랑에 대해 알려주세요",
+        "step2Body": "가능한 만큼 답해 주세요 — 이것이 상담원의 FAQ가 됩니다. 나중에 언제든지 더 추가할 수 있습니다.",
+        "dietarySectionTitle": "식단 옵션",
+        "dietarySectionHint": "레스토랑에 해당하지 않으면 비워두세요.",
+        "qHalal": "할랄 옵션이 있나요?",
+        "qVegan": "비건 옵션이 있나요?",
+        "qVegetarian": "채식 옵션이 있나요?",
+        "qGlutenFree": "글루텐 프리 옵션이 있나요?",
+        "yesNoPlaceholder": "예: \"네\" 또는 \"죄송하지만 없습니다\"",
+        "qAllergen": "알레르기 유발 물질이나 교차 오염에 대한 정책이 있나요?",
+        "qParking": "주차장이 있나요?",
+        "websiteLabel": "웹사이트 (선택 사항)",
+        "qSpecialInfo": "고객이 레스토랑에 대해 자주 묻는 다른 사항이 있나요?",
+        "specialInfoPlaceholder": "예: 레스토랑의 역사, 대표 메뉴, 좌석, 반려동물 동반 가능 여부...",
+        "hoursTitle": "영업시간",
+        "hoursBody": "상담원은 이미 게시된 영업시간을 자동으로 읽습니다.",
+        "hoursFixLink": "영업시간 수정",
+        "qHoursException": "발신자가 알아야 할 영업시간 예외 사항이 있나요?",
+        "hoursExceptionPlaceholder": "예: \"일요일에는 일찍 문을 닫습니다\"",
+        "orderingLinkTitle": "온라인 주문 링크",
+        "orderingLinkHint": "이미 설정되어 있습니다 — 상담원이 발신자에게 자동으로 문자로 보낼 수 있습니다.",
+        "saving": "저장 중…",
+        "saveFaq": "저장",
+        "faqSaved": "저장됨",
+        "faqSaveError": "문제가 발생했습니다. 다시 시도해 주세요.",
+        "goLiveTitle": "Nabil을 테스트할 준비가 되었습니다!",
+        "goLiveBody": "회선이 활성화되었습니다. 실제 고객을 위해 활성화하기 전에 전화를 걸어 {agentName}에게 몇 가지 질문을 해보세요.",
+        "goLiveTryHours": "영업시간 물어보기",
+        "goLiveTryParking": "주차장 물어보기",
+        "goLiveTryOrder": "포장 주문 시도해보기",
+        "goLiveHint": "만족스러우시면 위의 스위치를 켜서 실제 전화를 받기 시작하세요."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "모든 고객",
@@ -6192,7 +6239,9 @@
       "trackingCta": "주문 상태 보기",
       "missedTitle": "주문이 제시간에 접수되지 않았습니다",
       "missedBody": "죄송합니다. 레스토랑이 주문을 제시간에 접수하지 못해 주문이 진행되지 않았습니다. 온라인으로 결제하셨다면 승인 금액은 자동으로 해제되며 청구되지 않습니다.",
-      "creditReturned": "{label}(으)로 결제하신 {amount}이(가) 지갑으로 반환되었습니다."
+      "creditReturned": "{label}(으)로 결제하신 {amount}이(가) 지갑으로 반환되었습니다.",
+      "cancelledPaymentIncompleteTitle": "주문 취소됨 — 결제가 완료되지 않았습니다",
+      "cancelledPaymentIncompleteBody": "이 주문에 대한 결제를 제시간에 받지 못해 자동으로 취소되었습니다. 카드나 PayPal에 보류된 금액이 있다면 해제됩니다 — 요금은 청구되지 않았습니다. 준비되시면 언제든지 새 주문을 해 주세요."
     },
     "orderRejected": {
       "subject": "주문 #{orderNumber} 거절됨",
@@ -6986,7 +7035,7 @@
       "cta": "무료로 시작하기",
       "ctaContact": "영업 문의",
       "trialNote": "신용카드 불필요. 계약 없음.",
-      "phoneOrderingMinuteNote": "US$0.60/분, 월 최소 US$249.99 (약 416분 포함). 자세한 내용은"
+      "phoneOrderingMinuteNote": "월 US$249.99 요금제에는 약 499분의 통화가 포함되어 있으며, 초과 시간은 초 단위로 US$0.50/min이 청구됩니다. 자세한 내용은"
     },
     "faq": {
       "title": "자주 묻는 질문",
@@ -7138,7 +7187,7 @@
         "trust1": "피자 가게를 위해 제작",
         "trust2": "웹사이트와 동일한 결제",
         "trust3": "녹음 및 텍스트 기록",
-        "trust4": "통화 분당 US$0.60",
+        "trust4": "US$0.50/min, 초 단위 과금",
         "sampleLabel": "실시간 통화 예시",
         "sampleCaller": "발신자",
         "sample1": "안녕하세요, 배달 주문할 수 있나요?",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "간단한 가격",
         "title": "하나의 가격. 놀라운 일 없음.",
-        "perMinute": "US$0.60",
-        "perMinuteLabel": "통화분당",
+        "perMinute": "US$0.50",
+        "perMinuteLabel": "분당, 초 단위 과금",
         "minimum": "US$249.99",
         "minimumLabel": "월 최소",
-        "rule": "더 높은 금액을 지불합니다: 통화분당 US$0.60 또는 월 최소 US$249.99. 대부분의 레스토랑은 포함된 416분 이내입니다.",
+        "rule": "월 US$249.99 요금제에는 약 499분의 통화가 포함되어 있습니다. 이를 초과하여 통화할 경우 초과 시간은 분당 US$0.50이 청구됩니다 — 초 단위 과금이며 통화별 올림이 없습니다. 별도 계약도, 예상치 못한 요금도 없습니다. 대부분의 레스토랑은 포함된 통화 시간을 다 쓰지 않습니다.",
         "demo": "이미 Fee Free 유료 회원이신가요? Nabil을 7일 무료 체험하세요 — 약정 없음.",
         "include1": "무제한 통화",
         "include2": "녹음 및 대화록",
@@ -7384,7 +7433,7 @@
         "q6": "영업 시간 외에는 어떻게 되나요?",
         "a6": "Nabil은 영업 시간과 공휴일 일정을 알고 있습니다. 영업 외 시간에는 재개 시간을 알려주고, 예약이 활성화되어 있으면 다음 영업 시간에 대한 주문을 받을 수 있습니다.",
         "q7": "청구는 어떻게 계산되나요?",
-        "a7": "통화분당 US$0.60 또는 월 최소 US$249.99 중 높은 금액을 지불합니다. 최소 요금에는 약 416분이 포함됩니다. 각 통화는 다음 분으로 올림됩니다. 대시보드에서 실시간으로 사용량을 추적할 수 있습니다.",
+        "a7": "모든 요금제는 약 499분의 통화가 포함된 월 US$249.99 기본 요금으로 시작합니다. 이를 초과하면 초과 시간은 분당 US$0.50이 청구됩니다 — 초 단위 과금이며 통화별 올림이 없습니다. 대시보드에서 실시간으로 사용량을 추적할 수 있습니다.",
         "q8": "언제든 취소할 수 있나요?",
         "a8": "네. Nabil은 Stripe를 통해 매월 청구되며 장기 계약이 없습니다. 대시보드에서 언제든 취소할 수 있으며, 청구 기간이 끝날 때까지 회선은 활성 상태를 유지합니다.",
         "q9": "실제 사람이 응답하는 경우도 있나요?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Stripe로 안전하게 보호됩니다. 카드 정보는 저장되지 않습니다.",
       "preparingPayment": "안전한 결제를 준비하고 있습니다…",
       "couldNotStartPayment": "이 주문의 결제를 시작할 수 없습니다. 이전 화면으로 돌아가 다시 시도해 주세요.",
-      "backToRestaurant": "레스토랑으로 돌아가기"
+      "backToRestaurant": "레스토랑으로 돌아가기",
+      "leaveConfirmTitle": "결제 없이 나가시겠습니까?",
+      "leaveConfirmBody": "지금 뒤로 가면 이 주문이 취소됩니다 — 요금은 청구되지 않습니다.",
+      "leaveConfirmStay": "결제 계속하기",
+      "leaveConfirmCancel": "주문 취소하기",
+      "paymentInProgressWarning": "결제가 처리 중입니다 — 이 페이지를 닫지 마세요.",
+      "cancelUnpaidFailed": "주문을 취소할 수 없습니다. 다시 시도해 주세요."
     },
     "paymentPage": {
       "loading": "로딩 중…"

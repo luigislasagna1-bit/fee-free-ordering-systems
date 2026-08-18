@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "Crea pizzes i combos per veu",
         "buildPizzaComboHint": "Desactivat per defecte. Quan està activat, Nabil munta pizzes —mides, ingredients i fins i tot meitat i meitat— i completa els combos, en lloc de passar la trucada a una persona. Fes una comanda de prova i comprova el tiquet imprès abans de confiar-hi.",
         "offerDayDeals": "Oferir les ofertes d'avui sense que ho demanin",
-        "offerDayDealsHint": "Desactivat per defecte. Quan està actiu, si algú demana un producte que avui té una oferta més barata de la mateixa mida, en Nabil ho diu sense que li ho preguntin. Guanya simpatia i costa marge — tu decideixes."
+        "offerDayDealsHint": "Desactivat per defecte. Quan està actiu, si algú demana un producte que avui té una oferta més barata de la mateixa mida, en Nabil ho diu sense que li ho preguntin. Guanya simpatia i costa marge — tu decideixes.",
+        "agentIdentity": "Nom de l'agent",
+        "agentName": "Com s'hauria de dir el vostre agent?",
+        "agentNameHint": "Es diu a cada trucada quan es pregunta el nom. Deixeu-ho en blanc per fer servir «Nabil». Això no canvia el nom del propi Nabil AI — només com es diu la veu."
       },
       "apiErrors": {
         "featureLocked": "El teu pla encara no inclou l'agent de comandes telefòniques.",
@@ -4616,7 +4619,10 @@
           "operational": "Funcionament",
           "deflection": "Redireccions",
           "escalation": "Escalat"
-        }
+        },
+        "quickStartTemplate": "Plantilla d'inici ràpid",
+        "quickStartTitle": "Expliqueu al vostre agent el vostre restaurant",
+        "quickStartBody": "Responeu unes quantes preguntes freqüents i les convertirem en preguntes freqüents que el vostre agent pot fer servir a les trucades."
       },
       "links": {
         "title": "Enllaços per SMS",
@@ -4683,14 +4689,55 @@
         "submit": "Enviar sol·licitud",
         "cancelEdit": "Cancel·la",
         "errorAlreadyProvisioned": "La línia ja està configurada — actualitzeu la pàgina.",
-        "errorGeneric": "Alguna cosa ha anat malament. Torneu-ho a provar."
+        "errorGeneric": "Alguna cosa ha anat malament. Torneu-ho a provar.",
+        "agentNameLabel": "Doneu un nom al vostre agent",
+        "agentNameHint": "Aquest és el nom amb què la vostra IA respon al telèfon (p. ex. «Hola, sóc la Sophia»). Deixeu-ho en blanc per fer servir «Nabil». Podeu canviar-ho més endavant a Configuració.",
+        "summaryAgentName": "Nom de l'agent: {name}"
       },
       "nowAvailable": "Ja disponible",
       "availableHeading": "Nabil AI comandes telefòniques",
       "availablePrice": "{rate} per minut de trucada · {minimum}/mes mínim · {included} minuts inclosos",
       "availableConcierge": "El nostre equip configura la línia en un dia laborable. Sense feina tècnica per la vostra part.",
       "availableDemo": "Ja sou membre de pagament? Proveu-ho gratis durant {days} dies.",
-      "subscribeCta": "Subscriviu-vos i configureu"
+      "subscribeCta": "Subscriviu-vos i configureu",
+      "onboarding": {
+        "wizardTitle": "Configurar Nabil AI",
+        "wizardSubtitle": "Uns quants passos ràpids i el vostre agent telefònic amb IA estarà a punt per atendre trucades.",
+        "step1Label": "Línia i nom de l'agent",
+        "step2Label": "Informació del restaurant",
+        "step3Label": "Prova i activa",
+        "step2Title": "Expliqueu al vostre agent el vostre restaurant",
+        "step2Body": "Responeu el que pugueu — això esdevindrà les preguntes freqüents del vostre agent. Sempre podeu afegir-ne més més endavant.",
+        "dietarySectionTitle": "Opcions dietètiques",
+        "dietarySectionHint": "Deixeu-les en blanc si no s'apliquen al vostre restaurant.",
+        "qHalal": "Teniu opcions halal?",
+        "qVegan": "Teniu opcions veganes?",
+        "qVegetarian": "Teniu opcions vegetarianes?",
+        "qGlutenFree": "Teniu opcions sense gluten?",
+        "yesNoPlaceholder": "p. ex. «Sí» o «No, ho sento»",
+        "qAllergen": "Teniu una política sobre al·lèrgens o contaminació creuada?",
+        "qParking": "Teniu aparcament?",
+        "websiteLabel": "Lloc web (opcional)",
+        "qSpecialInfo": "Alguna altra cosa que els clients preguntin sovint sobre el vostre restaurant?",
+        "specialInfoPlaceholder": "p. ex. la vostra història, plats emblemàtics, seients, s'accepten mascotes...",
+        "hoursTitle": "Horari",
+        "hoursBody": "El vostre agent ja llegeix automàticament el vostre horari publicat.",
+        "hoursFixLink": "Corregeix l'horari",
+        "qHoursException": "Excepcions al vostre horari que els trucadors haurien de conèixer?",
+        "hoursExceptionPlaceholder": "p. ex. «tanquem més aviat els diumenges»",
+        "orderingLinkTitle": "Enllaç de comanda en línia",
+        "orderingLinkHint": "Ja configurat — el vostre agent el pot enviar automàticament per SMS als trucadors.",
+        "saving": "Desant…",
+        "saveFaq": "Desa",
+        "faqSaved": "Desat",
+        "faqSaveError": "Alguna cosa ha fallat. Torneu-ho a provar.",
+        "goLiveTitle": "A punt per provar Nabil!",
+        "goLiveBody": "La vostra línia està activa. Truqueu i feu unes quantes preguntes a {agentName} abans d'activar-lo per a clients reals.",
+        "goLiveTryHours": "Pregunteu per l'horari",
+        "goLiveTryParking": "Pregunteu per l'aparcament",
+        "goLiveTryOrder": "Proveu de fer una comanda per recollir",
+        "goLiveHint": "Quan estigueu satisfets, activeu l'interruptor de dalt per començar a rebre trucades reals."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "Tots els clients",
@@ -6192,7 +6239,9 @@
       "trackingCta": "Veure l'estat de la comanda",
       "missedTitle": "Comanda no acceptada a temps",
       "missedBody": "Malauradament el restaurant no ha pogut acceptar la comanda a temps, així que no s'ha processat. Si has pagat en línia, qualsevol autorització s'allibera automàticament — no se't cobrarà.",
-      "creditReturned": "L'import de {amount} que vas pagar amb {label} s'ha retornat al teu moneder."
+      "creditReturned": "L'import de {amount} que vas pagar amb {label} s'ha retornat al teu moneder.",
+      "cancelledPaymentIncompleteTitle": "Comanda cancel·lada — el pagament no s'ha completat",
+      "cancelledPaymentIncompleteBody": "No hem rebut el pagament d'aquesta comanda a temps, així que s'ha cancel·lat automàticament. Si hi havia una retenció a la teva targeta o PayPal, s'alliberarà — no se t'ha cobrat res. Pots fer una nova comanda quan vulguis."
     },
     "orderRejected": {
       "subject": "Comanda #{orderNumber} rebutjada",
@@ -6986,7 +7035,7 @@
       "cta": "Comença gratis",
       "ctaContact": "Contacta amb vendes",
       "trialNote": "No cal targeta de crèdit. Sense contractes.",
-      "phoneOrderingMinuteNote": "Facturat a 0,60 USD/min amb un mínim de 249,99 USD/mes (≈ 416 minuts inclosos). Detalls a"
+      "phoneOrderingMinuteNote": "El vostre pla de 249,99 USD/mes inclou uns 499 minuts de trucada; el temps addicional es factura a 0,50 USD/min per segon. Detalls a"
     },
     "faq": {
       "title": "Preguntes freqüents",
@@ -7138,7 +7187,7 @@
         "trust1": "Creat per a pizzeries",
         "trust2": "Mateix checkout que el teu web",
         "trust3": "Enregistraments i transcripcions",
-        "trust4": "US$0.60 per minut de trucada",
+        "trust4": "US$0.50/min, facturat per segon",
         "sampleLabel": "Exemple de trucada en directe",
         "sampleCaller": "Trucador",
         "sample1": "Hola, puc fer una comanda per a lliurament?",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Preus simples",
         "title": "Un preu. Sense sorpreses.",
-        "perMinute": "0,60 USD",
-        "perMinuteLabel": "per minut de trucada",
+        "perMinute": "0,50 USD",
+        "perMinuteLabel": "per minut, facturat per segon",
         "minimum": "249,99 USD",
         "minimumLabel": "mínim per mes",
-        "rule": "Pagueu el que sigui més alt: els vostres minuts de trucada a 0,60 USD cadascun, o el mínim mensual de 249,99 USD. La majoria de restaurants es mantenen dins els 416 minuts inclosos.",
+        "rule": "El vostre pla mensual de 249,99 USD inclou uns 499 minuts de trucada. Si parleu més, el temps addicional es factura a 0,50 USD per minut — per segon, sense arrodoniment per trucada. Sense contracte separat, sense sorpreses a la factura. La majoria de restaurants mai no superen els minuts inclosos.",
         "demo": "Ja sou membre de pagament de Fee Free? Proveu Nabil gratis durant 7 dies — sense compromís.",
         "include1": "Trucades il·limitades",
         "include2": "Enregistraments i transcripcions",
@@ -7384,7 +7433,7 @@
         "q6": "Què passa fora d'horari?",
         "a6": "Nabil coneix el vostre horari i els festius. Fora d'horari, informa el client de quan obriu i pot oferir una comanda programada si està activat.",
         "q7": "Com es calcula la facturació?",
-        "a7": "Pagueu 0,60 USD per minut de trucada o el mínim mensual de 249,99 USD — el més alt. El mínim inclou unes 416 minuts. Cada trucada s'arrodoneix cap amunt. Feu seguiment de l'ús en temps real.",
+        "a7": "Cada pla comença amb una base mensual de 249,99 USD que inclou uns 499 minuts de trucada. Més enllà d'això, el temps addicional es factura a 0,50 USD per minut — per segon, sense arrodoniment per trucada. Podeu fer seguiment de l'ús en temps real des del vostre tauler de control.",
         "q8": "Puc cancel·lar en qualsevol moment?",
         "a8": "Sí. Nabil es factura mensualment via Stripe sense contracte a llarg termini. Cancel·leu des del tauler en qualsevol moment i la línia roman activa fins al final del període de facturació.",
         "q9": "Alguna vegada contesta una persona real?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Protegit per Stripe. Mai emmagatzemem les dades de la teva targeta.",
       "preparingPayment": "Preparant el pagament segur…",
       "couldNotStartPayment": "No hem pogut iniciar el pagament d'aquesta comanda. Torna enrere i prova-ho de nou.",
-      "backToRestaurant": "Torna al restaurant"
+      "backToRestaurant": "Torna al restaurant",
+      "leaveConfirmTitle": "Sortir sense pagar?",
+      "leaveConfirmBody": "Si tornes enrere ara, es cancel·la aquesta comanda — no se't cobrarà res.",
+      "leaveConfirmStay": "Continua amb el pagament",
+      "leaveConfirmCancel": "Cancel·la la meva comanda",
+      "paymentInProgressWarning": "El pagament s'està processant — no tanquis aquesta pàgina.",
+      "cancelUnpaidFailed": "No s'ha pogut cancel·lar la comanda. Torna-ho a provar."
     },
     "paymentPage": {
       "loading": "Carregant…"

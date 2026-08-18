@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight, Bot, ChefHat, Check, CheckCircle2, Clock, Equal, Flag, FlaskConical, Globe, Hash, HelpCircle,
@@ -16,13 +17,14 @@ import { resolveLocale } from "@/lib/i18n-server";
 import { getSessionUser } from "@/lib/session";
 import { marketingMetadata } from "@/lib/seo";
 import { safeJsonLd } from "@/lib/safe-json-ld";
+import { COMPETITORS } from "@/data/competitors";
 import { LiveCallDemo } from "./LiveCallDemo";
 import { KitchenTicketMockup } from "./KitchenTicketMockup";
 
 export const metadata = marketingMetadata({
   title: "Nabil AI — AI Phone Ordering for Pizzerias, by Former Pizzeria Owners | Fee Free Ordering",
   description:
-    "Nabil AI answers your pizzeria's phone and takes the order — half-and-half pizzas, toppings by name, combos, delivery zones — straight into your kitchen through the same checkout as your website. Recordings, transcripts, a timeline for every call. US$0.60 per call-minute, US$249.99/month minimum.",
+    "Nabil AI answers your pizzeria's phone and takes the order — half-and-half pizzas, toppings by name, combos, delivery zones — straight into your kitchen through the same checkout as your website. Recordings, transcripts, a timeline for every call. US$0.50/min billed by the second, US$249.99/month minimum.",
   path: "/nabil-ai",
 });
 
@@ -102,7 +104,7 @@ export default async function NabilAiPage() {
       "@type": "Offer",
       price: "249.99",
       priceCurrency: "USD",
-      description: "US$0.60 per call-minute, US$249.99 per month minimum (whichever is higher). One-time 7-day free demo for restaurants already on a paid Fee Free add-on.",
+      description: "US$249.99 per month base plan includes about 499 call-minutes; extra time billed at US$0.50/min by the second with no per-call rounding. One-time 7-day free demo for restaurants already on a paid Fee Free add-on.",
     },
     provider: { "@type": "Organization", name: "Fee Free Ordering", url: baseUrl },
   };

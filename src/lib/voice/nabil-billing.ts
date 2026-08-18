@@ -2,9 +2,10 @@
  * Nabil AI pricing — PURE math, no prisma / stripe imports (unit-tested in
  * nabil-billing.test.ts; safe to import from client components).
  *
- * Luigi's price (2026-08-16, OWNER-ACTIONS A64 (d)):
- *   US$0.60 per call-minute, US$249.99 per month MINIMUM, whichever is higher
- *   ⇒ monthly charge = max(24999¢, minutes × 60¢).
+ * Luigi's price (2026-08-18):
+ *   US$0.50 per minute of call time, BILLED BY THE SECOND (no rounding).
+ *   US$249.99 per month MINIMUM, whichever is higher.
+ *   ⇒ monthly charge = max(24999¢, ceil(seconds × 50 / 60)).
  *
  * How the two halves are collected:
  *   • the US$249.99 minimum  = the `phone_ordering` add-on's Stripe subscription
@@ -19,50 +20,52 @@
  * `monthWindowUtc()` here. (Anchor-period metering would need Stripe's
  * invoice.created hook per subscription; documented seam, not built.)
  *
- * Rounding rule: EVERY call is rounded UP to the next whole minute (a 61 s call
- * bills 2 minutes; a 0 s / null-duration call bills 0). Minutes are summed per
- * call, never on the month's total seconds.
+ * Billing granularity: PER SECOND. Call durations are summed in seconds with
+ * no per-call rounding, then the total is converted to dollars at the
+ * per-minute rate: ceil(totalSeconds × 50 / 60).
  */
 
-/** US$0.60 per call-minute. */
-export const NABIL_PER_MINUTE_CENTS = 60;
+/** US$0.50 per minute — the rate shown to customers and used for billing. */
+export const NABIL_PER_MINUTE_CENTS = 50;
 /** US$249.99 per month minimum. */
 export const NABIL_MONTHLY_MIN_CENTS = 24999;
-/** Minutes the monthly minimum "includes" before overage starts:
- *  floor(24999 / 60) = 416 (416 × 60¢ = 24960¢ ≤ 24999¢; the 417th minute
- *  makes 25020¢ > 24999¢ and is the first billable overage minute). */
-export const NABIL_INCLUDED_MINUTES = Math.floor(NABIL_MONTHLY_MIN_CENTS / NABIL_PER_MINUTE_CENTS);
+/** Seconds the monthly minimum "includes" before overage starts:
+ *  floor(24999 × 60 / 50) = 29998 (≈ 499 min 58 sec). */
+export const NABIL_INCLUDED_SECONDS = Math.floor(NABIL_MONTHLY_MIN_CENTS * 60 / NABIL_PER_MINUTE_CENTS);
+/** Display-friendly included minutes: floor(29998 / 60) = 499. */
+export const NABIL_INCLUDED_MINUTES = Math.floor(NABIL_INCLUDED_SECONDS / 60);
 /** Length of the one-time member demo (see src/lib/voice/nabil-trial.ts). */
 export const NABIL_DEMO_DAYS = 7;
 
-/** Billed minutes for ONE call: ceil(seconds / 60); 0 for null / ≤ 0. */
-export function billedMinutes(durationSeconds: number | null | undefined): number {
+/** Billable seconds for ONE call — just the raw duration, no rounding.
+ *  Sub-second durations ceil to 1; null / ≤ 0 → 0. */
+export function billedSeconds(durationSeconds: number | null | undefined): number {
   if (durationSeconds == null || !Number.isFinite(durationSeconds) || durationSeconds <= 0) return 0;
-  return Math.ceil(durationSeconds / 60);
+  return Math.ceil(durationSeconds);
 }
 
-/** Sum of per-call billed minutes (each call rounded UP individually). */
-export function billedMinutesForCalls(durations: ReadonlyArray<number | null | undefined>): number {
+/** Sum of per-call billable seconds (no per-call rounding to minutes). */
+export function billedSecondsForCalls(durations: ReadonlyArray<number | null | undefined>): number {
   let total = 0;
-  for (const d of durations) total += billedMinutes(d);
+  for (const d of durations) total += billedSeconds(d);
   return total;
 }
 
-/** The month's charge in cents: max(minimum, minutes × per-minute). */
-export function monthlyChargeCents(minutes: number): number {
-  const m = Math.max(0, Math.floor(minutes));
-  return Math.max(NABIL_MONTHLY_MIN_CENTS, m * NABIL_PER_MINUTE_CENTS);
+/** The month's charge in cents: max(minimum, ceil(seconds × 50/60)). */
+export function monthlyChargeCents(seconds: number): number {
+  const s = Math.max(0, Math.ceil(seconds));
+  return Math.max(NABIL_MONTHLY_MIN_CENTS, Math.ceil(s * NABIL_PER_MINUTE_CENTS / 60));
 }
 
 /** Overage in cents = the part of the month's charge above the minimum
- *  (what the usage-billing cron invoices). 0 up to and including 416 min. */
-export function overageCents(minutes: number): number {
-  return monthlyChargeCents(minutes) - NABIL_MONTHLY_MIN_CENTS;
+ *  (what the usage-billing cron invoices). 0 up to and including 24999 sec. */
+export function overageCents(seconds: number): number {
+  return monthlyChargeCents(seconds) - NABIL_MONTHLY_MIN_CENTS;
 }
 
-/** Minutes above the included allowance (display only — money uses overageCents). */
-export function overageMinutes(minutes: number): number {
-  return Math.max(0, Math.floor(minutes) - NABIL_INCLUDED_MINUTES);
+/** Seconds above the included allowance (display only — money uses overageCents). */
+export function overageSeconds(seconds: number): number {
+  return Math.max(0, Math.ceil(seconds) - NABIL_INCLUDED_SECONDS);
 }
 
 /** First moment (UTC) of the calendar month containing `d`. */
@@ -102,33 +105,46 @@ export function parsePeriodKey(s: string | null | undefined): Date | null {
 }
 
 /**
- * Linear month-end projection: minutes so far ÷ fraction of the month elapsed.
+ * Linear month-end projection: seconds so far ÷ fraction of the month elapsed.
  * Before any of the month has elapsed (or with a degenerate window) the
- * projection is the minutes so far. Returns whole minutes (rounded).
+ * projection is the seconds so far. Returns whole seconds (rounded).
  */
 export function projectMonthEnd(
-  minutesSoFar: number,
+  secondsSoFar: number,
   now: Date,
   window: { start: Date; end: Date } = monthWindowUtc(now),
 ): number {
   const total = window.end.getTime() - window.start.getTime();
   const elapsed = Math.min(Math.max(now.getTime() - window.start.getTime(), 0), total);
-  const m = Math.max(0, minutesSoFar);
-  if (total <= 0 || elapsed <= 0) return Math.round(m);
-  if (elapsed >= total) return Math.round(m);
-  return Math.round(m * (total / elapsed));
+  const s = Math.max(0, secondsSoFar);
+  if (total <= 0 || elapsed <= 0) return Math.round(s);
+  if (elapsed >= total) return Math.round(s);
+  return Math.round(s * (total / elapsed));
 }
 
-/** Everything the Overview tile shows, from the month's minutes + "now". */
-export function meterSummary(minutesSoFar: number, now: Date, window: { start: Date; end: Date } = monthWindowUtc(now)) {
-  const projectedMinutes = projectMonthEnd(minutesSoFar, now, window);
+/** Format seconds as "Xm Ys" for display. */
+export function formatSecondsAsMinSec(seconds: number): string {
+  const s = Math.max(0, Math.ceil(seconds));
+  const m = Math.floor(s / 60);
+  const rem = s % 60;
+  if (m === 0) return `${rem}s`;
+  if (rem === 0) return `${m}m`;
+  return `${m}m ${rem}s`;
+}
+
+/** Everything the Overview tile shows, from the month's seconds + "now". */
+export function meterSummary(secondsSoFar: number, now: Date, window: { start: Date; end: Date } = monthWindowUtc(now)) {
+  const projectedSeconds = projectMonthEnd(secondsSoFar, now, window);
   return {
-    minutes: Math.max(0, Math.floor(minutesSoFar)),
+    seconds: Math.max(0, Math.ceil(secondsSoFar)),
+    minutes: Math.max(0, Math.floor(secondsSoFar / 60)),
+    includedSeconds: NABIL_INCLUDED_SECONDS,
     includedMinutes: NABIL_INCLUDED_MINUTES,
-    overageMinutes: overageMinutes(minutesSoFar),
-    chargeSoFarCents: monthlyChargeCents(minutesSoFar),
-    projectedMinutes,
-    projectedChargeCents: monthlyChargeCents(projectedMinutes),
+    overageSeconds: overageSeconds(secondsSoFar),
+    overageMinutes: Math.floor(overageSeconds(secondsSoFar) / 60),
+    chargeSoFarCents: monthlyChargeCents(secondsSoFar),
+    projectedSeconds,
+    projectedChargeCents: monthlyChargeCents(projectedSeconds),
     perMinuteCents: NABIL_PER_MINUTE_CENTS,
     monthlyMinCents: NABIL_MONTHLY_MIN_CENTS,
   };

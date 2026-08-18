@@ -21,7 +21,7 @@ type OrderUpdate = {
 type Line = {
   speaker: "nabil" | "caller";
   text: string;
-  /** Cumulative seconds into the call when this line appears. */
+  /** Audio second when speech begins (original, pre-compression). */
   at: number;
   /** If present, the order summary updates to this state. */
   order?: OrderUpdate;
@@ -32,6 +32,11 @@ const TRANSCRIPT: Line[] = [
   // Timestamps from ffmpeg silencedetect waveform analysis of the MP3.
   // Each `at` = exact audio second when the speech segment begins.
   // "Mhm."/"Right." voice fillers omitted from bubbles (audible only).
+  {
+    speaker: "nabil",
+    text: "Thanks for calling Luigi's Lasagna! How can I help you?",
+    at: 1.0,
+  },
   {
     speaker: "caller",
     text: "It's for delivery.",
@@ -197,7 +202,33 @@ const TRANSCRIPT: Line[] = [
   },
 ];
 
-const TOTAL_DURATION = 196; // seconds — full recording
+/** Silence gaps in the original audio (> 1.5s of dead air from AI processing).
+ *  During playback, the audio seeks past these to keep the demo snappy. */
+const SILENCE_GAPS = [
+  { start: 9.0, end: 13.3 },
+  { start: 22.0, end: 26.2 },
+  { start: 43.0, end: 47.3 },
+  { start: 53.5, end: 55.8 },
+  { start: 73.0, end: 77.1 },
+  { start: 100.0, end: 102.5 },
+  { start: 114.5, end: 117.0 },
+  { start: 139.0, end: 141.0 },
+  { start: 157.0, end: 161.1 },
+  { start: 184.0, end: 187.3 },
+];
+
+const GAP_KEEP = 0.4;
+
+const TOTAL_DURATION = 196;
+
+const TOTAL_SAVED = SILENCE_GAPS.reduce(
+  (sum, g) => sum + Math.max(0, g.end - g.start - GAP_KEEP),
+  0,
+);
+const COMPRESSED_DURATION = TOTAL_DURATION - TOTAL_SAVED;
+
+const WORDS_PER_SEC_NABIL = 2.8;
+const WORDS_PER_SEC_CALLER = 3.5;
 
 /* ── Helpers ──────────────────────────────────────────────────────────── */
 
@@ -205,6 +236,28 @@ function formatTimer(seconds: number): string {
   const m = Math.floor(seconds / 60);
   const s = Math.floor(seconds % 60);
   return `${m}:${s.toString().padStart(2, "0")}`;
+}
+
+function compressedTime(audioTime: number): number {
+  let saved = 0;
+  for (const g of SILENCE_GAPS) {
+    const gapDur = g.end - g.start - GAP_KEEP;
+    if (gapDur <= 0) continue;
+    if (audioTime >= g.end) {
+      saved += gapDur;
+    } else if (audioTime > g.start + GAP_KEEP) {
+      saved += audioTime - g.start - GAP_KEEP;
+    }
+  }
+  return audioTime - saved;
+}
+
+function speechDuration(line: Line, nextAt: number | null): number {
+  const wps = line.speaker === "nabil" ? WORDS_PER_SEC_NABIL : WORDS_PER_SEC_CALLER;
+  const wordCount = line.text.split(/\s+/).length;
+  const estimated = wordCount / wps;
+  const maxDur = nextAt != null ? Math.max(0.5, nextAt - line.at - 0.2) : estimated;
+  return Math.min(estimated, maxDur);
 }
 
 /* ── Component ────────────────────────────────────────────────────────── */
@@ -230,15 +283,16 @@ export function LiveCallDemo({
 }) {
   const [state, setState] = useState<"idle" | "playing" | "paused" | "done">("idle");
   const [elapsed, setElapsed] = useState(0);
-  const [visibleLines, setVisibleLines] = useState(0);
   const [currentOrder, setCurrentOrder] = useState<OrderUpdate | null>(null);
   const [muted, setMuted] = useState(false);
   const [volume, setVolume] = useState(1);
   const [audioReady, setAudioReady] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(0);
+  const [wordProgress, setWordProgress] = useState<number[]>([]);
 
   const startRef = useRef(0);
   const pausedAtRef = useRef(0);
-  const rafRef = useRef(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const transcriptEndRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -258,77 +312,107 @@ export function LiveCallDemo({
     if (audioRef.current) audioRef.current.volume = muted ? 0 : volume;
   }, [muted, volume]);
 
-  const tick = useCallback(() => {
-    const audio = audioRef.current;
-    const secs = audio && audioReady
-      ? audio.currentTime
-      : (performance.now() - startRef.current) / 1000;
-    setElapsed(secs);
+  const stopTimer = useCallback(() => {
+    if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
+  }, []);
 
-    let lines = 0;
-    let lastOrder: OrderUpdate | null = null;
-    for (const line of TRANSCRIPT) {
-      if (secs >= line.at) {
-        lines++;
-        if (line.order) lastOrder = line.order;
-      } else break;
-    }
-    setVisibleLines(lines);
-    if (lastOrder) setCurrentOrder(lastOrder);
+  const startTimer = useCallback(() => {
+    stopTimer();
+    timerRef.current = setInterval(() => {
+      const audio = audioRef.current;
+      let secs: number;
 
-    if (secs >= TOTAL_DURATION) {
-      setState("done");
-      setVisibleLines(TRANSCRIPT.length);
-      return;
-    }
-    rafRef.current = requestAnimationFrame(tick);
-  }, [audioReady]);
+      if (audio && !audio.paused) {
+        for (const g of SILENCE_GAPS) {
+          if (audio.currentTime >= g.start + GAP_KEEP && audio.currentTime < g.end) {
+            audio.currentTime = g.end;
+            break;
+          }
+        }
+        secs = audio.currentTime;
+      } else {
+        secs = (performance.now() - startRef.current) / 1000;
+      }
+
+      setElapsed(secs);
+
+      let count = 0;
+      let lastOrder: OrderUpdate | null = null;
+      const wp: number[] = [];
+      for (let i = 0; i < TRANSCRIPT.length; i++) {
+        const line = TRANSCRIPT[i];
+        if (secs >= line.at) {
+          count++;
+          if (line.order) lastOrder = line.order;
+          const nextAt = i + 1 < TRANSCRIPT.length ? TRANSCRIPT[i + 1].at : null;
+          const dur = speechDuration(line, nextAt);
+          const totalWords = line.text.split(/\s+/).length;
+          const timeSinceStart = secs - line.at;
+          const wordsShown = Math.min(totalWords, Math.ceil((timeSinceStart / dur) * totalWords));
+          wp.push(wordsShown);
+        } else {
+          break;
+        }
+      }
+      setVisibleCount(count);
+      setWordProgress(wp);
+      if (lastOrder) setCurrentOrder(lastOrder);
+
+      if (secs >= TOTAL_DURATION) {
+        stopTimer();
+        setState("done");
+        setVisibleCount(TRANSCRIPT.length);
+        setWordProgress(TRANSCRIPT.map((l) => l.text.split(/\s+/).length));
+      }
+    }, 50);
+  }, [stopTimer]);
 
   const play = useCallback(() => {
     const audio = audioRef.current;
     if (state === "idle" || state === "done") {
-      setVisibleLines(0);
+      setVisibleCount(0);
+      setWordProgress([]);
       setCurrentOrder(null);
       setElapsed(0);
       startRef.current = performance.now();
       if (audio && audioReady) { audio.currentTime = 0; void audio.play(); }
       setState("playing");
-      rafRef.current = requestAnimationFrame(tick);
+      startTimer();
     } else if (state === "paused") {
       startRef.current += performance.now() - pausedAtRef.current;
       if (audio && audioReady) void audio.play();
       setState("playing");
-      rafRef.current = requestAnimationFrame(tick);
+      startTimer();
     }
-  }, [state, tick, audioReady]);
+  }, [state, startTimer, audioReady]);
 
   const pause = useCallback(() => {
     if (state === "playing") {
-      cancelAnimationFrame(rafRef.current);
+      stopTimer();
       pausedAtRef.current = performance.now();
       if (audioRef.current) audioRef.current.pause();
       setState("paused");
     }
-  }, [state]);
+  }, [state, stopTimer]);
 
   useEffect(() => {
     return () => {
-      cancelAnimationFrame(rafRef.current);
+      stopTimer();
       if (audioRef.current) audioRef.current.pause();
     };
-  }, []);
+  }, [stopTimer]);
 
-  // Auto-scroll transcript
   useEffect(() => {
     transcriptEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }, [visibleLines]);
+  }, [visibleCount]);
 
   const isPlaying = state === "playing";
   const isDone = state === "done";
+  const cTime = compressedTime(elapsed);
+  const progress = Math.min(100, (cTime / COMPRESSED_DURATION) * 100);
 
   return (
     <div>
-      {/* Header + controls */}
       <div className="text-center mb-8 md:mb-12">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight leading-[1.08]">
           {heading}
@@ -350,7 +434,7 @@ export function LiveCallDemo({
               )}
               {isPlaying ? liveLabel : "Nabil AI"}
               {(isPlaying || state === "paused") && (
-                <span className="ml-1 tabular-nums">{formatTimer(elapsed)}</span>
+                <span className="ml-1 tabular-nums">{formatTimer(cTime)}</span>
               )}
             </div>
             <div className="flex items-center gap-1">
@@ -359,6 +443,16 @@ export function LiveCallDemo({
               <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
             </div>
           </div>
+
+          {/* Progress bar */}
+          {state !== "idle" && (
+            <div className="h-0.5 bg-gray-100">
+              <div
+                className="h-full bg-emerald-400 transition-[width] duration-200 ease-linear"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          )}
 
           {/* Chat area */}
           <div className="h-[380px] sm:h-[420px] overflow-y-auto p-4 sm:p-5 space-y-3">
@@ -373,43 +467,62 @@ export function LiveCallDemo({
               </div>
             ) : (
               <>
-                {TRANSCRIPT.slice(0, visibleLines).map((line, i) => (
-                  <div
-                    key={i}
-                    className={`flex ${line.speaker === "caller" ? "justify-start" : "justify-end"}`}
-                    style={{
-                      animation: "fadeSlideIn 0.3s ease-out",
-                    }}
-                  >
+                {TRANSCRIPT.slice(0, visibleCount).map((line, i) => {
+                  const words = line.text.split(/\s+/);
+                  const shown = wordProgress[i] ?? words.length;
+                  const visibleText = words.slice(0, shown).join(" ");
+                  const isTyping = shown < words.length;
+
+                  return (
                     <div
-                      className={`max-w-[88%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
-                        line.speaker === "caller"
-                          ? "bg-gray-100 text-gray-800 rounded-bl-sm"
-                          : "bg-emerald-50 text-emerald-950 ring-1 ring-emerald-100 rounded-br-sm"
-                      }`}
+                      key={i}
+                      className={`flex ${line.speaker === "caller" ? "justify-start" : "justify-end"}`}
+                      style={i === visibleCount - 1 && shown <= 1 ? { animation: "fadeSlideIn 0.25s ease-out" } : undefined}
                     >
                       <div
-                        className={`text-[10px] font-bold uppercase tracking-wide mb-0.5 ${
-                          line.speaker === "caller" ? "text-gray-400" : "text-emerald-600"
+                        className={`max-w-[88%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
+                          line.speaker === "caller"
+                            ? "bg-gray-100 text-gray-800 rounded-bl-sm"
+                            : "bg-emerald-50 text-emerald-950 ring-1 ring-emerald-100 rounded-br-sm"
                         }`}
                       >
-                        {line.speaker === "caller" ? "Caller" : "Nabil"}
-                      </div>
-                      {line.text}
-                    </div>
-                  </div>
-                ))}
-                {isPlaying && visibleLines < TRANSCRIPT.length && (
-                  <div className="flex justify-end">
-                    <div className="bg-emerald-50 ring-1 ring-emerald-100 rounded-2xl rounded-br-sm px-4 py-3">
-                      <div className="flex gap-1">
-                        <span className="w-2 h-2 rounded-full bg-emerald-300 animate-bounce" style={{ animationDelay: "0ms" }} />
-                        <span className="w-2 h-2 rounded-full bg-emerald-300 animate-bounce" style={{ animationDelay: "150ms" }} />
-                        <span className="w-2 h-2 rounded-full bg-emerald-300 animate-bounce" style={{ animationDelay: "300ms" }} />
+                        <div
+                          className={`text-[10px] font-bold uppercase tracking-wide mb-0.5 ${
+                            line.speaker === "caller" ? "text-gray-400" : "text-emerald-600"
+                          }`}
+                        >
+                          {line.speaker === "caller" ? "Caller" : "Nabil"}
+                        </div>
+                        <span>{visibleText}</span>
+                        {isTyping && (
+                          <span className="inline-block w-[3px] h-[14px] bg-current opacity-60 ml-0.5 align-text-bottom animate-blink" />
+                        )}
                       </div>
                     </div>
-                  </div>
-                )}
+                  );
+                })}
+                {isPlaying && visibleCount > 0 && visibleCount < TRANSCRIPT.length && (() => {
+                  const lastShown = wordProgress[visibleCount - 1];
+                  const lastTotal = TRANSCRIPT[visibleCount - 1].text.split(/\s+/).length;
+                  if (lastShown >= lastTotal) {
+                    return (
+                      <div className={`flex ${TRANSCRIPT[visibleCount].speaker === "caller" ? "justify-start" : "justify-end"}`}>
+                        <div className={`rounded-2xl rounded-br-sm px-4 py-3 ${
+                          TRANSCRIPT[visibleCount].speaker === "caller"
+                            ? "bg-gray-100"
+                            : "bg-emerald-50 ring-1 ring-emerald-100"
+                        }`}>
+                          <div className="flex gap-1">
+                            <span className="w-2 h-2 rounded-full bg-emerald-300 animate-bounce" style={{ animationDelay: "0ms" }} />
+                            <span className="w-2 h-2 rounded-full bg-emerald-300 animate-bounce" style={{ animationDelay: "150ms" }} />
+                            <span className="w-2 h-2 rounded-full bg-emerald-300 animate-bounce" style={{ animationDelay: "300ms" }} />
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  }
+                  return null;
+                })()}
                 <div ref={transcriptEndRef} />
               </>
             )}
@@ -455,7 +568,7 @@ export function LiveCallDemo({
             )}
           </div>
 
-          {/* Volume control — only shown when audio is available */}
+          {/* Volume control */}
           {audioReady && (
             <div className="px-4 py-2 border-t border-gray-100 bg-gray-50/50 flex items-center gap-3">
               <button
@@ -498,7 +611,7 @@ export function LiveCallDemo({
                   : "Waiting for items…"}
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-3" style={{ animation: "fadeSlideIn 0.3s ease-out" }}>
                 {currentOrder.items.map((item, i) => (
                   <div key={i} className="flex justify-between items-start gap-2">
                     <div>
@@ -537,11 +650,17 @@ export function LiveCallDemo({
         </div>
       </div>
 
-      {/* Inline keyframes — no animation library */}
       <style>{`
         @keyframes fadeSlideIn {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+        .animate-blink {
+          animation: blink 0.7s step-end infinite;
         }
       `}</style>
     </div>

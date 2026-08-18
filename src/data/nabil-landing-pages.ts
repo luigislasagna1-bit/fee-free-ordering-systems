@@ -66,7 +66,7 @@ const sushi: NabilLandingPage = {
   cuisine: "sushi",
   metaTitle: "AI Phone Ordering for Sushi Restaurants — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your sushi restaurant's phone and takes roll, platter, and combo orders conversationally — with accurate modifiers, read-back confirmation, and instant kitchen printing. US$0.60/min.",
+    "Nabil AI answers your sushi restaurant's phone and takes roll, platter, and combo orders conversationally — with accurate modifiers, read-back confirmation, and instant kitchen printing. US$0.50/min billed by the second.",
   h1: "AI phone ordering for sushi restaurants",
   eyebrow: "Nabil AI for sushi restaurants",
   intro:
@@ -110,7 +110,7 @@ const sushi: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute, with a US$249.99 per month minimum (whichever is higher). Every call includes a recording, full transcript, and per-call timeline on your dashboard.",
+      a: "A US$249.99 per month base plan that includes about 499 call-minutes; extra time billed at US$0.50/min by the second. Every call includes a recording, full transcript, and per-call timeline on your dashboard.",
     },
     {
       q: "Can Nabil take delivery orders and check if an address is in range?",
@@ -126,7 +126,7 @@ const chinese: NabilLandingPage = {
   cuisine: "Chinese",
   metaTitle: "AI Phone Ordering for Chinese Restaurants — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your Chinese restaurant's phone and takes combo, family dinner, and delivery orders conversationally — large menus handled accurately with read-back confirmation. US$0.60/min.",
+    "Nabil AI answers your Chinese restaurant's phone and takes combo, family dinner, and delivery orders conversationally — large menus handled accurately with read-back confirmation. US$0.50/min billed by the second.",
   h1: "AI phone ordering for Chinese restaurants",
   eyebrow: "Nabil AI for Chinese restaurants",
   intro:
@@ -170,7 +170,7 @@ const chinese: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Includes recordings, transcripts, and analytics for every call.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Includes recordings, transcripts, and analytics for every call.",
     },
   ],
 };
@@ -182,7 +182,7 @@ const thai: NabilLandingPage = {
   cuisine: "Thai",
   metaTitle: "AI Phone Ordering for Thai Restaurants — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your Thai restaurant's phone and takes curry, noodle, and takeout orders with spice levels and protein swaps — accurately and conversationally. US$0.60/min.",
+    "Nabil AI answers your Thai restaurant's phone and takes curry, noodle, and takeout orders with spice levels and protein swaps — accurately and conversationally. US$0.50/min billed by the second.",
   h1: "AI phone ordering for Thai restaurants",
   eyebrow: "Nabil AI for Thai restaurants",
   intro:
@@ -226,7 +226,7 @@ const thai: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Recordings, transcripts, and a per-call timeline are included with every call.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Recordings, transcripts, and a per-call timeline are included with every call.",
     },
   ],
 };
@@ -238,7 +238,7 @@ const vietnamese: NabilLandingPage = {
   cuisine: "Vietnamese",
   metaTitle: "AI Phone Ordering for Vietnamese Restaurants — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your Vietnamese restaurant's phone and takes pho, banh mi, and vermicelli bowl orders with accurate customizations — protein choices, broth options, and add-ons. US$0.60/min.",
+    "Nabil AI answers your Vietnamese restaurant's phone and takes pho, banh mi, and vermicelli bowl orders with accurate customizations — protein choices, broth options, and add-ons. US$0.50/min billed by the second.",
   h1: "AI phone ordering for Vietnamese restaurants",
   eyebrow: "Nabil AI for Vietnamese restaurants",
   intro:
@@ -282,7 +282,7 @@ const vietnamese: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Includes recordings, transcripts, and analytics for every call.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Includes recordings, transcripts, and analytics for every call.",
     },
   ],
 };
@@ -294,7 +294,7 @@ const koreanBbq: NabilLandingPage = {
   cuisine: "Korean BBQ",
   metaTitle: "AI Phone Ordering for Korean BBQ Restaurants — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your Korean BBQ restaurant's phone and takes takeout orders — galbi, bulgogi, bibimbap, banchan, and combo platters — with accurate modifiers and read-back. US$0.60/min.",
+    "Nabil AI answers your Korean BBQ restaurant's phone and takes takeout orders — galbi, bulgogi, bibimbap, banchan, and combo platters — with accurate modifiers and read-back. US$0.50/min billed by the second.",
   h1: "AI phone ordering for Korean BBQ restaurants",
   eyebrow: "Nabil AI for Korean BBQ",
   intro:
@@ -338,7 +338,7 @@ const koreanBbq: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Recordings, transcripts, and per-call analytics included.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Recordings, transcripts, and per-call analytics included.",
     },
   ],
 };
@@ -352,7 +352,7 @@ const italian: NabilLandingPage = {
   cuisine: "Italian",
   metaTitle: "AI Phone Ordering for Italian Restaurants — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your Italian restaurant's phone and takes pasta, pizza, and catering orders conversationally — with modifiers, portion sizes, and read-back confirmation. US$0.60/min.",
+    "Nabil AI answers your Italian restaurant's phone and takes pasta, pizza, and catering orders conversationally — with modifiers, portion sizes, and read-back confirmation. US$0.50/min billed by the second.",
   h1: "AI phone ordering for Italian restaurants",
   eyebrow: "Nabil AI for Italian restaurants",
   intro:
@@ -396,7 +396,7 @@ const italian: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Includes recordings, transcripts, and a dashboard with analytics for every call.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Includes recordings, transcripts, and a dashboard with analytics for every call.",
     },
   ],
 };
@@ -408,7 +408,7 @@ const mediterranean: NabilLandingPage = {
   cuisine: "Mediterranean",
   metaTitle: "AI Phone Ordering for Mediterranean & Greek Restaurants — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your Mediterranean restaurant's phone and takes gyro, falafel, and platter orders conversationally — build-your-own modifiers, sauces, and sides captured accurately. US$0.60/min.",
+    "Nabil AI answers your Mediterranean restaurant's phone and takes gyro, falafel, and platter orders conversationally — build-your-own modifiers, sauces, and sides captured accurately. US$0.50/min billed by the second.",
   h1: "AI phone ordering for Mediterranean & Greek restaurants",
   eyebrow: "Nabil AI for Mediterranean restaurants",
   intro:
@@ -452,7 +452,7 @@ const mediterranean: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Recordings, transcripts, and per-call analytics included.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Recordings, transcripts, and per-call analytics included.",
     },
   ],
 };
@@ -464,7 +464,7 @@ const middleEastern: NabilLandingPage = {
   cuisine: "Middle Eastern",
   metaTitle: "AI Phone Ordering for Middle Eastern & Halal Restaurants — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your Middle Eastern restaurant's phone and takes kebab, platter, and family meal orders conversationally — halal menus handled accurately with full read-back. US$0.60/min.",
+    "Nabil AI answers your Middle Eastern restaurant's phone and takes kebab, platter, and family meal orders conversationally — halal menus handled accurately with full read-back. US$0.50/min billed by the second.",
   h1: "AI phone ordering for Middle Eastern & halal restaurants",
   eyebrow: "Nabil AI for Middle Eastern restaurants",
   intro:
@@ -508,7 +508,7 @@ const middleEastern: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Includes recordings, transcripts, and analytics for every call.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Includes recordings, transcripts, and analytics for every call.",
     },
   ],
 };
@@ -522,7 +522,7 @@ const mexican: NabilLandingPage = {
   cuisine: "Mexican",
   metaTitle: "AI Phone Ordering for Mexican Restaurants — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your Mexican restaurant's phone and takes taco, burrito, and catering tray orders conversationally — proteins, salsas, and sides captured accurately. US$0.60/min.",
+    "Nabil AI answers your Mexican restaurant's phone and takes taco, burrito, and catering tray orders conversationally — proteins, salsas, and sides captured accurately. US$0.50/min billed by the second.",
   h1: "AI phone ordering for Mexican restaurants",
   eyebrow: "Nabil AI for Mexican restaurants",
   intro:
@@ -566,7 +566,7 @@ const mexican: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Recordings, transcripts, and analytics included.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Recordings, transcripts, and analytics included.",
     },
   ],
 };
@@ -578,7 +578,7 @@ const bbq: NabilLandingPage = {
   cuisine: "BBQ",
   metaTitle: "AI Phone Ordering for BBQ Restaurants & Smokehouses — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your BBQ restaurant's phone and takes brisket, rib, and platter orders conversationally — portion sizes, sides, and sauces captured accurately. US$0.60/min.",
+    "Nabil AI answers your BBQ restaurant's phone and takes brisket, rib, and platter orders conversationally — portion sizes, sides, and sauces captured accurately. US$0.50/min billed by the second.",
   h1: "AI phone ordering for BBQ restaurants & smokehouses",
   eyebrow: "Nabil AI for BBQ & smokehouses",
   intro:
@@ -622,7 +622,7 @@ const bbq: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Includes recordings, transcripts, and analytics for every call.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Includes recordings, transcripts, and analytics for every call.",
     },
   ],
 };
@@ -634,7 +634,7 @@ const burgerJoints: NabilLandingPage = {
   cuisine: "burgers",
   metaTitle: "AI Phone Ordering for Burger Joints — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your burger joint's phone and takes burger, combo, and pickup orders conversationally — custom toppings, sizes, and combos captured accurately. US$0.60/min.",
+    "Nabil AI answers your burger joint's phone and takes burger, combo, and pickup orders conversationally — custom toppings, sizes, and combos captured accurately. US$0.50/min billed by the second.",
   h1: "AI phone ordering for burger joints",
   eyebrow: "Nabil AI for burger joints",
   intro:
@@ -678,7 +678,7 @@ const burgerJoints: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Includes recordings, transcripts, and analytics.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Includes recordings, transcripts, and analytics.",
     },
   ],
 };
@@ -692,7 +692,7 @@ const indian: NabilLandingPage = {
   cuisine: "Indian",
   metaTitle: "AI Phone Ordering for Indian Restaurants — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your Indian restaurant's phone and takes curry, thali, and catering orders conversationally — spice levels, bread choices, and sides captured accurately. US$0.60/min.",
+    "Nabil AI answers your Indian restaurant's phone and takes curry, thali, and catering orders conversationally — spice levels, bread choices, and sides captured accurately. US$0.50/min billed by the second.",
   h1: "AI phone ordering for Indian restaurants",
   eyebrow: "Nabil AI for Indian restaurants",
   intro:
@@ -736,7 +736,7 @@ const indian: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Includes recordings, transcripts, and analytics for every call.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Includes recordings, transcripts, and analytics for every call.",
     },
   ],
 };
@@ -750,7 +750,7 @@ const fastCasual: NabilLandingPage = {
   cuisine: "fast casual",
   metaTitle: "AI Phone Ordering for Fast Casual Restaurants — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your fast casual restaurant's phone and takes build-your-own orders conversationally — bowls, wraps, and combos with every modifier captured accurately. US$0.60/min.",
+    "Nabil AI answers your fast casual restaurant's phone and takes build-your-own orders conversationally — bowls, wraps, and combos with every modifier captured accurately. US$0.50/min billed by the second.",
   h1: "AI phone ordering for fast casual restaurants",
   eyebrow: "Nabil AI for fast casual",
   intro:
@@ -794,7 +794,7 @@ const fastCasual: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Recordings, transcripts, and analytics included.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Recordings, transcripts, and analytics included.",
     },
   ],
 };
@@ -806,7 +806,7 @@ const foodTrucks: NabilLandingPage = {
   cuisine: "food truck",
   metaTitle: "AI Phone Ordering for Food Trucks — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your food truck's phone and takes orders conversationally — even when your crew is heads-down during the lunch rush. Orders print instantly. US$0.60/min.",
+    "Nabil AI answers your food truck's phone and takes orders conversationally — even when your crew is heads-down during the lunch rush. Orders print instantly. US$0.50/min billed by the second.",
   h1: "AI phone ordering for food trucks",
   eyebrow: "Nabil AI for food trucks",
   intro:
@@ -850,7 +850,7 @@ const foodTrucks: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Includes recordings, transcripts, and analytics.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Includes recordings, transcripts, and analytics.",
     },
   ],
 };
@@ -862,7 +862,7 @@ const ghostKitchens: NabilLandingPage = {
   cuisine: "ghost kitchen",
   metaTitle: "AI Phone Ordering for Ghost Kitchens & Virtual Restaurants — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI gives your ghost kitchen a phone presence — answers calls, takes orders from your menu, and routes them to your kitchen. No front-of-house staff needed. US$0.60/min.",
+    "Nabil AI gives your ghost kitchen a phone presence — answers calls, takes orders from your menu, and routes them to your kitchen. No front-of-house staff needed. US$0.50/min billed by the second.",
   h1: "AI phone ordering for ghost kitchens & virtual restaurants",
   eyebrow: "Nabil AI for ghost kitchens",
   intro:
@@ -906,7 +906,7 @@ const ghostKitchens: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Recordings, transcripts, and analytics for every call included.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Recordings, transcripts, and analytics for every call included.",
     },
   ],
 };
@@ -918,7 +918,7 @@ const catering: NabilLandingPage = {
   cuisine: "catering",
   metaTitle: "AI Phone Ordering for Catering Companies — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your catering company's phone and takes large event orders conversationally — menu selections, quantities, and details captured accurately with full read-back. US$0.60/min.",
+    "Nabil AI answers your catering company's phone and takes large event orders conversationally — menu selections, quantities, and details captured accurately with full read-back. US$0.50/min billed by the second.",
   h1: "AI phone ordering for catering companies",
   eyebrow: "Nabil AI for catering companies",
   intro:
@@ -962,7 +962,7 @@ const catering: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Includes recordings, transcripts, and analytics for every call.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Includes recordings, transcripts, and analytics for every call.",
     },
   ],
 };
@@ -974,7 +974,7 @@ const veganVegetarian: NabilLandingPage = {
   cuisine: "vegan",
   metaTitle: "AI Phone Ordering for Vegan & Vegetarian Restaurants — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your vegan or vegetarian restaurant's phone and takes orders conversationally — modifications, substitutions, and dietary requirements captured accurately. US$0.60/min.",
+    "Nabil AI answers your vegan or vegetarian restaurant's phone and takes orders conversationally — modifications, substitutions, and dietary requirements captured accurately. US$0.50/min billed by the second.",
   h1: "AI phone ordering for vegan & vegetarian restaurants",
   eyebrow: "Nabil AI for vegan & vegetarian",
   intro:
@@ -1018,7 +1018,7 @@ const veganVegetarian: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Recordings, transcripts, and analytics included.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Recordings, transcripts, and analytics included.",
     },
   ],
 };
@@ -1032,7 +1032,7 @@ const cafes: NabilLandingPage = {
   cuisine: "café",
   metaTitle: "AI Phone Ordering for Cafés & Coffee Shops — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your café's phone and takes coffee, drink, and food orders conversationally — milk, syrup, and size choices captured accurately. US$0.60/min.",
+    "Nabil AI answers your café's phone and takes coffee, drink, and food orders conversationally — milk, syrup, and size choices captured accurately. US$0.50/min billed by the second.",
   h1: "AI phone ordering for cafés & coffee shops",
   eyebrow: "Nabil AI for cafés & coffee shops",
   intro:
@@ -1076,7 +1076,7 @@ const cafes: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Recordings, transcripts, and analytics for every call included.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Recordings, transcripts, and analytics for every call included.",
     },
   ],
 };
@@ -1088,7 +1088,7 @@ const bakeries: NabilLandingPage = {
   cuisine: "bakery",
   metaTitle: "AI Phone Ordering for Bakeries — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your bakery's phone and takes pastry, bread, and custom order requests conversationally — item quantities, flavours, and pickup times captured accurately. US$0.60/min.",
+    "Nabil AI answers your bakery's phone and takes pastry, bread, and custom order requests conversationally — item quantities, flavours, and pickup times captured accurately. US$0.50/min billed by the second.",
   h1: "AI phone ordering for bakeries",
   eyebrow: "Nabil AI for bakeries",
   intro:
@@ -1132,7 +1132,7 @@ const bakeries: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Recordings, transcripts, and analytics included.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Recordings, transcripts, and analytics included.",
     },
   ],
 };
@@ -1144,7 +1144,7 @@ const delis: NabilLandingPage = {
   cuisine: "deli",
   metaTitle: "AI Phone Ordering for Delis & Sandwich Shops — Nabil AI | Fee Free Ordering",
   metaDescription:
-    "Nabil AI answers your deli's phone and takes sandwich, sub, and platter orders conversationally — bread, protein, toppings, and condiments captured accurately. US$0.60/min.",
+    "Nabil AI answers your deli's phone and takes sandwich, sub, and platter orders conversationally — bread, protein, toppings, and condiments captured accurately. US$0.50/min billed by the second.",
   h1: "AI phone ordering for delis & sandwich shops",
   eyebrow: "Nabil AI for delis & sandwich shops",
   intro:
@@ -1188,7 +1188,7 @@ const delis: NabilLandingPage = {
     },
     {
       q: "What does Nabil AI cost?",
-      a: "US$0.60 per call-minute with a US$249.99 monthly minimum. Recordings, transcripts, and analytics included.",
+      a: "US$0.50 per minute (billed by the second) with a US$249.99 monthly minimum. Recordings, transcripts, and analytics included.",
     },
   ],
 };

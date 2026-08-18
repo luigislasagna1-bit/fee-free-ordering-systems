@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "Pizza's en combo's samenstellen aan de telefoon",
         "buildPizzaComboHint": "Staat standaard uit. Wanneer dit aan staat, stelt Nabil pizza's samen — maten, toppings, zelfs half-om-half — en vult hij de slots van een combo in, in plaats van de beller naar een medewerker door te verbinden. Plaats een testbestelling en controleer de afgedrukte bon voordat je hierop vertrouwt.",
         "offerDayDeals": "Aanbiedingen van vandaag uit zichzelf noemen",
-        "offerDayDealsHint": "Standaard uit. Als dit aanstaat en een beller iets bestelt waarvoor vandaag een goedkopere aanbieding in hetzelfde formaat loopt, noemt Nabil die ongevraagd. Levert goodwill op en kost marge — jouw keuze."
+        "offerDayDealsHint": "Standaard uit. Als dit aanstaat en een beller iets bestelt waarvoor vandaag een goedkopere aanbieding in hetzelfde formaat loopt, noemt Nabil die ongevraagd. Levert goodwill op en kost marge — jouw keuze.",
+        "agentIdentity": "Naam assistent",
+        "agentName": "Hoe moet uw assistent zichzelf noemen?",
+        "agentNameHint": "Wordt bij elk gesprek gezegd als er naar de naam wordt gevraagd. Laat leeg om \"Nabil\" te gebruiken. Dit hernoemt Nabil AI zelf niet — alleen hoe de stem zichzelf noemt."
       },
       "apiErrors": {
         "featureLocked": "Je abonnement bevat de telefonische bestelassistent nog niet.",
@@ -4616,7 +4619,10 @@
           "operational": "Bedrijfsvoering",
           "deflection": "Doorverwijzingen",
           "escalation": "Escalatie"
-        }
+        },
+        "quickStartTemplate": "Snelstart-sjabloon",
+        "quickStartTitle": "Vertel uw assistent over uw restaurant",
+        "quickStartBody": "Beantwoord een paar veelgestelde vragen en wij maken er FAQ's van die uw assistent tijdens gesprekken kan gebruiken."
       },
       "links": {
         "title": "Sms-links",
@@ -4683,14 +4689,55 @@
         "submit": "Verzoek indienen",
         "cancelEdit": "Annuleren",
         "errorAlreadyProvisioned": "Uw lijn is al ingesteld — vernieuw de pagina om uw dashboard te zien.",
-        "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw."
+        "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw.",
+        "agentNameLabel": "Geef uw assistent een naam",
+        "agentNameHint": "Dit is de naam waarmee uw AI aan de telefoon antwoordt (bijv. \"Hoi, met Sophia\"). Laat leeg om \"Nabil\" te gebruiken. U kunt dit later wijzigen in Instellingen.",
+        "summaryAgentName": "Naam assistent: {name}"
       },
       "nowAvailable": "Nu beschikbaar",
       "availableHeading": "Nabil AI telefonisch bestellen",
       "availablePrice": "{rate} per belminuut · {minimum}/maand minimum · {included} minuten inbegrepen",
       "availableConcierge": "Ons team stelt uw lijn in binnen één werkdag. Geen technisch werk aan uw kant.",
       "availableDemo": "Al betalend lid? Probeer het {days} dagen gratis.",
-      "subscribeCta": "Abonneren & instellen"
+      "subscribeCta": "Abonneren & instellen",
+      "onboarding": {
+        "wizardTitle": "Nabil AI instellen",
+        "wizardSubtitle": "Een paar snelle stappen en uw AI-telefoonassistent kan gesprekken aannemen.",
+        "step1Label": "Lijn & naam assistent",
+        "step2Label": "Restaurantinfo",
+        "step3Label": "Testen & activeren",
+        "step2Title": "Vertel uw assistent over uw restaurant",
+        "step2Body": "Beantwoord wat u kunt — dit wordt de FAQ van uw assistent. U kunt later altijd meer toevoegen.",
+        "dietarySectionTitle": "Dieetopties",
+        "dietarySectionHint": "Laat velden leeg die niet van toepassing zijn op uw restaurant.",
+        "qHalal": "Heeft u halal-opties?",
+        "qVegan": "Heeft u veganistische opties?",
+        "qVegetarian": "Heeft u vegetarische opties?",
+        "qGlutenFree": "Heeft u glutenvrije opties?",
+        "yesNoPlaceholder": "bijv. \"Ja\" of \"Nee, helaas\"",
+        "qAllergen": "Heeft u een beleid voor allergenen of kruisbesmetting?",
+        "qParking": "Heeft u parkeergelegenheid?",
+        "websiteLabel": "Website (optioneel)",
+        "qSpecialInfo": "Iets anders wat klanten vaak vragen over uw restaurant?",
+        "specialInfoPlaceholder": "bijv. uw verhaal, signature gerechten, zitplaatsen, huisdiervriendelijk...",
+        "hoursTitle": "Openingstijden",
+        "hoursBody": "Uw assistent leest uw gepubliceerde openingstijden al automatisch.",
+        "hoursFixLink": "Openingstijden aanpassen",
+        "qHoursException": "Uitzonderingen op uw openingstijden die bellers moeten weten?",
+        "hoursExceptionPlaceholder": "bijv. \"we sluiten eerder op zondag\"",
+        "orderingLinkTitle": "Link voor online bestellen",
+        "orderingLinkHint": "Al ingesteld — uw assistent kan dit automatisch naar bellers sms'en.",
+        "saving": "Opslaan…",
+        "saveFaq": "Opslaan",
+        "faqSaved": "Opgeslagen",
+        "faqSaveError": "Er ging iets mis. Probeer het opnieuw.",
+        "goLiveTitle": "Klaar om Nabil te testen!",
+        "goLiveBody": "Uw lijn is live. Bel en stel {agentName} een paar vragen voordat u hem activeert voor echte klanten.",
+        "goLiveTryHours": "Vraag naar de openingstijden",
+        "goLiveTryParking": "Vraag naar parkeren",
+        "goLiveTryOrder": "Probeer een afhaalbestelling te plaatsen",
+        "goLiveHint": "Als u tevreden bent, zet u de schakelaar hierboven aan om echte gesprekken aan te nemen."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "Alle klanten",
@@ -6192,7 +6239,9 @@
       "trackingCta": "Bestelstatus bekijken",
       "missedTitle": "Bestelling niet op tijd geaccepteerd",
       "missedBody": "Helaas kon het restaurant uw bestelling niet op tijd accepteren, dus is deze niet doorgegaan. Als u online heeft betaald, wordt elke reservering automatisch vrijgegeven — er wordt niets afgeschreven.",
-      "creditReturned": "Het bedrag van {amount} dat je met {label} betaalde, is teruggestort in je tegoed."
+      "creditReturned": "Het bedrag van {amount} dat je met {label} betaalde, is teruggestort in je tegoed.",
+      "cancelledPaymentIncompleteTitle": "Bestelling geannuleerd — betaling niet voltooid",
+      "cancelledPaymentIncompleteBody": "We hebben de betaling voor deze bestelling niet op tijd ontvangen, dus is deze automatisch geannuleerd. Als er een reservering was op je kaart of PayPal, wordt deze vrijgegeven — er is niets in rekening gebracht. Plaats gerust een nieuwe bestelling wanneer je klaar bent."
     },
     "orderRejected": {
       "subject": "Bestelling #{orderNumber} afgewezen",
@@ -6986,7 +7035,7 @@
       "cta": "Gratis aan de slag",
       "ctaContact": "Contact opnemen met verkoop",
       "trialNote": "Geen creditcard vereist. Geen contracten.",
-      "phoneOrderingMinuteNote": "Gefactureerd à US$ 0,60/min met een minimum van US$ 249,99/maand (≈ 416 inbegrepen minuten). Details op"
+      "phoneOrderingMinuteNote": "Uw abonnement van US$ 249,99/maand omvat ongeveer 499 belminuten; extra minuten kosten US$ 0,50 per stuk. Details op"
     },
     "faq": {
       "title": "Veelgestelde vragen",
@@ -7138,7 +7187,7 @@
         "trust1": "Gebouwd voor pizzeria's",
         "trust2": "Dezelfde checkout als je website",
         "trust3": "Opnames & transcripties",
-        "trust4": "US$0.60 per belminuut",
+        "trust4": "US$0.50/min, per seconde gefactureerd",
         "sampleLabel": "Voorbeeld van een live gesprek",
         "sampleCaller": "Beller",
         "sample1": "Hallo, kan ik een bestelling plaatsen voor bezorging?",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Eenvoudige prijzen",
         "title": "Eén prijs. Geen verrassingen.",
-        "perMinute": "US$ 0,60",
-        "perMinuteLabel": "per belminuut",
+        "perMinute": "US$0.50",
+        "perMinuteLabel": "per minuut, per seconde gefactureerd",
         "minimum": "US$ 249,99",
         "minimumLabel": "minimum per maand",
-        "rule": "U betaalt het hogere bedrag: uw belminuten à US$ 0,60 per stuk, of het maandelijkse minimum van US$ 249,99. De meeste restaurants blijven binnen de inbegrepen 416 minuten.",
+        "rule": "Uw maandabonnement van US$249.99 omvat ongeveer 499 belminuten. Belt u meer, dan wordt de extra tijd gefactureerd tegen US$0.50 per minuut — per seconde, zonder afronding per gesprek. Geen apart contract, geen verrassingskosten. De meeste restaurants komen nooit boven de inbegrepen minuten uit.",
         "demo": "Al betalend Fee Free-lid? Probeer Nabil 7 dagen gratis — zonder verplichting.",
         "include1": "Onbeperkt bellen",
         "include2": "Opnames & transcripties",
@@ -7384,7 +7433,7 @@
         "q6": "Wat gebeurt er buiten openingstijden?",
         "a6": "Nabil kent uw openingstijden en feestdagen. Buiten de tijden laat het de beller weten wanneer u weer open bent en kan een geplande bestelling aanbieden indien ingeschakeld.",
         "q7": "Hoe wordt de facturering berekend?",
-        "a7": "U betaalt US$ 0,60 per belminuut of het maandelijkse minimum van US$ 249,99, afhankelijk van wat hoger is. Het minimum bevat ongeveer 416 minuten. Elk gesprek wordt naar boven afgerond. Volg uw gebruik in realtime.",
+        "a7": "Elk abonnement begint met een maandelijkse basis van US$249.99 die ongeveer 499 belminuten omvat. Daarboven wordt extra tijd gefactureerd tegen US$0.50 per minuut — per seconde, zonder afronding per gesprek. U kunt uw gebruik live volgen via uw dashboard.",
         "q8": "Kan ik op elk moment opzeggen?",
         "a8": "Ja. Nabil wordt maandelijks gefactureerd via Stripe zonder langlopend contract. Annuleer op uw dashboard en uw lijn blijft actief tot het einde van de factureringsperiode.",
         "q9": "Neemt er ooit een echt persoon op?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Beveiligd door Stripe. We slaan je kaartgegevens nooit op.",
       "preparingPayment": "Veilige betaling voorbereiden…",
       "couldNotStartPayment": "We konden de betaling voor deze bestelling niet starten. Ga terug en probeer het opnieuw.",
-      "backToRestaurant": "Terug naar restaurant"
+      "backToRestaurant": "Terug naar restaurant",
+      "leaveConfirmTitle": "Vertrekken zonder te betalen?",
+      "leaveConfirmBody": "Als je nu teruggaat, wordt deze bestelling geannuleerd — er wordt niets in rekening gebracht.",
+      "leaveConfirmStay": "Doorgaan met betalen",
+      "leaveConfirmCancel": "Bestelling annuleren",
+      "paymentInProgressWarning": "Je betaling wordt verwerkt — sluit deze pagina niet.",
+      "cancelUnpaidFailed": "Bestelling kon niet worden geannuleerd. Probeer het opnieuw."
     },
     "paymentPage": {
       "loading": "Laden…"

@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "Pizzaları ve komboları sesle oluştur",
         "buildPizzaComboHint": "Varsayılan olarak kapalıdır. Açıkken Nabil, arayanı bir kişiye aktarmak yerine pizzaları kendisi oluşturur — boyutlar, malzemeler, hatta yarım yarım — ve kombo bölmelerini doldurur. Buna güvenmeden önce bir deneme siparişi verip yazdırılan fişi kontrol edin.",
         "offerDayDeals": "Bugünün fırsatlarını kendiliğinden söyle",
-        "offerDayDealsHint": "Varsayılan olarak kapalı. Açıkken, arayan kişi bugün aynı boyutta daha ucuz fırsatı olan bir ürün sipariş ederse Nabil bunu sorulmadan söyler. Müşteri memnuniyeti kazandırır, kârdan götürür — karar sizin."
+        "offerDayDealsHint": "Varsayılan olarak kapalı. Açıkken, arayan kişi bugün aynı boyutta daha ucuz fırsatı olan bir ürün sipariş ederse Nabil bunu sorulmadan söyler. Müşteri memnuniyeti kazandırır, kârdan götürür — karar sizin.",
+        "agentIdentity": "Ajan adı",
+        "agentName": "Ajanınız kendini nasıl adlandırmalı?",
+        "agentNameHint": "Arayan biri ismini sorduğunda her aramada söylenir. \"Nabil\" kullanmak için boş bırakın. Bu, Nabil AI'ın kendisini yeniden adlandırmaz — yalnızca sesin kendini nasıl adlandırdığını değiştirir."
       },
       "apiErrors": {
         "featureLocked": "Planınız henüz telefonla sipariş asistanını içermiyor.",
@@ -4616,7 +4619,10 @@
           "operational": "Operasyonlar",
           "deflection": "Yönlendirmeler",
           "escalation": "Eskalasyon"
-        }
+        },
+        "quickStartTemplate": "Hızlı başlangıç şablonu",
+        "quickStartTitle": "Restoranınızı ajanınıza anlatın",
+        "quickStartBody": "Birkaç yaygın soruyu yanıtlayın, biz de bunları ajanınızın aramalarda kullanabileceği SSS'lere dönüştürelim."
       },
       "links": {
         "title": "SMS bağlantıları",
@@ -4683,14 +4689,55 @@
         "submit": "Talebi gönder",
         "cancelEdit": "İptal",
         "errorAlreadyProvisioned": "Hattınız zaten kurulu — sayfayı yenileyerek gösterim panelini görebilirsiniz.",
-        "errorGeneric": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
+        "errorGeneric": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
+        "agentNameLabel": "Ajanınıza bir isim verin",
+        "agentNameHint": "Bu, yapay zekânızın telefonda yanıt verirken kullandığı isimdir (örn. \"Merhaba, ben Sophia\"). \"Nabil\" kullanmak için boş bırakın. Daha sonra Ayarlar'dan değiştirebilirsiniz.",
+        "summaryAgentName": "Ajan adı: {name}"
       },
       "nowAvailable": "Artık mevcut",
       "availableHeading": "Nabil AI telefon siparişleri",
       "availablePrice": "{rate} arama dakikası başına · {minimum}/ay minimum · {included} dakika dahil",
       "availableConcierge": "Ekibimiz hattınızı bir iş günü içinde kurar. Sizin tarafınızdan teknik iş gerekmez.",
       "availableDemo": "Zaten ödeme yapan bir üye misiniz? {days} gün ücretsiz deneyin.",
-      "subscribeCta": "Abone ol ve kur"
+      "subscribeCta": "Abone ol ve kur",
+      "onboarding": {
+        "wizardTitle": "Nabil AI'ı ayarlayın",
+        "wizardSubtitle": "Birkaç hızlı adımla yapay zekâ telefon ajanınız aramaları yanıtlamaya hazır olacak.",
+        "step1Label": "Hat ve ajan adı",
+        "step2Label": "Restoran bilgileri",
+        "step3Label": "Test edin ve yayına alın",
+        "step2Title": "Restoranınızı ajanınıza anlatın",
+        "step2Body": "Yapabildiğiniz kadarını yanıtlayın — bu, ajanınızın SSS'si olur. Daha sonra her zaman daha fazlasını ekleyebilirsiniz.",
+        "dietarySectionTitle": "Beslenme seçenekleri",
+        "dietarySectionHint": "Restoranınız için geçerli değilse bunları boş bırakın.",
+        "qHalal": "Helal seçenekleriniz var mı?",
+        "qVegan": "Vegan seçenekleriniz var mı?",
+        "qVegetarian": "Vejetaryen seçenekleriniz var mı?",
+        "qGlutenFree": "Glutensiz seçenekleriniz var mı?",
+        "yesNoPlaceholder": "örn. \"Evet\" veya \"Hayır, maalesef\"",
+        "qAllergen": "Alerjen veya çapraz bulaşma politikanız var mı?",
+        "qParking": "Otoparkınız var mı?",
+        "websiteLabel": "Web sitesi (isteğe bağlı)",
+        "qSpecialInfo": "Müşterilerin restoranınız hakkında sıkça sorduğu başka bir şey var mı?",
+        "specialInfoPlaceholder": "örn. hikayeniz, imza yemekleriniz, oturma yerleri, evcil hayvan dostu...",
+        "hoursTitle": "Çalışma saatleri",
+        "hoursBody": "Ajanınız yayınladığınız çalışma saatlerini zaten otomatik olarak okuyor.",
+        "hoursFixLink": "Çalışma saatlerini düzelt",
+        "qHoursException": "Arayanların bilmesi gereken çalışma saati istisnaları var mı?",
+        "hoursExceptionPlaceholder": "örn. \"pazar günleri erken kapatıyoruz\"",
+        "orderingLinkTitle": "Çevrimiçi sipariş bağlantısı",
+        "orderingLinkHint": "Zaten ayarlandı — ajanınız bunu arayanlara otomatik olarak SMS ile gönderebilir.",
+        "saving": "Kaydediliyor…",
+        "saveFaq": "Kaydet",
+        "faqSaved": "Kaydedildi",
+        "faqSaveError": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
+        "goLiveTitle": "Nabil'i test etmeye hazır!",
+        "goLiveBody": "Hattınız yayında. Gerçek müşteriler için etkinleştirmeden önce arayın ve {agentName}'e birkaç soru sorun.",
+        "goLiveTryHours": "Çalışma saatlerini sorun",
+        "goLiveTryParking": "Otoparkı sorun",
+        "goLiveTryOrder": "Gel-al siparişi vermeyi deneyin",
+        "goLiveHint": "Duyduklarınızdan memnun kaldığınızda, gerçek aramaları almaya başlamak için yukarıdaki anahtarı açın."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "Tüm müşteriler",
@@ -6192,7 +6239,9 @@
       "trackingCta": "Sipariş durumunu görüntüle",
       "missedTitle": "Sipariş zamanında kabul edilmedi",
       "missedBody": "Maalesef restoran siparişinizi zamanında kabul edemedi, bu yüzden sipariş gerçekleşmedi. Çevrimiçi ödediyseniz, tüm ön provizyonlar otomatik olarak serbest bırakılır — sizden ücret alınmaz.",
-      "creditReturned": "{label} ile ödediğiniz {amount} tutarı cüzdanınıza iade edildi."
+      "creditReturned": "{label} ile ödediğiniz {amount} tutarı cüzdanınıza iade edildi.",
+      "cancelledPaymentIncompleteTitle": "Sipariş iptal edildi — ödeme tamamlanmadı",
+      "cancelledPaymentIncompleteBody": "Bu siparişin ödemesini zamanında alamadığımız için otomatik olarak iptal edildi. Kartınızda veya PayPal'ınızda bir bloke varsa serbest bırakılacaktır — sizden herhangi bir ücret alınmadı. Hazır olduğunuzda yeni bir sipariş verebilirsiniz."
     },
     "orderRejected": {
       "subject": "#{orderNumber} numaralı sipariş reddedildi",
@@ -6986,7 +7035,7 @@
       "cta": "Ücretsiz Başla",
       "ctaContact": "Satışla iletişime geç",
       "trialNote": "Kredi kartı gerekmez. Sözleşme yok.",
-      "phoneOrderingMinuteNote": "Dakika başı 0,60 USD, aylık minimum 249,99 USD (≈ 416 dahil dakika). Detaylar"
+      "phoneOrderingMinuteNote": "US$249.99/ay planınıza yaklaşık 499 arama dakikası dahildir; ek süre saniye bazında US$0.50/dk olarak faturalandırılır. Detaylar"
     },
     "faq": {
       "title": "Sıkça Sorulan Sorular",
@@ -7138,7 +7187,7 @@
         "trust1": "Pizzacılar için yapıldı",
         "trust2": "Web sitenizle aynı ödeme ekranı",
         "trust3": "Kayıtlar ve dökümanlar",
-        "trust4": "Arama dakikası başına US$0.60",
+        "trust4": "US$0.50/dk, saniye bazında faturalandırılır",
         "sampleLabel": "Canlı arama örneği",
         "sampleCaller": "Arayan",
         "sample1": "Merhaba, teslimat için sipariş verebilir miyim?",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Basit fiyatlandırma",
         "title": "Tek fiyat. Sürpriz yok.",
-        "perMinute": "0,60 USD",
-        "perMinuteLabel": "arama dakikası başına",
+        "perMinute": "US$0.50",
+        "perMinuteLabel": "dakika başına, saniye bazında faturalandırılır",
         "minimum": "249,99 USD",
         "minimumLabel": "aylık minimum",
-        "rule": "Hangisi yüksekse onu ödersiniz: arama dakikalarınız için dakika başı 0,60 USD, veya aylık 249,99 USD minimum. Çoğu restoran dahil 416 dakika içinde kalır.",
+        "rule": "Aylık US$249.99 planınıza yaklaşık 499 arama dakikası dahildir. Daha fazla konuştuğunuzda, ek süre dakika başına US$0.50 olarak faturalandırılır — saniye bazında, arama başına yuvarlama yapılmaz. Ayrı sözleşme yok, sürpriz ücret yok. Çoğu restoran dahil dakikaları hiç aşmaz.",
         "demo": "Zaten ödeme yapan bir Fee Free üyesi misiniz? Nabil'i 7 gün ücretsiz deneyin — taahhüt yok.",
         "include1": "Sınırsız arama",
         "include2": "Kayıtlar ve transkriptler",
@@ -7384,7 +7433,7 @@
         "q6": "Mesai saatleri dışında ne olur?",
         "a6": "Nabil çalışma saatlerinizi ve tatil takviminizi bilir. Mesai dışında, arayan kişiye ne zaman açılacağınızı söyler ve zamanlama etkinleştirilmişse bir sonraki açılış için sipariş alabilir.",
         "q7": "Faturalandırma nasıl hesaplanır?",
-        "a7": "Arama dakikası başına 0,60 USD veya aylık 249,99 USD minimumdan hangisi yüksekse onu ödersiniz. Minimum yaklaşık 416 dakika içerir. Her arama bir sonraki tam dakikaya yuvarlanır. Kullanımınızı gerçek zamanlı takip edebilirsiniz.",
+        "a7": "Her plan, yaklaşık 499 arama dakikası içeren aylık US$249.99 taban ücretiyle başlar. Bunun ötesinde, ek süre dakika başına US$0.50 olarak faturalandırılır — saniye bazında, arama başına yuvarlama yapılmaz. Kullanımınızı panelinizden anlık olarak takip edebilirsiniz.",
         "q8": "İstediğim zaman iptal edebilir miyim?",
         "a8": "Evet. Nabil, Stripe üzerinden uzun vadeli sözleşme olmaksızın aylık olarak faturalandırılır. Panelden istediğiniz zaman iptal edin ve hattınız fatura dönemi sonuna kadar aktif kalır.",
         "q9": "Bazen gerçek bir kişi cevap verir mi?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Stripe tarafından güvence altına alınmıştır. Kart bilgilerinizi asla saklamayız.",
       "preparingPayment": "Güvenli ödeme hazırlanıyor…",
       "couldNotStartPayment": "Bu sipariş için ödemeyi başlatamadık. Lütfen geri dönüp tekrar deneyin.",
-      "backToRestaurant": "Restorana dön"
+      "backToRestaurant": "Restorana dön",
+      "leaveConfirmTitle": "Ödemeden çıkılsın mı?",
+      "leaveConfirmBody": "Şimdi geri dönerseniz bu sipariş iptal edilir — sizden herhangi bir ücret alınmaz.",
+      "leaveConfirmStay": "Ödemeye devam et",
+      "leaveConfirmCancel": "Siparişimi iptal et",
+      "paymentInProgressWarning": "Ödemeniz işleniyor — lütfen bu sayfayı kapatmayın.",
+      "cancelUnpaidFailed": "Sipariş iptal edilemedi. Lütfen tekrar deneyin."
     },
     "paymentPage": {
       "loading": "Yükleniyor…"

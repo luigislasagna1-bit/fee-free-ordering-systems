@@ -3,8 +3,9 @@
  * `phone_ordering` AddOn row from "coming soon, $0" to the live catalog entry:
  *
  *   name              → "Nabil AI Phone Ordering"
- *   monthlyPriceCents → 24999   (US$249.99/month minimum; overage US$0.60/min
- *                                is billed by /api/cron/nabil-usage-billing)
+ *   monthlyPriceCents → 24999   (US$249.99/month minimum; overage US$0.50/min
+ *                                billed by the second via
+ *                                /api/cron/nabil-usage-billing)
  *   comingSoon        → false
  *   isActive          → true
  *   trialDays         → null    (the 7-day demo is CONDITIONAL — members only,
@@ -43,7 +44,7 @@ export const NABIL_ADDON_SLUG = "phone_ordering";
 export const NABIL_ADDON_LIVE = {
   name: "Nabil AI Phone Ordering",
   description:
-    "Nabil AI answers your phone 24/7 and takes orders straight into your kitchen — half-and-half pizzas, combos, delivery zones, promos, receipts and reports, all through the same checkout as your website. US$0.60 per call-minute, US$249.99/month minimum.",
+    "Nabil AI answers your phone 24/7 and takes orders straight into your kitchen — half-and-half pizzas, combos, delivery zones, promos, receipts and reports, all through the same checkout as your website. US$0.50/min billed by the second, US$249.99/month minimum.",
   monthlyPriceCents: 24999,
   comingSoon: false,
   isActive: true,

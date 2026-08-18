@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "Sestavljanje pic in kombinacij po telefonu",
         "buildPizzaComboHint": "Privzeto izklopljeno. Ko je vklopljeno, Nabil sestavi pice — velikosti, sestavine, tudi pol & pol — in zapolni mesta v kombinaciji, namesto da klicatelja preveže na osebo. Preden se nanj zanesete, oddajte preizkusno naročilo in preverite natisnjeni račun.",
         "offerDayDeals": "Ponudi današnje akcije brez vprašanja",
-        "offerDayDealsHint": "Privzeto izklopljeno. Ko je vklopljeno in klicatelj naroči nekaj, za kar danes velja cenejša ponudba iste velikosti, Nabil to omeni sam. Prinese naklonjenost in stane maržo — vaša odločitev."
+        "offerDayDealsHint": "Privzeto izklopljeno. Ko je vklopljeno in klicatelj naroči nekaj, za kar danes velja cenejša ponudba iste velikosti, Nabil to omeni sam. Prinese naklonjenost in stane maržo — vaša odločitev.",
+        "agentIdentity": "Ime agenta",
+        "agentName": "Kako naj se imenuje vaš agent?",
+        "agentNameHint": "Izgovorjeno ob vsakem klicu, ko klicatelj vpraša po imenu. Pustite prazno za uporabo \"Nabil\". To ne preimenuje samega Nabil AI — samo kako se imenuje glas."
       },
       "apiErrors": {
         "featureLocked": "Vaš paket še ne vključuje agenta za telefonsko naročanje.",
@@ -4616,7 +4619,10 @@
           "operational": "Poslovanje",
           "deflection": "Preusmeritve",
           "escalation": "Eskalacija"
-        }
+        },
+        "quickStartTemplate": "Predloga za hiter začetek",
+        "quickStartTitle": "Povejte agentu o svoji restavraciji",
+        "quickStartBody": "Odgovorite na nekaj pogostih vprašanj in jih bomo spremenili v pogosta vprašanja, ki jih lahko vaš agent uporablja med klici."
       },
       "links": {
         "title": "SMS-povezave",
@@ -4683,14 +4689,55 @@
         "submit": "Pošlji zahtevo",
         "cancelEdit": "Prekliči",
         "errorAlreadyProvisioned": "Vaša linija je že nastavljena — osvežite stran.",
-        "errorGeneric": "Prišlo je do napake. Poskusite znova."
+        "errorGeneric": "Prišlo je do napake. Poskusite znova.",
+        "agentNameLabel": "Poimenujte svojega agenta",
+        "agentNameHint": "To je ime, s katerim se vaš UI oglasi po telefonu (npr. \"Pozdravljeni, tukaj Sophia\"). Pustite prazno za uporabo \"Nabil\". Kasneje ga lahko spremenite v Nastavitvah.",
+        "summaryAgentName": "Ime agenta: {name}"
       },
       "nowAvailable": "Zdaj na voljo",
       "availableHeading": "Nabil AI telefonska naročila",
       "availablePrice": "{rate} na minuto klica · {minimum}/mesec minimum · {included} minut vključenih",
       "availableConcierge": "Naša ekipa nastavi vašo linijo v enem delovnem dnevu. Brez tehničnega dela z vaše strani.",
       "availableDemo": "Že plačujoči član? Preizkusite brezplačno {days} dni.",
-      "subscribeCta": "Naročite se in nastavite"
+      "subscribeCta": "Naročite se in nastavite",
+      "onboarding": {
+        "wizardTitle": "Nastavite Nabil AI",
+        "wizardSubtitle": "Nekaj hitrih korakov in vaš telefonski agent z UI bo pripravljen na sprejemanje klicev.",
+        "step1Label": "Linija in ime agenta",
+        "step2Label": "Podatki o restavraciji",
+        "step3Label": "Testiraj in zaženi",
+        "step2Title": "Povejte agentu o svoji restavraciji",
+        "step2Body": "Odgovorite, kolikor lahko — to postane pogosta vprašanja vašega agenta. Kasneje lahko vedno dodate več.",
+        "dietarySectionTitle": "Prehranske možnosti",
+        "dietarySectionHint": "Pustite prazno, če ne velja za vašo restavracijo.",
+        "qHalal": "Ali imate halal možnosti?",
+        "qVegan": "Ali imate veganske možnosti?",
+        "qVegetarian": "Ali imate vegetarijanske možnosti?",
+        "qGlutenFree": "Ali imate možnosti brez glutena?",
+        "yesNoPlaceholder": "npr. \"Da\" ali \"Ne, žal ne\"",
+        "qAllergen": "Ali imate politiko glede alergenov ali navzkrižne kontaminacije?",
+        "qParking": "Ali imate parkirišče?",
+        "websiteLabel": "Spletna stran (neobvezno)",
+        "qSpecialInfo": "Kaj drugega, kar stranke pogosto sprašujejo o vaši restavraciji?",
+        "specialInfoPlaceholder": "npr. vaša zgodba, avtorske jedi, sedežni prostori, primerno za hišne ljubljenčke...",
+        "hoursTitle": "Delovni čas",
+        "hoursBody": "Vaš agent že samodejno bere vaš objavljeni delovni čas.",
+        "hoursFixLink": "Popravi delovni čas",
+        "qHoursException": "Izjeme od vašega delovnega časa, ki bi jih klicatelji morali poznati?",
+        "hoursExceptionPlaceholder": "npr. \"ob nedeljah zapremo prej\"",
+        "orderingLinkTitle": "Povezava za spletno naročanje",
+        "orderingLinkHint": "Že nastavljeno — vaš agent lahko to samodejno pošlje klicateljem prek SMS-a.",
+        "saving": "Shranjevanje…",
+        "saveFaq": "Shrani",
+        "faqSaved": "Shranjeno",
+        "faqSaveError": "Nekaj je šlo narobe. Poskusite znova.",
+        "goLiveTitle": "Pripravljeni na testiranje Nabila!",
+        "goLiveBody": "Vaša linija je aktivna. Pokličite in postavite {agentName} nekaj vprašanj, preden ga aktivirate za prave stranke.",
+        "goLiveTryHours": "Vprašajte o delovnem času",
+        "goLiveTryParking": "Vprašajte o parkirišču",
+        "goLiveTryOrder": "Poskusite oddati naročilo za prevzem",
+        "goLiveHint": "Ko boste zadovoljni, vklopite stikalo zgoraj, da začnete sprejemati prave klice."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "Vsi kupci",
@@ -6192,7 +6239,9 @@
       "trackingCta": "Oglejte si stanje naročila",
       "missedTitle": "Naročilo ni bilo sprejeto pravočasno",
       "missedBody": "Restavracija žal ni uspela pravočasno sprejeti vašega naročila, zato ni bilo izvedeno. Če ste plačali prek spleta, se morebitna avtorizacija samodejno sprosti — bremenitve ne bo.",
-      "creditReturned": "Znesek {amount}, plačan z {label}, je bil vrnjen v vašo denarnico."
+      "creditReturned": "Znesek {amount}, plačan z {label}, je bil vrnjen v vašo denarnico.",
+      "cancelledPaymentIncompleteTitle": "Naročilo preklicano — plačilo ni bilo dokončano",
+      "cancelledPaymentIncompleteBody": "Plačila za to naročilo nismo prejeli pravočasno, zato je bilo samodejno preklicano. Če je bila na vaši kartici ali PayPalu rezervacija zneska, bo sproščena — ni vam bilo zaračunano nič. Novo naročilo lahko oddate, kadar koli ste pripravljeni."
     },
     "orderRejected": {
       "subject": "Naročilo #{orderNumber} zavrnjeno",
@@ -6986,7 +7035,7 @@
       "cta": "Začni brezplačno",
       "ctaContact": "Kontaktirajte prodajo",
       "trialNote": "Kreditna kartica ni potrebna. Brez pogodb.",
-      "phoneOrderingMinuteNote": "Zaračunavanje 0,60 USD/min z minimumom 249,99 USD/mesec (≈ 416 vključenih minut). Podrobnosti na"
+      "phoneOrderingMinuteNote": "Vaš paket US$249.99/mesec vključuje približno 499 minut klicev; dodatni čas se zaračuna po US$0.50/min po sekundah. Podrobnosti na"
     },
     "faq": {
       "title": "Pogosto zastavljena vprašanja",
@@ -7138,7 +7187,7 @@
         "trust1": "Narejeno za picerije",
         "trust2": "Ista blagajna kot vaša spletna stran",
         "trust3": "Posnetki in prepisi",
-        "trust4": "US$0.60 na minuto klica",
+        "trust4": "US$0.50/min, zaračunano po sekundah",
         "sampleLabel": "Primer klica v živo",
         "sampleCaller": "Klicatelj",
         "sample1": "Živjo, lahko naročim za dostavo?",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Enostavne cene",
         "title": "Ena cena. Brez presenečenj.",
-        "perMinute": "0,60 USD",
-        "perMinuteLabel": "na minuto klica",
+        "perMinute": "US$0.50",
+        "perMinuteLabel": "na minuto, zaračunano po sekundah",
         "minimum": "249,99 USD",
         "minimumLabel": "minimum na mesec",
-        "rule": "Plačate višji znesek: vaše minute klicev po 0,60 USD, ali mesečni minimum 249,99 USD. Večina restavracij ostane znotraj vključenih 416 minut.",
+        "rule": "Vaš mesečni paket US$249.99 vključuje približno 499 minut klicev. Če govorite več, se dodatni čas zaračuna po US$0.50 na minuto — po sekundah, brez zaokroževanja na klic. Brez ločene pogodbe, brez skritih stroškov. Večina restavracij nikoli ne preseže vključenih minut.",
         "demo": "Že plačujoči član Fee Free? Preizkusite Nabil brezplačno 7 dni — brez obveznosti.",
         "include1": "Neomejeni klici",
         "include2": "Posnetki in prepisi",
@@ -7384,7 +7433,7 @@
         "q6": "Kaj se zgodi zunaj delovnega časa?",
         "a6": "Nabil pozna vaš delovni čas in praznike. Zunaj delovnega časa obvesti klicatelja, kdaj spet odprete, in lahko ponudi načrtovano naročilo, če je omogočeno.",
         "q7": "Kako se izračuna zaračunavanje?",
-        "a7": "Plačate 0,60 USD na minuto klica ali mesečni minimum 249,99 USD — višji znesek. Minimum vključuje približno 416 minut. Vsak klic se zaokroži navzgor. Spremljajte uporabo v realnem času.",
+        "a7": "Vsak paket se začne z mesečno osnovo US$249.99, ki vključuje približno 499 minut klicev. Če v mesecu govorite več, se dodatni čas zaračuna po US$0.50 na minuto — po sekundah, brez zaokroževanja na klic. Porabo lahko spremljate v realnem času iz nadzorne plošče.",
         "q8": "Ali lahko kadarkoli prekličem?",
         "a8": "Da. Nabil se zaračunava mesečno prek Stripe brez dolgoročne pogodbe. Prekličite z nadzorne plošče kadarkoli in vaša linija ostane aktivna do konca obračunskega obdobja.",
         "q9": "Se kdaj oglasi resnična oseba?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Zaščiteno s Stripe. Vaših podatkov kartice nikoli ne shranjujemo.",
       "preparingPayment": "Pripravljamo varno plačilo…",
       "couldNotStartPayment": "Plačila za to naročilo ni bilo mogoče začeti. Vrnite se nazaj in poskusite znova.",
-      "backToRestaurant": "Nazaj na restavracijo"
+      "backToRestaurant": "Nazaj na restavracijo",
+      "leaveConfirmTitle": "Zapustiti brez plačila?",
+      "leaveConfirmBody": "Če se zdaj vrnete, bo to naročilo preklicano — ne bo vam zaračunano nič.",
+      "leaveConfirmStay": "Nadaljuj s plačilom",
+      "leaveConfirmCancel": "Prekliči moje naročilo",
+      "paymentInProgressWarning": "Vaše plačilo se obdeluje — te strani ne zapirajte.",
+      "cancelUnpaidFailed": "Naročila ni bilo mogoče preklicati. Poskusite znova."
     },
     "paymentPage": {
       "loading": "Nalaganje…"

@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "Byg pizzaer og comboer over telefonen",
         "buildPizzaComboHint": "Slået fra som standard. Når den er slået til, bygger Nabil pizzaer — størrelser, toppings, endda halv & halv — og udfylder combo-pladser i stedet for at stille opkaldet videre til en medarbejder. Afgiv en testbestilling, og tjek den printede bon, før du stoler på funktionen.",
         "offerDayDeals": "Tilbyd dagens tilbud uopfordret",
-        "offerDayDealsHint": "Slået fra som standard. Når det er slået til, og en kunde bestiller noget, der har et billigere tilbud i samme størrelse i dag, nævner Nabil det uopfordret. Det giver goodwill og koster margin — dit valg."
+        "offerDayDealsHint": "Slået fra som standard. Når det er slået til, og en kunde bestiller noget, der har et billigere tilbud i samme størrelse i dag, nævner Nabil det uopfordret. Det giver goodwill og koster margin — dit valg.",
+        "agentIdentity": "Agentnavn",
+        "agentName": "Hvad skal din agent kalde sig selv?",
+        "agentNameHint": "Siges i hvert opkald, når nogen spørger om navnet. Lad stå tomt for at bruge \"Nabil\". Dette omdøber ikke selve Nabil AI — kun hvad stemmen kalder sig."
       },
       "apiErrors": {
         "featureLocked": "Din plan inkluderer endnu ikke telefonbestillingsagenten.",
@@ -4616,7 +4619,10 @@
           "operational": "Drift",
           "deflection": "Viderestillinger",
           "escalation": "Eskalering"
-        }
+        },
+        "quickStartTemplate": "Hurtigstart-skabelon",
+        "quickStartTitle": "Fortæl din agent om din restaurant",
+        "quickStartBody": "Svar på et par almindelige spørgsmål, så laver vi dem om til FAQ, din agent kan bruge under opkald."
       },
       "links": {
         "title": "SMS-links",
@@ -4683,14 +4689,55 @@
         "submit": "Indsend anmodning",
         "cancelEdit": "Annuller",
         "errorAlreadyProvisioned": "Din linje er allerede sat op — opdater siden.",
-        "errorGeneric": "Noget gik galt. Prøv igen."
+        "errorGeneric": "Noget gik galt. Prøv igen.",
+        "agentNameLabel": "Giv din agent et navn",
+        "agentNameHint": "Dette er navnet, din AI svarer med i telefonen (f.eks. \"Hej, det er Sophia\"). Lad stå tomt for at bruge \"Nabil\". Du kan ændre det senere i Indstillinger.",
+        "summaryAgentName": "Agentnavn: {name}"
       },
       "nowAvailable": "Tilgængelig nu",
       "availableHeading": "Nabil AI telefonbestilling",
       "availablePrice": "{rate} pr. samtalsminut · {minimum}/måned minimum · {included} minutter inkluderet",
       "availableConcierge": "Vores team opsætter din linje inden for én hverdag. Intet teknisk arbejde fra din side.",
       "availableDemo": "Allerede betalende medlem? Prøv gratis i {days} dage.",
-      "subscribeCta": "Abonner & konfigurer"
+      "subscribeCta": "Abonner & konfigurer",
+      "onboarding": {
+        "wizardTitle": "Opsæt Nabil AI",
+        "wizardSubtitle": "Et par hurtige trin, så er din AI-telefonagent klar til at tage imod opkald.",
+        "step1Label": "Linje & agentnavn",
+        "step2Label": "Restaurantinfo",
+        "step3Label": "Test & gå live",
+        "step2Title": "Fortæl din agent om din restaurant",
+        "step2Body": "Svar på det, du kan — det bliver din agents FAQ. Du kan altid tilføje mere senere.",
+        "dietarySectionTitle": "Kostmuligheder",
+        "dietarySectionHint": "Lad felterne stå tomme, hvis de ikke gælder for din restaurant.",
+        "qHalal": "Har I halal-muligheder?",
+        "qVegan": "Har I veganske muligheder?",
+        "qVegetarian": "Har I vegetariske muligheder?",
+        "qGlutenFree": "Har I glutenfrie muligheder?",
+        "yesNoPlaceholder": "f.eks. \"Ja\" eller \"Nej, desværre\"",
+        "qAllergen": "Har I en politik om allergener eller krydskontaminering?",
+        "qParking": "Har I parkering?",
+        "websiteLabel": "Hjemmeside (valgfrit)",
+        "qSpecialInfo": "Andet, kunder ofte spørger om vedrørende din restaurant?",
+        "specialInfoPlaceholder": "f.eks. jeres historie, signaturretter, siddepladser, dyrevenligt...",
+        "hoursTitle": "Åbningstider",
+        "hoursBody": "Din agent læser allerede automatisk dine offentliggjorte åbningstider.",
+        "hoursFixLink": "Ret åbningstider",
+        "qHoursException": "Undtagelser fra jeres åbningstider, som opkaldere bør kende?",
+        "hoursExceptionPlaceholder": "f.eks. \"vi lukker tidligere om søndagen\"",
+        "orderingLinkTitle": "Link til onlinebestilling",
+        "orderingLinkHint": "Allerede sat op — din agent kan sms'e dette til opkaldere automatisk.",
+        "saving": "Gemmer…",
+        "saveFaq": "Gem",
+        "faqSaved": "Gemt",
+        "faqSaveError": "Noget gik galt. Prøv igen.",
+        "goLiveTitle": "Klar til at teste Nabil!",
+        "goLiveBody": "Din linje er live. Ring og stil {agentName} et par spørgsmål, før du aktiverer den for rigtige kunder.",
+        "goLiveTryHours": "Spørg om åbningstider",
+        "goLiveTryParking": "Spørg om parkering",
+        "goLiveTryOrder": "Prøv at afgive en afhentningsordre",
+        "goLiveHint": "Når du er tilfreds, så slå kontakten ovenfor til for at begynde at tage rigtige opkald."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "Alle kunder",
@@ -6192,7 +6239,9 @@
       "trackingCta": "Se ordrestatus",
       "missedTitle": "Ordren blev ikke accepteret i tide",
       "missedBody": "Desværre kunne restauranten ikke acceptere din ordre i tide, så den gik ikke igennem. Hvis du betalte online, frigives enhver godkendelse automatisk — du bliver ikke opkrævet.",
-      "creditReturned": "Beløbet {amount}, som du betalte med {label}, er ført tilbage til din saldo."
+      "creditReturned": "Beløbet {amount}, som du betalte med {label}, er ført tilbage til din saldo.",
+      "cancelledPaymentIncompleteTitle": "Ordre annulleret — betaling ikke gennemført",
+      "cancelledPaymentIncompleteBody": "Vi modtog ikke betaling for denne ordre i tide, så den blev automatisk annulleret. Hvis der var en reservation på dit kort eller PayPal, frigives den — du er ikke blevet opkrævet. Du er velkommen til at afgive en ny ordre, når du er klar."
     },
     "orderRejected": {
       "subject": "Ordre #{orderNumber} afvist",
@@ -6986,7 +7035,7 @@
       "cta": "Kom gratis i gang",
       "ctaContact": "Kontakt salg",
       "trialNote": "Intet kreditkort nødvendigt. Ingen kontrakter.",
-      "phoneOrderingMinuteNote": "Faktureres til 0,60 USD/min med et minimum på 249,99 USD/måned (≈ 416 inkluderede minutter). Detaljer på"
+      "phoneOrderingMinuteNote": "Din plan på 249,99 USD/måned inkluderer ca. 499 samtaleminutter; ekstra tid faktureres med 0,50 USD/min pr. sekund. Detaljer på"
     },
     "faq": {
       "title": "Ofte stillede spørgsmål",
@@ -7138,7 +7187,7 @@
         "trust1": "Bygget til pizzeriaer",
         "trust2": "Samme checkout som din hjemmeside",
         "trust3": "Optagelser & transskriptioner",
-        "trust4": "US$0.60 per samtalsminut",
+        "trust4": "US$0.50/min, faktureret pr. sekund",
         "sampleLabel": "Eksempel på liveopkald",
         "sampleCaller": "Opkalder",
         "sample1": "Hej, kan jeg afgive en bestilling til levering?",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Enkel prissætning",
         "title": "Én pris. Ingen overraskelser.",
-        "perMinute": "0,60 USD",
-        "perMinuteLabel": "pr. samtalsminut",
+        "perMinute": "0,50 USD",
+        "perMinuteLabel": "pr. minut, faktureret pr. sekund",
         "minimum": "249,99 USD",
         "minimumLabel": "minimum pr. måned",
-        "rule": "Du betaler det højeste beløb: dine samtalsminutter til 0,60 USD stykket, eller det månedlige minimum på 249,99 USD. De fleste restauranter holder sig inden for de inkluderede 416 minutter.",
+        "rule": "Din månedlige plan på 249,99 USD inkluderer ca. 499 samtaleminutter. Taler du mere end det, faktureres ekstra tid med 0,50 USD pr. minut — pr. sekund, uden oprunding pr. opkald. Ingen separat kontrakt, ingen overraskende gebyrer. De fleste restauranter overskrider aldrig de inkluderede minutter.",
         "demo": "Allerede betalende Fee Free-medlem? Prøv Nabil gratis i 7 dage — uden binding.",
         "include1": "Ubegrænsede opkald",
         "include2": "Optagelser & transskriptioner",
@@ -7384,7 +7433,7 @@
         "q6": "Hvad sker der uden for åbningstiderne?",
         "a6": "Nabil kender dine åbningstider og ferieplan. Uden for åbningstiden informerer den opkalderen om hvornår du åbner igen og kan tilbyde en planlagt bestilling hvis aktiveret.",
         "q7": "Hvordan beregnes faktureringen?",
-        "a7": "Du betaler 0,60 USD pr. samtalsminut eller det månedlige minimum på 249,99 USD. Minimummet inkluderer ca. 416 minutter. Hvert opkald rundes op. Følg dit forbrug i realtid.",
+        "a7": "Hver plan starter med en månedlig grundpris på 249,99 USD, som inkluderer ca. 499 samtaleminutter. Herudover faktureres ekstra tid med 0,50 USD pr. minut — pr. sekund, uden oprunding pr. opkald. Du kan følge dit forbrug i realtid fra dit dashboard.",
         "q8": "Kan jeg opsige når som helst?",
         "a8": "Ja. Nabil faktureres månedligt via Stripe uden langtidskontrakt. Opsig fra dit dashboard, og din linje forbliver aktiv til slutningen af faktureringsperioden.",
         "q9": "Er der nogensinde en rigtig person, der svarer?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Sikret af Stripe. Vi gemmer aldrig dine kortoplysninger.",
       "preparingPayment": "Forbereder sikker betaling…",
       "couldNotStartPayment": "Vi kunne ikke starte betalingen for denne ordre. Gå tilbage, og prøv igen.",
-      "backToRestaurant": "Tilbage til restauranten"
+      "backToRestaurant": "Tilbage til restauranten",
+      "leaveConfirmTitle": "Forlad uden at betale?",
+      "leaveConfirmBody": "Hvis du går tilbage nu, annulleres denne ordre — du bliver ikke opkrævet noget.",
+      "leaveConfirmStay": "Fortsæt til betaling",
+      "leaveConfirmCancel": "Annuller min ordre",
+      "paymentInProgressWarning": "Din betaling behandles — luk ikke denne side.",
+      "cancelUnpaidFailed": "Kunne ikke annullere ordren. Prøv venligst igen."
     },
     "paymentPage": {
       "loading": "Indlæser…"

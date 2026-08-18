@@ -4321,7 +4321,10 @@
         "buildPizzaCombo": "Pica ir rinkinių sudarymas balsu",
         "buildPizzaComboHint": "Pagal numatytuosius nustatymus išjungta. Kai įjungta, Nabil pats sudaro picas – dydžius, priedus, net pusę ant pusės – ir užpildo rinkinių pozicijas, užuot perdavęs skambinantįjį darbuotojui. Prieš pasikliaudami šia funkcija, pateikite bandomąjį užsakymą ir patikrinkite atspausdintą kvitą.",
         "offerDayDeals": "Siūlyti šiandienos pasiūlymus be raginimo",
-        "offerDayDealsHint": "Pagal numatytuosius išjungta. Įjungus, jei skambinantysis užsisako tai, kam šiandien galioja pigesnis to paties dydžio pasiūlymas, Nabil tai pamini pats. Laimi palankumą ir kainuoja maržos — jūsų sprendimas."
+        "offerDayDealsHint": "Pagal numatytuosius išjungta. Įjungus, jei skambinantysis užsisako tai, kam šiandien galioja pigesnis to paties dydžio pasiūlymas, Nabil tai pamini pats. Laimi palankumą ir kainuoja maržos — jūsų sprendimas.",
+        "agentIdentity": "Agento vardas",
+        "agentName": "Kaip turėtų vadintis jūsų agentas?",
+        "agentNameHint": "Ištariama kiekvieno skambučio metu, kai skambinantysis klausia vardo. Palikite tuščią, kad naudotumėte \"Nabil\". Tai nepervadina paties Nabil AI — tik tai, kaip vadinasi balsas."
       },
       "apiErrors": {
         "featureLocked": "Jūsų planas dar neapima užsakymų telefonu agento.",
@@ -4616,7 +4619,10 @@
           "operational": "Veikla",
           "deflection": "Peradresavimai",
           "escalation": "Eskalavimas"
-        }
+        },
+        "quickStartTemplate": "Greito starto šablonas",
+        "quickStartTitle": "Papasakokite agentui apie savo restoraną",
+        "quickStartBody": "Atsakykite į kelis dažnus klausimus ir mes juos paverčiame DUK, kuriuos jūsų agentas gali naudoti skambučių metu."
       },
       "links": {
         "title": "SMS nuorodos",
@@ -4683,14 +4689,55 @@
         "submit": "Pateikti užklausą",
         "cancelEdit": "Atšaukti",
         "errorAlreadyProvisioned": "Jūsų linija jau nustatyta — atnaujinkite puslapį.",
-        "errorGeneric": "Kažkas nepavyko. Bandykite dar kartą."
+        "errorGeneric": "Kažkas nepavyko. Bandykite dar kartą.",
+        "agentNameLabel": "Suteikite savo agentui vardą",
+        "agentNameHint": "Tai vardas, kuriuo jūsų DI atsiliepia telefonu (pvz., \"Sveiki, čia Sophia\"). Palikite tuščią, kad naudotumėte \"Nabil\". Vėliau galėsite pakeisti Nustatymuose.",
+        "summaryAgentName": "Agento vardas: {name}"
       },
       "nowAvailable": "Dabar pasiekiama",
       "availableHeading": "Nabil AI telefono užsakymai",
       "availablePrice": "{rate} skambučio minutei · {minimum}/mėn. minimumas · {included} minučių įtraukta",
       "availableConcierge": "Mūsų komanda nustato jūsų liniją per vieną darbo dieną. Jokio techninio darbo iš jūsų pusės.",
       "availableDemo": "Jau mokantis narys? Išbandykite nemokamai {days} dienas.",
-      "subscribeCta": "Prenumeruoti ir nustatyti"
+      "subscribeCta": "Prenumeruoti ir nustatyti",
+      "onboarding": {
+        "wizardTitle": "Nustatyti Nabil AI",
+        "wizardSubtitle": "Keli greiti žingsniai, ir jūsų DI telefono agentas bus pasiruošęs priimti skambučius.",
+        "step1Label": "Linija ir agento vardas",
+        "step2Label": "Restorano informacija",
+        "step3Label": "Testuoti ir paleisti",
+        "step2Title": "Papasakokite agentui apie savo restoraną",
+        "step2Body": "Atsakykite, kiek galite — tai taps jūsų agento DUK. Vėliau visada galėsite pridėti daugiau.",
+        "dietarySectionTitle": "Mitybos galimybės",
+        "dietarySectionHint": "Palikite tuščia, jei netaikoma jūsų restoranui.",
+        "qHalal": "Ar turite halal galimybių?",
+        "qVegan": "Ar turite veganiškų galimybių?",
+        "qVegetarian": "Ar turite vegetariškų galimybių?",
+        "qGlutenFree": "Ar turite be glitimo galimybių?",
+        "yesNoPlaceholder": "pvz., \"Taip\" arba \"Ne, deja\"",
+        "qAllergen": "Ar turite alergenų ar kryžminio užteršimo politiką?",
+        "qParking": "Ar turite automobilių stovėjimo aikštelę?",
+        "websiteLabel": "Svetainė (neprivaloma)",
+        "qSpecialInfo": "Kas dar, ko klientai dažnai klausia apie jūsų restoraną?",
+        "specialInfoPlaceholder": "pvz., jūsų istorija, firminiai patiekalai, sėdimos vietos, draugiškas naminiams gyvūnams...",
+        "hoursTitle": "Darbo valandos",
+        "hoursBody": "Jūsų agentas jau automatiškai skaito jūsų paskelbtas darbo valandas.",
+        "hoursFixLink": "Taisyti darbo valandas",
+        "qHoursException": "Darbo valandų išimtys, kurias skambinantieji turėtų žinoti?",
+        "hoursExceptionPlaceholder": "pvz., \"sekmadieniais uždarome anksčiau\"",
+        "orderingLinkTitle": "Užsakymų internetu nuoroda",
+        "orderingLinkHint": "Jau nustatyta — jūsų agentas gali automatiškai išsiųsti tai skambinantiesiems SMS žinute.",
+        "saving": "Saugoma…",
+        "saveFaq": "Išsaugoti",
+        "faqSaved": "Išsaugota",
+        "faqSaveError": "Kažkas nutiko ne taip. Bandykite dar kartą.",
+        "goLiveTitle": "Pasiruošę išbandyti Nabil!",
+        "goLiveBody": "Jūsų linija veikia. Paskambinkite ir užduokite {agentName} kelis klausimus, prieš aktyvindami jį tikriems klientams.",
+        "goLiveTryHours": "Paklauskite apie darbo valandas",
+        "goLiveTryParking": "Paklauskite apie stovėjimo aikštelę",
+        "goLiveTryOrder": "Pabandykite pateikti atsiėmimo užsakymą",
+        "goLiveHint": "Kai būsite patenkinti, įjunkite jungiklį aukščiau, kad pradėtumėte priimti tikrus skambučius."
+      }
     },
     "customerDetailPage": {
       "allCustomers": "Visi klientai",
@@ -6192,7 +6239,9 @@
       "trackingCta": "Peržiūrėti užsakymo būseną",
       "missedTitle": "Užsakymas nebuvo priimtas laiku",
       "missedBody": "Deja, restoranas nespėjo laiku priimti jūsų užsakymo, todėl jis neįvyko. Jei mokėjote internetu, bet kokia autorizacija atlaisvinama automatiškai — pinigai nebus nuskaityti.",
-      "creditReturned": "{amount} suma, sumokėta naudojant {label}, grąžinta į jūsų piniginę."
+      "creditReturned": "{amount} suma, sumokėta naudojant {label}, grąžinta į jūsų piniginę.",
+      "cancelledPaymentIncompleteTitle": "Užsakymas atšauktas — mokėjimas nebaigtas",
+      "cancelledPaymentIncompleteBody": "Negavome mokėjimo už šį užsakymą laiku, todėl jis buvo automatiškai atšauktas. Jei jūsų kortelėje ar PayPal buvo rezervuota suma, ji bus atlaisvinta — jums nieko nenuskaičiuota. Galite pateikti naują užsakymą, kai tik būsite pasiruošę."
     },
     "orderRejected": {
       "subject": "Užsakymas #{orderNumber} atmestas",
@@ -6986,7 +7035,7 @@
       "cta": "Pradėti nemokamai",
       "ctaContact": "Susisiekti su pardavimų komanda",
       "trialNote": "Nereikia kredito kortelės. Jokių sutarčių.",
-      "phoneOrderingMinuteNote": "Atsiskaitoma 0,60 USD/min su minimumu 249,99 USD/mėn. (≈ 416 įtrauktų minučių). Išsamiau"
+      "phoneOrderingMinuteNote": "Jūsų US$249.99/mėn. planas apima apie 499 skambučių minučių; papildomos minutės kainuoja US$0.50, skaičiuojama sekundėmis. Išsamiau"
     },
     "faq": {
       "title": "Dažnai užduodami klausimai",
@@ -7138,7 +7187,7 @@
         "trust1": "Sukurta picerijoms",
         "trust2": "Ta pati kasa kaip jūsų svetainėje",
         "trust3": "Įrašai ir transkripcijos",
-        "trust4": "US$0.60 už skambučio minutę",
+        "trust4": "US$0.50/min, skaičiuojama sekundėmis",
         "sampleLabel": "Tiesioginio skambučio pavyzdys",
         "sampleCaller": "Skambinantysis",
         "sample1": "Sveiki, ar galiu pateikti užsakymą su pristatymu?",
@@ -7349,11 +7398,11 @@
       "pricing": {
         "eyebrow": "Paprastos kainos",
         "title": "Viena kaina. Be staigmenų.",
-        "perMinute": "0,60 USD",
-        "perMinuteLabel": "per skambučio minutę",
+        "perMinute": "US$0.50",
+        "perMinuteLabel": "per minutę, skaičiuojama sekundėmis",
         "minimum": "249,99 USD",
         "minimumLabel": "minimumas per mėnesį",
-        "rule": "Mokate didesnę sumą: jūsų skambučių minutes po 0,60 USD kiekviena, arba mėnesinį minimumą 249,99 USD. Dauguma restoranų neviršija įtrauktų 416 minučių.",
+        "rule": "Jūsų US$249.99 mėnesinis planas apima apie 499 skambučių minučių. Jei kalbate daugiau, papildomas laikas apmokestinamas US$0.50 per minutę — skaičiuojama sekundėmis, be apvalinimo kiekvienam skambučiui. Jokios atskiros sutarties, jokių netikėtų mokesčių. Dauguma restoranų niekada neviršija įtrauktų minučių.",
         "demo": "Jau mokantis Fee Free narys? Išbandykite Nabil nemokamai 7 dienas — be įsipareigojimų.",
         "include1": "Neriboti skambučiai",
         "include2": "Įrašai ir transkripcijos",
@@ -7384,7 +7433,7 @@
         "q6": "Kas vyksta ne darbo valandomis?",
         "a6": "Nabil žino jūsų darbo valandas ir švenčių grafiką. Ne darbo valandomis informuoja skambinantįjį, kada vėl atsidarote, ir gali pasiūlyti suplanuotą užsakymą, jei tai įjungta.",
         "q7": "Kaip skaičiuojamas atsiskaitymas?",
-        "a7": "Mokate 0,60 USD per skambučio minutę arba mėnesinį minimumą 249,99 USD — kas yra aukščiau. Minimumas apima apie 416 minučių. Kiekvienas skambutis suapvalinamas į viršų. Stebėkite naudojimą realiu laiku.",
+        "a7": "Kiekvienas planas prasideda nuo US$249.99 mėnesinės bazinės kainos, kuri apima apie 499 skambučių minučių. Jei per mėnesį kalbate daugiau, papildomas laikas apmokestinamas US$0.50 per minutę — skaičiuojama sekundėmis, be apvalinimo kiekvienam skambučiui. Naudojimą galite stebėti realiu laiku savo skydelyje.",
         "q8": "Ar galiu atšaukti bet kada?",
         "a8": "Taip. Nabil atsiskaitomas kas mėnesį per Stripe be ilgalaikės sutarties. Atšaukite iš valdymo skydelio bet kada ir jūsų linija lieka aktyvi iki atsiskaitymo periodo pabaigos.",
         "q9": "Ar kada nors atsiliepia tikras žmogus?",
@@ -7743,7 +7792,13 @@
       "securedByStripe": "Apsaugota Stripe. Mes niekada nesaugome jūsų kortelės duomenų.",
       "preparingPayment": "Ruošiamas saugus mokėjimas…",
       "couldNotStartPayment": "Nepavyko pradėti šio užsakymo mokėjimo. Grįžkite atgal ir bandykite dar kartą.",
-      "backToRestaurant": "Grįžti į restoraną"
+      "backToRestaurant": "Grįžti į restoraną",
+      "leaveConfirmTitle": "Išeiti nesumokėjus?",
+      "leaveConfirmBody": "Jei dabar grįšite, šis užsakymas bus atšauktas — jums nebus nieko nuskaičiuota.",
+      "leaveConfirmStay": "Tęsti mokėjimą",
+      "leaveConfirmCancel": "Atšaukti mano užsakymą",
+      "paymentInProgressWarning": "Jūsų mokėjimas apdorojamas — nedarykite šio puslapio uždarymo.",
+      "cancelUnpaidFailed": "Nepavyko atšaukti užsakymo. Bandykite dar kartą."
     },
     "paymentPage": {
       "loading": "Kraunama…"

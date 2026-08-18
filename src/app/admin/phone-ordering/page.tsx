@@ -7,9 +7,10 @@ import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
 import { buildQuery, one, type SearchParams } from "@/components/admin/reports/table-nav";
 import { readVoiceSetupPayload } from "@/lib/voice/setup-request";
-import { NABIL_INCLUDED_MINUTES, NABIL_MONTHLY_MIN_CENTS, NABIL_PER_MINUTE_CENTS, NABIL_DEMO_DAYS, formatUsdCents } from "@/lib/voice/nabil-billing";
+import { NABIL_INCLUDED_MINUTES, NABIL_MONTHLY_MIN_CENTS, NABIL_PER_MINUTE_CENTS, NABIL_DEMO_DAYS, formatUsdCents, NABIL_INCLUDED_SECONDS } from "@/lib/voice/nabil-billing";
 import NabilStatusHeader from "./NabilStatusHeader";
-import SetupRequestCard from "./SetupRequestCard";
+import NabilOnboardingWizard from "./NabilOnboardingWizard";
+import NabilGoLiveBanner from "./NabilGoLiveBanner";
 import OverviewTab from "./OverviewTab";
 import CallsTab from "./CallsTab";
 import MenuTab from "./MenuTab";
@@ -17,7 +18,7 @@ import SettingsTab from "./SettingsTab";
 
 /**
  * Nabil AI — Fee Free's Automated Phone Answering System. ON SALE since
- * 2026-08-17 (US$0.60/call-minute, US$249.99/month minimum — Luigi's A64 (d)).
+ * 2026-08-17 (US$0.50/min billed per second, US$249.99/month minimum).
  *
  * Three states:
  *   • entitled + a provisioned line → the full dashboard (Overview / Calls /
@@ -79,25 +80,30 @@ export default async function PhoneOrderingPage({
 
     const tOverview = await getTranslations("admin.phoneOrderingPage.overview");
     const [config, number] = await Promise.all([
-      prisma.voiceAgentConfig.findUnique({ where: { restaurantId }, select: { enabled: true, transferToNumber: true } }),
+      prisma.voiceAgentConfig.findUnique({
+        where: { restaurantId },
+        select: { enabled: true, transferToNumber: true, agentName: true, firstEnabledAt: true },
+      }),
       prisma.voiceNumber.findFirst({ where: { restaurantId }, orderBy: { createdAt: "asc" }, select: { phoneNumber: true, status: true } }),
     ]);
 
     // Concierge activation: subscribed, but nobody has provisioned a line yet.
-    // Read the open request + the profile fields that pre-fill the intake form.
+    // Read the open request + the profile fields that pre-fill the intake
+    // form, plus a Step 2 completion check (any owner-sourced VoiceFaq row).
     const awaitingLine = !number;
     let setupCard: React.ReactNode = null;
     if (awaitingLine) {
-      const [setupRequest, restaurant] = await Promise.all([
+      const [setupRequest, restaurant, ownerFaqCount] = await Promise.all([
         prisma.voiceSetupRequest.findUnique({
           where: { restaurantId },
           select: { status: true, updatedAt: true, payload: true },
         }),
         prisma.restaurant.findUnique({ where: { id: restaurantId }, select: { name: true, phone: true, alertPhone: true } }),
+        prisma.voiceFaq.count({ where: { restaurantId, source: "owner" } }),
       ]);
       const payload = setupRequest ? readVoiceSetupPayload(setupRequest.payload) : null;
       setupCard = (
-        <SetupRequestCard
+        <NabilOnboardingWizard
           initialRequest={
             setupRequest
               ? {
@@ -115,11 +121,14 @@ export default async function PhoneOrderingPage({
                 }
               : null
           }
-          defaults={{
+          setupDefaults={{
             currentNumber: restaurant?.phone ?? "",
             transferNumber: config?.transferToNumber ?? restaurant?.alertPhone ?? restaurant?.phone ?? "",
             greetingName: restaurant?.name ?? "",
+            agentName: config?.agentName ?? "",
           }}
+          step1Complete={!!setupRequest}
+          step2Complete={ownerFaqCount > 0}
         />
       );
     }
@@ -127,6 +136,12 @@ export default async function PhoneOrderingPage({
     return (
       <div className="max-w-7xl mx-auto space-y-5 pb-10">
         {Header}
+
+        {/* Step 3 of onboarding: a line exists but this restaurant has never
+            gone live yet. Guided copy only — NabilStatusHeader right below
+            already has the real test-call link + enable toggle. Gone for
+            good once firstEnabledAt is stamped (first time enabled → true). */}
+        {!awaitingLine && !config?.firstEnabledAt && <NabilGoLiveBanner agentName={config?.agentName || "Nabil"} />}
 
         {/* Number + "Active — handling calls" status, visible on every tab.
             Hidden while the line is still being set up — there is nothing to

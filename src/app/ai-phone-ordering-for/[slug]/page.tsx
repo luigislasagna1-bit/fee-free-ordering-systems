@@ -86,7 +86,7 @@ export default async function NabilLandingPage({ params }: { params: Promise<{ s
       "@type": "Offer",
       price: "249.99",
       priceCurrency: "USD",
-      description: "US$0.60 per call-minute, US$249.99 per month minimum.",
+      description: "US$249.99 per month base plan includes about 499 call-minutes; extra time billed at US$0.50/min by the second with no per-call rounding.",
     },
     provider: { "@type": "Organization", name: "Fee Free Ordering", url: baseUrl },
   };
@@ -129,7 +129,7 @@ export default async function NabilLandingPage({ params }: { params: Promise<{ s
                 </Link>
               </div>
               <div className="mt-6 flex flex-wrap gap-x-4 gap-y-1.5 justify-center lg:justify-start text-xs text-gray-500">
-                {["US$0.60/min", "Recordings & transcripts", "Same checkout as your website", "Built by restaurant owners"].map((t) => (
+                {["US$0.50/min", "Recordings & transcripts", "Same checkout as your website", "Built by restaurant owners"].map((t) => (
                   <span key={t} className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-500" />{t}</span>
                 ))}
               </div>

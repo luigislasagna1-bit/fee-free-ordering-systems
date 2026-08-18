@@ -44,8 +44,8 @@ export default async function OverviewTab({
   const range = parseDateRangeInTz(spEff, scope.timezone ?? undefined);
   const rangeLabel = formatRangeLabelInTz(range, scope.timezone ?? undefined);
 
-  // Metering (Luigi's price: US$0.60/min, US$249.99/month min): the SAME UTC
-  // calendar-month window the overage cron bills — one aggregate query.
+  // Metering (Luigi's price: US$0.50/min billed per second, US$249.99/month
+  // min): the SAME UTC calendar-month window the overage cron bills.
   const now = new Date();
   const meterWindow = monthWindowUtc(now);
   const [a, monthRevenue, popularItems, usage] = await Promise.all([
@@ -54,7 +54,7 @@ export default async function OverviewTab({
     fetchPopularPhoneItems(restaurantId, range),
     fetchNabilUsage(restaurantId, meterWindow.start, meterWindow.end),
   ]);
-  const meter = meterSummary(usage.minutes, now, meterWindow);
+  const meter = meterSummary(usage.seconds, now, meterWindow);
 
   const outcomeLabel = (o: string | null) =>
     o && (CALL_OUTCOMES as readonly string[]).includes(o) ? tCalls(`outcome.${o}`) : tCalls("outcome.unknown");
@@ -105,7 +105,7 @@ export default async function OverviewTab({
       </div>
 
       {/* Metering — this calendar month's billed minutes + the projected charge,
-          so the bill is never a surprise (US$0.60/min, US$249.99 minimum). */}
+          so the bill is never a surprise (US$0.50/min, US$249.99 minimum). */}
       <div className="rounded-xl border border-gray-200 bg-white p-5 flex items-start justify-between gap-4 flex-wrap">
         <div className="min-w-0">
           <div className="flex items-center gap-2 text-xs text-gray-500">
