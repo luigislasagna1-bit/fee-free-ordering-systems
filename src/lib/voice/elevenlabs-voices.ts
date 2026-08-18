@@ -120,10 +120,11 @@ export function buildVoiceAttrValue(
 }
 
 /** ElevenLabs' own defaults. Stability: lower = more expressive/emotional,
- *  higher = flatter and more monotone. Luigi's "slightly too robotic"
- *  (2026-08-15) is partly the legacy voice at 1.1×, partly a flat delivery —
- *  NABIL_TTS_STABILITY lets us try 0.40 on one live call without a deploy. */
-export const DEFAULT_STABILITY = 0.5;
+ *  higher = flatter and more monotone. 0.35 gives warm, varied prosody that
+ *  sounds conversational on the phone — competitive benchmarks (Loman, AI Bunny)
+ *  confirmed that expressiveness is the #1 realism lever after latency.
+ *  Override per-deployment with NABIL_TTS_STABILITY env var on Vercel. */
+export const DEFAULT_STABILITY = 0.35;
 export const DEFAULT_SIMILARITY = 0.75;
 
 function clampUnit(v: number | null | undefined, fallback: number): number {

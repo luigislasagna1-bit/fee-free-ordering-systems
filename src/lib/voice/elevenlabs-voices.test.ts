@@ -37,16 +37,16 @@ describe("buildVoiceAttrValue", () => {
     // The model must NOT depend on whether the owner touched the speed slider:
     // it used to, and nudging speed silently downgraded TTS to flash.
     expect(buildVoiceAttrValue("21m00Tcm4TlvDq8ikWAM", 1)).toBe(
-      "21m00Tcm4TlvDq8ikWAM-turbo_v2_5-1.00_0.50_0.75",
+      "21m00Tcm4TlvDq8ikWAM-turbo_v2_5-1.00_0.35_0.75",
     );
     expect(buildVoiceAttrValue("21m00Tcm4TlvDq8ikWAM", null)).toBe(
-      "21m00Tcm4TlvDq8ikWAM-turbo_v2_5-1.00_0.50_0.75",
+      "21m00Tcm4TlvDq8ikWAM-turbo_v2_5-1.00_0.35_0.75",
     );
   });
 
   it("carries the owner's speed in the same extended form", () => {
     expect(buildVoiceAttrValue("21m00Tcm4TlvDq8ikWAM", 0.8)).toBe(
-      "21m00Tcm4TlvDq8ikWAM-turbo_v2_5-0.80_0.50_0.75",
+      "21m00Tcm4TlvDq8ikWAM-turbo_v2_5-0.80_0.35_0.75",
     );
   });
 
@@ -57,8 +57,8 @@ describe("buildVoiceAttrValue", () => {
   });
 
   it("clamps an out-of-range stored speed rather than sending it", () => {
-    expect(buildVoiceAttrValue("abc123def456ghij", 2)).toBe("abc123def456ghij-turbo_v2_5-1.20_0.50_0.75");
-    expect(buildVoiceAttrValue("abc123def456ghij", 0.1)).toBe("abc123def456ghij-turbo_v2_5-0.70_0.50_0.75");
+    expect(buildVoiceAttrValue("abc123def456ghij", 2)).toBe("abc123def456ghij-turbo_v2_5-1.20_0.35_0.75");
+    expect(buildVoiceAttrValue("abc123def456ghij", 0.1)).toBe("abc123def456ghij-turbo_v2_5-0.70_0.35_0.75");
   });
 
   it("never emits a character that would break the XML attribute", () => {
@@ -83,11 +83,11 @@ describe("NABIL_VOICES", () => {
 });
 
 describe("TTS tuning (stability / similarity)", () => {
-  it("defaults stay ElevenLabs' 0.50 / 0.75; env can move them within 0..1", () => {
-    expect(buildVoiceAttrValue("cgSgspJ2msm6clMCkdW9", 1, {})).toBe("cgSgspJ2msm6clMCkdW9-turbo_v2_5-1.00_0.50_0.75");
+  it("defaults stay 0.35 / 0.75; env can move them within 0..1", () => {
+    expect(buildVoiceAttrValue("cgSgspJ2msm6clMCkdW9", 1, {})).toBe("cgSgspJ2msm6clMCkdW9-turbo_v2_5-1.00_0.35_0.75");
     expect(buildVoiceAttrValue("cgSgspJ2msm6clMCkdW9", 1, { stability: 0.4 })).toBe("cgSgspJ2msm6clMCkdW9-turbo_v2_5-1.00_0.40_0.75");
     expect(buildVoiceAttrValue("cgSgspJ2msm6clMCkdW9", 1, { stability: 7, similarity: -1 })).toBe("cgSgspJ2msm6clMCkdW9-turbo_v2_5-1.00_1.00_0.00");
-    expect(buildVoiceAttrValue("cgSgspJ2msm6clMCkdW9", 1, { stability: Number.NaN })).toBe("cgSgspJ2msm6clMCkdW9-turbo_v2_5-1.00_0.50_0.75");
+    expect(buildVoiceAttrValue("cgSgspJ2msm6clMCkdW9", 1, { stability: Number.NaN })).toBe("cgSgspJ2msm6clMCkdW9-turbo_v2_5-1.00_0.35_0.75");
   });
   it("reads NABIL_TTS_STABILITY / NABIL_TTS_SIMILARITY from env, ignoring garbage", () => {
     expect(ttsTuningFromEnv({} as NodeJS.ProcessEnv)).toEqual({ stability: null, similarity: null });
