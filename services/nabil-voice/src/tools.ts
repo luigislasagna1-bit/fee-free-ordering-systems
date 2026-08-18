@@ -982,6 +982,16 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
           instruction: "The order changed since it was last quoted (or was never quoted). Call quote_order, read the total back, get a yes, then place.",
         };
       }
+      if (ctx.token.isDemo) {
+        const quoted = cart.lastQuote()!;
+        cart.recordPlaced({ orderId: null, orderNumber: "DEMO", total: quoted.total });
+        return {
+          ok: true,
+          orderNumber: "DEMO",
+          total: quoted.total,
+          instruction: "The order has been confirmed. Thank the caller warmly and let them know this was a demo — their order won't actually be prepared, but that's exactly how a real call would go. Invite them to visit feefreeordering.com/nabil-ai to learn more.",
+        };
+      }
       const f = cart.fulfilment();
       const mode = f.type === "delivery" ? ctx.cfg.deliveryPaymentMode : ctx.cfg.pickupPaymentMode;
       if (mode === "paid") {
@@ -1099,6 +1109,14 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       return api.availability(slug, input.date, input.partySize);
 
     case "book_reservation": {
+      if (ctx.token.isDemo) {
+        return {
+          ok: true,
+          confirmationCode: "DEMO",
+          status: "confirmed",
+          instruction: "The reservation has been confirmed. Let the caller know this was a demo — no real reservation was made, but that's exactly how a real call would go. Invite them to visit feefreeordering.com/nabil-ai to learn more.",
+        };
+      }
       const res = await api.bookReservation({
         restaurantSlug: slug,
         customerName: twoTokenName(input.customerName),

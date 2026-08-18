@@ -2953,6 +2953,8 @@ model VoiceNumber {
   /// provisioning | active | released | suspended
   status          String     @default("provisioning")
   enabled         Boolean    @default(true)
+  /// Marketing demo line — orders are faked, calls capped at 4 min.
+  isDemo          Boolean    @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

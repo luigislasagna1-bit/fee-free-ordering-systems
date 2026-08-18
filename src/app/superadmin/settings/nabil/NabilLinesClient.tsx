@@ -182,6 +182,7 @@ export function NabilLinesClient() {
                     <div className="mt-1 flex flex-wrap gap-1">
                       <Chip tone={row.status === "active" ? "ok" : "muted"}>{row.status}</Chip>
                       <Chip tone={row.enabled ? "ok" : "muted"}>{row.enabled ? "agent on" : "agent off"}</Chip>
+                      {row.isDemo && <Chip tone="warn">DEMO</Chip>}
                       <Chip tone={row.twilioNumberSid ? "muted" : "warn"}>{row.twilioNumberSid ? row.twilioNumberSid : "no SID yet"}</Chip>
                     </div>
                   </td>

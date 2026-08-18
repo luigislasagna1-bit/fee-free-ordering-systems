@@ -242,6 +242,7 @@ async function handle(req: NextRequest, params: Record<string, string>) {
         where: { phoneNumber: to },
         select: {
           enabled: true,
+          isDemo: true,
           restaurant: {
             select: {
               id: true, slug: true, name: true, defaultLanguage: true,
@@ -430,6 +431,7 @@ async function handle(req: NextRequest, params: Record<string, string>) {
     // The speech language ConversationRelay runs with — the service's English
     // number-to-words pass (spoken-numbers.ts) is gated on it. 2026-08-16.
     lang: bcp47(lang),
+    ...(line.isDemo ? { isDemo: true } : {}),
   });
   const url = `${wss}${wss.includes("?") ? "&" : "?"}t=${encodeURIComponent(token)}`;
   // On session end — a transfer, OR the voice service being unreachable — Twilio

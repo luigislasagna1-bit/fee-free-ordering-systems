@@ -178,8 +178,9 @@ export function buildSystemPrompt(args: {
   returningCaller: any;
   cfg: AgentConfig;
   callerPhone?: string | null;
+  isDemo?: boolean;
 }): BuiltPrompt {
-  const { menu, context, returningCaller, cfg, callerPhone } = args;
+  const { menu, context, returningCaller, cfg, callerPhone, isDemo } = args;
   const name = context?.restaurant?.name || menu?.restaurant?.name || "the restaurant";
   const openNow = context?.open?.isOpenNow;
   const todayHours = context?.open?.todayHours;
@@ -233,7 +234,7 @@ ${afterHoursSection(context, cfg)}${faqSection(context, cfg)}${upsellSection(con
       : ""
   }
 # MENU (live — ${name}). Item ids in [id:…] are what add_to_order takes. Option lists are names only; "+N more" means the list is truncated — get_item_options has the full one.
-${menuText(menu, cfg.allowPizzaCombo)}`;
+${menuText(menu, cfg.allowPizzaCombo)}${isDemo ? `\n\n## DEMO MODE\nThis is a DEMO line for prospective restaurant owners. Take the order completely naturally — the caller should experience exactly what their own customers would. After placing, the tool will tell you it's a demo; relay that warmly and mention feefreeordering.com/nabil-ai. Keep the call under 4 minutes.\n` : ""}`;
 
   // Per-call facts — first user turn only.
   const facts: string[] = [];

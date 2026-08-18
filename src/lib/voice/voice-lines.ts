@@ -16,6 +16,7 @@ export type VoiceLineRow = {
   phoneNumber: string;
   status: string;
   enabled: boolean;
+  isDemo: boolean;
   twilioNumberSid: string | null;
   restaurant: { id: string; name: string; slug: string };
   /** "ok" = Twilio answered; "not_configured" = FFOS_TWILIO_* missing on this

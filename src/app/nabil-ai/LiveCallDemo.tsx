@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Pause, Phone, Play, RotateCcw } from "lucide-react";
+import { Pause, Phone, Play, RotateCcw, Volume2, VolumeX } from "lucide-react";
 
 /* ── Transcript data ──────────────────────────────────────────────────── */
 
@@ -171,6 +171,7 @@ export function LiveCallDemo({
   pauseLabel,
   liveLabel,
   orderHeading,
+  audioSrc,
 }: {
   heading: string;
   subheading: string;
@@ -179,20 +180,43 @@ export function LiveCallDemo({
   pauseLabel: string;
   liveLabel: string;
   orderHeading: string;
+  audioSrc?: string;
 }) {
   const [state, setState] = useState<"idle" | "playing" | "paused" | "done">("idle");
   const [elapsed, setElapsed] = useState(0);
   const [visibleLines, setVisibleLines] = useState(0);
   const [currentOrder, setCurrentOrder] = useState<OrderUpdate | null>(null);
+  const [muted, setMuted] = useState(false);
+  const [volume, setVolume] = useState(0.8);
+  const [audioReady, setAudioReady] = useState(false);
 
   const startRef = useRef(0);
   const pausedAtRef = useRef(0);
   const rafRef = useRef(0);
   const transcriptEndRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    if (!audioSrc) return;
+    const audio = new Audio(audioSrc);
+    audio.preload = "auto";
+    audio.volume = volume;
+    audio.addEventListener("canplaythrough", () => setAudioReady(true), { once: true });
+    audio.addEventListener("error", () => setAudioReady(false));
+    audio.addEventListener("ended", () => setState("done"));
+    audioRef.current = audio;
+    return () => { audio.pause(); audio.src = ""; };
+  }, [audioSrc]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.volume = muted ? 0 : volume;
+  }, [muted, volume]);
 
   const tick = useCallback(() => {
-    const now = performance.now();
-    const secs = (now - startRef.current) / 1000;
+    const audio = audioRef.current;
+    const secs = audio && audioReady
+      ? audio.currentTime
+      : (performance.now() - startRef.current) / 1000;
     setElapsed(secs);
 
     let lines = 0;
@@ -212,35 +236,40 @@ export function LiveCallDemo({
       return;
     }
     rafRef.current = requestAnimationFrame(tick);
-  }, []);
+  }, [audioReady]);
 
   const play = useCallback(() => {
+    const audio = audioRef.current;
     if (state === "idle" || state === "done") {
-      // Start fresh
       setVisibleLines(0);
       setCurrentOrder(null);
       setElapsed(0);
       startRef.current = performance.now();
+      if (audio && audioReady) { audio.currentTime = 0; void audio.play(); }
       setState("playing");
       rafRef.current = requestAnimationFrame(tick);
     } else if (state === "paused") {
-      // Resume — shift startRef forward to account for pause
       startRef.current += performance.now() - pausedAtRef.current;
+      if (audio && audioReady) void audio.play();
       setState("playing");
       rafRef.current = requestAnimationFrame(tick);
     }
-  }, [state, tick]);
+  }, [state, tick, audioReady]);
 
   const pause = useCallback(() => {
     if (state === "playing") {
       cancelAnimationFrame(rafRef.current);
       pausedAtRef.current = performance.now();
+      if (audioRef.current) audioRef.current.pause();
       setState("paused");
     }
   }, [state]);
 
   useEffect(() => {
-    return () => cancelAnimationFrame(rafRef.current);
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      if (audioRef.current) audioRef.current.pause();
+    };
   }, []);
 
   // Auto-scroll transcript
@@ -379,6 +408,33 @@ export function LiveCallDemo({
               </button>
             )}
           </div>
+
+          {/* Volume control — only shown when audio is available */}
+          {audioReady && (
+            <div className="px-4 py-2 border-t border-gray-100 bg-gray-50/50 flex items-center gap-3">
+              <button
+                onClick={() => setMuted((m) => !m)}
+                className="text-gray-400 hover:text-gray-600 transition"
+                aria-label={muted ? "Unmute" : "Mute"}
+              >
+                {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+              </button>
+              <input
+                type="range"
+                min={0}
+                max={1}
+                step={0.05}
+                value={muted ? 0 : volume}
+                onChange={(e) => {
+                  const v = parseFloat(e.target.value);
+                  setVolume(v);
+                  if (v > 0 && muted) setMuted(false);
+                }}
+                className="w-24 h-1 accent-emerald-500"
+                aria-label="Volume"
+              />
+            </div>
+          )}
         </div>
 
         {/* ── Order summary panel ──────────────────────────────────── */}

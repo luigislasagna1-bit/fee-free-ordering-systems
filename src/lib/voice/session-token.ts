@@ -30,6 +30,8 @@ export type NabilCallPayload = {
    *  voice service gates its English number-to-words pass on it before the
    *  first ASR `lang` arrives (spoken-numbers.ts). Optional: older tokens omit it. */
   lang?: string;
+  /** Marketing demo line — place_order returns a fake success, call capped at 4 min. */
+  isDemo?: boolean;
 };
 
 function getSecret(): string {
@@ -48,7 +50,7 @@ export function verifyNabilCallToken(token: string): NabilCallPayload | null {
   try {
     const d = jwt.verify(token, getSecret()) as Record<string, unknown>;
     if (d?.t !== "nabilcall") return null;
-    const { restaurantId, slug, callSid, to, from, sttModel, ttsVoice, lang } = d;
+    const { restaurantId, slug, callSid, to, from, sttModel, ttsVoice, lang, isDemo } = d;
     if ([restaurantId, slug, callSid, to, from].every((v) => typeof v === "string")) {
       void sttModel;
       void ttsVoice;
@@ -59,6 +61,7 @@ export function verifyNabilCallToken(token: string): NabilCallPayload | null {
         callSid: callSid as string,
         to: to as string,
         from: from as string,
+        ...(isDemo === true ? { isDemo: true } : {}),
       };
     }
     return null;

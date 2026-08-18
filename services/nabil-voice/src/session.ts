@@ -401,6 +401,9 @@ export class CallSession {
       ]);
       this.ctx.cashDeliveryBlocked = !!context?.delivery?.cashDeliveryBlocked;
       this.ctx.cfg = normalizeAgentConfig(context?.config);
+      if (this.token.isDemo && (!this.ctx.cfg.maxCallSeconds || this.ctx.cfg.maxCallSeconds > 240)) {
+        this.ctx.cfg.maxCallSeconds = 240;
+      }
       this.ctx.currency = String(menu?.restaurant?.currency || context?.restaurant?.currency || "usd");
       this.customerId = typeof (returningCaller as any)?.customerId === "string" ? (returningCaller as any).customerId : null;
       const knownName = (returningCaller as any)?.found ? (returningCaller as any)?.name : null;
@@ -438,7 +441,7 @@ export class CallSession {
         knownName: typeof knownName === "string" && knownName.trim() ? knownName.trim() : null,
       });
 
-      const built = buildSystemPrompt({ menu, context, returningCaller, cfg: this.ctx.cfg, callerPhone: this.token.from });
+      const built = buildSystemPrompt({ menu, context, returningCaller, cfg: this.ctx.cfg, callerPhone: this.token.from, isDemo: !!this.token.isDemo });
       this.system = built.system;
       this.callFacts = built.callFacts;
       this.versions.menuSnapshotHash = this.menuHash;

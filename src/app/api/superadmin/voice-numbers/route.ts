@@ -40,6 +40,7 @@ const NUMBER_SELECT = {
   phoneNumber: true,
   status: true,
   enabled: true,
+  isDemo: true,
   twilioNumberSid: true,
   restaurant: {
     select: {
@@ -83,6 +84,7 @@ export async function GET() {
       phoneNumber: row.phoneNumber,
       status: row.status,
       enabled: row.enabled,
+      isDemo: row.isDemo,
       twilioNumberSid: row.twilioNumberSid,
       restaurant: { id: row.restaurant.id, name: row.restaurant.name, slug: row.restaurant.slug },
       twilioState,
