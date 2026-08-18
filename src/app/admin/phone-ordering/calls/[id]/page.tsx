@@ -1,5 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { totalsMismatch } from "@/lib/voice/totals-mismatch";
+import { BoostedAudio } from "@/components/BoostedAudio";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { AlertTriangle, ArrowRight, Ban, CalendarDays, ListTree, MessageSquareText, Mic, PhoneForwarded, ShoppingBag } from "lucide-react";
@@ -244,9 +245,7 @@ export default async function CallDetailPage({
           {t("recordingTitle")}
         </h3>
         {call.recordingUrl ? (
-          // Authenticated playback proxy (session + entitlement enforced
-          // server-side; the raw Twilio URL never reaches the browser).
-          <audio controls preload="none" className="w-full" src={`/api/admin/phone-ordering/calls/${call.id}/recording`} />
+          <BoostedAudio className="w-full" src={`/api/admin/phone-ordering/calls/${call.id}/recording`} />
         ) : (
           <p className="text-sm text-gray-500">{t("recordingPending")}</p>
         )}

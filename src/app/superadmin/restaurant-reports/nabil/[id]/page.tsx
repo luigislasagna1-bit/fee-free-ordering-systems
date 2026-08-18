@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { totalsMismatch } from "@/lib/voice/totals-mismatch";
+import { BoostedAudio } from "@/components/BoostedAudio";
 import { notFound } from "next/navigation";
 import { AlertTriangle, ExternalLink, ListTree, Mic, PhoneCall, ShoppingBag } from "lucide-react";
 import prisma from "@/lib/db";
@@ -243,7 +244,7 @@ export default async function NabilReportDetailPage({
           <Mic className="w-4 h-4 text-emerald-600" /> Recording
         </h3>
         {call.recordingUrl ? (
-          <audio controls preload="none" className="w-full" src={`/api/superadmin/restaurant-reports/nabil/${report.id}/recording`} />
+          <BoostedAudio className="w-full" src={`/api/superadmin/restaurant-reports/nabil/${report.id}/recording`} />
         ) : (
           <p className="text-sm text-gray-400 italic">No recording on this call.</p>
         )}

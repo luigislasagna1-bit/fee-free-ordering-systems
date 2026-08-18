@@ -29,87 +29,88 @@ type Line = {
 
 const TRANSCRIPT: Line[] = [
   // Real call to the Nabil AI demo line, 2026-08-17.
-  // Timestamps synced to the Twilio recording (offset ~8s for greeting).
+  // Timestamps from ffmpeg silencedetect waveform analysis of the MP3.
+  // Each `at` = exact audio second when the speech segment begins.
   // "Mhm."/"Right." voice fillers omitted from bubbles (audible only).
   {
     speaker: "caller",
     text: "It's for delivery.",
-    at: 8,
+    at: 7.5,
   },
   {
     speaker: "nabil",
     text: "Great, I can do delivery for you. Could I get the delivery address, please?",
-    at: 10,
+    at: 13.8,
   },
   {
     speaker: "caller",
     text: "It's one fifty Mary Street in Milton.",
-    at: 19,
+    at: 19.4,
   },
   {
     speaker: "nabil",
     text: "Delivery to a hundred fifty Mary Street works, and that fee is seven dollars and ninety-nine cents — or free once your order's over thirty dollars. Could I get the postal code there?",
-    at: 23,
+    at: 26.7,
   },
   {
     speaker: "caller",
     text: "Yeah, the postal code is L9T 6Z5.",
-    at: 40,
+    at: 41.8,
   },
   {
     speaker: "nabil",
     text: "Got it, thanks. So what can I get started for you today?",
-    at: 44,
+    at: 47.8,
   },
   {
     speaker: "caller",
     text: "Do you have any specials?",
-    at: 50,
+    at: 52.4,
   },
   {
     speaker: "nabil",
     text: "We've got several combo deals — the Large and Wings Combo with a large three-topping pizza and twenty wings for thirty-nine ninety-nine, a Double Large Combo with two large pizzas and two dips for thirty-nine ninety-nine, and a Family Feast for fifty-nine ninety-nine. Would any of those sound good?",
-    at: 54,
+    at: 56.3,
   },
   {
     speaker: "caller",
     text: "The large and wings combo sounds good.",
-    at: 70,
+    at: 77.6,
   },
   {
     speaker: "nabil",
     text: "Good choice — that comes with a large three-topping pizza and twenty wings. What toppings would you like on the pizza, and how would you like the wings done?",
-    at: 74,
+    at: 81.8,
   },
   {
     speaker: "caller",
     text: "Can I get pepperoni, mushroom, and green peppers on one half?",
-    at: 91,
+    at: 90.5,
   },
   {
     speaker: "nabil",
     text: "Sure, pepperoni, mushroom and green peppers on one half — and what would you like on the other half?",
-    at: 93,
+    at: 95.2,
   },
   {
     speaker: "caller",
     text: "Chicken, green pepper, and onions on the other half.",
-    at: 96,
+    at: 103.0,
   },
   {
     speaker: "nabil",
     text: "Got it — and how would you like the wings? Honey garlic, hot, BBQ, mild, or sweet heat?",
-    at: 99,
+    at: 108.0,
   },
   {
     speaker: "caller",
     text: "I'll get barbecue sauce on the side.",
-    at: 111,
+    at: 112.9,
   },
   {
     speaker: "nabil",
     text: "You've got a Large and Wings Combo with a large pizza — half pepperoni and mushrooms, half chicken and onions, green peppers on the whole thing — plus twenty piece Chicken Wings with BBQ on the side. Anything else for you?",
-    at: 116,
+    at: 120.1,
     order: {
       items: [
         {
@@ -127,12 +128,12 @@ const TRANSCRIPT: Line[] = [
   {
     speaker: "caller",
     text: "Yeah, can I get two garlic dips as well?",
-    at: 135,
+    at: 132.1,
   },
   {
     speaker: "nabil",
     text: "Two garlic dipping sauces, got it. Anything else?",
-    at: 139,
+    at: 143.2,
     order: {
       items: [
         {
@@ -151,22 +152,22 @@ const TRANSCRIPT: Line[] = [
   {
     speaker: "caller",
     text: "No, just what's my total?",
-    at: 146,
+    at: 147.5,
   },
   {
     speaker: "nabil",
     text: "Before I get you the total, could I get a name for the order?",
-    at: 148,
+    at: 151.8,
   },
   {
     speaker: "caller",
     text: "Yeah, it's for Sam.",
-    at: 153,
+    at: 155.7,
   },
   {
     speaker: "nabil",
     text: "Thanks, Sam. So that's a Large and Wings Combo with a large pizza — half pepperoni and mushrooms, half chicken and onions, green peppers on the whole thing — plus twenty piece Chicken Wings, BBQ on the side, and two garlic dipping sauces, delivered to you. Your total comes to forty-eight dollars and fifty-eight cents, tax included. Shall I go ahead and place that?",
-    at: 158,
+    at: 161.6,
     order: {
       items: [
         {
@@ -187,16 +188,16 @@ const TRANSCRIPT: Line[] = [
   {
     speaker: "caller",
     text: "Sure.",
-    at: 180,
+    at: 181.1,
   },
   {
     speaker: "nabil",
     text: "All set, Sam! This was a demo call, so nothing's actually being cooked up — but that's exactly how a real order would go from start to finish.",
-    at: 184,
+    at: 187.8,
   },
 ];
 
-const TOTAL_DURATION = 195; // seconds — real call with audio
+const TOTAL_DURATION = 196; // seconds — full recording
 
 /* ── Helpers ──────────────────────────────────────────────────────────── */
 
@@ -232,7 +233,7 @@ export function LiveCallDemo({
   const [visibleLines, setVisibleLines] = useState(0);
   const [currentOrder, setCurrentOrder] = useState<OrderUpdate | null>(null);
   const [muted, setMuted] = useState(false);
-  const [volume, setVolume] = useState(0.8);
+  const [volume, setVolume] = useState(1);
   const [audioReady, setAudioReady] = useState(false);
 
   const startRef = useRef(0);
