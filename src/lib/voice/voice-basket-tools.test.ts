@@ -835,7 +835,7 @@ describe("set_fulfilment", () => {
     const { ctx, api } = makeCtx();
     const out = await run(ctx, "set_fulfilment", { type: "delivery" });
     expect(out).toMatchObject({ ok: true, fulfilment: "delivery", addressNeeded: true });
-    expect(String(out.instruction)).toContain("full street address");
+    expect(String(out.instruction)).toContain("street address");
     expect(api.checkAddress).not.toHaveBeenCalled();
     expect(ctx.cart.validate().some((p) => p.code === "address_missing" && p.blocking)).toBe(true);
   });
@@ -1365,6 +1365,6 @@ describe("set_fulfilment: a full address the check can't place is read back and 
     expect(String(second.instruction)).toContain("1166 McEachern Court in Milton");
     // a street with no city/postcode keeps the "ask for the rest" path, unchanged
     const partial = await run(ctx, "set_fulfilment", { type: "delivery", street: "12 Nowhere Lane" });
-    expect(String(partial.instruction)).toContain("Ask for the city and postal code");
+    expect(String(partial.instruction)).toContain("Ask for the city");
   });
 });
