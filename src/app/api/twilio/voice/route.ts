@@ -465,7 +465,7 @@ async function handle(req: NextRequest, params: Record<string, string>) {
     console.log(`[twilio/voice] Media Streams for ${callSid}: wss=${mediaWssUrl}`);
     return twiml(
       `<Response><Connect action="${xml(afterStreamUrl)}">` +
-        `<Stream url="${xml(mediaWssUrl)}">` +
+        `<Stream url="${xml(mediaWssUrl)}" mode="bidirectional">` +
         `<Parameter name="token" value="${xml(token)}"/>` +
         `<Parameter name="greeting" value="${xml(greeting)}"/>` +
         `</Stream>` +
