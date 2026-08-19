@@ -49,7 +49,7 @@ const TRANSCRIPT: Line[] = [
   },
   {
     speaker: "caller",
-    text: "It's one fifty Mary Street in Milton.",
+    text: "150 Mary Street, Milton.",
     at: 19.4,
   },
   {
