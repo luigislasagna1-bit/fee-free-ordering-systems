@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { requireInternalKey } from "@/lib/voice/internal-auth";
 import { loadRawItem, loadComboData, shapeItemData } from "@/lib/voice/item-loader";
+import { parseComboConfig, comboUpchargeFor } from "@/lib/combo";
 
 // Prisma can't run on the edge runtime.
 export const runtime = "nodejs";
@@ -67,5 +68,39 @@ export async function GET(req: NextRequest) {
   // No option-count caps live server-side: the voice service is the only place
   // that trims groups for the model (its `andMore` markers), so what the
   // compiler validates against is always the FULL tree returned here.
-  return NextResponse.json({ currency: restaurant.currency, item, combo });
+
+  // Per-slot upcharges for the agent to mention premium choices. The combo
+  // data only carries choices as ItemData (standalone prices); the actual
+  // combo upcharge is in the raw config. Two maps per slot:
+  //   itemUpcharges:    itemId → amount (applies to any size of that item)
+  //   variantUpcharges: "itemId::variantId" → amount (a specific size costs more)
+  let slotUpcharges: Record<string, { items?: Record<string, number>; variants?: Record<string, number> }> | null = null;
+  if (combo) {
+    const cfg = parseComboConfig((raw as { comboConfig?: string | null }).comboConfig);
+    if (cfg) {
+      const out: Record<string, { items?: Record<string, number>; variants?: Record<string, number> }> = {};
+      for (let i = 0; i < cfg.slots.length && i < combo.slots.length; i++) {
+        const rawSlot = cfg.slots[i];
+        const voiceSlot = combo.slots[i];
+        const items: Record<string, number> = {};
+        for (const choice of voiceSlot.choices) {
+          const up = rawSlot.upcharges?.[choice.menuItemId];
+          if (up && up > 0) items[choice.menuItemId] = up;
+        }
+        const variants: Record<string, number> = {};
+        if (rawSlot.variantUpcharges) {
+          for (const [k, v] of Object.entries(rawSlot.variantUpcharges)) {
+            if (v > 0) variants[k] = v;
+          }
+        }
+        const entry: { items?: Record<string, number>; variants?: Record<string, number> } = {};
+        if (Object.keys(items).length) entry.items = items;
+        if (Object.keys(variants).length) entry.variants = variants;
+        if (entry.items || entry.variants) out[voiceSlot.id] = entry;
+      }
+      if (Object.keys(out).length) slotUpcharges = out;
+    }
+  }
+
+  return NextResponse.json({ currency: restaurant.currency, item, combo, slotUpcharges });
 }

@@ -278,9 +278,9 @@ export const TOOLS = [
       additionalProperties: false,
       properties: {
         type: { type: "string", enum: ["pickup", "delivery"] },
-        street: { type: "string", description: "House number and street, as the caller said it." },
+        street: { type: "string", description: "Street address or place name, as the caller said it ('933 Maple Avenue' or 'Milton Sports Center on Santa Maria Blvd')." },
         city: { type: "string" },
-        zip: { type: "string", description: "Postcode, if given." },
+        zip: { type: "string", description: "Postal code — only if the caller offered it unprompted. Never ask for it." },
       },
       required: ["type"],
     },
@@ -697,21 +697,35 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         combo: res?.combo
           ? {
               sharedToppings: res.combo.sharedToppings ?? null,
-              slots: res.combo.slots.map((s: any) => ({
-                label: s.label,
-                choose: s.min === s.max ? s.min : `${s.min}-${s.max}`,
-                choices: s.choices.slice(0, MAX_SLOT_CHOICES).map((c: any) => ({
-                  name: c.name,
-                  menuItemId: c.menuItemId,
-                  ...(Array.isArray(c.variants) && c.variants.length ? { sizes: c.variants.map((v: any) => v.name) } : {}),
-                })),
-                ...(s.choices.length > MAX_SLOT_CHOICES || s.choicesTruncated ? { truncated: Math.max(0, s.choices.length - MAX_SLOT_CHOICES) || true } : {}),
-              })),
+              slots: res.combo.slots.map((s: any) => {
+                const upInfo = res.slotUpcharges?.[s.id] as { items?: Record<string, number>; variants?: Record<string, number> } | undefined;
+                return {
+                  label: s.label,
+                  choose: s.min === s.max ? s.min : `${s.min}-${s.max}`,
+                  choices: s.choices.slice(0, MAX_SLOT_CHOICES).map((c: any) => {
+                    const itemUp = upInfo?.items?.[c.menuItemId];
+                    const variants = Array.isArray(c.variants) && c.variants.length ? c.variants : [];
+                    const sizes = variants.map((v: any) => {
+                      const vKey = `${c.menuItemId}::${v.variantId}`;
+                      const vUp = upInfo?.variants?.[vKey];
+                      return vUp ? `${v.name} (+${money(vUp, ctx.currency)} upgrade)` : v.name;
+                    });
+                    return {
+                      name: c.name,
+                      menuItemId: c.menuItemId,
+                      ...(itemUp ? { upgrade: `+${money(itemUp, ctx.currency)}` } : {}),
+                      ...(sizes.length ? { sizes } : {}),
+                    };
+                  }),
+                  ...(s.choices.length > MAX_SLOT_CHOICES || s.choicesTruncated ? { truncated: Math.max(0, s.choices.length - MAX_SLOT_CHOICES) || true } : {}),
+                };
+              }),
             }
           : null,
         instruction:
           "Offer these in natural speech — a couple of options at a time, never a long list. A 'truncated' count means the list goes on: never tell a caller something isn't offered just because it isn't in a truncated list; ask add_to_order and let the server decide. " +
-          "For a combo, pass each slot pick's menuItemId to add_to_order EXACTLY as given here, with its slotLabel. If sharedToppings is a number, the combo's pizzas SHARE that many toppings — any split is fine at no extra cost.",
+          "For a combo, pass each slot pick's menuItemId to add_to_order EXACTLY as given here, with its slotLabel. If sharedToppings is a number, the combo's pizzas SHARE that many toppings — any split is fine at no extra cost. " +
+          "A choice or size marked with an upgrade cost is a PREMIUM pick — say the amount naturally when offering it ('the large Fettuccine Alfredo is five dollars more' or 'that one's an upgrade'). Never hide the extra cost; always mention it BEFORE the caller commits.",
       };
       ctx.itemOptionsCache.set(wantedId, out);
       return out;

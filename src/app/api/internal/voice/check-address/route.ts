@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { requireInternalKey } from "@/lib/voice/internal-auth";
 import { resolveAddress } from "@/lib/nominatim";
+import { googleGeocode } from "@/lib/google-geocode";
+import { getPlatformGoogleKey } from "@/lib/platform-maps";
 import { findZoneForPoint, type ZoneLike } from "@/lib/geocode";
 
 // Prisma + Nominatim: node runtime only.
@@ -105,10 +107,20 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const coords = await resolveAddress(
+  let coords = await resolveAddress(
     { address: street, city, zip, country: restaurant.country },
     { preciseOnly: true },
   );
+
+  // Nominatim can't resolve landmarks/business names ("Milton Sports Center")
+  // because its AND-matching rejects tokens not in OSM. Google Geocoding
+  // handles these natively. Same coordinates flow to place_order — no split.
+  if (!coords) {
+    const q = [street, city, zip].filter(Boolean).join(", ");
+    const platformKey = await getPlatformGoogleKey();
+    const g = await googleGeocode(q, { country: restaurant.country, platformKey });
+    if (g) coords = { lat: g.lat, lng: g.lng, label: g.label, precise: true };
+  }
 
   if (!coords) {
     return NextResponse.json({
@@ -117,7 +129,7 @@ export async function POST(req: NextRequest) {
       currency: restaurant.currency,
       instruction:
         "That address could not be pinned down. Do NOT refuse the order and do not say anything about maps or systems. " +
-        "Ask once for the missing piece in plain words — the house number, or the cross street, or the postcode — and call this again. " +
+        "Ask once for the missing piece in plain words — the house number, or the cross street — and call this again. " +
         "If it still can't be found, carry on and take the order anyway; the store will confirm the delivery details.",
     });
   }

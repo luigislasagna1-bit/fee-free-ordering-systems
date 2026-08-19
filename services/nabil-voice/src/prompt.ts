@@ -150,6 +150,9 @@ function afterHoursSection(context: any, cfg: AgentConfig): string {
     case "transfer":
       return `\n## CLOSED RIGHT NOW — offer staff (this OVERRIDES ordering and reservations)\nThe restaurant is closed. Do NOT take orders or book reservations yourself — answer simple questions and offer transfer_to_human for anything else.${reopen}\n`;
     default:
+      if (!cfg.allowScheduledOrders) {
+        return `\n## CLOSED RIGHT NOW — questions only (this OVERRIDES ordering and reservations)\nThe restaurant is closed and does not accept advance orders. Do NOT take orders or offer to take orders for later — politely explain the restaurant is closed and answer questions only.${reopen}\n`;
+      }
       return `\n## CLOSED RIGHT NOW — orders you take are for when it reopens (this OVERRIDES the ordering flow)\nThe restaurant is CLOSED at this moment.${reopen} You CAN take an order now: it will be prepared when the restaurant reopens, so it is ready shortly after that opening time — say that plainly in one breath (\"We're closed right now — we open ${words || "later"}. I can take your order now and it'll be ready shortly after we open. Shall I?\").\nA caller who asks for \"tomorrow\", \"in the morning\" or \"when you open\" wants exactly this — take the order, do not tell them it can't be done. Only a SPECIFIC time later than that reopening is a scheduled order (see the scheduling rule).\nNEVER say the restaurant is open, never say the food is being made now, and never give a wait time measured from this moment.\n`;
   }
 }
