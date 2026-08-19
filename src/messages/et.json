@@ -4562,6 +4562,23 @@
         "notePlaceholder": "nt Sobib suurepäraselt lasanje kõrvale",
         "remove": "Eemalda"
       },
+      "dayDeals": {
+        "empty": "Päevapakkumiste sidumisi pole veel. Valige allpool pakkumise artikkel, et alustada.",
+        "noDealItems": "Teie menüüst ei leitud päevaspetsiifilisi artikleid. Looge kõigepealt menüüartikkel kindlate päevadega (nt \"Teisipäeva eripakkumine\") ja tulge siis siia tagasi selle sidumiseks.",
+        "autoDetect": "Automaatne tuvastamine",
+        "saves": "säästab {amount}",
+        "addPairings": "Lisa sidumised",
+        "scanning": "Menüü skaneerimine…",
+        "noCandidates": "Sobivaid artikleid ei leitud — kõik sobivad artiklid on juba seotud.",
+        "candidatesHint": "Need artiklid maksavad rohkem kui pakkumine ja neid saaks õigel päeval pakkumise hinnaga müüa. Märkige need, mida soovite siduda.",
+        "addSelected": "{count, plural, one {Lisa # sidumine} other {Lisa # sidumist}}",
+        "addedCount": "{count, plural, one {# sidumine lisatud} other {# sidumist lisatud}}",
+        "cancel": "Tühista",
+        "removedToast": "Sidumine eemaldatud",
+        "updateError": "Ei saanud uuendada — palun proovige uuesti.",
+        "setupDeals": "Pakkumisartiklid ilma sidumisteta",
+        "setupHint": "Nendel pakkumisartiklitel pole veel standardartikleid seotud. Puudutage ühte, et menüüst kandidaadid automaatselt tuvastada."
+      },
       "settingsTabs": {
         "general": "Üldine",
         "voice": "Hääl",

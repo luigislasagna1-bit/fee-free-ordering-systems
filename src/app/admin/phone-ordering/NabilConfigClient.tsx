@@ -9,6 +9,7 @@ import { HelpTip } from "@/components/HelpTip";
 import FaqManager, { type Faq } from "./FaqManager";
 import TextLinksManager, { type TextLink } from "./TextLinksManager";
 import BlockedCallersManager, { type BlockedRow } from "./BlockedCallersManager";
+import DayDealsManager from "./DayDealsManager";
 import VoicePicker from "./VoicePicker";
 
 /** The owner-editable VoiceAgentConfig fields this form round-trips. The
@@ -84,6 +85,7 @@ export default function NabilConfigClient({
   cashDeliveryBlocked,
   shipdayDispatches = false,
   payAtDoorDelivery = false,
+  currency,
   initialFaqs,
   initialTextLinks,
   initialBlockedCallers,
@@ -93,6 +95,7 @@ export default function NabilConfigClient({
   /** ShipDay is the active dispatcher — only then is pay-at-door a question. */
   shipdayDispatches?: boolean;
   payAtDoorDelivery?: boolean;
+  currency: string;
   initialFaqs: Faq[];
   initialTextLinks: TextLink[];
   initialBlockedCallers: BlockedRow[];
@@ -289,15 +292,8 @@ export default function NabilConfigClient({
             </div>
           </Section>
 
-          {/* HONESTY over parity: the call engine has no way to apply this yet.
-              It saves fine and will activate the moment the engine supports it
-              — never pretend a toggle changes live calls when it doesn't. */}
-          <Section title={ts("voiceComingSoonTitle")}>
-            <p className="text-xs text-amber-600 -mt-1">{ts("voiceComingSoonNote")}</p>
-            <div className="flex items-center gap-1.5">
-              <Toggle label={t("ambientNoise")} checked={!!cfg.ambientNoise} onChange={(v) => set("ambientNoise", v)} />
-              <span className="text-[10px] font-bold uppercase tracking-wide bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full flex-shrink-0">{ts("comingSoonBadge")}</span>
-            </div>
+          <Section title={t("ambientNoiseSection")}>
+            <Toggle label={t("ambientNoise")} checked={!!cfg.ambientNoise} onChange={(v) => set("ambientNoise", v)} />
           </Section>
         </div>
       )}
@@ -319,6 +315,7 @@ export default function NabilConfigClient({
                 nobody could reach. Luigi 2026-08-12. */}
             <Toggle label={t("offerDayDeals")} checked={!!cfg.offerDayDeals} onChange={(v) => set("offerDayDeals", v)} />
             <p className="text-xs text-gray-500">{t("offerDayDealsHint")}</p>
+            {!!cfg.offerDayDeals && <DayDealsManager currency={currency} />}
           </Section>
           <Section title={t("ordering")}>
             <Toggle label={t("quoteEta")} checked={!!cfg.quoteEta} onChange={(v) => set("quoteEta", v)} />

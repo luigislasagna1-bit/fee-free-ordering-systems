@@ -529,8 +529,8 @@ function mutationOut(ctx: ToolContext, r: MutationResult, verb: "added" | "chang
     ...r,
     instruction:
       (r.pricingNote ? `Weave pricingNote into the recap naturally (it is in words already — tack it on after the item, no "just a heads up" or "just so you know"). ` : "") +
-      (r.betterDeal
-        ? `TELL THEM ABOUT THE DEAL: today's "${r.betterDeal.name}" is the same thing for ${r.betterDeal.saving} less. Offer it in one friendly sentence; if yes, call update_line with lineId ${r.lineId} and replaceWithItemId "${r.betterDeal.menuItemId}"; if no, move on. `
+      (r.autoAppliedDeal
+        ? `GOOD NEWS: this rings up as our "${r.autoAppliedDeal.dealName}" — saves them ${spokenMoney(Number(r.autoAppliedDeal.saving) || 0)}. Say it naturally as good news in one sentence. It's already on the order at the lower price — do NOT ask permission and do NOT try to swap items for this. `
         : "") +
       (r.switchedTo ? `That size is a different item on this menu, so it was built as "${r.switchedTo.to}" instead of "${r.switchedTo.from}"${r.switchedTo.saving > 0 ? `, which also comes to ${spokenMoney(Number(r.switchedTo.saving) || 0)} less — say so as good news, in plain words (never the menu code name). ` : ". Say it in plain words — the size, not the menu code name — and don't present it as a problem. "}` : "") +
       (needs

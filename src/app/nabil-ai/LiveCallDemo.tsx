@@ -34,7 +34,7 @@ const TRANSCRIPT: Line[] = [
   // "Mhm."/"Right." voice fillers omitted from bubbles (audible only).
   {
     speaker: "nabil",
-    text: "Thanks for calling Luigi's Lasagna! How can I help you?",
+    text: "Thanks for calling Luigi's Lasagna & Pizzeria in Milton, Ontario. Is this for pick up or delivery?",
     at: 1.0,
   },
   {
@@ -74,17 +74,17 @@ const TRANSCRIPT: Line[] = [
   },
   {
     speaker: "nabil",
-    text: "We've got several combo deals — the Large and Wings Combo with a large three-topping pizza and twenty wings for thirty-nine ninety-nine, a Double Large Combo with two large pizzas and two dips for thirty-nine ninety-nine, and a Family Feast for fifty-nine ninety-nine. Would any of those sound good?",
+    text: "We've got several combo deals — things like the Large and Wings Combo with a large three-topping pizza and twenty wings for thirty-nine ninety-nine, a Double Large Combo with two large three-topping pizzas and two dips for thirty-nine ninety-nine, and a Family Feast with an extra-large pizza, wings, mozzarella sticks, fries, pop and dips for fifty-nine ninety-nine. There's also a medium one-topping pizza with a lava cake for twenty-four ninety-nine. Would any of those sound good, or would you like to hear more?",
     at: 56.3,
   },
   {
     speaker: "caller",
-    text: "The large and wings combo sounds good.",
+    text: "You know what? The large and wings combo sounded good.",
     at: 77.6,
   },
   {
     speaker: "nabil",
-    text: "Good choice — that comes with a large three-topping pizza and twenty wings. What toppings would you like on the pizza, and how would you like the wings done?",
+    text: "Good choice — that comes with a large three-topping pizza and twenty wings. What toppings would you like on the pizza, and how would you like the wings done — a sauce mixed in or on the side, and which flavor?",
     at: 81.8,
   },
   {
@@ -99,12 +99,12 @@ const TRANSCRIPT: Line[] = [
   },
   {
     speaker: "caller",
-    text: "Chicken, green pepper, and onions on the other half.",
+    text: "And chicken, green pepper, and onions on the other half.",
     at: 103.0,
   },
   {
     speaker: "nabil",
-    text: "Got it — and how would you like the wings? Honey garlic, hot, BBQ, mild, or sweet heat?",
+    text: "Got it — and how would you like the wings, mixed in or on the side, and what flavor: honey garlic, hot, BBQ, mild, or sweet heat?",
     at: 108.0,
   },
   {
@@ -114,7 +114,7 @@ const TRANSCRIPT: Line[] = [
   },
   {
     speaker: "nabil",
-    text: "You've got a Large and Wings Combo with a large pizza — half pepperoni and mushrooms, half chicken and onions, green peppers on the whole thing — plus twenty piece Chicken Wings with BBQ on the side. Anything else for you?",
+    text: "You've got a Large and Wings Combo with a large pizza — half pepperoni and mushrooms, half chicken and onions, green peppers on the whole thing — plus a twenty piece Chicken Wings with BBQ on the side. Anything else for you?",
     at: 120.1,
     order: {
       items: [
@@ -171,7 +171,7 @@ const TRANSCRIPT: Line[] = [
   },
   {
     speaker: "nabil",
-    text: "Thanks, Sam. So that's a Large and Wings Combo with a large pizza — half pepperoni and mushrooms, half chicken and onions, green peppers on the whole thing — plus twenty piece Chicken Wings, BBQ on the side, and two garlic dipping sauces, delivered to you. Your total comes to forty-eight dollars and fifty-eight cents, tax included. Shall I go ahead and place that?",
+    text: "Thanks, Sam. So that's a Large and Wings Combo with a large pizza — half pepperoni and mushrooms, half chicken and onions, green peppers on the whole thing — plus a twenty piece Chicken Wings, BBQ on the side, and two garlic dipping sauces, delivered to you. Your total comes to forty-eight dollars and fifty-eight cents, tax included. Shall I go ahead and place that?",
     at: 161.6,
     order: {
       items: [
@@ -197,7 +197,7 @@ const TRANSCRIPT: Line[] = [
   },
   {
     speaker: "nabil",
-    text: "All set, Sam! This was a demo call, so nothing's actually being cooked up — but that's exactly how a real order would go from start to finish.",
+    text: "All set, Sam! Just a heads up, this was a demo call, so nothing's actually being cooked up — but that's exactly how a real order would go from start to finish. If you'd like to see more, check out feefreeordering.com/nabil-ai. Thanks so much for trying it out!",
     at: 187.8,
   },
 ];

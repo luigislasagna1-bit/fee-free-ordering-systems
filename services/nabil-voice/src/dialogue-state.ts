@@ -73,9 +73,8 @@ export function noteToolResult(d: DialogueState, turn: number, name: string, inp
         d.pending = { kind: "needs_info", lineId, question: String(out.line.questions[0]) };
         d.pendingSince = turn;
       }
-      if (out?.betterDeal?.name) {
-        d.offered.push({ what: String(out.betterDeal.name), kind: "deal", lineId, outcome: "pending", turn });
-      }
+      // Auto-applied deals are deterministic — no offer/accept/decline cycle.
+      // Only track manually-offered deals (legacy path, currently unused).
       // The cart changed — any read-back/quote no longer describes it.
       d.quotedForCartHash = null;
       if (d.pending?.kind === "confirm_order") d.pending = null;

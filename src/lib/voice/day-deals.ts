@@ -2,7 +2,14 @@ import "server-only";
 import prisma from "@/lib/db";
 import { isFulfilableAt } from "@/lib/menu-fulfilment";
 import { isVisibleNow } from "@/lib/menu-visibility";
-import { compilePizzaLine, type ItemData, type PizzaIntent } from "@/lib/voice/order-line-compiler";
+import {
+  compileItemLine,
+  compilePizzaLine,
+  type CompileResult,
+  type ItemData,
+  type ItemIntent,
+  type PizzaIntent,
+} from "@/lib/voice/order-line-compiler";
 import { loadRawItem, shapeItemData, VOICE_ITEM_INCLUDE } from "@/lib/voice/item-loader";
 import { variantKey, variantsCorrespond } from "@/lib/voice/variant-match";
 
@@ -52,6 +59,9 @@ export type BetterDeal = {
   saving: number;
   /** Spoken description of the swapped line, for the read-back. */
   readBack: string;
+  /** Full compilation of the deal item — used by buildLineCore to auto-swap
+   *  without a second compile call. */
+  compiled: CompileResult;
 };
 
 /**
@@ -65,7 +75,8 @@ export type BetterDeal = {
 export async function findBetterDeal(args: {
   menuRestaurantId: string;
   standardItemId: string;
-  intent: PizzaIntent;
+  kind?: "pizza" | "item";
+  intent: PizzaIntent | ItemIntent;
   standardSubtotal: number | null | undefined;
   /** The standard item's sizes. REQUIRED — the size guard can't be optional. */
   standardVariants: ReadonlyArray<{ variantId: string; name: string }>;
@@ -131,11 +142,11 @@ export async function findBetterDeal(args: {
       // Build the caller's SAME order against the deal item. If it can't be
       // built identically — the deal doesn't carry that topping, or needs an
       // answer we don't have — say nothing rather than offer something else.
-      const compiled = compilePizzaLine(
-        { ...intent, menuItemId: dealItem.menuItemId },
-        dealItem,
-        { askGroupIds: args.askGroupIds, currency: args.currency, suppressPricingNote: true },
-      );
+      const compileOpts = { askGroupIds: args.askGroupIds, currency: args.currency, suppressPricingNote: true };
+      const kind = args.kind ?? "pizza";
+      const compiled = kind === "item"
+        ? compileItemLine({ ...(intent as ItemIntent), menuItemId: dealItem.menuItemId }, dealItem, compileOpts)
+        : compilePizzaLine({ ...(intent as PizzaIntent), menuItemId: dealItem.menuItemId }, dealItem, compileOpts);
       if (!compiled.line || compiled.unresolved.length) continue;
       if (typeof compiled.lineSubtotal !== "number") continue;
 
@@ -159,6 +170,7 @@ export async function findBetterDeal(args: {
         subtotal: compiled.lineSubtotal,
         saving,
         readBack: compiled.readBack,
+        compiled,
       };
     }
 

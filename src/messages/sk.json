@@ -4562,6 +4562,23 @@
         "notePlaceholder": "napr. Skvele sa hodí k lazaniam",
         "remove": "Odstrániť"
       },
+      "dayDeals": {
+        "empty": "Zatiaľ žiadne párovania denných ponúk. Vyberte položku ponuky nižšie a začnite.",
+        "noDealItems": "Vo vašom menu sa nenašli žiadne položky pre konkrétne dni. Najprv vytvorte položku menu s konkrétnymi dňami (napr. \"Utorkový špeciál\"), potom sa vráťte sem na párovanie.",
+        "autoDetect": "Automatická detekcia",
+        "saves": "ušetrí {amount}",
+        "addPairings": "Pridať párovania",
+        "scanning": "Skenovanie menu…",
+        "noCandidates": "Nenašli sa žiadne zodpovedajúce položky — všetky oprávnené položky sú už spárované.",
+        "candidatesHint": "Tieto položky stoja viac než ponuka a v správny deň by mohli byť zaevidované za cenu ponuky. Označte tie, ktoré chcete spárovať.",
+        "addSelected": "{count, plural, one {Pridať # párovanie} other {Pridať # párovaní}}",
+        "addedCount": "{count, plural, one {# párovanie pridané} other {# párovaní pridaných}}",
+        "cancel": "Zrušiť",
+        "removedToast": "Párovanie odstránené",
+        "updateError": "Nepodarilo sa aktualizovať — skúste to znova.",
+        "setupDeals": "Položky ponúk bez párovaní",
+        "setupHint": "Tieto položky ponúk ešte nemajú priradené štandardné položky. Ťuknite na jednu pre automatickú detekciu kandidátov z menu."
+      },
       "settingsTabs": {
         "general": "Všeobecné",
         "voice": "Hlas",

@@ -1225,7 +1225,7 @@ model MenuItem {
   // (resolvePromoMenuRefsForServing) — hot-path adjacent, must be indexed.
   @@index([restaurantId, lineageId])
   @@index([restaurantId, rewardEarnExcluded])
-  dealAsDeal     MenuItemDeal?  @relation("DealItem")
+  dealAsDeal     MenuItemDeal[] @relation("DealItem")
   dealAsStandard MenuItemDeal[] @relation("StandardItem")
 
 }
@@ -5706,8 +5706,8 @@ model CustomerPushPref {
 model MenuItemDeal {
   id             String   @id @default(cuid())
   restaurantId   String
-  /// The cheaper item ("Tuesday - Large Pizza Special"). One deal row per item.
-  dealItemId     String   @unique
+  /// The cheaper item ("Tuesday - Large Pizza Special").
+  dealItemId     String
   /// What it substitutes for ("Large 1 Topping").
   standardItemId String
   active         Boolean  @default(true)
@@ -5718,6 +5718,7 @@ model MenuItemDeal {
   dealItem     MenuItem   @relation("DealItem", fields: [dealItemId], references: [id], onDelete: Cascade)
   standardItem MenuItem   @relation("StandardItem", fields: [standardItemId], references: [id], onDelete: Cascade)
 
+  @@unique([dealItemId, standardItemId])
   @@index([restaurantId, active])
   @@index([standardItemId])
 }

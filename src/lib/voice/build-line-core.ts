@@ -34,13 +34,20 @@ export type BuildLineInput = {
    *  compilers tolerate the rest. */
   intent: unknown;
   askGroupIds: string[];
-  /** Ask the day-deal finder whether the same pizza is cheaper today. */
+  /** Auto-apply day deals when the same item is cheaper today. */
   offerDeals?: boolean;
   currency: string;
   timezone: string;
 };
 
 export type SwitchedTo = { from: string; to: string; saving: number };
+
+export type AutoAppliedDeal = {
+  standardItemName: string;
+  dealName: string;
+  dealMenuItemId: string;
+  saving: number;
+};
 
 export type BuildLineLoaders = {
   /** The item in compiler shape, or null when it doesn't exist / isn't orderable. */
@@ -55,10 +62,11 @@ export type BuildLineLoaders = {
     namedSubtotal: number | null | undefined;
     timezone: string;
   }) => Promise<SizeMatch | null>;
-  /** Day-deal finder (day-deals.ts). Optional: omit and no deal is offered. */
+  /** Day-deal finder (day-deals.ts). Optional: omit and no deal is checked. */
   betterDeal?: (args: {
     standardItemId: string;
-    intent: PizzaIntent;
+    kind: "pizza" | "item";
+    intent: PizzaIntent | ItemIntent;
     standardSubtotal: number | null | undefined;
     standardVariants: ItemData["variants"];
     standardVariantId: string | null;
@@ -69,7 +77,8 @@ export type BuildLineLoaders = {
 };
 
 export type BuildLineOk = CompileResult & {
-  betterDeal?: BetterDeal | null;
+  /** Auto-applied day deal — the line is already at the deal price. */
+  autoAppliedDeal?: AutoAppliedDeal | null;
   switchedTo?: SwitchedTo | null;
 };
 
@@ -92,11 +101,11 @@ const isKind = (k: unknown): k is BuildLineKind => k === "item" || k === "pizza"
  * through `loaders`.
  *
  * Response shapes, per kind:
- *  - pizza: `CompileResult & { betterDeal, switchedTo }` — unchanged from the
- *    route's original inline behaviour, including the size-family swap.
- *  - combo: the bare `CompileResult` — unchanged.
- *  - item:  `CompileResult & { betterDeal: null, switchedTo: null }` — a simple
- *    item gets no size-family swap and no deal hunt.
+ *  - pizza: `CompileResult & { autoAppliedDeal, switchedTo }` — includes the
+ *    size-family swap and day-deal auto-substitution.
+ *  - combo: the bare `CompileResult`.
+ *  - item:  `CompileResult & { autoAppliedDeal }` — day-deal auto-substitution
+ *    for non-pizza items (sandwiches, wings, etc.).
  */
 export async function buildLineCore(
   input: BuildLineInput,
@@ -143,6 +152,9 @@ export async function buildLineCore(
   }
 
   // ── simple item ────────────────────────────────────────────────────────
+  let result: CompileResult;
+  let switchedTo: SwitchedTo | null = null;
+
   if (input.kind === "item") {
     if (item.pizzaConfig) {
       return {
@@ -156,69 +168,76 @@ export async function buildLineCore(
         body: { error: "That item is a combo — use the combo tool", code: "wrong_kind", actualKind: "combo" },
       };
     }
-    const result = compileItemLine(intent as unknown as ItemIntent, item, opts);
-    return { status: 200, body: { ...result, betterDeal: null, switchedTo: null } };
-  }
+    result = compileItemLine(intent as unknown as ItemIntent, item, opts);
 
   // ── pizza ──────────────────────────────────────────────────────────────
-  if (!item.pizzaConfig) {
-    return { status: 400, body: { error: "That item isn't a pizza builder", code: "not_a_pizza" } };
-  }
-  const pizzaIntent = intent as unknown as PizzaIntent;
-  let result = compilePizzaLine(pizzaIntent, item, opts);
-  let switchedTo: SwitchedTo | null = null;
+  } else {
+    if (!item.pizzaConfig) {
+      return { status: 400, body: { error: "That item isn't a pizza builder", code: "not_a_pizza" } };
+    }
+    const pizzaIntent = intent as unknown as PizzaIntent;
+    result = compilePizzaLine(pizzaIntent, item, opts);
 
-  // ── The caller asked for a size this item cannot be ────────────────────
-  //
-  // On menus where each size is its own product, "make it extra large" means
-  // building a DIFFERENT item. The compiler refuses rather than silently
-  // dropping the size (which is how a Large reached the kitchen on
-  // 2026-08-14), but refusing is not the answer the caller wants: Luigi —
-  // "why cant it do an extra large? it should be able to!"
-  //
-  // So resolve it HERE, server-side, in the same hop. The model never picks the
-  // SKU and never sees this happen; it stated an intent and gets back a
-  // compiled line at the size it asked for. Doing it on the model's side would
-  // cost three more round trips, which is where the dead air came from.
-  if (loaders.sizeMatch) {
-    const sizeMatch = await loaders.sizeMatch({
-      item,
-      intent: pizzaIntent,
-      namedSubtotal: result.lineSubtotal,
-      timezone: input.timezone,
-    });
-    if (sizeMatch) {
-      const swappedItem = await loaders.item(sizeMatch.menuItemId);
-      if (swappedItem) {
-        const recompiled = compilePizzaLine({ ...pizzaIntent, menuItemId: sizeMatch.menuItemId }, swappedItem, opts);
-        // Only take the swap if it fully compiles. A half-resolved swap is worse
-        // than the honest refusal it replaces.
-        if (recompiled.line && !recompiled.unresolved.length) {
-          result = recompiled;
-          switchedTo = { from: item.name, to: swappedItem.name, saving: sizeMatch.saving };
+    // ── The caller asked for a size this item cannot be ──────────────────
+    //
+    // On menus where each size is its own product, "make it extra large" means
+    // building a DIFFERENT item. The compiler refuses rather than silently
+    // dropping the size (which is how a Large reached the kitchen on
+    // 2026-08-14), but refusing is not the answer the caller wants.
+    //
+    // Resolve it HERE, server-side, in the same hop. The model never picks the
+    // SKU and never sees this happen.
+    if (loaders.sizeMatch) {
+      const sizeMatch = await loaders.sizeMatch({
+        item,
+        intent: pizzaIntent,
+        namedSubtotal: result.lineSubtotal,
+        timezone: input.timezone,
+      });
+      if (sizeMatch) {
+        const swappedItem = await loaders.item(sizeMatch.menuItemId);
+        if (swappedItem) {
+          const recompiled = compilePizzaLine({ ...pizzaIntent, menuItemId: sizeMatch.menuItemId }, swappedItem, opts);
+          if (recompiled.line && !recompiled.unresolved.length) {
+            result = recompiled;
+            switchedTo = { from: item.name, to: swappedItem.name, saving: sizeMatch.saving };
+          }
         }
       }
     }
   }
 
-  // Is the SAME pizza cheaper today under one of the store's day deals? Only
-  // asked when the owner turned it on, and only when we have a line to compare
-  // against — a suggestion is a nicety and must never delay a broken order.
-  const betterDeal =
-    input.offerDeals === true && result.line && loaders.betterDeal
-      ? await loaders.betterDeal({
-          standardItemId: itemId,
-          intent: pizzaIntent,
-          standardSubtotal: result.lineSubtotal,
-          // The size guard: the deal must offer the same sizes, and must land
-          // on the same one this line landed on.
-          standardVariants: item.variants,
-          standardVariantId: result.line.variantId,
-          timezone: input.timezone,
-          askGroupIds,
-          currency: input.currency,
-        })
-      : null;
+  // ── SHARED: day deal auto-substitution ────────────────────────────────
+  //
+  // Is the SAME item cheaper today under one of the store's day deals? When
+  // found, the deal's compilation REPLACES the standard one — the line goes on
+  // the order at the deal price automatically. The agent announces the savings
+  // but never asks permission; refusing a lower price makes no sense.
+  let autoAppliedDeal: AutoAppliedDeal | null = null;
+  if (input.offerDeals === true && result.line && loaders.betterDeal) {
+    const deal = await loaders.betterDeal({
+      standardItemId: itemId,
+      kind: input.kind as "pizza" | "item",
+      intent: input.kind === "pizza"
+        ? (intent as unknown as PizzaIntent)
+        : (intent as unknown as ItemIntent),
+      standardSubtotal: result.lineSubtotal,
+      standardVariants: item.variants,
+      standardVariantId: result.line.variantId,
+      timezone: input.timezone,
+      askGroupIds,
+      currency: input.currency,
+    });
+    if (deal) {
+      result = deal.compiled;
+      autoAppliedDeal = {
+        standardItemName: item.name,
+        dealName: deal.name,
+        dealMenuItemId: deal.menuItemId,
+        saving: deal.saving,
+      };
+    }
+  }
 
-  return { status: 200, body: { ...result, betterDeal, switchedTo } };
+  return { status: 200, body: { ...result, autoAppliedDeal, switchedTo } };
 }

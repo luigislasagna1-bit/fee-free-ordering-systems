@@ -4562,6 +4562,23 @@
         "notePlaceholder": "pvz., Puikiai dera su lazanija",
         "remove": "Pašalinti"
       },
+      "dayDeals": {
+        "empty": "Kol kas nėra dienos pasiūlymų porų. Pasirinkite pasiūlymo prekę žemiau, kad pradėtumėte.",
+        "noDealItems": "Jūsų meniu nerasta konkrečioms dienoms skirtų prekių. Pirmiausia sukurkite meniu prekę su konkrečiomis dienomis (pvz., \"Antradienio pasiūlymas\"), tada grįžkite čia ją susieti.",
+        "autoDetect": "Automatinis aptikimas",
+        "saves": "sutaupo {amount}",
+        "addPairings": "Pridėti poras",
+        "scanning": "Meniu nuskaitomas…",
+        "noCandidates": "Tinkamų prekių nerasta — visos tinkamos prekės jau susietos.",
+        "candidatesHint": "Šios prekės kainuoja daugiau nei pasiūlymas ir tinkamą dieną galėtų būti parduodamos pasiūlymo kaina. Pažymėkite tas, kurias norite susieti.",
+        "addSelected": "{count, plural, one {Pridėti # porą} other {Pridėti # poras}}",
+        "addedCount": "{count, plural, one {# pora pridėta} other {# poros pridėtos}}",
+        "cancel": "Atšaukti",
+        "removedToast": "Pora pašalinta",
+        "updateError": "Nepavyko atnaujinti — bandykite dar kartą.",
+        "setupDeals": "Pasiūlymų prekės be porų",
+        "setupHint": "Šios pasiūlymų prekės dar neturi susietų standartinių prekių. Bakstelėkite vieną, kad automatiškai aptiktumėte kandidatus iš meniu."
+      },
       "settingsTabs": {
         "general": "Bendra",
         "voice": "Balsas",

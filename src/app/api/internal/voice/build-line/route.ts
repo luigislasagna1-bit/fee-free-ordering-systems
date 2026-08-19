@@ -96,7 +96,7 @@ export async function POST(req: NextRequest) {
         namedSubtotal,
         timezone,
       }),
-    betterDeal: async (args) => findBetterDeal({ menuRestaurantId, ...args }),
+    betterDeal: async (args) => findBetterDeal({ ...args, menuRestaurantId, kind: args.kind }),
   };
 
   const out = await buildLineCore(

@@ -4562,6 +4562,23 @@
         "notePlaceholder": "ex.: Se potrivește perfect cu lasagna",
         "remove": "Elimină"
       },
+      "dayDeals": {
+        "empty": "Nicio asociere de oferte zilnice încă. Alegeți un articol de ofertă mai jos pentru a începe.",
+        "noDealItems": "Niciun articol specific zilei nu a fost găsit în meniul dvs. Creați mai întâi un articol de meniu cu zile specifice (de ex. \"Oferta de marți\"), apoi reveniți aici pentru a-l asocia.",
+        "autoDetect": "Detectare automată",
+        "saves": "economisește {amount}",
+        "addPairings": "Adaugă asocieri",
+        "scanning": "Se scanează meniul…",
+        "noCandidates": "Nu s-au găsit articole potrivite — toate articolele eligibile sunt deja asociate.",
+        "candidatesHint": "Aceste articole costă mai mult decât oferta și ar putea fi înregistrate la prețul ofertei în ziua potrivită. Bifați cele pe care doriți să le asociați.",
+        "addSelected": "{count, plural, one {Adaugă # asociere} other {Adaugă # asocieri}}",
+        "addedCount": "{count, plural, one {# asociere adăugată} other {# asocieri adăugate}}",
+        "cancel": "Anulează",
+        "removedToast": "Asociere eliminată",
+        "updateError": "Nu s-a putut actualiza — vă rugăm încercați din nou.",
+        "setupDeals": "Articole de ofertă fără asocieri",
+        "setupHint": "Aceste articole de ofertă nu au încă articole standard asociate. Atingeți unul pentru a detecta automat candidații din meniu."
+      },
       "settingsTabs": {
         "general": "General",
         "voice": "Voce",

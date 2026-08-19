@@ -1,5 +1,6 @@
 import prisma from "@/lib/db";
 import { shouldDispatchToShipday } from "@/lib/shipday";
+import { resolveReportScope } from "@/lib/reports/report-scope";
 import NabilConfigClient from "./NabilConfigClient";
 
 /**
@@ -8,9 +9,10 @@ import NabilConfigClient from "./NabilConfigClient";
  * sub-tabbed client (General / Voice / Ordering / Payments / FAQ / Blocked).
  */
 export default async function SettingsTab({ restaurantId }: { restaurantId: string }) {
-  const [config, shipdayDispatches, shipdayCfg, faqs, textLinks, blockedCallers] = await Promise.all([
+  const [config, shipdayDispatches, scope, shipdayCfg, faqs, textLinks, blockedCallers] = await Promise.all([
     prisma.voiceAgentConfig.findUnique({ where: { restaurantId } }),
     shouldDispatchToShipday(restaurantId).catch(() => false),
+    resolveReportScope(restaurantId),
     prisma.shipdayConfig
       .findUnique({ where: { restaurantId }, select: { payAtDoorDelivery: true } })
       .catch(() => null),
@@ -43,6 +45,7 @@ export default async function SettingsTab({ restaurantId }: { restaurantId: stri
       shipdayDispatches={!!shipdayDispatches}
       payAtDoorDelivery={payAtDoor}
       cashDeliveryBlocked={!!shipdayDispatches && !payAtDoor}
+      currency={scope.currency}
       initialFaqs={faqs}
       initialTextLinks={textLinks}
       initialBlockedCallers={blockedCallers.map((b) => ({ ...b, createdAt: b.createdAt.toISOString() }))}

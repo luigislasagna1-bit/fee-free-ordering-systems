@@ -207,7 +207,7 @@ export type CompileResponse =
       pickSlots?: Array<{ index: number; slotId: string; slotLabel: string }>;
       /** Names of the named pizzas used by halfRecipes (aliases: "the Philly one"). */
       recipeNames?: string[];
-      betterDeal?: { name: string; menuItemId: string; saving: number } | null;
+      autoAppliedDeal?: { standardItemName: string; dealName: string; dealMenuItemId: string; saving: number } | null;
       switchedTo?: { from: string; to: string; menuItemId?: string; saving: number } | null;
     }
   | { ok: false; code: string; message: string };
@@ -246,7 +246,7 @@ export type CartLine = {
   previousIntent?: LineIntent | null;
   meta: {
     switchedTo?: { from: string; to: string; saving: number } | null;
-    betterDeal?: { name: string; menuItemId: string; saving: number } | null;
+    autoAppliedDeal?: { standardItemName: string; dealName: string; dealMenuItemId: string; saving: number } | null;
     lineSubtotal?: number | null;
     notices?: string[];
     /** Highest pick number ever issued on this line — pick ids are never reused. */
@@ -324,7 +324,7 @@ export type MutationResult =
        *  there, a placement that had nothing to move). The line, the quote and
        *  the undo history are untouched. Never silent: `notices` say why. */
       changed?: boolean;
-      betterDeal?: { name: string; menuItemId: string; saving: number } | null;
+      autoAppliedDeal?: { standardItemName: string; dealName: string; dealMenuItemId: string; saving: number } | null;
       switchedTo?: { from: string; to: string; saving: number } | null;
       state: OrderState;
     }
@@ -1141,7 +1141,7 @@ export class CartEngine {
       pricingNote: line.pricingNote,
       ...(line.halves ? { halves: line.halves } : {}),
       ...(res.notices?.length ? { notices: res.notices } : {}),
-      ...(line.meta.betterDeal ? { betterDeal: line.meta.betterDeal } : {}),
+      ...(line.meta.autoAppliedDeal ? { autoAppliedDeal: line.meta.autoAppliedDeal } : {}),
       ...(line.meta.switchedTo ? { switchedTo: line.meta.switchedTo } : {}),
       state: this.stateForModel(),
     };
@@ -1514,7 +1514,7 @@ export class CartEngine {
       pickSlots,
       meta: {
         switchedTo: res.switchedTo ? { from: res.switchedTo.from, to: res.switchedTo.to, saving: res.switchedTo.saving } : null,
-        betterDeal: res.betterDeal ?? null,
+        autoAppliedDeal: res.autoAppliedDeal ?? null,
         lineSubtotal: typeof res.lineSubtotal === "number" ? res.lineSubtotal : null,
         notices: res.notices ?? [],
         maxPickNo:

@@ -36,7 +36,7 @@ export function compilerFromApi(api: VoiceApi, slug: string): Compiler {
         toppings: Array.isArray(j.toppings) ? j.toppings : undefined,
         pickSlots: Array.isArray(j.pickSlots) ? j.pickSlots : undefined,
         recipeNames: Array.isArray(j.recipeNames) ? j.recipeNames.map(String) : undefined,
-        betterDeal: j.betterDeal ? { name: String(j.betterDeal.name), menuItemId: String(j.betterDeal.menuItemId), saving: Number(j.betterDeal.saving ?? 0) } : null,
+        autoAppliedDeal: j.autoAppliedDeal ? { standardItemName: String(j.autoAppliedDeal.standardItemName), dealName: String(j.autoAppliedDeal.dealName), dealMenuItemId: String(j.autoAppliedDeal.dealMenuItemId), saving: Number(j.autoAppliedDeal.saving ?? 0) } : null,
         switchedTo: j.switchedTo ? { from: String(j.switchedTo.from), to: String(j.switchedTo.to), menuItemId: j.switchedTo.menuItemId ? String(j.switchedTo.menuItemId) : undefined, saving: Number(j.switchedTo.saving ?? 0) } : null,
       };
     },
