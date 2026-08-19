@@ -850,11 +850,25 @@ export function compilePizzaLine(
     if (rSauce && !intent.sauce && rSauce !== mySauce) recipeSauceBySide.push({ side, recipe: recipe.name, sauce: rSauce });
   }
   // A recipe on the WHOLE pizza with its own base sauce simply sets the sauce.
+  // A recipe on a HALF with a different sauce becomes a prefixed modifier —
+  // "(L.H) Ranch Base" — so the kitchen sees it grouped with the half's
+  // toppings instead of buried in free-text notes.
   let recipeWholeSauce: string | null = null;
+  const perHalfSauces: Array<{ side: Placement; sauceName: string }> = [];
   for (const r of recipeSauceBySide) {
     if (r.side === "whole") recipeWholeSauce = r.sauce;
-    else recipeSauceNotes.push(`${r.sauce} on the ${r.recipe} half`);
+    else perHalfSauces.push({ side: r.side, sauceName: r.sauce });
   }
+  if (perHalfSauces.length > 0) {
+    const pizzaDefaultSauce = defaultOptionName(groupsForRole(item, "sauce"));
+    const coveredSides = new Set(perHalfSauces.map((p) => p.side));
+    for (const side of ["left", "right"] as const) {
+      if (!coveredSides.has(side) && pizzaDefaultSauce) {
+        perHalfSauces.push({ side, sauceName: pizzaDefaultSauce });
+      }
+    }
+  }
+  const perHalfSauceResolved: Array<{ side: Placement; name: string }> = [];
   // Two recipes that share a topping ⇒ whole (dedupe by name across sides).
   for (let a = 0; a < requested.length; a++) {
     for (let b = requested.length - 1; b > a; b--) {
@@ -905,6 +919,17 @@ export function compilePizzaLine(
       // A caller-chosen crust/sauce/cheese is part of what they hear back —
       // a default one is not (it is the standard pizza).
       spokenOptions.push(speakRole(role, m.option.name));
+      continue;
+    }
+
+    if (role === "sauce" && perHalfSauces.length > 0) {
+      for (const hs of perHalfSauces) {
+        const m = matchOption(hs.sauceName, groups);
+        if (m.ok) {
+          mods.push({ modifierOptionId: m.option.modifierOptionId, name: `${placementPrefix(hs.side, true)}${m.option.name}` });
+          perHalfSauceResolved.push({ side: hs.side, name: m.option.name });
+        }
+      }
       continue;
     }
 
@@ -966,8 +991,9 @@ export function compilePizzaLine(
 
   const chargeLines: ToppingChargeLine[] = [];
   const toppingsOut: NonNullable<CompileResult["toppings"]> = [];
-  /** "placement|OptionName" of toppings that came from a half recipe (not spoken by name). */
+  /** "placement|OptionName" of toppings/sauces that came from a half recipe (not spoken by name). */
   const recipeDerived = new Set<string>();
+  for (const hs of perHalfSauceResolved) recipeDerived.add(`${hs.side}|${hs.name}`);
   for (const t of requested) {
     const m = matchOption(t.name, tGroups);
     if (!m.ok) {

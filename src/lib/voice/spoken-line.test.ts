@@ -250,22 +250,23 @@ describe("half of a NAMED pizza is first-class: recipe toppings, overlaps, base 
   const deluxe = "cmpuex52708kk04kv4l0xflwf"; // presets Pepperoni, Green Peppers, Mushrooms; default Pizza Sauce Base
   const recipes = { [philly]: item(philly), [deluxe]: item(deluxe) };
 
-  it("half Philly Steak, half Deluxe on the combo's Large 3 Topping: shared toppings go whole, ranch rides as a half note, spoken by name", () => {
+  it("half Philly Steak, half Deluxe on the combo's Large 3 Topping: shared toppings go whole, per-half sauces are prefixed modifiers", () => {
     const r = compilePizzaLine(
       { menuItemId: L.large3, halfRecipes: [{ placement: "left", menuItemId: philly }, { placement: "right", menuItemId: deluxe }] },
       item(L.large3),
       { currency: "cad", recipes, suppressPricingNote: true },
     );
     expect(r.unresolved).toEqual([]);
-    expect(r.halves).toEqual({ left: ["Steak", "Red Onion"], right: ["Pepperoni"], whole: ["Mushrooms", "Green Peppers"] });
-    // the kitchen sees the recipe names AND the sauce for that half
-    expect(r.readBack).toBe("Large 3 Topping — left half (Philly Steak Pizza): Steak, Red Onion; right half (Deluxe Pizza): Pepperoni; all over: Mushrooms, Green Peppers (Ranch Base on the Philly Steak Pizza half)");
-    expect(r.line!.notes).toBe("Ranch Base on the Philly Steak Pizza half");
-    // the caller hears the recipe names, not an enumeration, plus the sauce note
-    expect(r.spoken).toBe("a large pizza, half Philly Steak Pizza, half Deluxe Pizza, ranch base on the philly steak pizza half");
+    expect(r.halves).toEqual({ left: ["Ranch Base", "Steak", "Red Onion"], right: ["Pizza Sauce Base", "Pepperoni"], whole: ["Mushrooms", "Green Peppers"] });
+    // the kitchen sees per-half sauces as prefixed modifiers, not notes
+    expect(r.readBack).toBe("Large 3 Topping — left half (Philly Steak Pizza): Ranch Base, Steak, Red Onion; right half (Deluxe Pizza): Pizza Sauce Base, Pepperoni; all over: Mushrooms, Green Peppers");
+    expect(r.line!.notes).toBeNull();
+    // the caller hears recipe names only — per-half sauces are recipe-derived and not spoken
+    expect(r.spoken).toBe("a large pizza, half Philly Steak Pizza, half Deluxe Pizza");
     expect(r.recipeNames).toEqual(["Philly Steak Pizza", "Deluxe Pizza"]);
-    // whole-pizza sauce stays the pizza's own default (Pizza Sauce Base) — no per-half sauce on the ticket line itself
-    expect(r.line!.modifiers.some((m) => /Ranch/.test(m.name))).toBe(false);
+    // per-half sauces ARE on the ticket as prefixed modifiers
+    expect(r.line!.modifiers.some((m) => m.name === "(L.H) Ranch Base")).toBe(true);
+    expect(r.line!.modifiers.some((m) => m.name === "(R.H) Pizza Sauce Base")).toBe(true);
   });
 
   it("an extra topping on a recipe half is spoken as 'plus'; 'no pineapple on the Hawaiian half' removes it from the recipe", () => {
