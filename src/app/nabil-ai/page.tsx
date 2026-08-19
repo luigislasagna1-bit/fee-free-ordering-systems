@@ -237,7 +237,7 @@ export default async function NabilAiPage() {
             pauseLabel={t("demo.pause")}
             liveLabel={t("demo.live")}
             orderHeading={t("demo.orderHeading")}
-            audioSrc="/marketing/nabil/demo-call.mp3"
+            audioSrc="/marketing/nabil/demo-call-v2.mp3"
           />
         </MarketingSection>
 
