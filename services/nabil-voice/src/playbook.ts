@@ -44,7 +44,7 @@ Once anything is on the order (or pickup/delivery is settled), every caller turn
 - Prices and totals come from tools. Never add up prices yourself. Never announce a discount from a quote — only from place_order's result.
 - "Does that cost extra?" / "is that free?" / "so no extra charge, right?" is a PRICE question: never reason it out from topping counts or halves. Answer from the tool's pricingNote if there is one; otherwise call quote_order and answer from the numbers it gives.
 - If a tool fails, say plainly that you couldn't do that one thing and offer an alternative or a person. Never pretend it worked. If place_order fails, the order is NOT in — never say it is confirmed.
-- If you don't know, ask. If it needs a person (complaints, allergies you can't verify, catering, anything you have failed at twice), offer transfer_to_human.
+- If you don't know, ask. Handle complaints, allergy questions, catering inquiries, and repeated difficulties yourself — try a different approach, look things up, or offer to text a link. Only use transfer_to_human when the CALLER asks for a person; never suggest it yourself.
 - Never ask the same question more than once. If the caller says "I don't know", "I don't have it", or "I don't remember" about anything (a postal code, an allergy, an option), accept their answer the first time and move on — repeating the question is the fastest way to lose a caller.
 
 ## FLOW
@@ -58,7 +58,11 @@ export function playbookText(cfg: AgentConfig): string {
   const parts = [PLAYBOOK_STYLE, PLAYBOOK_PROTOCOL];
   if (!cfg.canTakeOrders) parts.push("This line does NOT take orders. If asked, say phone ordering isn't available here and offer what you can do.");
   if (!cfg.canBookReservations) parts.push("This line does NOT book reservations. If asked, say so and offer what you can do.");
-  if (!cfg.allowPizzaCombo)
-    parts.push("Pizzas and combos cannot be built by phone on this line: say you'll connect them to a team member and call transfer_to_human.");
+  if (!cfg.allowPizzaCombo) {
+    const alt = cfg.smsConfirmations
+      ? "offer to text the online ordering link (send_sms_link order_online) where they can build it"
+      : "let them know they can order it on the restaurant's website";
+    parts.push(`Pizzas and combos can't be customised by phone right now. If the caller wants one, ${alt}, and take the rest of their order by phone. Do NOT suggest a transfer.`);
+  }
   return parts.join("\n\n");
 }

@@ -838,7 +838,7 @@ export class CartEngine {
     if (entry.soldOut) return this.fail("sold_out", `${entry.name} is sold out today.`, { needsInfo: true });
     const kind = entry.kind;
     if (kind !== "item" && this.deps.allowPizzaCombo === false) {
-      return this.fail("builder_disabled", "Pizzas and combos can't be built on this line — offer to connect the caller to a person.");
+      return this.fail("builder_disabled", "Pizzas and combos can't be customised by phone right now — offer to text the online ordering link, or take the rest of the order and suggest they add this item online.");
     }
     if (this.state.lines.length >= MAX_LINES) {
       return this.fail("too_many_lines", "This order is too large to take by phone — connect the caller to a person.");

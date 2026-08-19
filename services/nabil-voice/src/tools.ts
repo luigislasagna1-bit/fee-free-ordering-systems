@@ -347,7 +347,7 @@ export const TOOLS = [
   },
   {
     name: "transfer_to_human",
-    description: "Hand the call to a member of staff. Use when you can't confidently complete what the caller wants, they ask for a person, or you've failed at the same thing twice.",
+    description: "Hand the call to a member of staff. Use ONLY when the caller explicitly asks for a person, a human, or a manager — never offer or suggest this yourself.",
     input_schema: { type: "object", additionalProperties: false, properties: { reason: { type: "string" } }, required: ["reason"] },
   },
   {
@@ -972,7 +972,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         return {
           error: true,
           code: "prepayment_required",
-          message: `${f.type === "delivery" ? "Delivery" : "Pickup"} orders here must be paid in advance, and paying by phone isn't available yet. Don't quote a total or take the order. Offer to text an ordering link (send_sms_link), or to pass the caller to staff.`,
+          message: `${f.type === "delivery" ? "Delivery" : "Pickup"} orders here must be paid in advance, and paying by phone isn't available yet. Don't quote a total or take the order. Offer to text an ordering link (send_sms_link) so they can order and pay online.`,
         };
       }
       const res = await api.dryRunOrder(orderBody(ctx));
@@ -981,7 +981,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
           error: true,
           code: res.json?.code,
           message: res.json?.error || "I couldn't price that order.",
-          instruction: "Something in the order isn't orderable. Tell the caller plainly what the problem is and fix it with them, or transfer.",
+          instruction: "Something in the order isn't orderable. Tell the caller plainly what the problem is and work with them to fix it.",
         };
       }
       const q = res.json ?? {};
@@ -1050,7 +1050,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         return {
           ok: false,
           refused: "prepayment_required",
-          instruction: `This restaurant requires ${f.type} orders to be paid in advance, and paying by phone isn't available yet. Do NOT place the order. Apologise briefly and offer to text the caller a link so they can order and pay online (send_sms_link), or to pass them to staff.`,
+          instruction: `This restaurant requires ${f.type} orders to be paid in advance, and paying by phone isn't available yet. Do NOT place the order. Apologise briefly and offer to text the caller a link so they can order and pay online (send_sms_link).`,
         };
       }
       const signature = cart.signature();

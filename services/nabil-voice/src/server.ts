@@ -1,6 +1,9 @@
 // FIRST: config validation (throws loudly on a missing required var) + Sentry
 // when SENTRY_DSN is set + the process crash handlers. See sentry.ts.
 import "./sentry";
+import { existsSync } from "node:fs";
+import { resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import http from "node:http";
 import Anthropic from "@anthropic-ai/sdk";
 import { WebSocketServer } from "ws";
@@ -382,8 +385,9 @@ process.on("SIGTERM", () => void drain("SIGTERM"));
 process.on("SIGINT", () => void drain("SIGINT"));
 
 // Load the ambient bed once at boot (shared across all calls).
-// The file is optional: no bed = no ambient, the pipeline still works.
-const bedPath = process.env.NABIL_BED_PATH || "";
+// Default to the bundled file when NABIL_BED_PATH is not set.
+const DEFAULT_BED = resolve(dirname(fileURLToPath(import.meta.url)), "../assets/ambience/restaurant-bed.pcm");
+const bedPath = process.env.NABIL_BED_PATH || (existsSync(DEFAULT_BED) ? DEFAULT_BED : "");
 if (bedPath) {
   try {
     loadBed(bedPath);
@@ -391,6 +395,8 @@ if (bedPath) {
   } catch (e) {
     console.warn(`[nabil-voice] ambient bed not loaded (${e instanceof Error ? e.message : e}) — media calls will have no ambience`);
   }
+} else {
+  console.warn("[nabil-voice] no ambient bed file found — media calls will have no ambience");
 }
 
 server.listen(CONFIG.port, () => {

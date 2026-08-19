@@ -454,7 +454,7 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   // was toggled on before the env var existed on Vercel. A half-built
   // audio pipeline must never be reachable from a live phone number.
   const useMediaStreams =
-    cfg.audioPipeline === "mediastreams" &&
+    (cfg.ambientNoise === true || cfg.audioPipeline === "mediastreams") &&
     process.env.NABIL_MEDIASTREAMS_ENABLED === "true";
 
   if (useMediaStreams) {

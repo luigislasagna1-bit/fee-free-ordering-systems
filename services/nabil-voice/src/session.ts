@@ -107,7 +107,7 @@ export function isEarlyFragment(text: string, msSinceReplyEnd: number, windowMs:
 }
 /** Hard cap on how long one sentence may hold off barge-in. */
 const PROTECT_MAX_MS = 8_000;
-const STRUGGLE_LIMIT = 2;
+const STRUGGLE_LIMIT = 3;
 /** How often the event log is flushed to the app mid-call (crash-safety). */
 const EVENT_FLUSH_EVERY_TURNS = 10;
 
