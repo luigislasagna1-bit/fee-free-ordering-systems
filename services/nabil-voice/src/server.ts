@@ -218,6 +218,7 @@ wss.on("connection", (ws, req) => {
 const mediaWss = new WebSocketServer({ noServer: true });
 
 mediaWss.on("connection", (ws, req) => {
+  console.log(`[nabil-voice] /media upgrade received from ${req.socket?.remoteAddress ?? "?"}`);
   if (draining) { ws.close(1013, "draining"); return; }
   if (active.size >= CONFIG.maxSessions) {
     console.error(`[nabil-voice] AT CAPACITY (${active.size}/${CONFIG.maxSessions}) — refusing media call`);
@@ -229,7 +230,7 @@ mediaWss.on("connection", (ws, req) => {
   const url = new URL(req.url || "/media", "wss://placeholder.local");
   const token = url.searchParams.get("t") || "";
   const payload = verifyCallToken(token);
-  if (!payload) { ws.close(1008, "unauthorized"); return; }
+  if (!payload) { console.warn("[nabil-voice] /media token rejected"); ws.close(1008, "unauthorized"); return; }
 
   // Parse voice settings from the token's ttsVoice attribute
   // Format: <voiceId>-<modelId>-<speed>_<stability>_<similarity>

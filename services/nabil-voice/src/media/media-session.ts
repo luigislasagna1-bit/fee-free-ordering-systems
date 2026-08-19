@@ -93,8 +93,9 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
           sendMediaToTwilio(frame);
         });
         opts.onSetup();
-        if (opts.greeting) {
-          speakText(opts.greeting);
+        {
+          const greetingText = opts.greeting || msg.start?.customParameters?.greeting || "";
+          if (greetingText) speakText(greetingText);
         }
         break;
 

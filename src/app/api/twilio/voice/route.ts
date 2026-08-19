@@ -453,13 +453,16 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   // call for Luigi for ~2 hours on 2026-08-18 because the media pipeline
   // was toggled on before the env var existed on Vercel. A half-built
   // audio pipeline must never be reachable from a live phone number.
+  const mediaFallback = new URL(req.url).searchParams.get("mediaFallback") === "1";
   const useMediaStreams =
-    cfg.audioPipeline === "mediastreams" &&
+    !mediaFallback &&
+    (cfg.ambientNoise === true || cfg.audioPipeline === "mediastreams") &&
     process.env.NABIL_MEDIASTREAMS_ENABLED === "true";
 
   if (useMediaStreams) {
     const afterStreamUrl = `${origin}/api/twilio/voice/after-stream`;
     const mediaUrl = `${wss.replace("/call", "/media")}${wss.includes("?") ? "&" : "?"}t=${encodeURIComponent(token)}`;
+    console.log(`[twilio/voice] Media Streams for ${callSid}: url=${mediaUrl.replace(/t=[^&]+/, "t=***")}`);
     return twiml(
       `<Response><Connect action="${xml(afterStreamUrl)}">` +
         `<Stream url="${xml(mediaUrl)}">` +

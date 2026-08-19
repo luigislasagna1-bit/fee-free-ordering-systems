@@ -83,7 +83,7 @@ function rejectIfForged(req: NextRequest, params: Record<string, string>): Respo
   return null;
 }
 
-async function handle(params: Record<string, string>) {
+async function handle(req: NextRequest, params: Record<string, string>) {
   const callSid = (params.CallSid || "").trim();
   const to = (params.To || "").trim();
 
@@ -104,8 +104,18 @@ async function handle(params: Record<string, string>) {
     );
   }
 
-  // For all other reasons (transfer, agent_struggling, pipeline_failed,
-  // or unknown), dial the restaurant — the caller must never hear dead air.
+  // No call record = the Media Streams WebSocket never established a session.
+  // Redirect back to the main voice route with ?mediaFallback=1 so it falls
+  // back to ConversationRelay instead of ringing the store.
+  if (!reason) {
+    const voiceOrigin = new URL(publicUrl(req)).origin;
+    const retryUrl = `${voiceOrigin}/api/twilio/voice?mediaFallback=1`;
+    console.warn(`[twilio/voice/after-stream] stream failed for ${callSid} — falling back to ConversationRelay`);
+    return twiml(`<Response><Redirect method="POST">${xml(retryUrl)}</Redirect></Response>`);
+  }
+
+  // For all other reasons (transfer, agent_struggling, pipeline_failed),
+  // dial the restaurant — the caller must never hear dead air.
   const line = to
     ? await prisma.voiceNumber.findUnique({
         where: { phoneNumber: to },
@@ -146,7 +156,7 @@ export async function POST(req: NextRequest) {
   if (rejected) return rejected;
 
   try {
-    return await handle(params);
+    return await handle(req, params);
   } catch (e) {
     reportError(e, { route: "twilio/voice/after-stream", stage: "handle" });
     return safetyNetTwiml(params.To || undefined);
