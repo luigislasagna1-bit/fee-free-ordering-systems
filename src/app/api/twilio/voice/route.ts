@@ -446,8 +446,27 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   // NOTE (config): voiceSpeed DOES take effect — it rides the extended `voice`
   // value built above, which also pins the TTS model to turbo_v2_5 so audio
   // quality never depends on whether the owner touched the speed slider.
-  // ambientNoise is still not wired to anything (no ConversationRelay
-  // attribute); the Settings UI labels it "coming soon" rather than pretending.
+  // ── Pipeline switch ──────────────────────────────────────────────────
+  // "mediastreams" = own STT/TTS + ambient bed mixer via Twilio Media Streams.
+  // Kill switch: NABIL_MEDIASTREAMS_ENABLED=false forces ConversationRelay.
+  const useMediaStreams =
+    cfg.audioPipeline === "mediastreams" &&
+    process.env.NABIL_MEDIASTREAMS_ENABLED !== "false";
+
+  if (useMediaStreams) {
+    const afterStreamUrl = `${origin}/api/twilio/voice/after-stream`;
+    const mediaUrl = `${wss.replace("/call", "/media")}${wss.includes("?") ? "&" : "?"}t=${encodeURIComponent(token)}`;
+    return twiml(
+      `<Response><Connect action="${xml(afterStreamUrl)}">` +
+        `<Stream url="${xml(mediaUrl)}">` +
+        `<Parameter name="greeting" value="${xml(greeting)}"/>` +
+        `</Stream>` +
+        `</Connect>` +
+        `<Redirect>${xml(afterStreamUrl)}</Redirect>` +
+        `</Response>`,
+    );
+  }
+
   // `interruptible="any"` gives barge-in; elevenlabsTextNormalization="auto"
   // reads prices/numbers correctly (accuracy).
   return twiml(

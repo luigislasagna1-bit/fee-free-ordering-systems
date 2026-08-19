@@ -3002,6 +3002,9 @@ model VoiceAgentConfig {
   voice                 String? // provider voice id; null = per-locale default
   voiceSpeed            Float   @default(1.0)   // 0.5..2.0
   ambientNoise          Boolean @default(false) // subtle restaurant-noise realism
+  /// Audio pipeline: "conversationrelay" (default, Twilio-managed STT/TTS) or
+  /// "mediastreams" (own STT/TTS + ambient bed mixer). Set by superadmin only.
+  audioPipeline         String  @default("conversationrelay")
 
   // ── Capabilities ──
   canTakeOrders         Boolean @default(true)

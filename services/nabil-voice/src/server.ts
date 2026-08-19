@@ -8,6 +8,10 @@ import { CONFIG, verifyCallToken } from "./config";
 import { CallSession } from "./session";
 import { fallbackMapStatus, fallbackTwiml, handleFallback, startFallbackRefresh } from "./fallback";
 import { captureError, createRefractory, flushObservability, hasErrorSink } from "./observability";
+import { createMediaSession, type MediaSessionHandle } from "./media/media-session";
+import { createDeepgramStt } from "./media/stt";
+import { createElevenLabsTts } from "./media/tts";
+import { loadBed } from "./media/bed";
 
 /**
  * Nabil AI voice service entry point. A single always-on process (Fly.io):
@@ -188,6 +192,130 @@ wss.on("connection", (ws, req) => {
   });
 });
 
+// ── /media — Twilio Media Streams path (ambient bed pipeline) ─────────────
+//
+// Same capacity/drain/token logic as /call. The MediaSession adapter
+// translates Media Streams events to ConversationRelay-shaped messages
+// so CallSession works unchanged.
+
+const mediaWss = new WebSocketServer({ server, path: "/media" });
+
+mediaWss.on("connection", (ws, req) => {
+  if (draining) { ws.close(1013, "draining"); return; }
+  if (active.size >= CONFIG.maxSessions) {
+    console.error(`[nabil-voice] AT CAPACITY (${active.size}/${CONFIG.maxSessions}) — refusing media call`);
+    if (capacityAlert.fire()) captureError(new Error(`AT CAPACITY ${active.size}/${CONFIG.maxSessions}`), { where: "capacity" });
+    ws.close(1013, "at capacity");
+    return;
+  }
+
+  const url = new URL(req.url || "/media", "wss://placeholder.local");
+  const token = url.searchParams.get("t") || "";
+  const payload = verifyCallToken(token);
+  if (!payload) { ws.close(1008, "unauthorized"); return; }
+
+  // Parse voice settings from the token's ttsVoice attribute
+  // Format: <voiceId>-<modelId>-<speed>_<stability>_<similarity>
+  let voiceId = "cgSgspJ2msm6clMCkdEj"; // default ElevenLabs voice
+  let stability = 0.35;
+  let similarity = 0.75;
+  let speed = 1.0;
+  let ttsModel = "eleven_turbo_v2_5";
+  if (payload.ttsVoice) {
+    const parts = payload.ttsVoice.split("-");
+    if (parts.length >= 1) voiceId = parts[0];
+    if (parts.length >= 2) ttsModel = parts[1];
+    if (parts.length >= 3) {
+      const nums = parts[2].split("_").map(Number);
+      if (nums.length >= 1 && !isNaN(nums[0])) speed = nums[0];
+      if (nums.length >= 2 && !isNaN(nums[1])) stability = nums[1];
+      if (nums.length >= 3 && !isNaN(nums[2])) similarity = nums[2];
+    }
+  }
+
+  const deepgramKey = process.env.DEEPGRAM_API_KEY;
+  const elevenLabsKey = process.env.ELEVENLABS_API_KEY;
+  if (!deepgramKey || !elevenLabsKey) {
+    console.error("[nabil-voice] DEEPGRAM_API_KEY or ELEVENLABS_API_KEY not set — refusing media call");
+    ws.close(1011, "missing keys");
+    return;
+  }
+
+  let mediaHandle: MediaSessionHandle | null = null;
+  let session: CallSession | null = null;
+
+  const stt = createDeepgramStt(
+    { apiKey: deepgramKey, language: payload.lang ?? undefined },
+    {
+      onTranscript: (t) => mediaHandle?.handleTranscript(t),
+      onUtteranceEnd: () => mediaHandle?.handleUtteranceEnd(),
+      onOpen: () => console.log(`[nabil-voice] STT open for ${payload.callSid}`),
+      onError: (err) => captureError(err, { where: "media-stt", callSid: payload.callSid }),
+      onClose: () => {},
+    },
+  );
+
+  const tts = createElevenLabsTts(
+    { apiKey: elevenLabsKey, voiceId, modelId: ttsModel, stability, similarity, speed, languageCode: payload.lang ?? undefined },
+    {
+      onAudio: (chunk) => mediaHandle?.handleTtsAudio(chunk),
+      onDone: () => mediaHandle?.handleTtsDone(),
+      onError: (err) => captureError(err, { where: "media-tts", callSid: payload.callSid }),
+    },
+  );
+
+  // Create a shim WebSocket that translates ws.send() from CallSession
+  // into MediaSession's sendText(). CallSession was designed for
+  // ConversationRelay and sends JSON like {type:"text", token:"..."} —
+  // the shim intercepts these and routes them through TTS instead.
+  const shimWs = Object.create(ws);
+  shimWs.send = (data: string) => {
+    try {
+      const msg = JSON.parse(data);
+      if (msg.type === "text") {
+        mediaHandle?.sendText(msg.token ?? "", !!msg.last);
+      }
+    } catch {
+      // non-JSON passthrough (shouldn't happen)
+    }
+  };
+
+  mediaHandle = createMediaSession({
+    token: payload,
+    twilioWs: ws,
+    stt,
+    tts,
+    onSetup: () => {
+      // CallSession expects a "setup" message from ConversationRelay.
+      // We synthesise one after the Twilio "start" event.
+      session = new CallSession(shimWs, payload, anthropic);
+      active.add(session);
+      session.onMessage(JSON.stringify({ type: "setup" }));
+    },
+    onPrompt: (text, lang) => {
+      session?.onMessage(JSON.stringify({ type: "prompt", voicePrompt: text, lang }));
+    },
+    onInterrupt: (utteranceUntilInterrupt) => {
+      session?.onMessage(JSON.stringify({ type: "interrupt", utteranceUntilInterrupt }));
+    },
+    onDtmf: (digit) => {
+      session?.onMessage(JSON.stringify({ type: "dtmf", digit }));
+    },
+    onEnd: () => {
+      if (session) {
+        active.delete(session);
+        session.onClose();
+        session = null;
+      }
+    },
+  });
+
+  ws.on("error", (e) => {
+    console.error("[nabil-voice] media ws error", e);
+    captureError(e, { where: "media-ws", callSid: payload.callSid, restaurantId: payload.restaurantId });
+  });
+});
+
 /**
  * Graceful shutdown. Fly sends SIGTERM before replacing a machine; until this
  * existed nothing listened, so a deploy killed the process outright — every live
@@ -227,8 +355,20 @@ async function drain(signal: string): Promise<void> {
 process.on("SIGTERM", () => void drain("SIGTERM"));
 process.on("SIGINT", () => void drain("SIGINT"));
 
+// Load the ambient bed once at boot (shared across all calls).
+// The file is optional: no bed = no ambient, the pipeline still works.
+const bedPath = process.env.NABIL_BED_PATH || "";
+if (bedPath) {
+  try {
+    loadBed(bedPath);
+    console.log(`[nabil-voice] ambient bed loaded: ${bedPath}`);
+  } catch (e) {
+    console.warn(`[nabil-voice] ambient bed not loaded (${e instanceof Error ? e.message : e}) — media calls will have no ambience`);
+  }
+}
+
 server.listen(CONFIG.port, () => {
-  console.log(`[nabil-voice] listening on :${CONFIG.port} (WSS /call, health /health) → model ${CONFIG.model}`);
+  console.log(`[nabil-voice] listening on :${CONFIG.port} (WSS /call + /media, health /health) → model ${CONFIG.model}`);
   // Fire after listening so the port is open immediately — Fly's health check
   // grace period covers the few hundred ms this takes.
   void checkAnthropicKey();
