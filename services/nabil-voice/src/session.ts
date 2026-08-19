@@ -1195,7 +1195,7 @@ export class CallSession {
       this.numbersVerbalized += r.changes;
       this.events.emit({ type: "numbers_verbalized", turn: this.turnIndex, count: r.changes });
     }
-    return r.text;
+    return r.text.replace(/\bBBQ\b/gi, "barbecue");
   }
 
   /** Sentence-chunk mode: forward a complete clause unless it is narration. */
