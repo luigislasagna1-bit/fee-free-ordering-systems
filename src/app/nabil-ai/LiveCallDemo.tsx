@@ -195,7 +195,7 @@ const TRANSCRIPT: Line[] = [
   },
   {
     speaker: "nabil",
-    text: "All set, Sam! Just a heads up, this was a demo call, so nothing's actually being cooked up — but that's exactly how a real order would go from start to finish. If you'd like to see more, check out feefreeordering.com/nabil-ai. Thanks so much for trying it out!",
+    text: "All set, Sam!",
     at: 148.9,
   },
 ];
@@ -204,7 +204,7 @@ const SILENCE_GAPS: { start: number; end: number }[] = [];
 
 const GAP_KEEP = 0.4;
 
-const TOTAL_DURATION = 157;
+const TOTAL_DURATION = 151;
 
 const TOTAL_SAVED = SILENCE_GAPS.reduce(
   (sum, g) => sum + Math.max(0, g.end - g.start - GAP_KEEP),
@@ -281,17 +281,9 @@ export function LiveCallDemo({
   const transcriptEndRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  useEffect(() => {
-    if (!audioSrc) return;
-    const audio = new Audio(audioSrc);
-    audio.preload = "auto";
-    audio.volume = volume;
-    audio.addEventListener("canplaythrough", () => setAudioReady(true), { once: true });
-    audio.addEventListener("error", () => setAudioReady(false));
-    audio.addEventListener("ended", () => setState("done"));
-    audioRef.current = audio;
-    return () => { audio.pause(); audio.src = ""; };
-  }, [audioSrc]); // eslint-disable-line react-hooks/exhaustive-deps
+  const handleCanPlay = useCallback(() => setAudioReady(true), []);
+  const handleAudioError = useCallback(() => setAudioReady(false), []);
+  const handleAudioEnded = useCallback(() => setState("done"), []);
 
   useEffect(() => {
     if (audioRef.current) audioRef.current.volume = muted ? 0 : volume;
@@ -346,6 +338,7 @@ export function LiveCallDemo({
       if (secs >= TOTAL_DURATION) {
         stopTimer();
         setState("done");
+        if (audioRef.current) { audioRef.current.pause(); }
         setVisibleCount(TRANSCRIPT.length);
         setWordProgress(TRANSCRIPT.map((l) => l.text.split(/\s+/).length));
       }
@@ -634,6 +627,17 @@ export function LiveCallDemo({
           </div>
         </div>
       </div>
+
+      {audioSrc && (
+        <audio
+          ref={audioRef}
+          src={audioSrc}
+          preload="auto"
+          onCanPlayThrough={handleCanPlay}
+          onError={handleAudioError}
+          onEnded={handleAudioEnded}
+        />
+      )}
 
       <style>{`
         @keyframes fadeSlideIn {
