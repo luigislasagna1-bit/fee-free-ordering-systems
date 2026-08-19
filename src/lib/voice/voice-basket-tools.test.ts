@@ -153,7 +153,7 @@ function compilerOver(api: any, restaurantSlug: string) {
         notices: Array.isArray(j.notices) ? j.notices.map(String) : undefined,
         toppings: Array.isArray(j.toppings) ? j.toppings : undefined,
         pickSlots: Array.isArray(j.pickSlots) ? j.pickSlots : undefined,
-        betterDeal: j.betterDeal ? { name: String(j.betterDeal.name), menuItemId: String(j.betterDeal.menuItemId), saving: Number(j.betterDeal.saving ?? 0) } : null,
+        autoAppliedDeal: j.autoAppliedDeal ? { standardItemName: String(j.autoAppliedDeal.standardItemName), dealName: String(j.autoAppliedDeal.dealName), dealMenuItemId: String(j.autoAppliedDeal.dealMenuItemId), saving: Number(j.autoAppliedDeal.saving ?? 0) } : null,
         switchedTo: j.switchedTo ? { from: String(j.switchedTo.from), to: String(j.switchedTo.to), menuItemId: j.switchedTo.menuItemId ? String(j.switchedTo.menuItemId) : undefined, saving: Number(j.switchedTo.saving ?? 0) } : null,
       };
     },
@@ -871,12 +871,12 @@ describe("set_fulfilment", () => {
 
 /**
  * DAY DEALS. Luigi tested on a Tuesday and paid $17.74 for a pizza his own menu
- * was selling at $11.99 that day. The saving is computed server-side and comes
- * back on the add result; the model's only job is to offer it and, if the
- * caller says yes, ask for the swap — which recompiles like any other change.
+ * was selling at $11.99 that day. The deal is now AUTO-APPLIED: when a deal
+ * item is cheaper, the compiler swaps it in server-side and the agent announces
+ * the savings. No offer/accept cycle needed.
  */
 describe("day deals", () => {
-  const deal = { menuItemId: "pz_tuesday", name: "Tuesday - Large Pizza Special", saving: 5.75, subtotal: 11.99, readBack: "Tuesday Special with Pepperoni" };
+  const autoAppliedDeal = { standardItemName: "Large 1 Topping", dealName: "Tuesday - Large Pizza Special", dealMenuItemId: "pz_tuesday", saving: 5.75 };
 
   it("passes the owner's setting to the compiler on ADDS only — never on an update", async () => {
     const { ctx, api } = makeCtx({ cfg: { offerDayDeals: true } });
@@ -890,28 +890,27 @@ describe("day deals", () => {
     expect((a2.buildLine.mock.calls[0][0] as any).offerDeals).toBeUndefined();
   });
 
-  it("surfaces the deal with the SERVER's saving, never a recomputed one", async () => {
+  it("surfaces the auto-applied deal with the SERVER's saving", async () => {
     const { ctx, api } = makeCtx();
-    api.buildLine.mockResolvedValueOnce({ ok: true, status: 200, json: { line: defaultBuild({ kind: "pizza", intent: { menuItemId: "pz_large", quantity: 1 } }).json.line, readBack: "1× Large 1 Topping with Pepperoni", pricingNote: null, unresolved: [], betterDeal: deal } });
+    api.buildLine.mockResolvedValueOnce({ ok: true, status: 200, json: { line: defaultBuild({ kind: "pizza", intent: { menuItemId: "pz_tuesday", quantity: 1 } }).json.line, readBack: "1× Tuesday - Large Pizza Special with Pepperoni", pricingNote: null, unresolved: [], autoAppliedDeal } });
     const out = await addPizza(ctx);
     expect(out.ok).toBe(true);
-    expect(out.betterDeal).toEqual({ name: "Tuesday - Large Pizza Special", menuItemId: "pz_tuesday", saving: 5.75 });
-    expect(String(out.instruction)).toContain("TELL THEM ABOUT THE DEAL");
+    expect(out.autoAppliedDeal).toEqual(autoAppliedDeal);
+    expect(String(out.instruction)).toContain("GOOD NEWS");
     expect(String(out.instruction)).toContain("Tuesday - Large Pizza Special");
-    expect(String(out.instruction)).toContain(`update_line with lineId L1 and replaceWithItemId "pz_tuesday"`);
+    expect(String(out.instruction)).not.toContain("update_line");
     expect(out.state.lines).toHaveLength(1);
   });
 
   it("says nothing when there is no deal today", async () => {
     const { ctx } = makeCtx();
     const out = await addPizza(ctx);
-    expect(out.betterDeal).toBeUndefined();
-    expect(String(out.instruction)).not.toContain("TELL THEM ABOUT THE DEAL");
+    expect(out.autoAppliedDeal).toBeUndefined();
+    expect(String(out.instruction)).not.toContain("GOOD NEWS");
   });
 
-  it("accepting the deal SWAPS the line in place rather than adding a second pizza", async () => {
+  it("replaceWithItemId still SWAPS the line in place", async () => {
     const { ctx, api } = makeCtx();
-    api.buildLine.mockResolvedValueOnce({ ok: true, status: 200, json: { ...defaultBuild({ kind: "pizza", intent: { menuItemId: "pz_large", quantity: 1, toppings: [{ name: "pepperoni", placement: "whole" }] } }).json, betterDeal: deal } });
     await addPizza(ctx);
     const out = await run(ctx, "update_line", { lineId: "L1", replaceWithItemId: "pz_tuesday" });
     expect(out.ok).toBe(true);

@@ -153,30 +153,9 @@ describe("noteToolResult — quote / place", () => {
 });
 
 describe("offers", () => {
-  it("a betterDeal on an add is a pending offer; accepted by a replaceWithItemId update; declined after a turn goes by", () => {
+  it("auto-applied deals do NOT create an offered entry — no offer/accept/decline cycle", () => {
     const d = createDialogueState();
-    noteToolResult(d, 1, "add_to_order", { menuItemId: "pz_large" }, okLine("L1", "complete", [], { betterDeal: { name: "Tuesday Special", menuItemId: "pz_tuesday", saving: 5.75 } }), "h");
-    expect(d.offered).toEqual([{ what: "Tuesday Special", kind: "deal", lineId: "L1", outcome: "pending", turn: 1 }]);
-    // the very next turn: still on the table
-    beginTurn(d, 2);
-    expect(d.offered[0].outcome).toBe("pending");
-    // accepted
-    noteToolResult(d, 2, "update_line", { lineId: "L1", replaceWithItemId: "pz_tuesday" }, okLine("L1", "complete"), "h2");
-    expect(d.offered[0].outcome).toBe("accepted");
-    beginTurn(d, 9);
-    expect(d.offered[0].outcome).toBe("accepted"); // never flips back
-
-    // declined by silence: offered on turn 1, not taken by the start of turn 3
-    const d2 = createDialogueState();
-    noteToolResult(d2, 1, "add_to_order", {}, okLine("L1", "complete", [], { betterDeal: { name: "Tuesday Special", menuItemId: "pz_tuesday", saving: 5.75 } }), "h");
-    beginTurn(d2, 2);
-    expect(d2.offered[0].outcome).toBe("pending");
-    beginTurn(d2, 3);
-    expect(d2.offered[0].outcome).toBe("declined");
-    // a failed swap does not accept it
-    const d3 = createDialogueState();
-    noteToolResult(d3, 1, "add_to_order", {}, okLine("L1", "complete", [], { betterDeal: { name: "Deal", menuItemId: "x", saving: 1 } }), "h");
-    noteToolResult(d3, 2, "update_line", { lineId: "L1", replaceWithItemId: "x" }, { ok: false, code: "unknown_item" }, "h");
-    expect(d3.offered[0].outcome).toBe("pending");
+    noteToolResult(d, 1, "add_to_order", { menuItemId: "pz_large" }, okLine("L1", "complete", [], { autoAppliedDeal: { standardItemName: "Large 1 Topping", dealName: "Tuesday Special", dealMenuItemId: "pz_tuesday", saving: 5.75 } }), "h");
+    expect(d.offered).toEqual([]);
   });
 });

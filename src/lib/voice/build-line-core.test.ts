@@ -153,9 +153,9 @@ describe("buildLineCore — kind gates", () => {
 /* ─────────────────────────────── item path ────────────────────────────── */
 
 describe("buildLineCore — item path", () => {
-  it("compiles a simple item with options and returns null betterDeal/switchedTo", async () => {
+  it("compiles a simple item with options and returns null autoAppliedDeal/switchedTo", async () => {
     const sizeMatch = vi.fn();
-    const betterDeal = vi.fn();
+    const betterDeal = vi.fn(async () => null);
     const out = await buildLineCore(
       input("item", { menuItemId: "mi_wings", options: ["ranch"], quantity: 2 }, { offerDeals: true }),
       loaders({ sizeMatch, betterDeal }),
@@ -172,11 +172,11 @@ describe("buildLineCore — item path", () => {
     });
     expect(out.body.readBack).toBe("2× 10pc Wings with Ranch");
     expect(out.body.lineSubtotal).toBe(25.5);
-    expect(out.body.betterDeal).toBeNull();
+    expect(out.body.autoAppliedDeal).toBeNull();
     expect(out.body.switchedTo).toBeNull();
-    // A simple item never gets a size-family swap or a deal hunt.
+    // A simple item never gets a size-family swap, but DOES get a deal check.
     expect(sizeMatch).not.toHaveBeenCalled();
-    expect(betterDeal).not.toHaveBeenCalled();
+    expect(betterDeal).toHaveBeenCalledTimes(1);
   });
 
   it("returns the compiler's questions untouched", async () => {
@@ -191,7 +191,7 @@ describe("buildLineCore — item path", () => {
 /* ─────────────────────────────── pizza path ───────────────────────────── */
 
 describe("buildLineCore — pizza path", () => {
-  it("compiles a pizza and reports betterDeal + switchedTo keys", async () => {
+  it("compiles a pizza and reports autoAppliedDeal + switchedTo keys", async () => {
     const out = await buildLineCore(
       input("pizza", { menuItemId: "mi_large1", size: "large", toppings: [{ name: "pepperoni" }] }),
       loaders(),
@@ -200,7 +200,7 @@ describe("buildLineCore — pizza path", () => {
     if (out.status !== 200) return;
     expect(out.body.unresolved).toEqual([]);
     expect(out.body.line!.menuItemId).toBe("mi_large1");
-    expect(out.body).toHaveProperty("betterDeal", null);
+    expect(out.body).toHaveProperty("autoAppliedDeal", null);
     expect(out.body).toHaveProperty("switchedTo", null);
   });
 
@@ -301,7 +301,7 @@ describe("buildLineCore — combo path", () => {
       { index: 0, slotId: "s1", slotLabel: "Pizza" },
       { index: 1, slotId: "s2", slotLabel: "Wings" },
     ]);
-    expect(out.body).not.toHaveProperty("betterDeal");
+    expect(out.body).not.toHaveProperty("autoAppliedDeal");
     expect(out.body).not.toHaveProperty("switchedTo");
   });
 });

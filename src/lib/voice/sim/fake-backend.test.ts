@@ -86,7 +86,7 @@ describe("fake backend — buildLine (real compiler)", () => {
     expect(modNames(r.json.line)).toEqual(expect.arrayContaining(["REGULAR", "Pizza Sauce Base", "Regular Cheese", "Regular Cooked", "Pepperoni"]));
     expect(r.json.lineSubtotal).toBe(17.74); // 1 included topping — list price
     expect(r.json.readBack).toMatch(/Large 1 Topping/);
-    expect(r.json.betterDeal).toBeNull(); // no day-deal loader offline
+    expect(r.json.autoAppliedDeal).toBeNull(); // no day-deal loader offline
     expect(r.json.switchedTo).toBeNull(); // no size-family loader offline
   });
 
