@@ -227,30 +227,6 @@ mediaWss.on("connection", (ws, req) => {
     return;
   }
 
-  const url = new URL(req.url || "/media", "wss://placeholder.local");
-  const token = url.searchParams.get("t") || "";
-  const payload = verifyCallToken(token);
-  if (!payload) { console.warn("[nabil-voice] /media token rejected"); ws.close(1008, "unauthorized"); return; }
-
-  // Parse voice settings from the token's ttsVoice attribute
-  // Format: <voiceId>-<modelId>-<speed>_<stability>_<similarity>
-  let voiceId = "cgSgspJ2msm6clMCkdEj"; // default ElevenLabs voice
-  let stability = 0.35;
-  let similarity = 0.75;
-  let speed = 1.0;
-  let ttsModel = "eleven_turbo_v2_5";
-  if (payload.ttsVoice) {
-    const parts = payload.ttsVoice.split("-");
-    if (parts.length >= 1) voiceId = parts[0];
-    if (parts.length >= 2) ttsModel = parts[1];
-    if (parts.length >= 3) {
-      const nums = parts[2].split("_").map(Number);
-      if (nums.length >= 1 && !isNaN(nums[0])) speed = nums[0];
-      if (nums.length >= 2 && !isNaN(nums[1])) stability = nums[1];
-      if (nums.length >= 3 && !isNaN(nums[2])) similarity = nums[2];
-    }
-  }
-
   const deepgramKey = process.env.DEEPGRAM_API_KEY;
   const elevenLabsKey = process.env.ELEVENLABS_API_KEY;
   if (!deepgramKey || !elevenLabsKey) {
@@ -259,78 +235,130 @@ mediaWss.on("connection", (ws, req) => {
     return;
   }
 
+  // Auth deferred to the Twilio "start" event — Media Streams strips URL
+  // query params, so the token rides as a <Parameter> in the TwiML and
+  // arrives in start.customParameters.token.
   let mediaHandle: MediaSessionHandle | null = null;
   let session: CallSession | null = null;
+  let callPayload: CallToken | null = null;
+  let authenticated = false;
 
-  const stt = createDeepgramStt(
-    { apiKey: deepgramKey, language: payload.lang ?? undefined },
-    {
-      onTranscript: (t) => mediaHandle?.handleTranscript(t),
-      onUtteranceEnd: () => mediaHandle?.handleUtteranceEnd(),
-      onOpen: () => console.log(`[nabil-voice] STT open for ${payload.callSid}`),
-      onError: (err) => captureError(err, { where: "media-stt", callSid: payload.callSid }),
-      onClose: () => {},
-    },
-  );
-
-  const tts = createElevenLabsTts(
-    { apiKey: elevenLabsKey, voiceId, modelId: ttsModel, stability, similarity, speed, languageCode: payload.lang ?? undefined },
-    {
-      onAudio: (chunk) => mediaHandle?.handleTtsAudio(chunk),
-      onDone: () => mediaHandle?.handleTtsDone(),
-      onError: (err) => captureError(err, { where: "media-tts", callSid: payload.callSid }),
-    },
-  );
-
-  // Create a shim WebSocket that translates ws.send() from CallSession
-  // into MediaSession's sendText(). CallSession was designed for
-  // ConversationRelay and sends JSON like {type:"text", token:"..."} —
-  // the shim intercepts these and routes them through TTS instead.
-  const shimWs = Object.create(ws);
-  shimWs.send = (data: string) => {
-    try {
-      const msg = JSON.parse(data);
-      if (msg.type === "text") {
-        mediaHandle?.sendText(msg.token ?? "", !!msg.last);
-      }
-    } catch {
-      // non-JSON passthrough (shouldn't happen)
+  const authTimer = setTimeout(() => {
+    if (!authenticated) {
+      console.warn("[nabil-voice] /media auth timeout — no start event within 10 s");
+      ws.close(1008, "auth timeout");
     }
-  };
+  }, 10_000);
 
-  mediaHandle = createMediaSession({
-    token: payload,
-    twilioWs: ws,
-    stt,
-    tts,
-    onSetup: () => {
-      // CallSession expects a "setup" message from ConversationRelay.
-      // We synthesise one after the Twilio "start" event.
-      session = new CallSession(shimWs, payload, anthropic);
-      active.add(session);
-      session.onMessage(JSON.stringify({ type: "setup" }));
-    },
-    onPrompt: (text, lang) => {
-      session?.onMessage(JSON.stringify({ type: "prompt", voicePrompt: text, lang }));
-    },
-    onInterrupt: (utteranceUntilInterrupt) => {
-      session?.onMessage(JSON.stringify({ type: "interrupt", utteranceUntilInterrupt }));
-    },
-    onDtmf: (digit) => {
-      session?.onMessage(JSON.stringify({ type: "dtmf", digit }));
-    },
-    onEnd: () => {
-      if (session) {
-        active.delete(session);
-        session.onClose();
-        session = null;
+  function authHandler(raw: Buffer | string) {
+    if (authenticated) return;
+    const data = typeof raw === "string" ? raw : raw.toString("utf-8");
+    let msg: Record<string, unknown>;
+    try { msg = JSON.parse(data); } catch { return; }
+
+    if (msg.event === "connected") return;
+    if (msg.event !== "start") return;
+
+    const params = (msg.start as Record<string, unknown>)?.customParameters as Record<string, string> | undefined;
+    const tokenStr = params?.token || "";
+    callPayload = verifyCallToken(tokenStr);
+    if (!callPayload) {
+      console.warn(`[nabil-voice] /media token rejected (param-len=${tokenStr.length})`);
+      ws.close(1008, "unauthorized");
+      clearTimeout(authTimer);
+      return;
+    }
+
+    authenticated = true;
+    clearTimeout(authTimer);
+    ws.removeListener("message", authHandler);
+
+    const payload = callPayload;
+    console.log(`[nabil-voice] /media connected: ${payload.callSid} from=${payload.from} to=${payload.to} active=${active.size}`);
+
+    let voiceId = "cgSgspJ2msm6clMCkdEj";
+    let stability = 0.35;
+    let similarity = 0.75;
+    let speed = 1.0;
+    let ttsModel = "eleven_turbo_v2_5";
+    if (payload.ttsVoice) {
+      const parts = payload.ttsVoice.split("-");
+      if (parts.length >= 1) voiceId = parts[0];
+      if (parts.length >= 2) ttsModel = parts[1];
+      if (parts.length >= 3) {
+        const nums = parts[2].split("_").map(Number);
+        if (nums.length >= 1 && !isNaN(nums[0])) speed = nums[0];
+        if (nums.length >= 2 && !isNaN(nums[1])) stability = nums[1];
+        if (nums.length >= 3 && !isNaN(nums[2])) similarity = nums[2];
       }
-    },
-  });
+    }
 
+    const stt = createDeepgramStt(
+      { apiKey: deepgramKey!, language: payload.lang ?? undefined },
+      {
+        onTranscript: (t) => mediaHandle?.handleTranscript(t),
+        onUtteranceEnd: () => mediaHandle?.handleUtteranceEnd(),
+        onOpen: () => console.log(`[nabil-voice] STT open for ${payload.callSid}`),
+        onError: (err) => captureError(err, { where: "media-stt", callSid: payload.callSid }),
+        onClose: () => {},
+      },
+    );
+
+    const tts = createElevenLabsTts(
+      { apiKey: elevenLabsKey!, voiceId, modelId: ttsModel, stability, similarity, speed, languageCode: payload.lang ?? undefined },
+      {
+        onAudio: (chunk) => mediaHandle?.handleTtsAudio(chunk),
+        onDone: () => mediaHandle?.handleTtsDone(),
+        onError: (err) => captureError(err, { where: "media-tts", callSid: payload.callSid }),
+      },
+    );
+
+    const shimWs = Object.create(ws);
+    shimWs.send = (sendData: string) => {
+      try {
+        const m = JSON.parse(sendData);
+        if (m.type === "text") mediaHandle?.sendText(m.token ?? "", !!m.last);
+      } catch { /* non-JSON passthrough */ }
+    };
+
+    mediaHandle = createMediaSession({
+      token: payload,
+      twilioWs: ws,
+      stt,
+      tts,
+      greeting: params?.greeting || "",
+      onSetup: () => {
+        session = new CallSession(shimWs, payload, anthropic);
+        active.add(session);
+        session.onMessage(JSON.stringify({ type: "setup" }));
+      },
+      onPrompt: (text, lang) => {
+        session?.onMessage(JSON.stringify({ type: "prompt", voicePrompt: text, lang }));
+      },
+      onInterrupt: (utteranceUntilInterrupt) => {
+        session?.onMessage(JSON.stringify({ type: "interrupt", utteranceUntilInterrupt }));
+      },
+      onDtmf: (digit) => {
+        session?.onMessage(JSON.stringify({ type: "dtmf", digit }));
+      },
+      onEnd: () => {
+        if (session) {
+          active.delete(session);
+          session.onClose();
+          session = null;
+        }
+      },
+    });
+
+    // Re-emit the "start" message so the media session's own handler
+    // processes it (extracts streamSid, starts the pacer + greeting).
+    ws.emit("message", raw);
+  }
+
+  ws.on("message", authHandler);
   ws.on("error", (e) => {
     console.error("[nabil-voice] media ws error", e);
-    captureError(e, { where: "media-ws", callSid: payload.callSid, restaurantId: payload.restaurantId });
+    if (callPayload) captureError(e, { where: "media-ws", callSid: callPayload.callSid, restaurantId: callPayload.restaurantId });
   });
 });
 

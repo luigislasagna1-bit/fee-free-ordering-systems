@@ -461,11 +461,12 @@ async function handle(req: NextRequest, params: Record<string, string>) {
 
   if (useMediaStreams) {
     const afterStreamUrl = `${origin}/api/twilio/voice/after-stream`;
-    const mediaUrl = `${wss.replace("/call", "/media")}${wss.includes("?") ? "&" : "?"}t=${encodeURIComponent(token)}`;
-    console.log(`[twilio/voice] Media Streams for ${callSid}: url=${mediaUrl.replace(/t=[^&]+/, "t=***")}`);
+    const mediaWssUrl = wss.replace("/call", "/media");
+    console.log(`[twilio/voice] Media Streams for ${callSid}: wss=${mediaWssUrl}`);
     return twiml(
       `<Response><Connect action="${xml(afterStreamUrl)}">` +
-        `<Stream url="${xml(mediaUrl)}">` +
+        `<Stream url="${xml(mediaWssUrl)}">` +
+        `<Parameter name="token" value="${xml(token)}"/>` +
         `<Parameter name="greeting" value="${xml(greeting)}"/>` +
         `</Stream>` +
         `</Connect>` +
