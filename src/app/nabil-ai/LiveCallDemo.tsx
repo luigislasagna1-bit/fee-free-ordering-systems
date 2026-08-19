@@ -29,93 +29,92 @@ type Line = {
 
 const TRANSCRIPT: Line[] = [
   // Real call to the Nabil AI demo line, 2026-08-17.
-  // Timestamps from ffmpeg silencedetect waveform analysis of the MP3.
-  // Each `at` = exact audio second when the speech segment begins.
-  // "Mhm."/"Right." voice fillers omitted from bubbles (audible only).
+  // Rebuilt from individual segments: Nabil = original ElevenLabs voice,
+  // Caller = edge-tts BrianNeural. No AI processing gaps.
   {
     speaker: "nabil",
     text: "Thanks for calling Luigi's Lasagna & Pizzeria in Milton, Ontario. Is this for pick up or delivery?",
-    at: 1.0,
+    at: 0.0,
   },
   {
     speaker: "caller",
     text: "It's for delivery.",
-    at: 7.5,
+    at: 6.7,
   },
   {
     speaker: "nabil",
     text: "Great, I can do delivery for you. Could I get the delivery address, please?",
-    at: 13.8,
+    at: 8.1,
   },
   {
     speaker: "caller",
     text: "150 Mary Street, Milton.",
-    at: 19.4,
+    at: 12.6,
   },
   {
     speaker: "nabil",
     text: "Delivery to a hundred fifty Mary Street works, and that fee is seven dollars and ninety-nine cents — or free once your order's over thirty dollars. Could I get the postal code there?",
-    at: 26.7,
+    at: 15.4,
   },
   {
     speaker: "caller",
     text: "Yeah, the postal code is L9T 6Z5.",
-    at: 41.8,
+    at: 30.5,
   },
   {
     speaker: "nabil",
     text: "Got it, thanks. So what can I get started for you today?",
-    at: 47.8,
+    at: 34.5,
   },
   {
     speaker: "caller",
     text: "Do you have any specials?",
-    at: 52.4,
+    at: 38.2,
   },
   {
     speaker: "nabil",
     text: "We've got several combo deals — things like the Large and Wings Combo with a large three-topping pizza and twenty wings for thirty-nine ninety-nine, a Double Large Combo with two large three-topping pizzas and two dips for thirty-nine ninety-nine, and a Family Feast with an extra-large pizza, wings, mozzarella sticks, fries, pop and dips for fifty-nine ninety-nine. There's also a medium one-topping pizza with a lava cake for twenty-four ninety-nine. Would any of those sound good, or would you like to hear more?",
-    at: 56.3,
+    at: 39.8,
   },
   {
     speaker: "caller",
     text: "You know what? The large and wings combo sounded good.",
-    at: 77.6,
+    at: 56.5,
   },
   {
     speaker: "nabil",
     text: "Good choice — that comes with a large three-topping pizza and twenty wings. What toppings would you like on the pizza, and how would you like the wings done — a sauce mixed in or on the side, and which flavor?",
-    at: 81.8,
+    at: 60.0,
   },
   {
     speaker: "caller",
     text: "Can I get pepperoni, mushroom, and green peppers on one half?",
-    at: 90.5,
+    at: 67.8,
   },
   {
     speaker: "nabil",
     text: "Sure, pepperoni, mushroom and green peppers on one half — and what would you like on the other half?",
-    at: 95.2,
+    at: 72.0,
   },
   {
     speaker: "caller",
     text: "And chicken, green pepper, and onions on the other half.",
-    at: 103.0,
+    at: 77.0,
   },
   {
     speaker: "nabil",
-    text: "Got it — and how would you like the wings, mixed in or on the side, and what flavor: honey garlic, hot, BBQ, mild, or sweet heat?",
-    at: 108.0,
+    text: "Got it — and how would you like the wings, mixed in or on the side, and what flavor: honey garlic, hot, barbecue, mild, or sweet heat?",
+    at: 80.4,
   },
   {
     speaker: "caller",
     text: "I'll get barbecue sauce on the side.",
-    at: 112.9,
+    at: 83.9,
   },
   {
     speaker: "nabil",
-    text: "You've got a Large and Wings Combo with a large pizza — half pepperoni and mushrooms, half chicken and onions, green peppers on the whole thing — plus a twenty piece Chicken Wings with BBQ on the side. Anything else for you?",
-    at: 120.1,
+    text: "You've got a Large and Wings Combo with a large pizza — half pepperoni and mushrooms, half chicken and onions, green peppers on the whole thing — plus a twenty piece Chicken Wings with barbecue on the side. Anything else for you?",
+    at: 86.2,
     order: {
       items: [
         {
@@ -133,12 +132,12 @@ const TRANSCRIPT: Line[] = [
   {
     speaker: "caller",
     text: "Yeah, can I get two garlic dips as well?",
-    at: 132.1,
+    at: 98.0,
   },
   {
     speaker: "nabil",
     text: "Two garlic dipping sauces, got it. Anything else?",
-    at: 143.2,
+    at: 100.5,
     order: {
       items: [
         {
@@ -157,22 +156,22 @@ const TRANSCRIPT: Line[] = [
   {
     speaker: "caller",
     text: "No, just what's my total?",
-    at: 147.5,
+    at: 103.6,
   },
   {
     speaker: "nabil",
     text: "Before I get you the total, could I get a name for the order?",
-    at: 151.8,
+    at: 105.4,
   },
   {
     speaker: "caller",
     text: "Yeah, it's for Sam.",
-    at: 155.7,
+    at: 108.7,
   },
   {
     speaker: "nabil",
-    text: "Thanks, Sam. So that's a Large and Wings Combo with a large pizza — half pepperoni and mushrooms, half chicken and onions, green peppers on the whole thing — plus a twenty piece Chicken Wings, BBQ on the side, and two garlic dipping sauces, delivered to you. Your total comes to forty-eight dollars and fifty-eight cents, tax included. Shall I go ahead and place that?",
-    at: 161.6,
+    text: "Thanks, Sam. So that's a Large and Wings Combo with a large pizza — half pepperoni and mushrooms, half chicken and onions, green peppers on the whole thing — plus a twenty piece Chicken Wings, barbecue on the side, and two garlic dipping sauces, delivered to you. Your total comes to forty-eight dollars and fifty-eight cents, tax included. Shall I go ahead and place that?",
+    at: 110.2,
     order: {
       items: [
         {
@@ -193,33 +192,23 @@ const TRANSCRIPT: Line[] = [
   {
     speaker: "caller",
     text: "Sure.",
-    at: 181.1,
+    at: 133.1,
   },
   {
     speaker: "nabil",
     text: "All set, Sam! Just a heads up, this was a demo call, so nothing's actually being cooked up — but that's exactly how a real order would go from start to finish. If you'd like to see more, check out feefreeordering.com/nabil-ai. Thanks so much for trying it out!",
-    at: 187.8,
+    at: 133.9,
   },
 ];
 
-/** Silence gaps in the original audio (> 1.5s of dead air from AI processing).
- *  During playback, the audio seeks past these to keep the demo snappy. */
-const SILENCE_GAPS = [
-  { start: 9.0, end: 13.3 },
-  { start: 22.0, end: 26.2 },
-  { start: 43.0, end: 47.3 },
-  { start: 53.5, end: 55.8 },
-  { start: 73.0, end: 77.1 },
-  { start: 100.0, end: 102.5 },
-  { start: 114.5, end: 117.0 },
-  { start: 139.0, end: 141.0 },
-  { start: 157.0, end: 161.1 },
-  { start: 184.0, end: 187.3 },
-];
+/** Silence gaps in the audio (> 1.5s of dead air from AI processing).
+ *  During playback, the audio seeks past these to keep the demo snappy.
+ *  The rebuilt audio has no processing gaps, so this is empty. */
+const SILENCE_GAPS: { start: number; end: number }[] = [];
 
 const GAP_KEEP = 0.4;
 
-const TOTAL_DURATION = 196;
+const TOTAL_DURATION = 143;
 
 const TOTAL_SAVED = SILENCE_GAPS.reduce(
   (sum, g) => sum + Math.max(0, g.end - g.start - GAP_KEEP),
