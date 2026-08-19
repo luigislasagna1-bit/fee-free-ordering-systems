@@ -219,7 +219,7 @@ const SILENCE_GAPS: { start: number; end: number }[] = [];
 
 const GAP_KEEP = 0.4;
 
-const TOTAL_DURATION = 150.5;
+const TOTAL_DURATION = 149.8;
 
 const TOTAL_SAVED = SILENCE_GAPS.reduce(
   (sum, g) => sum + Math.max(0, g.end - g.start - GAP_KEEP),
