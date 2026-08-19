@@ -33,7 +33,7 @@
 
 /** Payment states that mean "the online payment has not settled". Mirrors
  *  UNRESOLVED in reconcile-card-payments.ts, plus "failed" (a declined card the
- *  webhook flipped) — both are swept up by the 30-minute abandoned-payment
+ *  webhook flipped) — both are swept up by the 10-minute abandoned-payment
  *  cancel in auto-reject-orders.ts. "voided" is deliberately absent: that order
  *  is already dead and reads correctly as cancelled/rejected. */
 const UNSETTLED_PAYMENT = new Set(["pending", "requires_action", "processing", "failed"]);

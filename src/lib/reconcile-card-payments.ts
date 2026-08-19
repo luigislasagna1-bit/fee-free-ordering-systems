@@ -54,7 +54,7 @@ import { verifyAndReleaseOrderPayment } from "@/lib/stripe/verify-order-payment"
  *  this cron only needs to catch the ones that never got there. */
 const MIN_AGE_MS = 45 * 1000;
 /** How far back to hunt for rescuable orders. Comfortably wider than the
- *  30-minute abandoned-payment window so a rescue always beats the cancel. */
+ *  10-minute abandoned-payment window so a rescue always beats the cancel. */
 const RESCUE_WINDOW_MS = 6 * 60 * 60 * 1000;
 /** Stripe authorizations expire after ~7 days; past that there's no hold left
  *  to release, so there's nothing for the void sweep to do. */

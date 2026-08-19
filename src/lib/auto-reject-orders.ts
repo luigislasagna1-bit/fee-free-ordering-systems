@@ -21,6 +21,11 @@ import { syncCustomerTotalsForOrder } from "@/lib/customer-totals";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
+import {
+  cancelAbandonedOrder,
+  ABANDONED_ORDER_STATUSES,
+  ABANDONED_PAYMENT_STATUSES,
+} from "@/lib/abandoned-order-cancel";
 
 // The two windows moved to auto-reject-window.ts so the store's new-order email
 // can quote the real number without importing this module's prisma/stripe
@@ -133,13 +138,18 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
   // for confirmation" forever — even though there's nothing to confirm
   // because no payment was ever taken.
   //
-  // Window: 30 min. Long enough for slow Stripe webhooks; short enough
-  // that the customer's "I'll just place the order again" instinct is
-  // honoured before they get confused looking at the stale entry.
-  const ABANDONED_TIMEOUT_MINUTES = 30;
+  // Window: 10 min (tightened from 30, Luigi 2026-08-17). This is now the
+  // BACKSTOP for the tail a client-side guard on the payment page can't catch
+  // (force-quit, dead battery, dropped connection, or dismissing the
+  // beforeunload prompt) — a customer who deliberately clicks "Cancel my
+  // order" is cancelled INSTANTLY via the same cancelAbandonedOrder() below,
+  // called from POST /api/public/orders/[id]/cancel-unpaid. 10 minutes stays
+  // comfortably longer than a slow 3D Secure/bank-app challenge while cutting
+  // the old 30-minute limbo window by two-thirds.
+  const ABANDONED_TIMEOUT_MINUTES = 10;
   const abandonedCutoff = new Date(now.getTime() - ABANDONED_TIMEOUT_MINUTES * 60 * 1000);
   // Covers every UNPAID, never-released order (money never moved, kitchen never
-  // saw it) so its coupon / reward / promo-usage claims are given back:
+  // saw it):
   //   • paymentStatus "pending"         — checkout never authorized.
   //   • paymentStatus "requires_action" — 3D Secure / SCA challenge abandoned.
   //   • paymentStatus "processing"      — bank-debit that never resolved.
@@ -150,76 +160,28 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
   // stamps a CARD order "accepted" at CREATE while its release stays deferred
   // (notifiedAt null) until payment — so an abandoned auto-accepted card order is
   // "accepted" + notifiedAt:null and the kitchen-stale sweep above (which requires
-  // notifiedAt) never sees it. The "failed"/"voided" and "accepted" cases were
-  // leaking a promo-usage slot until B5's ledger + this broadened sweep (Luigi
-  // 2026-06-30). notifiedAt:null keeps every genuinely-paid order (notifiedAt set
-  // + paymentStatus "paid") safely OUT of this sweep.
-  const abandonedStatuses = ["pending", "accepted"];
-  const abandonedPaymentStatuses = ["pending", "requires_action", "processing", "failed", "voided"];
+  // notifiedAt) never sees it. notifiedAt:null keeps every genuinely-paid order
+  // (notifiedAt set + paymentStatus "paid") safely OUT of this sweep.
+  //
+  // The actual claim + rollback + customer notification now lives in
+  // cancelAbandonedOrder() (src/lib/abandoned-order-cancel.ts) — the SAME
+  // function the instant customer-initiated cancel calls, so there is exactly
+  // one place that knows how to correctly cancel an abandoned order. This
+  // query only needs `id` — the shared function re-fetches what it needs.
   const abandoned = await prisma.order.findMany({
     where: {
-      status: { in: abandonedStatuses },
+      status: { in: [...ABANDONED_ORDER_STATUSES] },
       notifiedAt: null,
       ...(opts.restaurantId ? { restaurantId: opts.restaurantId } : {}),
-      paymentStatus: { in: abandonedPaymentStatuses },
+      paymentStatus: { in: [...ABANDONED_PAYMENT_STATUSES] },
       createdAt: { lt: abandonedCutoff },
     },
-    select: { id: true, orderNumber: true, restaurantId: true, viaMarketplace: true, marketplaceCounterApplied: true, smartLinkCounterApplied: true, total: true },
+    select: { id: true },
   });
   for (const o of abandoned) {
     try {
-      // Atomic status flip re-asserting the FULL abandoned condition (status +
-      // notifiedAt:null + unpaid) so (a) two overlapping cron runs can't both
-      // cancel it, and (b) a payment that succeeds concurrently — which sets
-      // notifiedAt and paymentStatus "paid" — makes this guard MISS, so we never
-      // cancel a just-paid order out from under the customer.
-      const claimed = await prisma.order.updateMany({
-        where: {
-          id: o.id,
-          status: { in: abandonedStatuses },
-          notifiedAt: null,
-          paymentStatus: { in: abandonedPaymentStatuses },
-        },
-        data: {
-          status: "cancelled",
-          rejectedAt: now,
-          rejectionReason:
-            "Payment was not completed within the checkout window. The order was cancelled automatically.",
-        },
-      });
-      if (claimed.count === 0) continue; // another run already cancelled it, or it just got paid
-      result.abandonedCancelled += 1;
-      // Free any coupon this abandoned order had reserved, so the customer can
-      // re-use the offer on a fresh order. Idempotent + internally safe.
-      await releaseCouponsForOrder(o.id);
-      // Return any Reward Dollars reserved on this abandoned order (no-op when
-      // none were spent). Mirrors the manual cancel path in orders/[id]/route.
-      await releaseRewardForOrder(o.id);
-      // Give back the promo usage slot(s) this abandoned order claimed at create
-      // (B5). Deletes its PromotionUsage ledger rows + decrements usedCount,
-      // idempotently — without this a capped promo leaks a slot on every
-      // abandoned card checkout.
-      await releasePromotionUsageForOrder(o.id);
-      // Lifetime counters fall back out of Customer.totalOrders/totalSpent —
-      // mirrors the manual kill flows. Idempotent, never throws.
-      await syncCustomerTotalsForOrder(o.id);
-      // Marketplace attribution shouldn't include orders that never paid.
-      // (For belt-and-suspenders — usually marketplaceCounterApplied is
-      // false on never-paid orders, but the rollback is idempotent.)
-      if (o.viaMarketplace && o.marketplaceCounterApplied) {
-        unrecordMarketplaceOrder({
-          orderId: o.id,
-          restaurantId: o.restaurantId,
-          orderTotalCents: Math.round(o.total * 100),
-        }).catch((e) => console.error("[auto-reject abandoned unrecord]", e));
-      }
-      // Same rollback for a smart-link-attributed order that never paid.
-      if (o.smartLinkCounterApplied) {
-        unrecordSmartLinkOrder({
-          orderId: o.id,
-          orderTotalCents: Math.round(o.total * 100),
-        }).catch((e) => console.error("[auto-reject abandoned smart-link unrecord]", e));
-      }
+      const r = await cancelAbandonedOrder(o.id, "payment_timeout", now);
+      if (r.cancelled) result.abandonedCancelled += 1;
     } catch (e) {
       result.errors.push({
         orderId: o.id,

@@ -161,6 +161,7 @@ export default async function CallsTab({
               <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100">
                 <th className="py-2.5 px-4 font-medium">{t("colTime")}</th>
                 <th className="py-2.5 px-4 font-medium">{t("colCaller")}</th>
+                <th className="py-2.5 px-4 font-medium">{t("colName")}</th>
                 <th className="py-2.5 px-4 font-medium">{t("colOutcome")}</th>
                 <th className="py-2.5 px-4 font-medium text-right">{t("colDuration")}</th>
                 <th className="py-2.5 px-4 font-medium text-center">{t("colSentiment")}</th>
@@ -171,7 +172,7 @@ export default async function CallsTab({
             <tbody>
               {calls.length === 0 && (
                 <tr>
-                  <td colSpan={7} className="py-10 text-center text-sm text-gray-400">
+                  <td colSpan={8} className="py-10 text-center text-sm text-gray-400">
                     {t("emptyState")}
                   </td>
                 </tr>
@@ -194,12 +195,17 @@ export default async function CallsTab({
                       {formatTzDateTime(c.startedAt, scope.timezone)}
                     </td>
                     <td className="py-2.5 px-4 whitespace-nowrap">
-                      {name ? (
-                        <span className="font-medium text-gray-900">{name}</span>
-                      ) : c.fromNumber ? (
+                      {c.fromNumber ? (
                         <span className="font-mono text-gray-700">{c.fromNumber}</span>
                       ) : (
                         <span className="text-gray-400">{t("anonymousCaller")}</span>
+                      )}
+                    </td>
+                    <td className="py-2.5 px-4 whitespace-nowrap">
+                      {name ? (
+                        <span className="font-medium text-gray-900">{name}</span>
+                      ) : (
+                        <span className="text-gray-400">—</span>
                       )}
                     </td>
                     <td className="py-2.5 px-4 whitespace-nowrap">

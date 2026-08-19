@@ -23,7 +23,7 @@
  * re-verified — never derive the footnote from the build date, which would
  * falsely re-assert freshness on every deploy.
  */
-export const COMPETITOR_FACTS_VERIFIED = "May 2026";
+export const COMPETITOR_FACTS_VERIFIED = "August 2026";
 
 export type CompetitorCategory =
   | "ordering_platform"      // peer (GloriaFood, ChowNow, Slice)
@@ -1180,9 +1180,13 @@ export const COMPETITORS: Competitor[] = [
         { label: "Per-minute / usage charge", feefree: "US$0.50/min (billed by the second) after ~499 included minutes", competitor: "Loman states \"no per-minute fees\" — any usage-based cost is quote-only" },
         { label: "Hidden / customer-side fees", feefree: "None", competitor: "None claimed" },
         { label: "Contract / commitment", feefree: "None — cancel anytime", competitor: "Sales-quoted; confirm term" },
+        { label: "POS or hardware required", feefree: "None — Nabil runs standalone on your phone line, with our own kitchen app on a device you already own. Integrate with Toast or Square only if you prefer to", competitor: "Built around POS integration — their site says Loman \"syncs with top POS systems\" and names Toast, SpotOn, Clover, Square, Shift4, Aloha, Olo and Stream" },
+        { label: "What's included", feefree: "All-in-one: online ordering, reservations, marketing and loyalty, a custom-branded app, and the AI phone agent — one platform, one order stream", competitor: "AI phone agent" },
+        { label: "Live phone support", feefree: "Yes — 24/7, real humans, 1-888-618-8765", competitor: "Not advertised — the site lists an email (hey@loman.ai) and a contact form" },
+        { label: "Dedicated representative", feefree: "Yes — a named person for your restaurant, not a ticket queue", competitor: "Not advertised" },
         { label: "Free to try (no demo call)", feefree: "Yes — 7-day free demo for paying Fee Free members, no sales call to see the price", competitor: "No — every price requires \"Contact Us\"" },
       ],
-      footnote: "Loman AI publishes no pricing figures on its own pricing page as of 2026-08-18; the $199/mo figure comes from a Loman blog post, not their rate card. Our numbers are public at /nabil-ai.",
+      footnote: "Loman AI publishes no pricing figures on its own pricing page as of 2026-08-18; the $199/mo figure comes from a Loman blog post, not their rate card. Loman's site describes POS integration but does not state a POS is required — the hardware row above compares our approach to theirs, not a stated Loman requirement. Support and account-management rows say \"not advertised\" because Loman's site does not describe those channels either way. Our numbers are public at /nabil-ai.",
     },
     whyFeeFree: [
       { title: "Published pricing vs. a sales-quote funnel",
@@ -1193,8 +1197,12 @@ export const COMPETITORS: Competitor[] = [
         body: "Phone orders from Nabil AI go through the exact online-ordering checkout your restaurant already uses — same kitchen display, same printer, same reports. Loman AI syncs into your POS as a separate integration, which is one more system that can drift out of step." },
       { title: "Every call recorded, transcribed, and timelined",
         body: "Every Nabil AI call gets a recording, a full transcript and a per-call timeline you can review from your dashboard, with a one-click \"Report\" button if something sounds off." },
-      { title: "Where Loman AI is genuinely strong",
-        body: "Loman AI has real venture backing (~$4.1M raised) and a wider named POS integration list — Toast, SpotOn, OpenTable, Resy, Clover, Shift4, Square, Aloha, Olo and Stream — which matters if your restaurant already runs on one of those systems and needs a certified two-way sync rather than a shared checkout. If deep third-party POS integration outweighs seeing the exact price up front, that's a real trade-off worth weighing." },
+      { title: "No POS, no hardware, no second subscription",
+        body: "Nabil answers your existing phone line and sends orders to our own kitchen app on a device you already own — there is no POS terminal to buy and no separate hardware plan to carry. If you already run Toast or Square and want to keep them, we integrate; you're just never forced to." },
+      { title: "One platform instead of one more vendor",
+        body: "The AI phone agent is part of a system that already does your online ordering, reservations, marketing and loyalty, and your own branded app — so a phone order lands in the same checkout, kitchen display, printer and reports as everything else. A phone-only tool leaves you stitching that together yourself." },
+      { title: "A real person answers when you call us",
+        body: "24/7 live phone support on 1-888-618-8765, plus a dedicated representative who knows your restaurant — not a ticket queue. Loman's site advertises no support phone line or account manager either way." },
     ],
     comparison: [
       { feature: "Published pricing", feefree: "Yes — public at /nabil-ai", competitor: "No — \"Contact Us\" for every tier" },
@@ -1203,7 +1211,12 @@ export const COMPETITORS: Competitor[] = [
       { feature: "Same checkout as your website", feefree: "Yes — one order pipeline", competitor: "Separate POS sync integration" },
       { feature: "Half-and-half pizza handling", feefree: "Yes — core feature, confirmed by read-back", competitor: "Not specifically documented" },
       { feature: "Call recordings + transcripts + timeline", feefree: "Yes, every call", competitor: "Live transcripts/analytics claimed" },
-      { feature: "Named POS integrations", feefree: "Runs through Fee Free's own checkout", competitor: "Toast, SpotOn, OpenTable, Resy, Clover, Shift4, Square, Aloha, Olo, Stream" },
+      { feature: "POS or hardware required", feefree: "None — runs standalone; integrate with Toast/Square only if you want to", competitor: "Built around POS integration" },
+      { feature: "Named POS integrations", feefree: "Runs through Fee Free's own checkout; Toast and Square optional", competitor: "Toast, SpotOn, OpenTable, Resy, Clover, Shift4, Square, Aloha, Olo, Stream" },
+      { feature: "Online ordering, reservations, marketing", feefree: "Included — one platform, one order stream", competitor: "Not offered — AI phone agent only" },
+      { feature: "Your own branded customer app", feefree: "Yes — iOS + Android under your name", competitor: "Not offered" },
+      { feature: "Live phone support", feefree: "24/7 real humans — 1-888-618-8765", competitor: "Not advertised — email / contact form" },
+      { feature: "Dedicated representative", feefree: "Yes — a named person per restaurant", competitor: "Not advertised" },
       { feature: "Contract / commitment", feefree: "None — cancel anytime", competitor: "Sales-quoted; confirm term" },
     ],
     faqs: [

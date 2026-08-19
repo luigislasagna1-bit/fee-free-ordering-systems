@@ -7,6 +7,7 @@ import { defaultsForCountry, regionForCountry } from "@/lib/regions";
 import { isSupportedLocale } from "@/lib/locales";
 import { sendBillingNotificationEmail } from "@/lib/email";
 import crypto from "crypto";
+import bcrypt from "bcryptjs";
 
 /**
  * GET /api/reseller/restaurants
@@ -130,12 +131,9 @@ export async function POST(req: NextRequest) {
 
   const starterPlan = await prisma.subscriptionPlan.findUnique({ where: { slug: "starter" } });
 
-  // Create restaurant + a placeholder User. The user has an unguessable
-  // random "stub" password (they can never log in with it) — a password
-  // reset link is what gets them in.
   const stubPassword = crypto.randomBytes(32).toString("hex");
-  const bcrypt = (await import("bcryptjs")).default;
   const passwordHash = await bcrypt.hash(stubPassword, 12);
+  const emailVerifyToken = crypto.randomBytes(32).toString("base64url");
 
   const restaurant = await prisma.restaurant.create({
     data: {
@@ -175,14 +173,24 @@ export async function POST(req: NextRequest) {
       email: ownerEmail,
       name: ownerName || restaurantName,
       passwordHash,
+      emailVerifyToken,
       role: ROLES.RESTAURANT_ADMIN,
       restaurantId: restaurant.id,
       isActive: true,
     },
   });
 
-  // Send a password reset link so the owner can set their own password and log in.
-  // We piggy-back on the existing PasswordResetToken system.
+  // NotificationRecipient — so the owner gets order alerts once they publish.
+  await prisma.notificationRecipient.create({
+    data: {
+      restaurantId: restaurant.id,
+      email: ownerEmail,
+      name: ownerName || restaurantName,
+      emailLanguage: derivedLanguage,
+    },
+  });
+
+  // Password-reset token so the owner can set their own password and log in.
   const token = crypto.randomBytes(32).toString("hex");
   const newUser = await prisma.user.findUnique({ where: { email: ownerEmail }, select: { id: true } });
   if (newUser) {
@@ -203,13 +211,12 @@ export async function POST(req: NextRequest) {
     restaurantName,
     subject: `Set up your ${restaurantName} account`,
     headline: `Welcome to Fee Free Ordering`,
-    // Plain text only — the email template renders `body` as escaped text
-    // (<P>{body}</P>), so HTML tags like <strong> would show up literally in
-    // the inbox. Keep the restaurant name unwrapped. (Bug fix, Luigi 2026-06-04.)
     body: `${user.name || "Your reseller"} has set up an account for ${restaurantName} on Fee Free Ordering. Click below to set your password and log in.`,
     ctaLabel: "Set my password",
     ctaUrl: setupUrl,
-  }).catch(() => {});
+  }).catch((err) => {
+    console.error("[reseller/restaurants] welcome email failed:", ownerEmail, err);
+  });
 
   return NextResponse.json({
     ok: true,

@@ -61,7 +61,7 @@ export async function verifyAndReleaseOrderPayment(params: {
   // This is the one release path every caller shares (confirmation page, status
   // poll, reconcile cron), so the guard belongs here rather than in each of
   // them. Without it there's a live race: the reconciler reads a batch of
-  // unreleased orders, the 30-minute abandoned-payment sweep cancels one of
+  // unreleased orders, the 10-minute abandoned-payment sweep cancels one of
   // them a moment later, and the reconciler then captures the card and sends a
   // cancelled order to the kitchen. Rejected orders are the same story from the
   // kitchen side. Any hold left behind is released by the reconciler's VOID

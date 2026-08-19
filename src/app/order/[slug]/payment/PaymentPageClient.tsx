@@ -11,16 +11,22 @@ import {
 import { Loader2, ShieldCheck, ArrowLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { formatCurrency } from "@/lib/utils";
+import { usePreventPaymentAbandon } from "@/lib/use-prevent-payment-abandon";
 
 function CheckoutForm({
   orderId,
   slug,
   payAmountLabel,
+  onPayingChange,
 }: {
   orderId: string;
   slug: string;
   /** Preformatted net amount ("$12.34") appended to the Pay Now button, or null when the summary fetch failed. */
   payAmountLabel: string | null;
+  /** Mirrors local `paying` state up to the parent so the abandon-guard hook
+   *  (which lives in the parent, outside this <Elements> subtree) knows a
+   *  payment is in flight and suppresses the leave-confirm/beforeunload UI. */
+  onPayingChange: (paying: boolean) => void;
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -33,6 +39,7 @@ function CheckoutForm({
     e.preventDefault();
     if (!stripe || !elements) return;
     setPaying(true);
+    onPayingChange(true);
     setError("");
 
     const { error: stripeError } = await stripe.confirmPayment({
@@ -45,8 +52,11 @@ function CheckoutForm({
     if (stripeError) {
       setError(stripeError.message ?? t("paymentFailed"));
       setPaying(false);
+      onPayingChange(false);
     }
-    // On success, Stripe redirects to return_url automatically
+    // On success, Stripe redirects to return_url automatically — `paying`
+    // deliberately stays true through that redirect so the abandon guard
+    // doesn't pop a stray "Leave site?" prompt on a customer who just paid.
   }
 
   return (
@@ -118,6 +128,46 @@ export function PaymentPageClient({ slug }: { slug: string }) {
     rewardLabel: string;
     currency: string;
   } | null>(null);
+  // Purpose-scoped token minted by the public order GET only while this order
+  // still qualifies as abandoned (card/paypal, notifiedAt null, unresolved
+  // payment) — authorizes the "Cancel my order" action below. Null while
+  // that GET hasn't resolved yet, or once the order no longer qualifies.
+  const [cancelToken, setCancelToken] = useState<string | null>(null);
+  // Mirrors CheckoutForm's local `paying` state — lives here because the
+  // abandon-guard hook (below) is outside the <Elements> subtree CheckoutForm
+  // renders inside, so it can't read that state directly.
+  const [paying, setPaying] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
+  const [cancelError, setCancelError] = useState<string | null>(null);
+  // Armed only once the card form is actually on screen — the modal this
+  // hook opens only renders in the main return branch below, not the
+  // earlier loading/error ones. Arming any sooner would trap browser-back
+  // behind a popstate intercept with nothing visible to explain why.
+  const { showConfirm, requestLeave, dismiss } = usePreventPaymentAbandon({
+    enabled: !!orderId && !!clientSecret && !!stripePromise && !setupError,
+    paymentInFlight: paying,
+  });
+
+  async function handleCancelUnpaid() {
+    setCancelling(true);
+    setCancelError(null);
+    try {
+      const res = await fetch(`/api/public/orders/${orderId}/cancel-unpaid`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(cancelToken ? { token: cancelToken } : {}),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || t("cancelUnpaidFailed"));
+      }
+      router.push(`/order/${slug}/confirmation?orderId=${orderId}`);
+    } catch (e) {
+      setCancelError(e instanceof Error ? e.message : t("cancelUnpaidFailed"));
+      setCancelling(false);
+    }
+  }
+
   useEffect(() => {
     if (!orderId) return;
     let cancelled = false;
@@ -145,6 +195,7 @@ export function PaymentPageClient({ slug }: { slug: string }) {
           currency: (o.restaurant?.currency || "usd").toLowerCase(),
         });
       }
+      if (o && typeof o.cancelToken === "string") setCancelToken(o.cancelToken);
 
       // Already carrying an intent from the URL (customer mid-checkout across
       // the deploy) — nothing to set up.
@@ -241,9 +292,15 @@ export function PaymentPageClient({ slug }: { slug: string }) {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 space-y-6">
         <div className="flex items-center gap-3">
+          {/* Guarded exit (Luigi 2026-08-17) — no longer a bare router.back().
+              Routes through the same leave-confirm modal browser-back opens,
+              so there's exactly one deliberate way off this page instead of a
+              silent one. Disabled while paying: matches the guard hook's own
+              in-flight suppression. */}
           <button
-            onClick={() => router.back()}
-            className="text-gray-400 hover:text-gray-600 transition"
+            onClick={requestLeave}
+            disabled={paying}
+            className="text-gray-400 hover:text-gray-600 transition disabled:opacity-40"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
@@ -287,10 +344,70 @@ export function PaymentPageClient({ slug }: { slug: string }) {
               orderId={orderId}
               slug={slug}
               payAmountLabel={summary ? fmt(summary.toPay) : null}
+              onPayingChange={setPaying}
             />
           </Elements>
         )}
       </div>
+
+      {/* ── Leave-confirm modal ──────────────────────────────────────────
+          Opened by browser-back (popstate, via the guard hook) or the header
+          back-arrow — never by a stray render, since `showConfirm` only ever
+          flips true from `requestLeave`. Visual pattern matches the existing
+          cancel-order modal on the order status page (StatusPageClient.tsx)
+          for consistency across the two places a customer can cancel. */}
+      {showConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6">
+            {paying ? (
+              // Payment is actively confirming — no cancel offered, just a
+              // hold-tight notice. requestLeave() itself already refuses to
+              // open this modal while paying, but the guard hook's popstate
+              // path can flip `paying` true between an open modal and here on
+              // a fast double-back; render defensively either way.
+              <>
+                <h3 className="text-lg font-bold text-gray-900">{t("processing")}</h3>
+                <p className="text-sm text-gray-600 mt-2">{t("paymentInProgressWarning")}</p>
+                <div className="mt-5">
+                  <button
+                    onClick={dismiss}
+                    className="w-full bg-gray-100 text-gray-700 font-semibold py-2.5 rounded-lg hover:bg-gray-200 text-sm"
+                  >
+                    {t("leaveConfirmStay")}
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <h3 className="text-lg font-bold text-gray-900">{t("leaveConfirmTitle")}</h3>
+                <p className="text-sm text-gray-600 mt-2">{t("leaveConfirmBody")}</p>
+                {cancelError && (
+                  <div className="mt-3 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-xs text-red-700">
+                    {cancelError}
+                  </div>
+                )}
+                <div className="mt-5 flex gap-3">
+                  <button
+                    onClick={dismiss}
+                    disabled={cancelling}
+                    className="flex-1 bg-white border border-gray-300 text-gray-700 font-semibold py-2.5 rounded-lg hover:bg-gray-50 text-sm disabled:opacity-50"
+                  >
+                    {t("leaveConfirmStay")}
+                  </button>
+                  <button
+                    onClick={handleCancelUnpaid}
+                    disabled={cancelling}
+                    className="flex-1 flex items-center justify-center gap-2 bg-red-500 text-white font-semibold py-2.5 rounded-lg hover:bg-red-600 disabled:opacity-50 text-sm"
+                  >
+                    {cancelling && <Loader2 className="w-4 h-4 animate-spin" />}
+                    {cancelling ? tRoot("customer.orderStatus.cancellingInProgress") : t("leaveConfirmCancel")}
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

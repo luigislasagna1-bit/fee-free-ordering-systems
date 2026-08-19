@@ -31,6 +31,8 @@ import { syncCustomerTotalsForOrder } from "@/lib/customer-totals";
 import { resolveRewardLabel, orderShowsCredit } from "@/lib/reward-label";
 import { collectedOf } from "@/lib/reports/collected";
 import { RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
+import { signActionToken } from "@/lib/order-status-token";
+import { ABANDONED_ORDER_STATUSES, ABANDONED_PAYMENT_STATUSES } from "@/lib/abandoned-order-cancel";
 
 const ALLOWED_STATUSES = ["pending", "accepted", "preparing", "ready", "completed", "rejected", "cancelled"] as const;
 
@@ -83,6 +85,10 @@ const PUBLIC_ORDER_SELECT = {
   id: true, orderNumber: true, status: true, type: true,
   customerName: true, notes: true, subtotal: true, taxAmount: true,
   deliveryFee: true, tip: true, total: true, paymentMethod: true,
+  // Release flag — needed (public branch only) to decide whether this order
+  // still qualifies for a minted cancelToken below. Never otherwise exposed
+  // as anything but an internal signal.
+  notifiedAt: true,
   // Reward Dollars spent on this order (part-payment). Shown on the
   // receipt/status breakdown as "Paid with {rewardName}". Luigi 2026-06-29.
   creditApplied: true,
@@ -165,7 +171,20 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
   if (order.restaurant?.rewardsEnabled) {
     rewardEarned = (await getOrderRewardSummary(id)).earned;
   }
-  return NextResponse.json({ ...order, rewardEarned });
+  // Cancel token for the payment page's "Cancel my order" guard — minted only
+  // while this order still qualifies as abandoned (same definition
+  // cancelAbandonedOrder enforces server-side; this is purely so the client
+  // knows whether to offer the button, not a trust boundary by itself). The
+  // payment page already fetches this endpoint on mount for the money
+  // summary, so no extra round-trip. Luigi 2026-08-17.
+  const cancelToken =
+    (order.paymentMethod === "card" || order.paymentMethod === "paypal") &&
+    !order.notifiedAt &&
+    ABANDONED_ORDER_STATUSES.includes(order.status as any) &&
+    ABANDONED_PAYMENT_STATUSES.includes((order.paymentStatus ?? "") as any)
+      ? signActionToken("order-cancel", order.id)
+      : null;
+  return NextResponse.json({ ...order, rewardEarned, cancelToken });
 }
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {

@@ -16,7 +16,7 @@ import { getSessionUser } from "@/lib/session";
  *
  * This asks Stripe directly and releases (or, for already-dead orders, voids)
  * whatever the browser failed to report. Runs every minute so a rescue always
- * beats the 30-minute abandoned-payment cancel. See lib/reconcile-card-payments.ts.
+ * beats the 10-minute abandoned-payment cancel. See lib/reconcile-card-payments.ts.
  *
  * Two authorized callers, same pattern as the other crons:
  *   1. Vercel cron — Authorization: Bearer $CRON_SECRET

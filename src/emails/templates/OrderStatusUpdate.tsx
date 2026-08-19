@@ -58,7 +58,11 @@ export type OrderStatusUpdateProps = {
   balanceSettled?: boolean;
   /** WHO cancelled (status "cancelled" only): "customer" switches the title/
    *  body to the you-cancelled variant — "The restaurant cancelled your
-   *  order" would be wrong for a self-cancel. Fabrizio cms0idtz7. */
+   *  order" would be wrong for a self-cancel. Fabrizio cms0idtz7.
+   *  "payment_timeout" (Luigi 2026-08-17): the checkout backstop cron cancelled
+   *  an order whose online payment never completed — neither the restaurant-
+   *  cancelled nor the you-cancelled copy fits (the restaurant never saw it,
+   *  and the customer took no explicit action), so it gets its own copy below. */
   cancelledBy?: string;
   trackingUrl: string;
   restaurantUrl?: string;
@@ -135,16 +139,25 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
   // "The restaurant cancelled your order" would be wrong — use the
   // you-cancelled copy. Fabrizio cms0idtz7.
   const isSelfCancel = key === "cancelled" && cancelledBy === "customer";
+  // Checkout-abandonment backstop cancel (Luigi 2026-08-17): neither the
+  // restaurant-cancelled nor the you-cancelled copy fits — the restaurant
+  // never saw this order (notifiedAt was always null) and the customer took
+  // no explicit cancel action, the checkout window just ran out.
+  const isAbandonedPaymentCancel = key === "cancelled" && cancelledBy === "payment_timeout";
   const copyKeys: StatusCopyKeys | undefined = STATUS_COPY_KEYS[key];
   const title = isMissed
     ? t("email.orderStatus.missedTitle")
     : isSelfCancel
     ? t("email.orderStatus.cancelledByCustomerTitle")
+    : isAbandonedPaymentCancel
+    ? t("email.orderStatus.cancelledPaymentIncompleteTitle")
     : copyKeys ? t(copyKeys.titleKey) : t("email.orderStatus.fallbackTitle");
   const body = isMissed
     ? t("email.orderStatus.missedBody")
     : isSelfCancel
     ? t("email.orderStatus.cancelledByCustomerBody")
+    : isAbandonedPaymentCancel
+    ? t("email.orderStatus.cancelledPaymentIncompleteBody")
     : copyKeys ? t(copyKeys.bodyKey) : t("email.orderStatus.fallbackBody");
   const badge = isMissed ? t("kitchen.missed") : (copyKeys ? t(copyKeys.badgeKey) : status);
   const badgeColor = copyKeys?.badgeColor ?? "sky";
@@ -206,8 +219,10 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
           <P>{t("email.orderStatus.delayNotice")}</P>
         )}
         {/* Self-cancel: the internal "Customer cancelled from the order status
-            page." reason is redundant noise to the person who did it — hide. */}
-        {isNegative && reason && !isMissed && !isSelfCancel && (
+            page." reason is redundant noise to the person who did it — hide.
+            Same for the abandoned-payment backstop's internal reason string —
+            the friendly copy above already says it plainly. */}
+        {isNegative && reason && !isMissed && !isSelfCancel && !isAbandonedPaymentCancel && (
           <InfoCard label={t("email.orderStatus.reasonLabel")} accent="rose">
             {reason}
           </InfoCard>

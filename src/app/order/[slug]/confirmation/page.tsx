@@ -146,7 +146,10 @@ export default async function ConfirmationPage({
         </h1>
         <p className="text-gray-500 mb-6">
           {orderDead
-            ? (order.rejectionReason
+            ? // Self-cancel: the internal English reason string is redundant
+              // noise to the person who just clicked "Cancel my order" — same
+              // suppression StatusPageClient.tsx already applies. Luigi 2026-08-17.
+              (order.rejectionReason && order.cancelledBy !== "customer"
                 ? tStatus("rejectionReason", { reason: order.rejectionReason })
                 : tStatus("orderCancelled"))
             : awaitingPayment

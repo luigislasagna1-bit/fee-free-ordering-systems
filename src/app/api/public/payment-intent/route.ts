@@ -121,7 +121,7 @@ export async function POST(req: NextRequest) {
   if (dbOrder.paymentMethod !== "card") {
     return NextResponse.json({ error: "Order is not paying by card" }, { status: 400 });
   }
-  // NEVER take money for an order that will never be made. The 30-minute
+  // NEVER take money for an order that will never be made. The 10-minute
   // abandoned-payment sweep cancels unpaid checkouts and the kitchen can
   // reject — either way the food is not coming. This route only ever gated on
   // paymentStatus, which says nothing about whether the ORDER is still alive,
