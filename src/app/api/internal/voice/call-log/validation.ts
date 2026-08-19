@@ -57,6 +57,8 @@ export interface EndData {
   reservationCode: string | null;
   customerId: string | null;
   transferReason: string | null;
+  transferredAt: Date | null;
+  billableSeconds: number | null;
   transcript: TranscriptTurn[] | undefined;
   model: string | null;
   tokensIn: number | null;
@@ -171,6 +173,13 @@ function str(v: unknown, max: number): string | null {
 function nonNegInt(v: unknown): number | null {
   if (typeof v !== "number" || !Number.isFinite(v) || v < 0) return null;
   return Math.floor(v);
+}
+
+function parseOptionalIso(v: unknown): Date | null {
+  if (typeof v !== "string" || !v.trim()) return null;
+  const d = new Date(v);
+  if (Number.isNaN(d.getTime())) return null;
+  return d;
 }
 
 /** Money, not a count — deliberately NOT nonNegInt, which would floor $25.97 to
@@ -299,6 +308,8 @@ export function parseEndBody(b: unknown): ParseResult<EndData> {
       reservationCode: str(body.reservationCode, MAX_ID_CHARS),
       customerId: str(body.customerId, MAX_ID_CHARS),
       transferReason: str(body.transferReason, MAX_REASON_CHARS),
+      transferredAt: parseOptionalIso(body.transferredAtIso),
+      billableSeconds: nonNegInt(body.billableSeconds),
       transcript: capTranscript(body.transcript),
       model: str(body.model, 100),
       costCents: nonNegInt(body.costCents),

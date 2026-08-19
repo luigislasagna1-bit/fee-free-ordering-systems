@@ -145,6 +145,8 @@ export async function POST(req: NextRequest) {
     reservationCode: d.reservationCode,
     customerId: d.customerId,
     transferReason: d.transferReason,
+    transferredAt: d.transferredAt,
+    billableSeconds: d.billableSeconds,
     transcript: d.transcript,
     model: d.model,
     costCents: d.costCents,

@@ -3168,6 +3168,14 @@ model VoiceCall {
   startedAt       DateTime   @default(now())
   endedAt         DateTime?
   durationSeconds Int?
+  /// Epoch millis when Nabil AI handed the call to a human (endTransfer).
+  /// After this point the caller is with staff — no AI time is consumed.
+  transferredAt   DateTime?
+  /// AI-only seconds: startedAt → transferredAt when transferred, otherwise
+  /// equal to durationSeconds. THE billing input — nabil-usage.ts reads this
+  /// via COALESCE(billableSeconds, durationSeconds) so pre-column rows still
+  /// bill at full duration.
+  billableSeconds Int?
 
   /// order_placed | reservation_booked | faq_answered | transferred | abandoned | spam | error
   outcome         String?

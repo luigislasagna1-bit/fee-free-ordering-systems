@@ -230,6 +230,8 @@ export class CallSession {
   private narrationDropped = 0;
   /** Digit → words substitutions made before the voice (spoken-numbers.ts). */
   private numbersVerbalized = 0;
+  /** Epoch millis when AI handed the call to a human — billing stops here. */
+  private transferredAt: number | null = null;
   private ttfaMsList: number[] = [];
   private eventFlushInFlight: Promise<unknown> | null = null;
 
@@ -1218,6 +1220,7 @@ export class CallSession {
   }
 
   private endTransfer(reason: string) {
+    if (!this.transferredAt) this.transferredAt = this.now();
     try {
       this.ws.send(JSON.stringify({ type: "end", handoffData: JSON.stringify({ reason }) }));
     } catch {
@@ -1304,12 +1307,16 @@ export class CallSession {
         reservationCode: this.reservationCode,
         customerId: this.customerId,
         transferReason: this.ctx.pendingTransfer,
+        transferredAtIso: this.transferredAt ? new Date(this.transferredAt).toISOString() : null,
         transcript: this.transcript.map(({ role, text, ts }) => ({ role, text, ts })),
         model: CONFIG.model,
         tokensIn: this.usageIn,
         tokensOut: this.usageOut,
         costCents: this.costCents(),
         durationSeconds: Math.round((this.now() - this.startedAt) / 1000),
+        billableSeconds: this.transferredAt
+          ? Math.max(0, Math.round((this.transferredAt - this.startedAt) / 1000))
+          : Math.round((this.now() - this.startedAt) / 1000),
         quotedTotal: this.quotedTotal,
         chargedTotal: this.chargedTotal,
         latency,

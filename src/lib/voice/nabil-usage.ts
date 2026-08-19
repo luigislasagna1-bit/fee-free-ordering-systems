@@ -2,15 +2,21 @@
  * Nabil AI metering — how many billable seconds a restaurant used in a window.
  *
  * ONE aggregate query per call (no per-call rows come back, no take-cap that
- * could silently under-bill a busy store): SUM("durationSeconds") over
+ * could silently under-bill a busy store): SUM of billable seconds over
  * VoiceCall — per-second billing, no per-call rounding.
  * Uses the existing VoiceCall @@index([restaurantId, startedAt]).
  *
+ * Billable seconds = AI-only time. When a call is TRANSFERRED to staff,
+ * billing stops at the transfer moment (transferredAt − startedAt). The
+ * voice service writes `billableSeconds` on every call; for pre-column rows
+ * (before 2026-08-19), COALESCE falls back to `durationSeconds` (full
+ * duration — the old behavior).
+ *
  * What counts: every call with a recorded duration > 0 whose startedAt falls in
- * [start, end). Outcome is deliberately NOT filtered — a spam / abandoned /
- * transferred call still consumed Nabil seconds (and cost us model + Twilio
- * time), and Luigi's price is per second. In-progress calls (durationSeconds
- * null) are not counted until they end; the stale-call sweep closes orphans.
+ * [start, end). Outcome is deliberately NOT filtered — a spam / abandoned
+ * call still consumed Nabil seconds (and cost us model + Twilio time), and
+ * Luigi's price is per second. In-progress calls (durationSeconds null) are
+ * not counted until they end; the stale-call sweep closes orphans.
  */
 import prisma from "@/lib/db";
 import { Prisma } from "@/generated/prisma/client";
@@ -24,7 +30,7 @@ export interface NabilUsage {
 export async function fetchNabilUsage(restaurantId: string, start: Date, end: Date): Promise<NabilUsage> {
   const rows = await prisma.$queryRaw<Array<{ calls: number | bigint; seconds: number | bigint | null }>>`
     SELECT COUNT(*)::int AS calls,
-           COALESCE(SUM("durationSeconds"), 0)::int AS seconds
+           COALESCE(SUM(COALESCE("billableSeconds", "durationSeconds")), 0)::int AS seconds
     FROM "VoiceCall"
     WHERE "restaurantId" = ${restaurantId}
       AND "startedAt" >= ${start}
@@ -50,7 +56,7 @@ export async function fetchNabilUsageByRestaurant(
   const rows = await prisma.$queryRaw<Array<{ restaurantId: string; calls: number | bigint; seconds: number | bigint | null }>>`
     SELECT "restaurantId",
            COUNT(*)::int AS calls,
-           COALESCE(SUM("durationSeconds"), 0)::int AS seconds
+           COALESCE(SUM(COALESCE("billableSeconds", "durationSeconds")), 0)::int AS seconds
     FROM "VoiceCall"
     WHERE "restaurantId" IN (${Prisma.join(restaurantIds)})
       AND "startedAt" >= ${start}
