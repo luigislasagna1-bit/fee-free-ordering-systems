@@ -51,7 +51,7 @@ const FILLER_PHRASES = ["One moment.", "Just a moment.", "Hang on.", "One sec."]
  * filler that over-fired was 1.2 s. Test seam: SessionDeps.thinkingFillerMs.
  */
 const THINKING_FILLER_AFTER_MS = 2_500;
-const THINKING_FILLER_PHRASES = ["Mhm.", "Yep.", "Right.", "Yeah."];
+const THINKING_FILLER_PHRASES = ["Sure thing.", "Got it.", "Alright.", "Okay."];
 /**
  * BOOKKEEPING MERGE (latency, Luigi's live call 2026-08-15: 2.9 s of silence
  * after "my name is Sam" because set_fulfilment + set_customer forced a second

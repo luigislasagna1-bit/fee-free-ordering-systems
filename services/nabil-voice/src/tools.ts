@@ -884,7 +884,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
                       : "Address found. Delivery is FREE here — say so."
                     : "Address found. Tell the caller the delivery fee in one short clause.") +
                   (!input?.zip
-                    ? " Then ask for the postal code — one question — and call set_fulfilment again with it before moving to the food."
+                    ? " Then ask for the postal code — one question. If they don't have it, say that's completely fine and move straight to the food — never ask again."
                     : " Then move to the food."),
               }
             : {}),
