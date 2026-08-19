@@ -150,7 +150,13 @@ const server = http.createServer((req, res) => {
   res.end();
 });
 
-const wss = new WebSocketServer({ server, path: "/call" });
+// ws v8.21 `abortHandshake(socket, 400)` bug: when TWO WebSocketServer
+// instances share an HTTP server via `{ server, path }`, the non-matching
+// WSS destroys the already-upgraded socket — killing every connection to
+// the matching WSS within milliseconds. This broke ALL Nabil calls for
+// ~3 hours on 2026-08-18/19. Fix: `noServer` + a single manual upgrade
+// router that hands each socket to exactly ONE WSS.
+const wss = new WebSocketServer({ noServer: true });
 
 wss.on("connection", (ws, req) => {
   // Refuse FAST rather than accepting a call we can't serve. 1013 = "try again
@@ -179,10 +185,18 @@ wss.on("connection", (ws, req) => {
     ws.close(1008, "unauthorized");
     return;
   }
+  const connectedAt = Date.now();
+  console.log(`[nabil-voice] /call connected: ${payload.callSid} from=${payload.from} to=${payload.to} active=${active.size}`);
   const session = new CallSession(ws, payload, anthropic);
   active.add(session);
-  ws.on("message", (data) => session.onMessage(data.toString()));
-  ws.on("close", () => {
+  ws.on("message", (data) => {
+    const raw = data.toString();
+    try { const m = JSON.parse(raw); if (m.type === "setup") console.log(`[nabil-voice] setup received: ${payload.callSid}`); }
+    catch {}
+    session.onMessage(raw);
+  });
+  ws.on("close", (code, reason) => {
+    console.log(`[nabil-voice] /call closed: ${payload.callSid} code=${code} reason=${reason?.toString() ?? ""} after=${Date.now() - connectedAt}ms active=${active.size - 1}`);
     active.delete(session);
     session.onClose();
   });
@@ -198,7 +212,7 @@ wss.on("connection", (ws, req) => {
 // translates Media Streams events to ConversationRelay-shaped messages
 // so CallSession works unchanged.
 
-const mediaWss = new WebSocketServer({ server, path: "/media" });
+const mediaWss = new WebSocketServer({ noServer: true });
 
 mediaWss.on("connection", (ws, req) => {
   if (draining) { ws.close(1013, "draining"); return; }
@@ -314,6 +328,18 @@ mediaWss.on("connection", (ws, req) => {
     console.error("[nabil-voice] media ws error", e);
     captureError(e, { where: "media-ws", callSid: payload.callSid, restaurantId: payload.restaurantId });
   });
+});
+
+// Manual upgrade router — each request goes to exactly ONE WSS.
+server.on("upgrade", (req, socket, head) => {
+  const pathname = (req.url || "/").split("?")[0];
+  if (pathname === "/call") {
+    wss.handleUpgrade(req, socket, head, (ws) => wss.emit("connection", ws, req));
+  } else if (pathname === "/media") {
+    mediaWss.handleUpgrade(req, socket, head, (ws) => mediaWss.emit("connection", ws, req));
+  } else {
+    socket.destroy();
+  }
 });
 
 /**
