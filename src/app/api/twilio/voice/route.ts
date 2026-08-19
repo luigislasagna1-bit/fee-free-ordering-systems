@@ -448,10 +448,14 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   // quality never depends on whether the owner touched the speed slider.
   // ── Pipeline switch ──────────────────────────────────────────────────
   // "mediastreams" = own STT/TTS + ambient bed mixer via Twilio Media Streams.
-  // Kill switch: NABIL_MEDIASTREAMS_ENABLED=false forces ConversationRelay.
+  // REQUIRES explicit opt-in: NABIL_MEDIASTREAMS_ENABLED=true on the
+  // deployment. The default-allow gate (!== "false") silently broke EVERY
+  // call for Luigi for ~2 hours on 2026-08-18 because the media pipeline
+  // was toggled on before the env var existed on Vercel. A half-built
+  // audio pipeline must never be reachable from a live phone number.
   const useMediaStreams =
     cfg.audioPipeline === "mediastreams" &&
-    process.env.NABIL_MEDIASTREAMS_ENABLED !== "false";
+    process.env.NABIL_MEDIASTREAMS_ENABLED === "true";
 
   if (useMediaStreams) {
     const afterStreamUrl = `${origin}/api/twilio/voice/after-stream`;
