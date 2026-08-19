@@ -119,7 +119,7 @@ export async function POST(req: NextRequest) {
     const q = [street, city, zip].filter(Boolean).join(", ");
     const platformKey = await getPlatformGoogleKey();
     const g = await googleGeocode(q, { country: restaurant.country, platformKey });
-    if (g) coords = { lat: g.lat, lng: g.lng, label: g.label, precise: true };
+    if (g) coords = { lat: g.lat, lng: g.lng, label: g.label, precise: true, postcode: g.postcode };
   }
 
   if (!coords) {
@@ -150,6 +150,7 @@ export async function POST(req: NextRequest) {
       located: true,
       lat: coords.lat,
       lng: coords.lng,
+      postcode: coords.postcode || null,
       currency: restaurant.currency,
       instruction: "Address found. Carry on and take the order.",
     });
@@ -217,6 +218,7 @@ export async function POST(req: NextRequest) {
     lat: coords.lat,
     lng: coords.lng,
     matchedAddress: coords.label,
+    postcode: coords.postcode || null,
     zoneName: zone.name,
     deliveryFee: zone.deliveryFee,
     minimumOrder: zone.minimumOrder,

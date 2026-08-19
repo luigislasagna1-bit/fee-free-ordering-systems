@@ -236,6 +236,7 @@ export type ResolvedAddress = {
    *  the owner knows the pin is approximate and worth dragging. */
   label: string;
   precise: boolean;
+  postcode?: string | null;
 };
 
 /**
@@ -265,6 +266,7 @@ export async function resolveAddress(
         lng: top.lng,
         label: top.label.length > 90 ? `${top.label.slice(0, 89)}…` : top.label,
         precise: rung.precise,
+        postcode: top.postcode || null,
       };
     }
   }

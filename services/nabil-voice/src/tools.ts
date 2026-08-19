@@ -31,6 +31,8 @@ export type ToolContext = {
   itemOptionsCache: Map<string, unknown>;
   /** Raw combo slots (label/min/max/choices) by combo id — for slot auto-fill. Lazily created. */
   comboSlotsCache?: Map<string, RawSlot[]>;
+  /** Per-slot upcharges by combo id — cached alongside combo slots. */
+  comboUpchargeCache?: Map<string, unknown>;
   /** speakExactly strings handed to the model this turn (claims guard). */
   speakExactlyThisTurn: string[];
   currency: string;
@@ -571,11 +573,38 @@ async function comboSlotsFor(ctx: ToolContext, comboId: string): Promise<RawSlot
         })),
       }));
     }
+    if (res?.slotUpcharges && typeof res.slotUpcharges === "object") {
+      ctx.comboUpchargeCache ??= new Map();
+      ctx.comboUpchargeCache.set(comboId, res.slotUpcharges);
+    }
   } catch {
     slots = null;
   }
   ctx.comboSlotsCache.set(comboId, slots ?? []);
   return slots;
+}
+
+function comboUpchargeSummary(ctx: ToolContext, comboId: string): string | null {
+  const upcharges = ctx.comboUpchargeCache?.get(comboId);
+  if (!upcharges || typeof upcharges !== "object") return null;
+  const parts: string[] = [];
+  for (const [, info] of Object.entries(upcharges as Record<string, { items?: Record<string, number>; variants?: Record<string, number> }>)) {
+    if (info.items) {
+      for (const [itemId, amount] of Object.entries(info.items)) {
+        const name = ctx.menu.get(itemId)?.name;
+        if (name && amount > 0) parts.push(`${name} (+${money(amount, ctx.currency)})`);
+      }
+    }
+    if (info.variants) {
+      for (const [key, amount] of Object.entries(info.variants)) {
+        const [itemId] = key.split("::");
+        const name = ctx.menu.get(itemId)?.name;
+        if (name && amount > 0) parts.push(`${name} size upgrade (+${money(amount, ctx.currency)})`);
+      }
+    }
+  }
+  if (!parts.length) return null;
+  return `PREMIUM PICKS in this combo (tell the caller BEFORE they choose): ${parts.join(", ")}. Always mention the extra cost naturally when offering these options.`;
 }
 
 const normLabel = (s: unknown) => String(s ?? "").toLowerCase().replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
@@ -763,7 +792,12 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         confirmAnother: input?.confirmAnother === true,
         removeToppings: input?.removeToppings,
       });
-      return mutationOut(ctx, r, "added");
+      const out = mutationOut(ctx, r, "added");
+      if (r.ok && slots) {
+        const ups = comboUpchargeSummary(ctx, comboId);
+        if (ups) out.instruction = `${ups} ${out.instruction}`;
+      }
+      return out;
     }
 
     case "update_line": {
@@ -828,7 +862,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
           fulfilment: "delivery",
           addressNeeded: true,
           state: cart.stateForModel(),
-          instruction: "Delivery noted. Ask for the full street address — house number and street, city, and postcode — BEFORE taking any food, then call set_fulfilment again with it.",
+          instruction: "Delivery noted. Ask for the street address — house number and street, plus city — BEFORE taking any food, then call set_fulfilment again with it. Never ask for a postal code.",
         };
       }
       if (!res.addressChanged && cart.fulfilment().check) {
@@ -848,6 +882,9 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         };
       }
       const j = check.json ?? {};
+      if (j.postcode && !cart.fulfilment().zip) {
+        cart.fulfilment().zip = String(j.postcode);
+      }
       cart.recordAddressCheck({
         located: typeof j.located === "boolean" ? j.located : null,
         inside: typeof j.inside === "boolean" ? j.inside : null,
@@ -880,7 +917,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         ...j,
         state: cart.stateForModel(),
         ...(partial
-          ? { instruction: "That street alone couldn't be placed. Ask for the city and postal code right now — one question — and call set_fulfilment again with the full address before any food; then say the delivery fee plainly." }
+          ? { instruction: "That street alone couldn't be placed. Ask for the city right now — one question — and call set_fulfilment again with the full address before any food; then say the delivery fee plainly." }
           : unfound
             ? {
                 heardBack,
@@ -890,16 +927,13 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
               }
           : j.located === true && typeof j.deliveryFee === "number"
             ? {
-                needsPostalCode: !input?.zip,
                 instruction:
                   (typeof j.freeDeliveryOver === "number"
                     ? j.freeDeliveryOver > 0
                       ? `Address found. Say the delivery fee AND, in the same breath, that delivery is free on orders over ${spokenMoney(j.freeDeliveryOver)} ("delivery is ${spokenMoney(Number(j.deliveryFee))}, or free once you're over ${spokenMoney(j.freeDeliveryOver)}") — never the fee alone.`
                       : "Address found. Delivery is FREE here — say so."
                     : "Address found. Tell the caller the delivery fee in one short clause.") +
-                  (!input?.zip
-                    ? " Then ask for the postal code — one question. If they don't have it, say that's completely fine and move straight to the food — never ask again."
-                    : " Then move to the food."),
+                  " Then move to the food.",
               }
             : {}),
       };

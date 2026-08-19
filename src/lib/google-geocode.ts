@@ -17,6 +17,7 @@ export type GoogleGeocodeResult = {
   lat: number;
   lng: number;
   label: string;
+  postcode?: string | null;
 };
 
 /**
@@ -67,15 +68,18 @@ export async function googleGeocode(
     const top = results[0] as {
       geometry?: { location?: { lat: number; lng: number } };
       formatted_address?: string;
+      address_components?: Array<{ long_name: string; types: string[] }>;
     };
     const loc = top?.geometry?.location;
     if (!loc || !Number.isFinite(loc.lat) || !Number.isFinite(loc.lng)) return null;
 
     const label = top.formatted_address || q;
+    const pcComp = top.address_components?.find((c) => c.types.includes("postal_code"));
     return {
       lat: loc.lat,
       lng: loc.lng,
       label: label.length > 90 ? `${label.slice(0, 89)}…` : label,
+      postcode: pcComp?.long_name || null,
     };
   } catch {
     return null;
