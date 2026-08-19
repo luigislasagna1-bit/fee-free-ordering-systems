@@ -120,9 +120,14 @@ const TRANSCRIPT: Line[] = [
           name: "1× Large & Wings Combo",
           price: "$39.99",
           details: [
-            "Pizza: half Pepperoni & Mushrooms, half Chicken & Onions",
-            "Green Peppers on the whole thing",
-            "20pc Wings — BBQ on the side",
+            "Large 3-Topping Pizza",
+            "(L.H) Pepperoni",
+            "(L.H) Mushroom",
+            "(R.H) Chicken",
+            "(R.H) Onion",
+            "Green Pepper",
+            "20pc Chicken Wings",
+            "BBQ — on the side",
           ],
         },
       ],
@@ -143,9 +148,14 @@ const TRANSCRIPT: Line[] = [
           name: "1× Large & Wings Combo",
           price: "$39.99",
           details: [
-            "Pizza: half Pepperoni & Mushrooms, half Chicken & Onions",
-            "Green Peppers on the whole thing",
-            "20pc Wings — BBQ on the side",
+            "Large 3-Topping Pizza",
+            "(L.H) Pepperoni",
+            "(L.H) Mushroom",
+            "(R.H) Chicken",
+            "(R.H) Onion",
+            "Green Pepper",
+            "20pc Chicken Wings",
+            "BBQ — on the side",
           ],
         },
         { name: "2× Garlic Dipping Sauce", price: "$3.00" },
@@ -177,9 +187,14 @@ const TRANSCRIPT: Line[] = [
           name: "1× Large & Wings Combo",
           price: "$39.99",
           details: [
-            "Pizza: half Pepperoni & Mushrooms, half Chicken & Onions",
-            "Green Peppers on the whole thing",
-            "20pc Wings — BBQ on the side",
+            "Large 3-Topping Pizza",
+            "(L.H) Pepperoni",
+            "(L.H) Mushroom",
+            "(R.H) Chicken",
+            "(R.H) Onion",
+            "Green Pepper",
+            "20pc Chicken Wings",
+            "BBQ — on the side",
           ],
         },
         { name: "2× Garlic Dipping Sauce", price: "$3.00" },
@@ -204,7 +219,7 @@ const SILENCE_GAPS: { start: number; end: number }[] = [];
 
 const GAP_KEEP = 0.4;
 
-const TOTAL_DURATION = 151;
+const TOTAL_DURATION = 150.5;
 
 const TOTAL_SAVED = SILENCE_GAPS.reduce(
   (sum, g) => sum + Math.max(0, g.end - g.start - GAP_KEEP),
