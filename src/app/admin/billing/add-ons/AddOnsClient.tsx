@@ -86,12 +86,22 @@ export function AddOnsClient({
         body: JSON.stringify({ addOnSlug: slug }),
       });
       const data = await r.json();
-      if (!r.ok || !data?.url) {
+      if (!r.ok) {
         setError(data?.error || t("errorRetryPayment"));
         setPendingSlug(null);
         return;
       }
-      window.location.href = data.url;
+      if (data.paid) {
+        router.refresh();
+        setPendingSlug(null);
+        return;
+      }
+      if (data.url) {
+        window.location.href = data.url;
+        return;
+      }
+      setError(t("errorRetryPayment"));
+      setPendingSlug(null);
     } catch (e: any) {
       setError(e?.message || t("errorRetryPayment"));
       setPendingSlug(null);
