@@ -213,6 +213,15 @@ export default function NabilConfigClient({
             <Toggle label={t("recordCalls")} checked={!!cfg.recordCalls} onChange={(v) => set("recordCalls", v)} />
             <p className="text-xs text-gray-500">{t("recordHint")}</p>
           </Section>
+          <TestCallerPhones
+            phones={
+              Array.isArray(cfg.testCallerPhones)
+                ? (cfg.testCallerPhones as unknown[]).filter((x): x is string => typeof x === "string")
+                : []
+            }
+            onChange={(v) => set("testCallerPhones", v)}
+            t={t}
+          />
         </div>
       )}
 
@@ -437,6 +446,64 @@ export default function NabilConfigClient({
         </div>
       )}
     </div>
+  );
+}
+
+function TestCallerPhones({
+  phones,
+  onChange,
+  t,
+}: {
+  phones: string[];
+  onChange: (v: string[]) => void;
+  t: (k: string) => string;
+}) {
+  const [draft, setDraft] = useState("");
+  const add = () => {
+    const v = draft.trim();
+    if (!v) return;
+    if (phones.length >= 10) return;
+    onChange([...phones, v]);
+    setDraft("");
+  };
+  return (
+    <Section title={t("testCallers")}>
+      <p className="text-xs text-gray-500 -mt-1">{t("testCallersHint")}</p>
+      {phones.length > 0 && (
+        <ul className="space-y-1.5">
+          {phones.map((p, i) => (
+            <li key={i} className="flex items-center gap-2 text-sm">
+              <span className="font-mono text-gray-800">{p}</span>
+              <button
+                type="button"
+                onClick={() => onChange(phones.filter((_, j) => j !== i))}
+                className="text-xs text-red-500 hover:text-red-700"
+              >
+                {t("testCallerRemove")}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <div className="flex gap-2">
+        <input
+          type="tel"
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), add())}
+          placeholder={t("testCallerPlaceholder")}
+          className="flex-1 rounded-lg border border-gray-300 px-3 py-1.5 text-sm focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none"
+        />
+        <button
+          type="button"
+          onClick={add}
+          disabled={!draft.trim() || phones.length >= 10}
+          className="px-3 py-1.5 text-sm rounded-lg bg-sky-600 text-white font-medium hover:bg-sky-700 disabled:opacity-50 transition"
+        >
+          {t("testCallerAdd")}
+        </button>
+      </div>
+    </Section>
   );
 }
 
