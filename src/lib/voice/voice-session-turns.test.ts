@@ -40,6 +40,7 @@ const { apiMock } = vi.hoisted(() => ({
 vi.mock("../../../services/nabil-voice/src/api", () => ({ api: apiMock }));
 
 import { CallSession } from "../../../services/nabil-voice/src/session";
+import { voiceFillers } from "../../../services/nabil-voice/src/voice-i18n";
 
 type Spoken = { token: string; last: boolean };
 
@@ -260,8 +261,8 @@ describe("the THINKING filler covers a first hop that stays silent past 2.5 s (c
   // Nabil went straight to a tool with no acknowledgement on every pizza edit —
   // 2.6–4 s of dead air each time; the tool filler only arms once the tool call
   // has started. One short ack after 2.5 s of nothing, never a second filler.
-  const THINKING = ["Sure thing.", "Got it.", "Alright.", "Okay."];
-  const TOOL_FILLERS = ["One moment.", "Just a moment.", "Hang on.", "One sec."];
+  const THINKING = voiceFillers("en", "thinkingFillers");
+  const TOOL_FILLERS = voiceFillers("en", "fillers");
 
   it("speaks one ack when a plain answer's first token is 3 s away — and stays quiet at 1.7 s (the 08-15 rule)", async () => {
     const slow = (ms: number) => ({
