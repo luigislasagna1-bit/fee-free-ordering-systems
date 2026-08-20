@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import http from "node:http";
 import Anthropic from "@anthropic-ai/sdk";
 import { WebSocketServer } from "ws";
-import { CONFIG, verifyCallToken } from "./config";
+import { CONFIG, verifyCallToken, type CallToken } from "./config";
 import { CallSession } from "./session";
 import { fallbackMapStatus, fallbackTwiml, handleFallback, startFallbackRefresh } from "./fallback";
 import { captureError, createRefractory, flushObservability, hasErrorSink } from "./observability";
@@ -284,7 +284,12 @@ mediaWss.on("connection", (ws, req) => {
     if (payload.ttsVoice) {
       const parts = payload.ttsVoice.split("-");
       if (parts.length >= 1) voiceId = parts[0];
-      if (parts.length >= 2) ttsModel = parts[1];
+      if (parts.length >= 2) {
+        // ConversationRelay uses Twilio's short model names (e.g. "turbo_v2_5");
+        // the ElevenLabs API requires the "eleven_" prefix.
+        const raw = parts[1];
+        ttsModel = raw.startsWith("eleven_") ? raw : `eleven_${raw}`;
+      }
       if (parts.length >= 3) {
         const nums = parts[2].split("_").map(Number);
         if (nums.length >= 1 && !isNaN(nums[0])) speed = nums[0];
@@ -304,8 +309,11 @@ mediaWss.on("connection", (ws, req) => {
       },
     );
 
+    // language_code is only accepted by multilingual models; turbo/flash
+    // models are English-only and REJECT the parameter (1008 unsupported_language).
+    const isMultilingual = ttsModel.includes("multilingual");
     const tts = createElevenLabsTts(
-      { apiKey: elevenLabsKey!, voiceId, modelId: ttsModel, stability, similarity, speed, languageCode: payload.lang ?? undefined },
+      { apiKey: elevenLabsKey!, voiceId, modelId: ttsModel, stability, similarity, speed, languageCode: isMultilingual ? (payload.lang ?? undefined) : undefined },
       {
         onAudio: (chunk) => mediaHandle?.handleTtsAudio(chunk),
         onDone: () => mediaHandle?.handleTtsDone(),
@@ -330,6 +338,7 @@ mediaWss.on("connection", (ws, req) => {
       onSetup: () => {
         session = new CallSession(shimWs, payload, anthropic);
         active.add(session);
+        session.setGreeting(params?.greeting || "");
         session.onMessage(JSON.stringify({ type: "setup" }));
       },
       onPrompt: (text, lang) => {
@@ -352,10 +361,14 @@ mediaWss.on("connection", (ws, req) => {
 
     // Re-emit the "start" message so the media session's own handler
     // processes it (extracts streamSid, starts the pacer + greeting).
+    console.log(`[nabil-voice] /media re-emitting start for ${payload.callSid}`);
     ws.emit("message", raw);
   }
 
   ws.on("message", authHandler);
+  ws.on("close", (code: number, reason: Buffer) => {
+    console.log(`[nabil-voice] /media closed: ${callPayload?.callSid ?? "pre-auth"} code=${code} reason=${reason?.toString() ?? ""}`);
+  });
   ws.on("error", (e) => {
     console.error("[nabil-voice] media ws error", e);
     if (callPayload) captureError(e, { where: "media-ws", callSid: callPayload.callSid, restaurantId: callPayload.restaurantId });

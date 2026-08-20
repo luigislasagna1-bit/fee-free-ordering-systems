@@ -19,6 +19,15 @@ describe("narration filter — the model's inner monologue never reaches the cal
       "Let me add the large pepperoni and the medium Hawaiian.",
       "The wings id needed a tweak. Let me try that again.",
       "That didn't go through — my mistake.",
+      // Resolution narration (gate 2026-08-16 17:59, 8/35 under Opus-off):
+      "That search didn't quite land — I'll just add the Large 1 Topping directly.",
+      "I'll just add the Large 1 Topping Pizza directly.",
+      "Just use the standard Large 1 Topping.",
+      "Just use the known 'Large 1 Topping'.",
+      "The menu has a Large 1 Topping — I'll use that.",
+      "The menu has 'Large 1 Topping' which matches.",
+      "Let me go with the Large 2 Topping instead.",
+      "I'll go with the Large 1 Topping directly as the base.",
     ]) {
       expect(isNarrationLeak(s), s).toBe(true);
     }
@@ -34,6 +43,7 @@ describe("narration filter — the model's inner monologue never reaches the cal
       "Do you mean the first pizza, the pepperoni one?",
       "Your total comes to twenty dollars and fifty-one cents, tax included.",
       "We're open until midnight tonight.",
+      "The menu has a lot to offer — what sounds good?",
       "",
     ]) {
       expect(isNarrationLeak(s), s).toBe(false);

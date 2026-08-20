@@ -88,8 +88,20 @@ describe("read-back drift", () => {
     // "Tea" is under 4 characters — never checked
     expect(check("One iced tea, sure.", { speakExactly: ["1× Tea"] })).toEqual([]);
     // only one drift hit per speakExactly string, even if several names differ
-    const hits = check("Two things then.", { speakExactly: ["1× Large 1 Topping — Pepperoni, Mushroom"] });
+    const hits = check("One large order then.", { speakExactly: ["1× Large 1 Topping — Pepperoni, Mushroom"] });
     expect(kinds(hits)).toEqual(["readback_drift"]);
+  });
+
+  it("does NOT flag when the model simply omits the name (omission ≠ drift)", () => {
+    expect(check("Got it, plain cheese it is. Is there anything else you'd like to add?", { speakExactly: ["1× Chicken Wings (Hot)"] })).toEqual([]);
+    expect(check("Sure thing.", { speakExactly: ["1× Large 1 Topping — Pepperoni"] })).toEqual([]);
+    expect(check("Two things then.", { speakExactly: ["1× Large 1 Topping — Pepperoni, Mushroom"] })).toEqual([]);
+  });
+
+  it("flags a near-miss where a word matches but the full name doesn't", () => {
+    const hits = check("I've added your Philly Cheese for you.", { speakExactly: ["1× Philly Steak (Large)"] });
+    expect(kinds(hits)).toEqual(["readback_drift"]);
+    expect(hits[0].evidence).toEqual(["Philly Steak"]);
   });
 });
 

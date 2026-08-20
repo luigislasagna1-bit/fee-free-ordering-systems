@@ -1,0 +1,142 @@
+[
+  {
+    "ts": 1787017869989,
+    "role": "user",
+    "text": "It's for delivery."
+  },
+  {
+    "ts": 1787017872012,
+    "role": "assistant",
+    "text": "Great, I can do delivery for you. Could I get the delivery address, please?"
+  },
+  {
+    "ts": 1787017880952,
+    "role": "user",
+    "text": "It's one fifty Mary Street in Milton."
+  },
+  {
+    "ts": 1787017884884,
+    "role": "assistant",
+    "text": "Delivery to a hundred fifty Mary Street works, and that fee is seven dollars and ninety-nine cents — or free once your order's over thirty dollars. Could I get the postal code there?"
+  },
+  {
+    "ts": 1787017902075,
+    "role": "user",
+    "text": "Yeah. The postal code l nine t six z five."
+  },
+  {
+    "ts": 1787017906026,
+    "role": "assistant",
+    "text": "Got it, thanks. So what can I get started for you today?"
+  },
+  {
+    "ts": 1787017912339,
+    "role": "user",
+    "text": "Do you have any specials?"
+  },
+  {
+    "ts": 1787017915971,
+    "role": "assistant",
+    "text": "We've got several combo deals — things like the Large and Wings Combo with a large three-topping pizza and twenty wings for thirty-nine ninety-nine, a Double Large Combo with two large three-topping pizzas and two dips for thirty-nine ninety-nine, and a Family Feast with an extra-large pizza, wings, mozzarella sticks, fries, pop and dips for fifty-nine ninety-nine. There's also a medium one-topping pizza with a lava cake for twenty-four ninety-nine. Would any of those sound good, or would you like to hear more?"
+  },
+  {
+    "ts": 1787017931687,
+    "role": "user",
+    "text": "You know what? The the large and wing combo sounded good."
+  },
+  {
+    "ts": 1787017936040,
+    "role": "assistant",
+    "text": "Good choice — that comes with a large three-topping pizza and twenty wings. What toppings would you like on the pizza, and how would you like the wings done — a sauce mixed in or on the side, and which flavor?"
+  },
+  {
+    "ts": 1787017953139,
+    "role": "user",
+    "text": "Can I get, uh, pepperoni, mushroom, and green peppers on one half?"
+  },
+  {
+    "ts": 1787017955122,
+    "role": "assistant",
+    "text": "Sure, pepperoni, mushroom and green peppers on one half — and what would you like on the other half?"
+  },
+  {
+    "ts": 1787017958398,
+    "role": "user",
+    "text": "and chicken, green pepper, and onions on the other half."
+  },
+  {
+    "ts": 1787017960599,
+    "role": "assistant",
+    "text": "Got it — and how would you like the wings, mixed in or on the side, and what flavor: honey garlic, hot, BBQ, mild, or sweet heat?"
+  },
+  {
+    "ts": 1787017973218,
+    "role": "user",
+    "text": "I'll get barbecue sauce on the side."
+  },
+  {
+    "ts": 1787017975719,
+    "role": "assistant",
+    "text": "Mhm."
+  },
+  {
+    "ts": 1787017978429,
+    "role": "assistant",
+    "text": "You've got a Large and Wings Combo with a large pizza — half pepperoni and mushrooms, half chicken and onions, green peppers on the whole thing — plus a twenty piece Chicken Wings with BBQ on the side. Anything else for you?"
+  },
+  {
+    "ts": 1787017997277,
+    "role": "user",
+    "text": "Yeah. Can I get two garlic dips as well?"
+  },
+  {
+    "ts": 1787017999778,
+    "role": "assistant",
+    "text": "Right."
+  },
+  {
+    "ts": 1787018001344,
+    "role": "assistant",
+    "text": "Two garlic dipping sauces, got it. Anything else?"
+  },
+  {
+    "ts": 1787018007939,
+    "role": "user",
+    "text": "No. Just what's my total?"
+  },
+  {
+    "ts": 1787018009947,
+    "role": "assistant",
+    "text": "Before I get you the total, could I get a name for the order?"
+  },
+  {
+    "ts": 1787018015456,
+    "role": "user",
+    "text": "Yeah. It's for Sam."
+  },
+  {
+    "ts": 1787018020430,
+    "role": "assistant",
+    "text": "Thanks, Sam. So that's a Large and Wings Combo with a large pizza — half pepperoni and mushrooms, half chicken and onions, green peppers on the whole thing — plus a twenty piece Chicken Wings, BBQ on the side, and two garlic dipping sauces, delivered to you. Your total comes to forty-eight dollars and fifty-eight cents, tax included. Shall I go ahead and place that?"
+  },
+  {
+    "ts": 1787018042489,
+    "role": "user",
+    "text": "Sure."
+  },
+  {
+    "ts": 1787018046503,
+    "role": "assistant",
+    "text": "All set, Sam! Just a heads up, this was a demo call, so nothing's actually being cooked up — but that's exactly how a real order would go from start to finish. If you'd like to see more, check out feefreeordering.com/nabil-ai. Thanks so much for trying it out!"
+  },
+  {
+    "ts": 1787018052475,
+    "role": "user",
+    "text": "(You are nearing the maximum call length. Wrap up politely now — finish the current action first.)"
+  },
+  {
+    "ts": 1787018054395,
+    "role": "assistant",
+    "text": "Thanks again for calling, Sam — take care, and have a great day!"
+  }
+]

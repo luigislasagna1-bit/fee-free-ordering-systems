@@ -5,6 +5,7 @@ import { placeVoiceCall, pollyVoiceForLocale } from "@/lib/voice-call";
 import { getDict } from "@/lib/i18n-dict";
 import { liveOpenStatus } from "@/lib/restaurant-hours";
 import { holidayEffectToday } from "@/lib/holiday-rules";
+import { sanitizePhone } from "@/lib/phone";
 
 /**
  * POST/GET /api/cron/order-alert-calls  (Vercel cron, every minute)
@@ -99,6 +100,7 @@ export async function POST(req: NextRequest) {
           hoursFormat: true,
           openingHours: true,
           holidays: true,
+          voiceNumbers: { where: { enabled: true }, select: { phoneNumber: true } },
         },
       },
     },
@@ -140,6 +142,17 @@ export async function POST(req: NextRequest) {
     // Dedicated alert number wins; otherwise the public phone.
     const phone = r.alertPhone?.trim() || r.phone;
     if (!phone) continue;
+
+    // NEVER dial a Nabil AI line — a store that forwards its public phone to
+    // its Nabil number would robocall Nabil, which would try to take an order
+    // from the TTS message. Compare in E.164 since alertPhone may be bare digits.
+    const phoneE164 = sanitizePhone(phone);
+    if (phoneE164 && r.voiceNumbers?.some((vn: { phoneNumber: string }) => vn.phoneNumber === phoneE164)) {
+      await prisma.order.update({ where: { id: o.id }, data: { alertCallAt: new Date() } });
+      console.warn("[order-alert-calls] skipped: target is a Nabil AI line", { orderId: o.id, to: phoneE164 });
+      results.push({ orderId: o.id, placed: false, reason: "target is a Nabil AI line" });
+      continue;
+    }
 
     // Anchor = the moment the order started RINGING: the deferred opening time
     // (alertAt) for a closed-placed order, else when it hit the kitchen
@@ -231,6 +244,7 @@ export async function POST(req: NextRequest) {
         select: {
           name: true, phone: true, alertPhone: true, defaultLanguage: true,
           timezone: true, hoursFormat: true, openingHours: true, holidays: true,
+          voiceNumbers: { where: { enabled: true }, select: { phoneNumber: true } },
         },
       },
     },
@@ -243,6 +257,13 @@ export async function POST(req: NextRequest) {
     const r = b.restaurant;
     const phone = r.alertPhone?.trim() || r.phone;
     if (!phone) continue;
+    const resPhoneE164 = sanitizePhone(phone);
+    if (resPhoneE164 && r.voiceNumbers?.some((vn: { phoneNumber: string }) => vn.phoneNumber === resPhoneE164)) {
+      await prisma.reservation.update({ where: { id: b.id }, data: { alertCallAt: new Date() } });
+      console.warn("[order-alert-calls] skipped reservation: target is a Nabil AI line", { resId: b.id, to: resPhoneE164 });
+      results.push({ orderId: `res:${b.id}`, placed: false, reason: "target is a Nabil AI line" });
+      continue;
+    }
     const anchorMs = b.alertAt ? b.alertAt.getTime() : (b.createdAt ? b.createdAt.getTime() : 0);
     const sinceAnchor = now - anchorMs;
     if (sinceAnchor < THRESHOLD_MS || sinceAnchor > LOOKBACK_MS) {
@@ -303,7 +324,8 @@ function bcp47(locale: string): string {
     nb: "nb-NO", fi: "fi-FI", el: "el-GR", ro: "ro-RO", ja: "ja-JP", ko: "ko-KR",
     zh: "zh-CN", ca: "ca-ES", tr: "tr-TR", uk: "uk-UA", ar: "ar-XA", he: "he-IL",
     id: "id-ID", vi: "vi-VN", th: "th-TH", hi: "hi-IN", cs: "cs-CZ", sk: "sk-SK",
-    hu: "hu-HU", bg: "bg-BG", hr: "hr-HR",
+    hu: "hu-HU", bg: "bg-BG", hr: "hr-HR", sr: "sr-RS", sl: "sl-SI",
+    et: "et-EE", lv: "lv-LV", lt: "lt-LT",
   };
   return map[locale] || "en-US";
 }

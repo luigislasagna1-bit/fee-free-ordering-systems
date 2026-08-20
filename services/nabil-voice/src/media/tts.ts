@@ -31,6 +31,7 @@ export interface TtsEvents {
 export interface TtsProvider {
   sendText(text: string): void;
   flush(): void;
+  interrupt(): void;
   close(): void;
   readonly ready: boolean;
 }
@@ -55,83 +56,130 @@ export function createElevenLabsTts(opts: ElevenLabsTtsOpts, events: TtsEvents):
 
   let ws: WebSocket | null = null;
   let isReady = false;
+  let pendingText: string[] = [];
+  let pendingFlush = false;
+  let closed = false;
 
-  try {
-    ws = new WebSocket(url);
-  } catch (err) {
-    events.onError(err instanceof Error ? err : new Error(String(err)));
-    return { sendText() {}, flush() {}, close() {}, get ready() { return false; } };
-  }
-
-  ws.on("open", () => {
-    isReady = true;
-    // Send the BOS (beginning of stream) message with voice settings
-    ws!.send(JSON.stringify({
-      text: " ",
-      voice_settings: {
-        stability: opts.stability ?? 0.35,
-        similarity_boost: opts.similarity ?? 0.75,
-        speed: opts.speed ?? 1.0,
-      },
-      xi_api_key: opts.apiKey,
-      generation_config: {
-        chunk_length_schedule: [120, 160, 250, 290],
-      },
-      flush: true,
-    }));
-  });
-
-  ws.on("message", (raw: Buffer | ArrayBuffer | string) => {
+  function connect() {
+    if (closed) return;
     try {
-      const data = JSON.parse(typeof raw === "string" ? raw : Buffer.from(raw as ArrayBufferLike).toString("utf-8"));
+      ws = new WebSocket(url);
+    } catch (err) {
+      events.onError(err instanceof Error ? err : new Error(String(err)));
+      return;
+    }
 
-      if (data.audio) {
-        const audioBuffer = Buffer.from(data.audio, "base64");
-        const chunk: TtsChunk = { audio: audioBuffer };
+    ws.on("open", () => {
+      isReady = true;
+      console.log(`[tts] ElevenLabs WS open, pending=${pendingText.length} flush=${pendingFlush}`);
+      ws!.send(JSON.stringify({
+        text: " ",
+        voice_settings: {
+          stability: opts.stability ?? 0.35,
+          similarity_boost: opts.similarity ?? 0.75,
+          speed: opts.speed ?? 1.0,
+        },
+        xi_api_key: opts.apiKey,
+        generation_config: {
+          chunk_length_schedule: [120, 160, 250, 290],
+        },
+      }));
 
-        if (data.alignment) {
-          chunk.alignment = {
-            chars: data.alignment.chars ?? [],
-            charStartTimesMs: data.alignment.char_start_times_ms ?? [],
-            charDurationsMs: data.alignment.char_durations_ms ?? [],
-          };
+      for (const t of pendingText) {
+        ws!.send(JSON.stringify({ text: t, flush: false }));
+      }
+      const needFlush = pendingFlush || pendingText.length > 0;
+      pendingText = [];
+      pendingFlush = false;
+      if (needFlush) {
+        ws!.send(JSON.stringify({ text: " ", flush: true }));
+      }
+    });
+
+    ws.on("message", (raw: Buffer | ArrayBuffer | string) => {
+      try {
+        const data = JSON.parse(typeof raw === "string" ? raw : Buffer.from(raw as ArrayBufferLike).toString("utf-8"));
+
+        if (data.audio) {
+          const audioBuffer = Buffer.from(data.audio, "base64");
+          console.log(`[tts] audio chunk ${audioBuffer.length}B`);
+          const chunk: TtsChunk = { audio: audioBuffer };
+
+          if (data.alignment) {
+            chunk.alignment = {
+              chars: data.alignment.chars ?? [],
+              charStartTimesMs: data.alignment.char_start_times_ms ?? [],
+              charDurationsMs: data.alignment.char_durations_ms ?? [],
+            };
+          }
+
+          events.onAudio(chunk);
         }
 
-        events.onAudio(chunk);
-      }
+        if (data.isFinal) {
+          console.log(`[tts] isFinal received`);
+          events.onDone();
+        }
 
-      if (data.isFinal) {
-        events.onDone();
+        if (data.error) {
+          console.error(`[tts] ElevenLabs error response: ${JSON.stringify(data)}`);
+        }
+      } catch {
+        // ignore unparseable messages
       }
-    } catch {
-      // ignore unparseable messages
+    });
+
+    ws.on("error", (err: Error) => {
+      console.error(`[tts] ElevenLabs WS error: ${err.message}`);
+      captureError(err, { where: "elevenlabs-tts" });
+      events.onError(err);
+    });
+
+    ws.on("close", (code: number, reason: Buffer) => {
+      console.log(`[tts] ElevenLabs WS closed code=${code} reason=${reason?.toString() ?? ""}`);
+      isReady = false;
+    });
+  }
+
+  connect();
+
+  function ensureConnected() {
+    if (closed) return;
+    if (!ws || (ws.readyState !== WebSocket.OPEN && ws.readyState !== WebSocket.CONNECTING)) {
+      connect();
     }
-  });
-
-  ws.on("error", (err: Error) => {
-    captureError(err, { where: "elevenlabs-tts" });
-    events.onError(err);
-  });
-
-  ws.on("close", () => {
-    isReady = false;
-  });
+  }
 
   return {
     sendText(text: string) {
+      ensureConnected();
       if (ws?.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify({ text, flush: false }));
+      } else {
+        pendingText.push(text);
       }
     },
     flush() {
       if (ws?.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({ text: "", flush: true }));
+        // Space (not empty string) — empty text signals EOS to ElevenLabs
+        ws.send(JSON.stringify({ text: " ", flush: true }));
+      } else {
+        pendingFlush = true;
       }
     },
+    interrupt() {
+      isReady = false;
+      pendingText = [];
+      pendingFlush = false;
+      if (ws?.readyState === WebSocket.OPEN || ws?.readyState === WebSocket.CONNECTING) {
+        ws.close(1000);
+      }
+      ws = null;
+    },
     close() {
+      closed = true;
       isReady = false;
       if (ws?.readyState === WebSocket.OPEN) {
-        // Send EOS (end of stream)
         ws.send(JSON.stringify({ text: "" }));
         ws.close(1000);
       }
@@ -224,6 +272,7 @@ export function createFakeTts(events: TtsEvents): TtsProvider {
     flush() {
       if (!closed) events.onDone();
     },
+    interrupt() {},
     close() {
       closed = true;
     },

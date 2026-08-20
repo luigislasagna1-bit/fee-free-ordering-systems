@@ -48,27 +48,16 @@ export default async function PhoneOrderingPage({
   const entitled = await hasFeature(restaurantId, "phone_ordering_agent");
 
   const Header = (
-    <div>
-      <Link href="/admin" className="text-sm text-gray-600 hover:text-gray-900">
-        &larr; {t("backToAdmin")}
-      </Link>
-      <div className="flex items-center gap-3 mt-2">
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 text-white flex items-center justify-center shadow-md">
-          <Phone className="w-6 h-6" />
-        </div>
-        <div className="flex-1">
-          <div className="flex items-center gap-2 flex-wrap">
-            <h1 className="text-2xl font-bold text-gray-900">Nabil AI</h1>
-            {!entitled && (
-              <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full">
-                <BadgeCheck className="w-3 h-3" />
-                {t("nowAvailable")}
-              </span>
-            )}
-          </div>
-          <p className="text-[11px] font-bold uppercase tracking-wider text-amber-600 mt-1">{t("pageTitle")}</p>
-          <p className="text-sm text-gray-600 mt-0.5">{t("pageSubtitle")}</p>
-        </div>
+    <div className="flex items-center justify-between gap-4 flex-wrap">
+      <div className="flex items-center gap-3">
+        <Link href="/admin" className="text-sm text-gray-400 hover:text-gray-600 transition">&larr;</Link>
+        <h1 className="text-xl font-semibold text-gray-900">Nabil AI</h1>
+        {!entitled && (
+          <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">
+            <BadgeCheck className="w-3 h-3" />
+            {t("nowAvailable")}
+          </span>
+        )}
       </div>
     </div>
   );
@@ -153,16 +142,15 @@ export default async function PhoneOrderingPage({
           />
         )}
 
-        {/* Server-rendered ?tab= tabs (per-tab accent, ReservationsClient style). */}
-        <div className="flex border-b border-gray-200 overflow-x-auto">
+        <div className="flex gap-1 border-b border-gray-200 overflow-x-auto">
           {(
             [
-              ["overview", tOverview("tabOverview"), LayoutDashboard, "border-amber-500", "text-amber-700", "bg-amber-50", "text-amber-500"],
-              ["calls", tOverview("tabCalls"), PhoneCall, "border-sky-500", "text-sky-700", "bg-sky-50", "text-sky-500"],
-              ["menu", tOverview("tabMenu"), UtensilsCrossed, "border-emerald-500", "text-emerald-700", "bg-emerald-50", "text-emerald-500"],
-              ["settings", tOverview("tabSettings"), Settings, "border-slate-900", "text-slate-900", "bg-slate-100", "text-slate-600"],
-            ] as [Tab, string, typeof Phone, string, string, string, string][]
-          ).map(([key, label, Icon, activeBorder, activeText, activeBg, inactiveIcon]) => {
+              ["overview", tOverview("tabOverview"), LayoutDashboard],
+              ["calls", tOverview("tabCalls"), PhoneCall],
+              ["menu", tOverview("tabMenu"), UtensilsCrossed],
+              ["settings", tOverview("tabSettings"), Settings],
+            ] as [Tab, string, typeof Phone][]
+          ).map(([key, label, Icon]) => {
             const isActive = tab === key;
             const u = new URLSearchParams(buildQuery(sp));
             u.set("tab", key);
@@ -170,13 +158,13 @@ export default async function PhoneOrderingPage({
               <Link
                 key={key}
                 href={`?${u.toString()}`}
-                className={`flex items-center gap-2 px-5 py-3 text-sm font-medium border-b-2 transition -mb-px whitespace-nowrap ${
+                className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition -mb-px whitespace-nowrap rounded-t-lg ${
                   isActive
-                    ? `${activeBorder} ${activeText} ${activeBg}`
-                    : "border-transparent text-gray-500 hover:text-gray-800 hover:bg-gray-50"
+                    ? "border-gray-900 text-gray-900"
+                    : "border-transparent text-gray-500 hover:text-gray-700"
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? "" : inactiveIcon}`} />
+                <Icon className="w-4 h-4" />
                 {label}
               </Link>
             );

@@ -64,17 +64,16 @@ export function checkClaims(args: {
   }
   for (const exact of args.speakExactly) {
     const names = exact.match(/(?:\d+×\s*)?([A-Z][A-Za-z0-9' ]{2,40}?)(?=\s[—:(]|,|$)/g) ?? [];
+    const said = spoken.toLowerCase();
     for (const nm of names.slice(0, 3)) {
       const bare = nm.replace(/^\d+×\s*/, "").trim();
       if (bare.length < 4) continue;
-      // The spoken layer names a recipe without its category word ("half
-      // Philly Steak" for "Philly Steak Pizza") — that is not drift.
       const short = bare.replace(/\s+(?:pizza|combo|wings|pasta|salad|sandwich)$/i, "");
-      const said = spoken.toLowerCase();
-      if (!said.includes(bare.toLowerCase()) && !(short.length >= 4 && said.includes(short.toLowerCase()))) {
-        hits.push({ kind: "readback_drift", sentence: spoken.slice(0, 200), evidence: [bare] });
-        break;
-      }
+      if (said.includes(bare.toLowerCase()) || (short.length >= 4 && said.includes(short.toLowerCase()))) continue;
+      const words = bare.toLowerCase().split(/\s+/).filter((w) => w.length >= 4);
+      if (!words.some((w) => said.includes(w))) continue;
+      hits.push({ kind: "readback_drift", sentence: spoken.slice(0, 200), evidence: [bare] });
+      break;
     }
   }
   return hits;

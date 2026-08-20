@@ -87,7 +87,7 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
 
       case "start":
         streamSid = msg.start?.streamSid;
-        // Start the pacer — ambient bed plays immediately
+        console.log(`[media-session] start: streamSid=${streamSid} bedReader=${!!bedReader}`);
         pacer.onFrame((frame) => {
           if (destroyed || !streamSid) return;
           sendMediaToTwilio(frame);
@@ -95,6 +95,7 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
         opts.onSetup();
         {
           const greetingText = opts.greeting || msg.start?.customParameters?.greeting || "";
+          console.log(`[media-session] greeting=${greetingText.length > 0 ? greetingText.slice(0, 40) + "..." : "(none)"}`);
           if (greetingText) speakText(greetingText);
         }
         break;
@@ -156,11 +157,47 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
 
   // ── Outbound: text → TTS → pacer → Twilio ──────────────────────────
 
+  let drainTimer: ReturnType<typeof setTimeout> | null = null;
+
+  function watchForDrain() {
+    if (drainTimer) clearTimeout(drainTimer);
+    const check = () => {
+      if (destroyed) return;
+      if (pacer.voiceQueueLength === 0) {
+        drainTimer = setTimeout(() => {
+          if (destroyed) return;
+          if (pacer.voiceQueueLength === 0) {
+            isSpeaking = false;
+            currentSpokenText = "";
+            sendMark(`speech_${markSeq++}`);
+            drainTimer = null;
+          } else {
+            check();
+          }
+        }, 200);
+      } else {
+        drainTimer = setTimeout(check, 50);
+      }
+    };
+    drainTimer = setTimeout(check, 400);
+  }
+
   function speakText(text: string) {
     isSpeaking = true;
     currentSpokenText = text;
     tts.sendText(text);
     tts.flush();
+    watchForDrain();
+  }
+
+  function streamToken(text: string, last: boolean) {
+    isSpeaking = true;
+    currentSpokenText += text;
+    tts.sendText(text);
+    if (last) {
+      tts.flush();
+      watchForDrain();
+    }
   }
 
   function handleTtsAudio(chunk: TtsChunk) {
@@ -177,9 +214,10 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
   // ── Barge-in ────────────────────────────────────────────────────────
 
   function bargeIn(callerText: string) {
+    if (drainTimer) { clearTimeout(drainTimer); drainTimer = null; }
     pacer.clearVoice();
     isSpeaking = false;
-    tts.close();
+    tts.interrupt();
 
     const utteranceUntilInterrupt = currentSpokenText;
     currentSpokenText = "";
@@ -235,9 +273,9 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
   // ── Public interface ────────────────────────────────────────────────
 
   return {
-    sendText(text: string, _last: boolean) {
+    sendText(text: string, last: boolean) {
       if (destroyed) return;
-      speakText(text);
+      streamToken(text, last);
     },
     end(_reason: string) {
       const maxWaitMs = 8_000;

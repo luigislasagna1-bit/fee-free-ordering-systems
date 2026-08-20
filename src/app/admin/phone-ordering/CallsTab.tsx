@@ -74,6 +74,7 @@ export default async function CallsTab({
         fromNumber: true,
         outcome: true,
         durationSeconds: true,
+        billableSeconds: true,
         sentiment: true,
         customerId: true,
         orderNumber: true,
@@ -164,6 +165,7 @@ export default async function CallsTab({
                 <th className="py-2.5 px-4 font-medium">{t("colName")}</th>
                 <th className="py-2.5 px-4 font-medium">{t("colOutcome")}</th>
                 <th className="py-2.5 px-4 font-medium text-right">{t("colDuration")}</th>
+                <th className="py-2.5 px-4 font-medium text-right">{t("colAiTime")}</th>
                 <th className="py-2.5 px-4 font-medium text-center">{t("colSentiment")}</th>
                 <th className="py-2.5 px-4 font-medium text-right">{t("colTotal")}</th>
                 <th className="py-2.5 px-4 font-medium text-right">{t("colItems")}</th>
@@ -172,7 +174,7 @@ export default async function CallsTab({
             <tbody>
               {calls.length === 0 && (
                 <tr>
-                  <td colSpan={8} className="py-10 text-center text-sm text-gray-400">
+                  <td colSpan={9} className="py-10 text-center text-sm text-gray-400">
                     {t("emptyState")}
                   </td>
                 </tr>
@@ -217,6 +219,15 @@ export default async function CallsTab({
                     </td>
                     <td className="py-2.5 px-4 whitespace-nowrap text-right text-gray-600 tabular-nums">
                       {formatDuration(c.durationSeconds)}
+                    </td>
+                    <td className="py-2.5 px-4 whitespace-nowrap text-right tabular-nums">
+                      {c.billableSeconds != null ? (
+                        <span className={c.billableSeconds < (c.durationSeconds ?? 0) ? "text-emerald-600 font-medium" : "text-gray-600"}>
+                          {formatDuration(c.billableSeconds)}
+                        </span>
+                      ) : (
+                        <span className="text-gray-400">—</span>
+                      )}
                     </td>
                     <td className="py-2.5 px-4 whitespace-nowrap text-center">
                       <SentimentDot sentiment={c.sentiment} label={c.sentiment ? t(`sentiment.${c.sentiment}`) : ""} />

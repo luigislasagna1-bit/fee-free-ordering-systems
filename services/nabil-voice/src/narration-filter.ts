@@ -38,6 +38,12 @@ const LEAK_MARKERS: RegExp[] = [
   /\blet me (?:set that up|check the|look up|verify|re-?send|use)\b/i,
   /\bI need to (?:make sure|check|verify|set|use|call)\b/i,
   /\bmodifier|\bslot\b|\bpayload\b|\bschema\b/i,
+  // Resolution narration (gate 2026-08-16 17:59, 8/35 under Opus-off):
+  // "I'll just add the Large 1 Topping directly" / "Let me go with … instead"
+  /\b(?:I'?ll|I will|Let me) (?:just )?(?:add|use|go with|pick) .{4,} (?:directly|instead|as the)\b/i,
+  /^That search\b/i,
+  /^Just use the\b/i,
+  /^The menu has\b/i,
 ];
 
 /** True when a complete clause is the model talking to itself, not to the caller. */

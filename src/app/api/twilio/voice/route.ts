@@ -68,6 +68,9 @@ const BCP47: Record<string, string> = {
   de: "de-DE", nl: "nl-NL", pl: "pl-PL", ro: "ro-RO", sv: "sv-SE", da: "da-DK",
   nb: "nb-NO", fi: "fi-FI", el: "el-GR", tr: "tr-TR", ru: "ru-RU", uk: "uk-UA",
   zh: "zh-CN", ja: "ja-JP", ko: "ko-KR", ar: "ar-SA", he: "he-IL", hi: "hi-IN",
+  cs: "cs-CZ", sk: "sk-SK", hu: "hu-HU", bg: "bg-BG", hr: "hr-HR", sr: "sr-RS",
+  sl: "sl-SI", et: "et-EE", lv: "lv-LV", lt: "lt-LT", ca: "ca-ES", id: "id-ID",
+  vi: "vi-VN", th: "th-TH",
 };
 function bcp47(locale: string): string {
   return BCP47[locale] || (locale.includes("-") ? locale : "en-US");

@@ -41,10 +41,11 @@ const MENU = {
         item("lasagna", "Lasagna", { isSoldOut: true, todayDeal: { name: "Lasagna Monday" } }),
       ],
     },
+    { category: "Sandwiches", items: [item("sand_cp", "Chicken Parm Sandwich", { price: 9.99 })] },
     { category: "Desserts", items: [item("float", "Coke Float", { price: 4.5 })] },
     { category: "Junk", items: [{ name: "no id" }, null] },
   ],
-  notToday: [{ name: "Thursday Smash Burger", available: "Thursdays" }, { name: "" }],
+  notToday: [{ name: "Thursday Smash Burger", available: "Thursdays" }, { name: "Thursday - Chicken Parm Sandwich", available: "Thursdays" }, { name: "" }],
 };
 
 const idx = buildMenuIndex(MENU);
@@ -66,8 +67,8 @@ describe("has / get / kindOf / entries", () => {
     expect(idx.get("pz_large")).toMatchObject({ nameSize: "large", familyKey: "1 topping" });
     expect(idx.get("dip")).toMatchObject({ description: "Creamy garlic dip", nameSize: null, familyKey: "garlic dip" });
     expect(idx.get("lasagna")).toMatchObject({ soldOut: true, todayDeal: { name: "Lasagna Monday" } });
-    expect(idx.entries()).toHaveLength(16); // the id-less junk is skipped
-    expect(idx.notToday).toEqual([{ name: "Thursday Smash Burger", available: "Thursdays" }]);
+    expect(idx.entries()).toHaveLength(17); // the id-less junk is skipped
+    expect(idx.notToday).toEqual([{ name: "Thursday Smash Burger", available: "Thursdays" }, { name: "Thursday - Chicken Parm Sandwich", available: "Thursdays" }]);
     expect(buildMenuIndex(null).entries()).toEqual([]);
   });
 });
@@ -119,7 +120,7 @@ describe("search", () => {
 
   it("uses the category as a boost, drops stop words, and ranks partial hits below full ones", () => {
     const r = idx.search("a drink coke please");
-    expect(r.candidates.map((c) => c.menuItemId).slice(0, 3)).toEqual(["dr_coke", "dr_diet", "float"]);
+    expect(r.candidates.map((c) => c.menuItemId).slice(0, 2)).toEqual(["dr_coke", "dr_diet"]);
     // "drink" hits Coke's category (Drinks & Sides), not the dessert's
     expect(r.candidates[0].score).toBeGreaterThan(r.candidates[2].score);
     // a category-only hit is a weak partial, ranked last
@@ -133,6 +134,13 @@ describe("search", () => {
     expect(r.notToday).toEqual([{ name: "Thursday Smash Burger", available: "Thursdays" }]);
     expect(idx.search("thursday smash burger").notToday).toHaveLength(1);
     expect(idx.search("coke").notToday).toEqual([]);
+  });
+
+  it("suppresses notToday day-deal variant when the regular item is a confident candidate", () => {
+    const r = idx.search("chicken parm sandwich");
+    expect(r.candidates[0]).toMatchObject({ menuItemId: "sand_cp", name: "Chicken Parm Sandwich" });
+    expect(r.candidates[0].score).toBeGreaterThanOrEqual(65);
+    expect(r.notToday).toEqual([]);
   });
 
   it("caps candidates at 5 by default (or the given limit) and flags sold-out items", () => {

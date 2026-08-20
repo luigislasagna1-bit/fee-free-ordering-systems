@@ -214,7 +214,7 @@ export function buildMenuIndex(menuPayload: any): MenuIndex {
       if (e.soldOut) score -= 1;
       scored.push({ ...e, score, matchedOn, confidence: 0 });
     }
-    scored.sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+    scored.sort((a, b) => b.score - a.score || (a.price ?? Infinity) - (b.price ?? Infinity) || a.name.localeCompare(b.name));
     const candidates = scored.slice(0, limit);
     // Confidence: from the match tier, then capped when a rival is close —
     // a near-tie is a question, never a pick. Size siblings of one family
@@ -232,6 +232,18 @@ export function buildMenuIndex(menuPayload: any): MenuIndex {
       const on = norm(o.name);
       return on === qNorm || stem(o.name) === qStem || (qTokens.length && qTokens.every((t) => on.includes(t)));
     });
+    // Suppress notToday entries that are day-deal variants of a confident
+    // candidate already on today's menu. Without this, "Chicken Parm Sandwich"
+    // also matches "Thursday - Chicken Parm Sandwich" in notToday, and the
+    // model conflates the two — telling the caller the item is Thursday-only.
+    const DAY_PREFIX = /^(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\s*[-–—:]\s*/i;
+    const filteredNotToday =
+      candidates.length && candidates[0].score >= 65
+        ? notTodayHits.filter((nt) => {
+            const stripped = norm(nt.name.replace(DAY_PREFIX, ""));
+            return !candidates.some((c) => c.score >= 65 && norm(c.name) === stripped);
+          })
+        : notTodayHits;
     // Exact when the top hit is a name match and nothing else ties it — a
     // runner-up that differs ONLY by size ("EXTRA Large 1 Topping" behind
     // "Large 1 Topping" when the caller said "large") does not count as a tie.
@@ -244,7 +256,7 @@ export function buildMenuIndex(menuPayload: any): MenuIndex {
       exact: !!top && top.score >= 90 && (!second || second.score < 90 || secondIsSizeSibling),
       confidence: top?.confidence ?? 0,
       sizeHint: split.token,
-      notToday: notTodayHits,
+      notToday: filteredNotToday,
     };
   }
 
