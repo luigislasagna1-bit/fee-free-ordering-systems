@@ -283,8 +283,14 @@ async function placeOrder(req: NextRequest) {
     // sees an empty hours array → always reads "closed" → EVERY
     // order is stamped placedWhileClosed=true, even normal in-hours
     // ones (bug surfaced live 2026-05-30).
+    // When the client signals isTest, drop the isActive filter so admins can
+    // test-order on an unpublished / inactive location. The session is verified
+    // below (isVerifiedTest) — a customer sending isTest on an inactive
+    // restaurant still gets a 404.
     const restaurant = await prisma.restaurant.findUnique({
-      where: { slug: sanitize(restaurantSlug, 100), isActive: true },
+      where: bodyIsTest === true
+        ? { slug: sanitize(restaurantSlug, 100) }
+        : { slug: sanitize(restaurantSlug, 100), isActive: true },
       include: {
         openingHours: { orderBy: { dayOfWeek: "asc" } },
         // One-off holiday closures — force "closed today" so holiday orders
@@ -345,6 +351,11 @@ async function placeOrder(req: NextRequest) {
       const adminUser = await getSessionUser().catch(() => null);
       isVerifiedTest =
         !!adminUser && (adminUser.restaurantId === restaurant.id || adminUser.role === "superadmin");
+    }
+    // Inactive restaurant loaded because bodyIsTest dropped the filter —
+    // reject unless the session actually verified as admin.
+    if (!restaurant.isActive && !isVerifiedTest) {
+      return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
     }
 
     // ── Reserve-then-order: validate the optional table-booking payload ───────
@@ -621,7 +632,7 @@ async function placeOrder(req: NextRequest) {
     })();
     const pauseBlocks =
       pauseEndMs > Date.now() && (scheduledMsForPause === null || scheduledMsForPause < pauseEndMs);
-    if (pauseBlocks) {
+    if (pauseBlocks && !isVerifiedTest) {
       // Restaurant wall clock, not the server's UTC (the known
       // toLocaleString-without-timeZone bug class): Luigi's own pause ending
       // 11:59 PM Toronto read "3:59 AM" in the live error, and the new
@@ -2452,7 +2463,7 @@ async function placeOrder(req: NextRequest) {
     // should display a friendly "this restaurant has paused new orders
     // until next month" message rather than a generic error.
     const cap = await checkOrderCap(restaurant.id);
-    if (!cap.allowed) {
+    if (!cap.allowed && !isVerifiedTest) {
       // Owner alert: a real order just got turned away ("you're losing orders").
       // Fire AFTER the response (rate-limited ~3h inside) so the rejection isn't
       // slowed by an email round-trip. Luigi 2026-06-16.
@@ -2559,6 +2570,9 @@ async function placeOrder(req: NextRequest) {
     })();
 
     // ── Special-day / holiday enforcement (Gloriafood parity) ───────────────
+    // Verified test orders bypass ALL time-based guards (holidays, weekly hours,
+    // first-order delay) so admins can exercise the full flow at any time.
+    if (!isVerifiedTest) {
     // Reseller report cmpxds2d2: holiday closures must actually BLOCK orders.
     // We resolve the holiday rule for the day the order is FOR (the scheduled
     // slot's calendar day, else today) and the order's service:
@@ -2780,6 +2794,7 @@ async function placeOrder(req: NextRequest) {
         }
       }
     }
+    } // end !isVerifiedTest — test orders bypass holiday / hours / delay guards
 
     // ── Per-item Fulfilment Time enforcement (Luigi 2026-06-12, Phase 2) ──────
     // An item with a fulfilment window can only be ordered FOR days/times inside

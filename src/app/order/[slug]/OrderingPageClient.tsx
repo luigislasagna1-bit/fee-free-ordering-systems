@@ -3538,14 +3538,14 @@ export function OrderingPageClient({
   })();
   const servicePausedNow = servicePausedUntilMs !== null;
 
-  const scheduleRequired = cartHasCatering || restaurantIsClosedNow || orderMinLeadMinutes > 0 || hideAsap || fulfilForcesSchedule || servicePausedNow;
+  const scheduleRequired = cartHasCatering || (!isTestPreview && restaurantIsClosedNow) || orderMinLeadMinutes > 0 || hideAsap || fulfilForcesSchedule || (!isTestPreview && servicePausedNow);
   // Whether the schedule picker is shown at all. Off only when the owner
   // disabled scheduling AND nothing forces it (catering / closed now / fulfilment
   // / a paused service). ⚠️ servicePausedNow MUST be here: without it an
   // ASAP-only store that pauses a service reached checkout with a forced
   // schedule but NO picker — the auto-fill silently stamped a time the
   // customer never saw or consented to (adversarial review wf_a62b0536).
-  const schedulingEnabled = schedulingAllowed || cartHasCatering || restaurantIsClosedNow || fulfilForcesSchedule || servicePausedNow;
+  const schedulingEnabled = schedulingAllowed || cartHasCatering || (!isTestPreview && restaurantIsClosedNow) || fulfilForcesSchedule || (!isTestPreview && servicePausedNow);
   // Closed-now default = the FIRST slot the picker actually offers on the opening
   // day, NOT the raw opening minute. A new order can't be ready before now +
   // standard prep (zone-aware for delivery, mirroring estimatedDeliveryMinutes /
@@ -5527,7 +5527,7 @@ export function OrderingPageClient({
         <div className="flex flex-wrap gap-3 mb-5 [&>button]:min-w-[140px]">
           {restaurant.acceptsPickup && (() => {
             const until = (restaurant as any).pickupPausedUntil;
-            const holClosed = holidayClosedServices.includes("pickup");
+            const holClosed = !isTestPreview && holidayClosedServices.includes("pickup");
             const paused = (!!until && new Date(until).getTime() > Date.now()) || holClosed;
             let desc = "";
             try { desc = (JSON.parse((restaurant as any).serviceSettings || "null")?.pickup?.description || "").trim(); } catch {}
@@ -5555,7 +5555,7 @@ export function OrderingPageClient({
           })()}
           {restaurant.acceptsDelivery && (() => {
             const until = (restaurant as any).deliveryPausedUntil;
-            const holClosed = holidayClosedServices.includes("delivery");
+            const holClosed = !isTestPreview && holidayClosedServices.includes("delivery");
             const paused = (!!until && new Date(until).getTime() > Date.now()) || holClosed;
             let desc = "";
             try { desc = (JSON.parse((restaurant as any).serviceSettings || "null")?.delivery?.description || "").trim(); } catch {}
@@ -5586,7 +5586,7 @@ export function OrderingPageClient({
               fee). Each shows its own estimated time from serviceSettings. */}
           {(restaurant as any).acceptsDineIn && (() => {
             const until = (restaurant as any).dineInPausedUntil;
-            const holClosed = holidayClosedServices.includes("dine_in");
+            const holClosed = !isTestPreview && holidayClosedServices.includes("dine_in");
             const paused = (!!until && new Date(until).getTime() > Date.now()) || holClosed;
             let est = restaurant.estimatedPickup;
             let desc = "";
@@ -5614,7 +5614,7 @@ export function OrderingPageClient({
           })()}
           {(restaurant as any).acceptsTakeOut && (() => {
             const until = (restaurant as any).takeOutPausedUntil;
-            const holClosed = holidayClosedServices.includes("take_out");
+            const holClosed = !isTestPreview && holidayClosedServices.includes("take_out");
             const paused = (!!until && new Date(until).getTime() > Date.now()) || holClosed;
             let est = restaurant.estimatedPickup;
             let desc = "";

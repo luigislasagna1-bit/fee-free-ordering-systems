@@ -85,8 +85,13 @@ export default async function OrderingPage({
   // 1) Load the restaurant the customer is ordering FROM (the location).
   // Hours + delivery zones CAN be inherited live from the brand parent (resolved
   // just below); fees etc. remain per-location. Menu is inherited via useBrandMenu.
+  // When ?testing=1 is present, load the restaurant WITHOUT the isActive
+  // filter so admins can preview + test-order on an unpublished / paused /
+  // inactive location. The session is verified further down — a customer
+  // hitting ?testing=1 on an inactive restaurant still gets a 404.
+  const maybeTestPreview = sp.testing === "1";
   const restaurantBase = await prisma.restaurant.findUnique({
-    where: { slug, isActive: true },
+    where: maybeTestPreview ? { slug } : { slug, isActive: true },
     include: {
       openingHours: { orderBy: { dayOfWeek: "asc" } },
       // One-off holiday closures — drive the "closed today (holiday)" banner +
@@ -330,12 +335,17 @@ export default async function OrderingPage({
   // superadmin) — for customers the param is inert. The flag flows to the
   // client (banner + isTest on the order POST); the order route re-verifies
   // the session before honouring isTest, so this is display-level only.
+  // When verified, test mode ALSO bypasses closed/paused/holiday/inactive
+  // gates so the admin can exercise the full ordering flow at any time.
   let isTestPreview = false;
-  if (sp.testing === "1") {
+  if (maybeTestPreview) {
     const adminUser = await getSessionUser().catch(() => null);
     isTestPreview =
       !!adminUser && (adminUser.restaurantId === restaurantBase.id || adminUser.role === "superadmin");
   }
+  // If the restaurant is inactive and this ISN'T a verified test preview,
+  // return 404 just like the old isActive:true filter would have.
+  if (!restaurantBase.isActive && !isTestPreview) notFound();
 
   const restaurant = { ...restaurantBase, menuCategories } as typeof restaurantBase & {
     menuCategories: typeof menuCategories;
