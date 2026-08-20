@@ -3070,6 +3070,7 @@ model VoiceAgentConfig {
 
   // ── Handoff / limits / notifications ──
   transferToNumber      String? // E.164; falls back to Restaurant.alertPhone/phone
+  testCallerPhones      Json?   // string[] of E.164 phones allowed to test when agent is off
   afterHoursBehavior    String  @default("take_orders") // take_orders | reservations_only | message_only | transfer
   maxCallSeconds        Int     @default(600)
   smsConfirmations      Boolean @default(true)

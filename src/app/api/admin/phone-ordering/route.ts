@@ -109,6 +109,13 @@ export async function PATCH(req: NextRequest) {
   if (Array.isArray(body.languages)) {
     data.languages = body.languages.filter((s: unknown) => typeof s === "string").slice(0, 38);
   }
+  // Phone numbers allowed to test the agent when it is turned off.
+  if (Array.isArray(body.testCallerPhones)) {
+    data.testCallerPhones = body.testCallerPhones
+      .filter((s: unknown) => typeof s === "string" && s.trim())
+      .map((s: unknown) => (s as string).trim())
+      .slice(0, 10);
+  }
 
   // firstEnabledAt: stamped ONCE, the first time the line goes live — never
   // overwritten (same conditional-write shape as trialUsedAt). Powers the

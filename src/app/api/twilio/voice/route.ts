@@ -330,7 +330,10 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   let isTestOrder = false;
   if (!cfg.enabled) {
     const callerDigits = (from || "").replace(/\D/g, "");
-    const ownerPhones = [restaurant.phone, restaurant.alertPhone, cfg.transferToNumber]
+    const testPhones = Array.isArray(cfg.testCallerPhones)
+      ? (cfg.testCallerPhones as unknown[]).filter((x): x is string => typeof x === "string")
+      : [];
+    const ownerPhones = [restaurant.phone, restaurant.alertPhone, cfg.transferToNumber, ...testPhones]
       .filter(Boolean)
       .map((p) => (p as string).replace(/\D/g, ""));
     const isOwnerCall = callerDigits.length >= 10 && ownerPhones.some((p) =>
