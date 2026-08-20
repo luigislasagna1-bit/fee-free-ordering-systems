@@ -317,17 +317,27 @@ async function handle(req: NextRequest, params: Record<string, string>) {
     }
     return twiml(`<Response><Say voice="Polly.Joanna-Neural">${xml(GENERIC_MSG)}</Say></Response>`);
   }
+  if (!cfg) {
+    const fallback = (restaurant.phone || "").trim();
+    if (fallback) {
+      return twiml(
+        `<Response><Dial answerOnBridge="true" timeout="25">${xml(fallback)}</Dial>` +
+          `<Say voice="Polly.Joanna-Neural">${xml(GENERIC_MSG)}</Say></Response>`,
+      );
+    }
+    return twiml(`<Response><Say voice="Polly.Joanna-Neural">${xml(GENERIC_MSG)}</Say></Response>`);
+  }
   let isTestOrder = false;
-  if (!cfg?.enabled) {
+  if (!cfg.enabled) {
     const callerDigits = (from || "").replace(/\D/g, "");
-    const ownerPhones = [restaurant.phone, restaurant.alertPhone, cfg?.transferToNumber]
+    const ownerPhones = [restaurant.phone, restaurant.alertPhone, cfg.transferToNumber]
       .filter(Boolean)
       .map((p) => (p as string).replace(/\D/g, ""));
     const isOwnerCall = callerDigits.length >= 10 && ownerPhones.some((p) =>
       p.length >= 10 && (p === callerDigits || p.slice(-10) === callerDigits.slice(-10)),
     );
     if (!isOwnerCall) {
-      const fallback = (cfg?.transferToNumber || restaurant.phone || "").trim();
+      const fallback = (cfg.transferToNumber || restaurant.phone || "").trim();
       if (fallback) {
         return twiml(
           `<Response><Dial answerOnBridge="true" timeout="25">${xml(fallback)}</Dial>` +
