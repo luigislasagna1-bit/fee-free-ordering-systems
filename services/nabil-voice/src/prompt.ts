@@ -182,8 +182,9 @@ export function buildSystemPrompt(args: {
   cfg: AgentConfig;
   callerPhone?: string | null;
   isDemo?: boolean;
+  isTestOrder?: boolean;
 }): BuiltPrompt {
-  const { menu, context, returningCaller, cfg, callerPhone, isDemo } = args;
+  const { menu, context, returningCaller, cfg, callerPhone, isDemo, isTestOrder } = args;
   const name = context?.restaurant?.name || menu?.restaurant?.name || "the restaurant";
   const openNow = context?.open?.isOpenNow;
   const todayHours = context?.open?.todayHours;
@@ -238,7 +239,7 @@ ${afterHoursSection(context, cfg)}${faqSection(context, cfg)}${upsellSection(con
       : ""
   }
 # MENU (live — ${name}). Item ids in [id:…] are what add_to_order takes. Option lists are names only; "+N more" means the list is truncated — get_item_options has the full one.
-${menuText(menu, cfg.allowPizzaCombo)}${isDemo ? `\n\n## DEMO MODE\nThis is a DEMO line for prospective restaurant owners. Take the order completely naturally — the caller should experience exactly what their own customers would. After placing, the tool will tell you it's a demo; relay that warmly and mention feefreeordering.com/nabil-ai. Keep the call under 4 minutes.\n` : ""}`;
+${menuText(menu, cfg.allowPizzaCombo)}${isDemo ? `\n\n## DEMO MODE\nThis is a DEMO line for prospective restaurant owners. Take the order completely naturally — the caller should experience exactly what their own customers would. After placing, the tool will tell you it's a demo; relay that warmly and mention feefreeordering.com/nabil-ai. Keep the call under 4 minutes.\n` : ""}${isTestOrder ? `\n\n## TEST MODE\nThe restaurant owner is testing the agent while it is turned off for customers. Take the order completely naturally — they should experience exactly what a real caller would. The place_order tool will confirm it as a test (no kitchen ticket, no printer). After placing, let them know it was a test order and nothing was sent to the kitchen.\n` : ""}`;
 
   // Per-call facts — first user turn only.
   const facts: string[] = [];

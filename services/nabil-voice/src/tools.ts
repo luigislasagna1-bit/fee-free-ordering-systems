@@ -1044,6 +1044,16 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
           instruction: "The order has been confirmed. Thank the caller warmly and let them know this was a demo — their order won't actually be prepared, but that's exactly how a real call would go. Invite them to visit feefreeordering.com/nabil-ai to learn more.",
         };
       }
+      if (ctx.token.isTestOrder) {
+        const quoted = cart.lastQuote()!;
+        cart.recordPlaced({ orderId: null, orderNumber: "TEST", total: quoted.total });
+        return {
+          ok: true,
+          orderNumber: "TEST",
+          total: quoted.total,
+          instruction: "The order has been confirmed as a TEST — it will NOT be sent to the kitchen or printed. Let the caller know this was a test order and everything worked correctly.",
+        };
+      }
       const f = cart.fulfilment();
       const mode = f.type === "delivery" ? ctx.cfg.deliveryPaymentMode : ctx.cfg.pickupPaymentMode;
       if (mode === "paid") {

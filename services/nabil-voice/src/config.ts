@@ -87,6 +87,8 @@ export type CallToken = {
   lang?: string | null;
   /** Marketing demo line — orders faked, call capped at 4 min. */
   isDemo?: boolean;
+  /** Owner test call — agent disabled but owner is testing. place_order fakes. */
+  isTestOrder?: boolean;
 };
 
 /** Verify a call token (mirrors src/lib/voice/session-token.ts on the app side). */
@@ -94,7 +96,7 @@ export function verifyCallToken(token: string): CallToken | null {
   try {
     const d = jwt.verify(token, CONFIG.jwtSecret) as Record<string, unknown>;
     if (d?.t !== "nabilcall") return null;
-    const { restaurantId, slug, callSid, to, from, sttModel, ttsVoice, lang, isDemo } = d;
+    const { restaurantId, slug, callSid, to, from, sttModel, ttsVoice, lang, isDemo, isTestOrder } = d;
     if ([restaurantId, slug, callSid, to, from].every((v) => typeof v === "string")) {
       return {
         restaurantId,
@@ -106,6 +108,7 @@ export function verifyCallToken(token: string): CallToken | null {
         ttsVoice: typeof ttsVoice === "string" ? ttsVoice : null,
         lang: typeof lang === "string" ? lang : null,
         ...(isDemo === true ? { isDemo: true } : {}),
+        ...(isTestOrder === true ? { isTestOrder: true } : {}),
       } as CallToken;
     }
     return null;

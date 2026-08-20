@@ -32,6 +32,9 @@ export type NabilCallPayload = {
   lang?: string;
   /** Marketing demo line — place_order returns a fake success, call capped at 4 min. */
   isDemo?: boolean;
+  /** Owner test call — agent is disabled but the owner called to test. Orders
+   *  go through the full flow but place_order fakes the placement. */
+  isTestOrder?: boolean;
 };
 
 function getSecret(): string {
@@ -50,7 +53,7 @@ export function verifyNabilCallToken(token: string): NabilCallPayload | null {
   try {
     const d = jwt.verify(token, getSecret()) as Record<string, unknown>;
     if (d?.t !== "nabilcall") return null;
-    const { restaurantId, slug, callSid, to, from, sttModel, ttsVoice, lang, isDemo } = d;
+    const { restaurantId, slug, callSid, to, from, sttModel, ttsVoice, lang, isDemo, isTestOrder } = d;
     if ([restaurantId, slug, callSid, to, from].every((v) => typeof v === "string")) {
       void sttModel;
       void ttsVoice;
@@ -62,6 +65,7 @@ export function verifyNabilCallToken(token: string): NabilCallPayload | null {
         to: to as string,
         from: from as string,
         ...(isDemo === true ? { isDemo: true } : {}),
+        ...(isTestOrder === true ? { isTestOrder: true } : {}),
       };
     }
     return null;

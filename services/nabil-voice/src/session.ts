@@ -497,7 +497,7 @@ export class CallSession {
         knownName: typeof knownName === "string" && knownName.trim() ? knownName.trim() : null,
       });
 
-      const built = buildSystemPrompt({ menu, context, returningCaller, cfg: this.ctx.cfg, callerPhone: this.token.from, isDemo: !!this.token.isDemo });
+      const built = buildSystemPrompt({ menu, context, returningCaller, cfg: this.ctx.cfg, callerPhone: this.token.from, isDemo: !!this.token.isDemo, isTestOrder: !!this.token.isTestOrder });
       this.system = built.system;
       this.callFacts = built.callFacts;
       this.versions.menuSnapshotHash = this.menuHash;

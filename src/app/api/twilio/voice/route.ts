@@ -300,8 +300,14 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   // because the number on their printed menu is the one pointing at this route.
   // The line above already knew to fall back to restaurant.phone; this one
   // didn't. (2026-08-15)
+  //
+  // OWNER TEST MODE (2026-08-20): when the agent is disabled (cfg.enabled=false)
+  // but the add-on is active, the OWNER can still call to test — the call goes
+  // through normally but place_order fakes the placement (no kitchen ticket, no
+  // printer, no notification). The caller is identified as "owner" if their
+  // number matches the restaurant's phone, alert phone, or transfer number.
   const entitled = await hasFeature(restaurant.id, "phone_ordering_agent");
-  if (!entitled || !cfg?.enabled) {
+  if (!entitled) {
     const fallback = (cfg?.transferToNumber || restaurant.phone || "").trim();
     if (fallback) {
       return twiml(
@@ -310,6 +316,27 @@ async function handle(req: NextRequest, params: Record<string, string>) {
       );
     }
     return twiml(`<Response><Say voice="Polly.Joanna-Neural">${xml(GENERIC_MSG)}</Say></Response>`);
+  }
+  let isTestOrder = false;
+  if (!cfg?.enabled) {
+    const callerDigits = (from || "").replace(/\D/g, "");
+    const ownerPhones = [restaurant.phone, restaurant.alertPhone, cfg?.transferToNumber]
+      .filter(Boolean)
+      .map((p) => (p as string).replace(/\D/g, ""));
+    const isOwnerCall = callerDigits.length >= 10 && ownerPhones.some((p) =>
+      p.length >= 10 && (p === callerDigits || p.slice(-10) === callerDigits.slice(-10)),
+    );
+    if (!isOwnerCall) {
+      const fallback = (cfg?.transferToNumber || restaurant.phone || "").trim();
+      if (fallback) {
+        return twiml(
+          `<Response><Dial answerOnBridge="true" timeout="25">${xml(fallback)}</Dial>` +
+            `<Say voice="Polly.Joanna-Neural">${xml(GENERIC_MSG)}</Say></Response>`,
+        );
+      }
+      return twiml(`<Response><Say voice="Polly.Joanna-Neural">${xml(GENERIC_MSG)}</Say></Response>`);
+    }
+    isTestOrder = true;
   }
 
   // Block-list.
@@ -435,6 +462,7 @@ async function handle(req: NextRequest, params: Record<string, string>) {
     // number-to-words pass (spoken-numbers.ts) is gated on it. 2026-08-16.
     lang: bcp47(lang),
     ...(line.isDemo ? { isDemo: true } : {}),
+    ...(isTestOrder ? { isTestOrder: true } : {}),
   });
   const url = `${wss}${wss.includes("?") ? "&" : "?"}t=${encodeURIComponent(token)}`;
   // On session end — a transfer, OR the voice service being unreachable — Twilio
