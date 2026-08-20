@@ -170,6 +170,12 @@ export async function loadComboData(
           ? { ...shaped, variants: shaped.variants.filter((v) => allowed.includes(v.variantId)) }
           : shaped;
       }),
+      // Premium-pick money rides along so the compiler can DISCLOSE what the
+      // charge path will book (same records comboUpchargeFor reads there).
+      ...(slot.upcharges && Object.keys(slot.upcharges).length ? { upcharges: slot.upcharges } : {}),
+      ...(slot.variantUpcharges && Object.keys(slot.variantUpcharges).length
+        ? { variantUpcharges: slot.variantUpcharges }
+        : {}),
     });
   }
 

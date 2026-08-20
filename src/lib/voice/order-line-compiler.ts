@@ -30,6 +30,7 @@
  * (dryRun preview or the 201).
  */
 
+import { comboUpchargeFor } from "@/lib/combo";
 import type { PizzaConfig } from "@/lib/pizza-config-parse";
 import {
   priceToppingLines,
@@ -110,7 +111,10 @@ export type CompileOpts = {
   /** Combo children only. A child is NOT priced by the standalone engine —
    *  combo-child-pricing / the shared topping pool decide, and
    *  `extrasCharge:false` means the extras are free. Quoting the standalone
-   *  number there announces money the caller will never be charged. */
+   *  number there announces money the caller will never be charged.
+   *  Suppresses ONLY the spoken `pricingNote`; `surcharge` is still computed,
+   *  because compileComboLine needs the raw number to disclose per-pizza
+   *  extras on combos that DO charge them. */
   suppressPricingNote?: boolean;
   /** Recipe pizzas referenced by `halfRecipes` (theirs and every pick's), by menuItemId. */
   recipes?: Record<string, ItemData>;
@@ -178,6 +182,11 @@ export type ComboSlotData = {
   max: number;
   /** Eligible picks for this slot, already resolved to real items. */
   choices: ItemData[];
+  /** Premium-pick money from the combo's config, by item id and by
+   *  `itemId::variantId` — the SAME records `comboUpchargeFor` reads on the
+   *  charge path. Optional so older sim snapshots keep working; absent = 0. */
+  upcharges?: Record<string, number>;
+  variantUpcharges?: Record<string, number>;
 };
 export type ComboData = {
   menuItemId: string;
@@ -236,6 +245,13 @@ export type CompileResult = {
   pickSlots?: Array<{ index: number; slotId: string; slotLabel: string }>;
   /** Pizza only: names of the recipe pizzas used by halfRecipes (aliases, state). */
   recipeNames?: string[];
+  /** Combo only: advisory per-unit money the combo engine WILL book — slot
+   *  premium upcharges (booked unconditionally by the route) and, on
+   *  per-pizza-allowance combos with `extrasCharge` on, each pizza child's
+   *  over-allowance topping money. Pool combos (`sharedToppings` ≥ 1) list no
+   *  extras — allocation decides those, so the dryRun quote stays the only
+   *  honest number there. The voice service phrases these for the caller. */
+  priceParts?: Array<{ label: string; amount: number; kind: "slot_upcharge" | "child_extras" }>;
 };
 
 /* ───────────────────────────── name matching ───────────────────────────── */
@@ -1205,7 +1221,7 @@ export function compilePizzaLine(
         Math.round(Math.max(0, basePrice + toppingBaseAdjust(pricing) + toppings) * 100) / 100;
     }
 
-    if (flat > 0 && chargeLines.length && !opts.suppressPricingNote) {
+    if (flat > 0 && chargeLines.length) {
       const charges = priceToppingLines(pricing, chargeLines);
       const toppingTotal = charges.reduce((a, b) => a + b, 0) + toppingBaseAdjust(pricing);
       const extra = Math.round(toppingTotal * 100) / 100;
@@ -1213,10 +1229,10 @@ export function compilePizzaLine(
       const wholes = chargeLines.length - halves;
       const countLabel = `${wholes + halves} topping${wholes + halves === 1 ? "" : "s"}`;
       if (extra > 0) {
-        pricingNote = `${countLabel}; ${cfg.includedToppings} included, so that's ${money(extra, currency)} extra.`;
+        if (!opts.suppressPricingNote) pricingNote = `${countLabel}; ${cfg.includedToppings} included, so that's ${money(extra, currency)} extra.`;
         surcharge = { amount: extra, direction: "extra" };
       } else if (extra < 0) {
-        pricingNote = `${countLabel} — that's ${money(Math.abs(extra), currency)} less than the standard build.`;
+        if (!opts.suppressPricingNote) pricingNote = `${countLabel} — that's ${money(Math.abs(extra), currency)} less than the standard build.`;
         surcharge = { amount: Math.abs(extra), direction: "less" };
       }
     }
@@ -1491,7 +1507,7 @@ export function compileItemLine(intent: ItemIntent, item: ItemData, opts: Compil
       ? `Add-ons come to ${money(Math.round(extras * 100) / 100, currency)} extra.`
       : null;
   const surcharge: CompileResult["surcharge"] =
-    extras > 0 && !opts.suppressPricingNote ? { amount: Math.round(extras * 100) / 100, direction: "extra" } : null;
+    extras > 0 ? { amount: Math.round(extras * 100) / 100, direction: "extra" } : null;
   const readBack =
     `${quantity > 1 ? `${quantity}× ` : ""}${variant ? `${variant.name} ` : ""}${item.name}` +
     (spokenParts.length ? ` with ${spokenParts.join(", ")}` : "");
@@ -1539,6 +1555,8 @@ export function compileComboLine(
   const spokenChildren: Array<{ kind: "pizza" | "item"; spokenNoQty: string }> = [];
   const childNotes: string[] = [];
   const pickSlots: NonNullable<CompileResult["pickSlots"]> = [];
+  const priceParts: NonNullable<CompileResult["priceParts"]> = [];
+  const currency = opts.currency ?? "usd";
 
   if (combo.isSoldOut) {
     return { line: null, readBack: "", spoken: "", pricingNote: null, unresolved: [`"${combo.name}" is sold out.`] };
@@ -1636,6 +1654,44 @@ export function compileComboLine(
     if (childNote) childNotes.push(`${child.name}: ${childNote}`);
     spokenParts.push(sub.readBack);
     spokenChildren.push({ kind: child.pizzaConfig ? "pizza" : "item", spokenNoQty: sub.spokenNoQty || sub.spoken || sub.readBack });
+
+    // Money the caller must hear for THIS pick. The slot premium is resolved
+    // with the SAME function the charge path uses (variant key wins, then the
+    // per-item entry), on the slot the pick actually LANDED in — first-fit can
+    // relocate a pick, and the route books whatever slot it lands in.
+    const slotUp = comboUpchargeFor(
+      { upcharges: slot.upcharges, variantUpcharges: slot.variantUpcharges } as never,
+      child.menuItemId,
+      sub.line.variantId,
+    );
+    if (slotUp > 0) {
+      const variantName = sub.line.variantId
+        ? (child.variants.find((v) => v.variantId === sub.line!.variantId)?.name ?? null)
+        : null;
+      const usedVariantKey =
+        sub.line.variantId != null &&
+        Number.isFinite(slot.variantUpcharges?.[`${child.menuItemId}::${sub.line.variantId}`]);
+      priceParts.push({
+        label: usedVariantKey && variantName ? `${variantName} ${child.name}` : child.name,
+        amount: Math.round(slotUp * 100) / 100,
+        kind: "slot_upcharge",
+      });
+    }
+    // A pizza child's over-allowance toppings are billed only when the owner
+    // turned extrasCharge on AND there is no shared pool — pool overage is
+    // allocation-dependent, so its number stays with quote_order's dryRun.
+    if (
+      combo.extrasCharge &&
+      !(typeof combo.sharedToppings === "number" && combo.sharedToppings >= 1) &&
+      sub.surcharge?.direction === "extra" &&
+      sub.surcharge.amount > 0
+    ) {
+      priceParts.push({
+        label: child.name,
+        amount: sub.surcharge.amount,
+        kind: "child_extras",
+      });
+    }
   }
 
   // Every slot's minimum must be satisfied or the route 400s at the end.
@@ -1665,6 +1721,7 @@ export function compileComboLine(
   const notes = childNotes.length
     ? [intent.notes?.trim() || "", ...childNotes].filter(Boolean).join("; ")
     : (intent.notes ?? null);
+  const comboUpTotal = Math.round(priceParts.reduce((a, p) => a + p.amount, 0) * 100) / 100;
   return {
     line: {
       menuItemId: combo.menuItemId,
@@ -1678,13 +1735,15 @@ export function compileComboLine(
     readBack: `${quantity > 1 ? `${quantity}× ` : ""}${combo.name}: ${spokenParts.join(", ")}`,
     spoken: spokenCombo({ quantity, comboName: combo.name, children: spokenChildren }),
     spokenNoQty: spokenCombo({ quantity: 1, comboName: combo.name, children: spokenChildren }).replace(/^a /, ""),
-    surcharge: null,
-    // A combo quotes NO advisory extras. Its money comes from the combo
-    // engine (upcharges, extrasCharge, the shared topping pool) and the only
-    // honest number is the dryRun total from quote_order.
-    pricingNote: null,
+    // Advisory disclosure of the money the combo engine WILL book for these
+    // picks (slot premiums always; per-pizza/item extras only when
+    // extrasCharge is on and there is no shared pool — see priceParts docs).
+    // The binding total is still quote_order's dryRun.
+    surcharge: comboUpTotal > 0 ? { amount: comboUpTotal, direction: "extra" } : null,
+    pricingNote: comboUpTotal > 0 ? priceParts.map((p) => `${p.label} +${money(p.amount, currency)}`).join(", ") : null,
     unresolved: [],
     ...(notices.length ? { notices } : {}),
+    ...(priceParts.length ? { priceParts } : {}),
     pickSlots,
   };
 }

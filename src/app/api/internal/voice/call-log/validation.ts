@@ -141,6 +141,10 @@ export const EVENT_TYPES = new Set([
   "tail_fragment",
   "numbers_verbalized",
   "greeting_echo_dropped",
+  // Added 2026-08-20 with the post-filler ack de-dup (session.ts): the opener
+  // the stripper removed, so a transcript that differs from model history by
+  // a leading "Got it," stays auditable in the timeline.
+  "ack_stripped",
   "turn",
   "call_end",
   "error",

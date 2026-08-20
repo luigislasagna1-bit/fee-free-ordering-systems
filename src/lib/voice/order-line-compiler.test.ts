@@ -14,6 +14,7 @@ import {
   type ItemData,
 } from "./order-line-compiler";
 import { isHalfToppingName } from "@/lib/pizza-topping-pricing";
+import { priceComboPizzaChildren } from "@/lib/combo-child-pricing";
 import type { PizzaConfig } from "@/lib/pizza-config-parse";
 
 /* ─────────────────────────────── fixtures ─────────────────────────────── */
@@ -1442,5 +1443,215 @@ describe("combo — pickSlots and slotLabel routing", () => {
     );
     expect(r.unresolved).toEqual([]);
     expect(r.notices).toEqual(["10pc Wings comes in one size"]);
+  });
+});
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Combo pricing disclosure (Luigi 2026-08-20): the caller must hear the money
+   the route WILL book — slot premiums and, on extrasCharge combos with no
+   shared pool, each pizza child's over-allowance toppings. Pinned against the
+   real charge-path function so the spoken number can't drift from the bill.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+describe("combo pricing disclosure — priceParts", () => {
+  const ALFREDO: ItemData = {
+    menuItemId: "mi_alfredo",
+    name: "Fettuccine Alfredo",
+    price: 14.99,
+    hasVariants: false,
+    variants: [],
+    modifierGroups: [],
+    pizzaConfig: null,
+  };
+  const ROSE: ItemData = {
+    menuItemId: "mi_rose",
+    name: "Fettuccine Rose",
+    price: 14.99,
+    hasVariants: true,
+    variants: [
+      { variantId: "v_r_reg", name: "Regular", price: 14.99, isDefault: true },
+      { variantId: "v_r_lg", name: "Large", price: 18.99 },
+    ],
+    modifierGroups: [],
+    pizzaConfig: null,
+  };
+  const NAPOLI: ItemData = {
+    menuItemId: "mi_napoli",
+    name: "Penne Napoli",
+    price: 11.99,
+    hasVariants: false,
+    variants: [],
+    modifierGroups: [],
+    pizzaConfig: null,
+  };
+  const PREMIUM: ComboData = {
+    menuItemId: "mi_combo_p",
+    name: "XL Pizza / Pasta Combo",
+    price: 49.99,
+    extrasCharge: true,
+    slots: [
+      { id: "s_pz", label: "Pizza", min: 1, max: 1, choices: [PIZZA()] },
+      {
+        id: "s_pa",
+        label: "Pasta",
+        min: 1,
+        max: 1,
+        choices: [ALFREDO, ROSE, NAPOLI],
+        upcharges: { mi_alfredo: 5, mi_rose: 3 },
+        variantUpcharges: { "mi_rose::v_r_lg": 7 },
+      },
+    ],
+  };
+  // Symmetric model: exactly the 3 included toppings ⇒ $0 adjustment.
+  const IN_ALLOWANCE = [{ name: "pepperoni" }, { name: "mushrooms" }, { name: "olives" }];
+  // 5 toppings, 3 included @ $2.50 ⇒ $5.00 over.
+  const OVER = [...IN_ALLOWANCE, { name: "onion" }, { name: "bacon" }];
+
+  it("announces a premium slot pick (item-level upcharge)", () => {
+    const r = compileComboLine(
+      {
+        menuItemId: "mi_combo_p",
+        picks: [{ menuItemId: "mi_pizza", size: "large", toppings: IN_ALLOWANCE }, { menuItemId: "mi_alfredo" }],
+      },
+      PREMIUM,
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.priceParts).toEqual([{ label: "Fettuccine Alfredo", amount: 5, kind: "slot_upcharge" }]);
+    expect(r.surcharge).toEqual({ amount: 5, direction: "extra" });
+    expect(r.pricingNote).toContain("Fettuccine Alfredo +$5.00");
+  });
+
+  it("a variant-key upcharge beats the item-level one and names the size", () => {
+    const r = compileComboLine(
+      {
+        menuItemId: "mi_combo_p",
+        picks: [
+          { menuItemId: "mi_pizza", size: "large", toppings: IN_ALLOWANCE },
+          { menuItemId: "mi_rose", size: "large" },
+        ],
+      },
+      PREMIUM,
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.priceParts).toEqual([{ label: "Large Fettuccine Rose", amount: 7, kind: "slot_upcharge" }]);
+  });
+
+  it("falls back to the item-level upcharge when the landed size has no variant key", () => {
+    const r = compileComboLine(
+      {
+        menuItemId: "mi_combo_p",
+        picks: [
+          { menuItemId: "mi_pizza", size: "large", toppings: IN_ALLOWANCE },
+          { menuItemId: "mi_rose", size: "regular" },
+        ],
+      },
+      PREMIUM,
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.priceParts).toEqual([{ label: "Fettuccine Rose", amount: 3, kind: "slot_upcharge" }]);
+  });
+
+  it("announces a pizza child's over-allowance extras and matches BOTH the standalone engine and the charge path", () => {
+    const r = compileComboLine(
+      {
+        menuItemId: "mi_combo_p",
+        picks: [{ menuItemId: "mi_pizza", size: "large", toppings: OVER }, { menuItemId: "mi_alfredo" }],
+      },
+      PREMIUM,
+    );
+    expect(r.unresolved).toEqual([]);
+    const extras = r.priceParts!.find((p) => p.kind === "child_extras");
+    expect(extras).toEqual({ label: "Build Your Own", amount: 5, kind: "child_extras" });
+
+    // Agreement 1: the standalone pizza engine for the identical build.
+    const standalone = compilePizzaLine({ menuItemId: "mi_pizza", size: "large", toppings: OVER }, PIZZA());
+    expect(standalone.surcharge).toEqual({ amount: 5, direction: "extra" });
+
+    // Agreement 2: the EXACT function /api/orders bills combo pizza children with.
+    const pizzaChild = r.line!.bundleItems!.find((c) => c.menuItemId === "mi_pizza")!;
+    const [priced] = priceComboPizzaChildren({
+      children: [
+        {
+          pizzaConfigRaw: JSON.stringify(pizzaCfg()),
+          variantName: "Large",
+          rawModifiers: pizzaChild.modifiers,
+          candidateGroups: [CRUST, TOPPINGS].map((g) => ({
+            id: g.id,
+            libraryGroupId: null,
+            options: g.options.map((o) => ({ id: o.modifierOptionId, name: o.name, priceAdjustment: o.priceAdjustment })),
+          })),
+        },
+      ],
+      extrasCharge: true,
+    });
+    expect(priced.extrasFee).toBe(extras!.amount);
+
+    // The slot premium rides alongside, and the combined surcharge sums both.
+    expect(r.priceParts).toContainEqual({ label: "Fettuccine Alfredo", amount: 5, kind: "slot_upcharge" });
+    expect(r.surcharge).toEqual({ amount: 10, direction: "extra" });
+  });
+
+  it("stays silent for a standard pick within the allowance", () => {
+    const r = compileComboLine(
+      {
+        menuItemId: "mi_combo_p",
+        picks: [{ menuItemId: "mi_pizza", size: "large", toppings: IN_ALLOWANCE }, { menuItemId: "mi_napoli" }],
+      },
+      PREMIUM,
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.priceParts).toBeUndefined();
+    expect(r.surcharge).toBeNull();
+    expect(r.pricingNote).toBeNull();
+  });
+
+  it("never announces an under-allowance credit (the combo fee is max(0, …) — no credit exists)", () => {
+    const r = compileComboLine(
+      {
+        menuItemId: "mi_combo_p",
+        picks: [
+          { menuItemId: "mi_pizza", size: "large", toppings: [{ name: "pepperoni" }] },
+          { menuItemId: "mi_napoli" },
+        ],
+      },
+      PREMIUM,
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.priceParts).toBeUndefined();
+    expect(r.surcharge).toBeNull();
+  });
+
+  it("extrasCharge=false: topping extras are free (not announced) but the slot premium still is", () => {
+    const FREE_EXTRAS: ComboData = { ...PREMIUM, extrasCharge: false };
+    const r = compileComboLine(
+      {
+        menuItemId: "mi_combo_p",
+        picks: [{ menuItemId: "mi_pizza", size: "large", toppings: OVER }, { menuItemId: "mi_alfredo" }],
+      },
+      FREE_EXTRAS,
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.priceParts).toEqual([{ label: "Fettuccine Alfredo", amount: 5, kind: "slot_upcharge" }]);
+  });
+
+  it("a shared topping pool silences per-child extras (allocation decides; the dryRun quote is the number)", () => {
+    const POOL: ComboData = { ...PREMIUM, sharedToppings: 6 };
+    const r = compileComboLine(
+      {
+        menuItemId: "mi_combo_p",
+        picks: [{ menuItemId: "mi_pizza", size: "large", toppings: OVER }, { menuItemId: "mi_alfredo" }],
+      },
+      POOL,
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.priceParts).toEqual([{ label: "Fettuccine Alfredo", amount: 5, kind: "slot_upcharge" }]);
+  });
+
+  it("suppressPricingNote silences the spoken note but the raw surcharge still flows", () => {
+    const r = compilePizzaLine({ menuItemId: "mi_pizza", size: "large", toppings: OVER }, PIZZA(), {
+      suppressPricingNote: true,
+    });
+    expect(r.pricingNote).toBeNull();
+    expect(r.surcharge).toEqual({ amount: 5, direction: "extra" });
   });
 });

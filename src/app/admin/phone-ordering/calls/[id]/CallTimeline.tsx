@@ -363,14 +363,15 @@ function EventRow({ e, t, interruptedTag }: { e: TimelineEvent; t: T; interrupte
       const toolMs = tools.reduce((a, x) => a + (n(x.ms) ?? 0), 0);
       let inTok = 0;
       let cacheRead = 0;
-      let cacheWrite = 0;
       for (const h of hops) {
+        // hop.tokensIn is already the TOTAL input (uncached + cacheRead +
+        // cacheWrite — see session.ts hopsRecord). The old formula added the
+        // cache counts on top of it, so its mathematical ceiling was 50% and a
+        // fully-cached call read as half-cached (misled the 08-20 debugging).
         inTok += n(h.tokensIn) ?? 0;
         cacheRead += n(h.cacheRead) ?? 0;
-        cacheWrite += n(h.cacheWrite) ?? 0;
       }
-      const denom = inTok + cacheRead + cacheWrite;
-      const cachePct = denom > 0 ? Math.round((cacheRead / denom) * 100) : null;
+      const cachePct = inTok > 0 ? Math.round((cacheRead / inTok) * 100) : null;
       return (
         <div className="text-xs text-gray-600 flex items-center gap-2 flex-wrap">
           <Meta e={e} />
@@ -381,7 +382,7 @@ function EventRow({ e, t, interruptedTag }: { e: TimelineEvent; t: T; interrupte
             </Chip>
           ))}
           <Chip tone="muted">{t("latencyTools", { ms: toolMs })}</Chip>
-          {cachePct != null && <Chip tone={cachePct >= 50 ? "ok" : "warn"}>{t("latencyCache", { pct: cachePct })}</Chip>}
+          {cachePct != null && <Chip tone={cachePct >= 90 ? "ok" : "warn"}>{t("latencyCache", { pct: cachePct })}</Chip>}
           {p.interrupted === true && <Chip tone="warn">{interruptedTag}</Chip>}
         </div>
       );
