@@ -863,10 +863,11 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         removeToppings: input?.removeToppings,
       });
       const out = mutationOut(ctx, r, "added");
-      // Background premium list only while the combo still has open questions —
-      // once a line completes, the compiled pricingNote states the ACTUAL money
-      // and repeating the whole could-cost list would double-speak it.
-      if (r.ok && slots && r.line?.status === "needs_info") {
+      // Background premium list only while the combo still has open questions
+      // AND no compiled pricingNote is on the result — the note states the
+      // ACTUAL money for the picks so far, and the could-cost list next to it
+      // would double-speak the same dollars.
+      if (r.ok && slots && r.line?.status === "needs_info" && !r.pricingNote) {
         const ups = comboUpchargeSummary(ctx, comboId);
         if (ups) out.instruction = `${ups} ${out.instruction}`;
       }
@@ -914,9 +915,10 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       // Pick-time upcharge confirmation (Luigi 2026-08-20): update_line is the
       // hop where slot choices actually land, and the add-time background list
       // never fires here — so a premium pick used to go unannounced. Scoped to
-      // the picks just made; only while the line still has open questions (a
-      // completed line's pricingNote states the real total charge instead).
-      if (r.ok && Array.isArray(changes.picks) && changes.picks.length && r.line?.status === "needs_info") {
+      // the picks just made; only while the line still has open questions and
+      // no compiled pricingNote already states the money (either would
+      // double-speak the same dollars).
+      if (r.ok && Array.isArray(changes.picks) && changes.picks.length && r.line?.status === "needs_info" && !r.pricingNote) {
         const t = cart.resolveTarget({ lineId: r.lineId });
         if ("line" in t && t.line.kind === "combo") {
           const comboMenuItemId = t.line.intent.menuItemId;

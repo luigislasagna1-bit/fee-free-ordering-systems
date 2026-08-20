@@ -1654,4 +1654,29 @@ describe("combo pricing disclosure — priceParts", () => {
     expect(r.pricingNote).toBeNull();
     expect(r.surcharge).toEqual({ amount: 5, direction: "extra" });
   });
+
+  it("a MID-BUILD combo still discloses money for the picks that landed (announce at pick time — live call cmt237qmr)", () => {
+    // The pizza landed with paid extras; the pasta slot is still open.
+    const r = compileComboLine(
+      { menuItemId: "mi_combo_p", picks: [{ menuItemId: "mi_pizza", size: "large", toppings: OVER }] },
+      PREMIUM,
+    );
+    expect(r.line).toBeNull();
+    expect(r.unresolved.length).toBeGreaterThan(0);
+    expect(r.priceParts).toEqual([{ label: "Build Your Own", amount: 5, kind: "child_extras" }]);
+
+    // Only the premium pasta landed; the pizza slot is still open.
+    const p = compileComboLine({ menuItemId: "mi_combo_p", picks: [{ menuItemId: "mi_alfredo" }] }, PREMIUM);
+    expect(p.line).toBeNull();
+    expect(p.unresolved.length).toBeGreaterThan(0);
+    expect(p.priceParts).toEqual([{ label: "Fettuccine Alfredo", amount: 5, kind: "slot_upcharge" }]);
+
+    // Nothing premium landed yet → nothing disclosed mid-build either.
+    const q = compileComboLine(
+      { menuItemId: "mi_combo_p", picks: [{ menuItemId: "mi_pizza", size: "large", toppings: IN_ALLOWANCE }] },
+      PREMIUM,
+    );
+    expect(q.line).toBeNull();
+    expect(q.priceParts).toBeUndefined();
+  });
 });

@@ -36,6 +36,7 @@ import { buildSystemPrompt } from "./prompt";
 import { toolsForConfig } from "./tools";
 import { CONFIG } from "./config";
 import { captureError, createRefractory } from "./observability";
+import { quickHash } from "./versions";
 
 /** Real-call activity per slug — a request within this window refreshed the
  *  1h TTL on read, so the warmer can skip the store. */
@@ -71,34 +72,60 @@ export async function warmStore(
   anthropic: Anthropic,
   slug: string,
   deps: { menu?: typeof api.menu; context?: typeof api.context } = {},
-): Promise<{ outcome: "written" | "refreshed"; tokens: number } | null> {
+): Promise<{ outcome: "written" | "refreshed"; tokens: number; stableHash: string; toolsHash: string } | null> {
   const [menu, context] = await Promise.all([(deps.menu ?? api.menu)(slug), (deps.context ?? api.context)(slug)]);
   const cfg = normalizeAgentConfig(context?.config);
   // returningCaller/callerPhone only shape per-call facts, never the stable
   // block — mirror session.init()'s inputs for everything that does.
   const built = buildSystemPrompt({ menu, context, returningCaller: { found: false }, cfg, callerPhone: null, isDemo: false, isTestOrder: false });
   const tools = toolsForConfig(cfg);
-  const request = (maxTokens: number) =>
-    anthropic.messages.create({
+  const request = (maxTokens: number) => {
+    const params: Record<string, unknown> = {
       model: CONFIG.model,
       max_tokens: maxTokens,
-      thinking: { type: "disabled" },
       system: [{ type: "text", text: built.stable, cache_control: { type: "ephemeral", ttl: CONFIG.cacheTtl } }],
       tools: tools as never,
       messages: [{ role: "user", content: "warmup" }],
-    } as never);
-  let res: { usage?: { cache_creation_input_tokens?: number; cache_read_input_tokens?: number } };
-  try {
-    // max_tokens: 0 is the prefill-only form (nothing sampled, no output
-    // billed). Fall back to 1 token if the model/API rejects the zero.
-    res = (await request(0)) as never;
-  } catch (e) {
-    if (/max_tokens/i.test(String((e as Error)?.message ?? ""))) res = (await request(1)) as never;
-    else throw e;
+    };
+    // Mirror the live turn loop EXACTLY (session.ts runTurnInner). The 22:23
+    // live call proved a disabled-thinking warm writes an entry adaptive calls
+    // do NOT read (turn 1 cache=0% ten minutes after "written 52253") —
+    // whatever the precise invalidation rule, identical params is the cure.
+    if (CONFIG.thinking === "adaptive") {
+      params.thinking = { type: "adaptive" };
+      params.output_config = { effort: CONFIG.effort };
+    } else {
+      params.thinking = { type: "disabled" };
+    }
+    return anthropic.messages.create(params as never);
+  };
+  // max_tokens: 0 is the prefill-only form (nothing sampled, no output
+  // billed). Some param combinations demand a minimum, so step up the ladder
+  // ONLY on max_tokens-shaped rejections — anything else is a real error.
+  type WarmUsage = { usage?: { cache_creation_input_tokens?: number; cache_read_input_tokens?: number } };
+  let res: WarmUsage | null = null;
+  let lastErr: unknown = null;
+  for (const maxTokens of [0, 1, 64]) {
+    try {
+      res = (await request(maxTokens)) as WarmUsage;
+      break;
+    } catch (e) {
+      lastErr = e;
+      if (!/max_tokens/i.test(String((e as Error)?.message ?? ""))) throw e;
+    }
   }
+  if (!res) throw lastErr;
   const wrote = Number(res?.usage?.cache_creation_input_tokens ?? 0);
   const read = Number(res?.usage?.cache_read_input_tokens ?? 0);
-  return { outcome: wrote > 0 ? "written" : "refreshed", tokens: wrote > 0 ? wrote : read };
+  return {
+    outcome: wrote > 0 ? "written" : "refreshed",
+    tokens: wrote > 0 ? wrote : read,
+    // Comparable against the next call's call_start versions: systemStableHash
+    // and toolsVersion. Equal hashes + a turn-1 miss would disprove the
+    // params theory and point at the request shape instead.
+    stableHash: quickHash(built.stable),
+    toolsHash: quickHash(tools),
+  };
 }
 
 async function runCycle(anthropic: Anthropic): Promise<void> {
@@ -117,7 +144,7 @@ async function runCycle(anthropic: Anthropic): Promise<void> {
     try {
       const out = await warmStore(anthropic, slug);
       if (out) {
-        console.log(`[nabil-voice/warm] slug=${slug} ${out.outcome} tokens=${out.tokens} ms=${Date.now() - startedAt}`);
+        console.log(`[nabil-voice/warm] slug=${slug} ${out.outcome} tokens=${out.tokens} stable=${out.stableHash} tools=${out.toolsHash} ms=${Date.now() - startedAt}`);
         // A warm counts as activity: don't re-warm the same store next cycle
         // when nothing else happened — the TTL was just refreshed.
         lastStoreRequestAt.set(slug, Date.now());

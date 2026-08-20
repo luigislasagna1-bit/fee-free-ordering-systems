@@ -1714,6 +1714,11 @@ export function compileComboLine(
       unresolved,
       ...(notices.length ? { notices } : {}),
       ...(pickSlots.length ? { pickSlots } : {}),
+      // Money for the picks that DID land rides along even mid-build, so a
+      // premium/recipe pick is priced the moment it's chosen — not held back
+      // until the last slot fills (live call cmt237qmr, 2026-08-20: the
+      // Philly Steak pick got no "+nine dollars" because pastas were open).
+      ...(priceParts.length ? { priceParts } : {}),
     };
   }
 

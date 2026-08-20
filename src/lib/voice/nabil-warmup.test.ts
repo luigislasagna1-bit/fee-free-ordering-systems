@@ -49,11 +49,13 @@ const deps = { menu: vi.fn(async () => MENU), context: vi.fn(async () => CONTEXT
 beforeEach(() => vi.clearAllMocks());
 
 describe("warmStore", () => {
-  it("sends the identical prefix a real call caches: stable block + 1h marker + the store's tools", async () => {
+  it("sends the identical request a real call caches against: stable block + 1h marker + the store's tools + the LIVE thinking params", async () => {
     const anthropic = fakeAnthropic("ok");
     const out = await warmStore(anthropic as never, "luigis", deps);
 
-    expect(out).toEqual({ outcome: "written", tokens: 41230 });
+    expect(out).toMatchObject({ outcome: "written", tokens: 41230 });
+    expect(typeof out?.stableHash).toBe("string");
+    expect(typeof out?.toolsHash).toBe("string");
     expect(anthropic.calls).toHaveLength(1);
     const p = anthropic.calls[0];
 
@@ -62,10 +64,13 @@ describe("warmStore", () => {
     expect(p.system).toEqual([{ type: "text", text: expected.stable, cache_control: { type: "ephemeral", ttl: "1h" } }]);
     expect(p.tools).toEqual(toolsForConfig(cfg));
     expect(p.max_tokens).toBe(0);
-    expect(p.thinking).toEqual({ type: "disabled" });
+    // MUST mirror session.ts exactly — a disabled-thinking warm wrote an entry
+    // real adaptive calls never read (live call cmt237qmr, 2026-08-20).
+    expect(p.thinking).toEqual({ type: "adaptive" });
+    expect(p.output_config).toEqual({ effort: "low" });
   });
 
-  it("falls back to max_tokens: 1 when the API rejects 0, and reports a cache READ as 'refreshed'", async () => {
+  it("steps the max_tokens ladder (0 → 1) when the API rejects the zero, and reports a cache READ as 'refreshed'", async () => {
     const anthropic = fakeAnthropic("reject-zero");
     anthropic.messages.create.mockImplementationOnce(async (params: any) => {
       anthropic.calls.push(params);
@@ -77,7 +82,7 @@ describe("warmStore", () => {
     });
 
     const out = await warmStore(anthropic as never, "luigis", deps);
-    expect(out).toEqual({ outcome: "refreshed", tokens: 41230 });
+    expect(out).toMatchObject({ outcome: "refreshed", tokens: 41230 });
     expect(anthropic.calls.map((c) => c.max_tokens)).toEqual([0, 1]);
   });
 
