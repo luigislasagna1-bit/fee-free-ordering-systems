@@ -19,6 +19,7 @@ import { agentVersion, hashJson, quickHash, type Versions } from "./versions";
 import { PLAYBOOK_PROTOCOL, PLAYBOOK_STYLE } from "./playbook";
 import { isNarrationLeak } from "./narration-filter";
 import { verbalizeNumbersEn } from "./spoken-numbers";
+import { voicePhrase, voiceFillers } from "./voice-i18n";
 import { captureError } from "./observability";
 
 /** maxCallSeconds timing (contract): wrap-up nudge at T-45s, hangup at T+15s. */
@@ -37,7 +38,6 @@ const INTERRUPT_GRACE_MS = 800;
  *  On 2026-08-15 the old 1.2 s any-turn filler spoke "One moment." on 12 of 17
  *  turns of a call whose plain TTFT was ~1 s. */
 const FILLER_AFTER_TOOL_MS = 1_500;
-const FILLER_PHRASES = ["One moment.", "Just a moment.", "Hang on.", "One sec."];
 /**
  * THINKING filler (call cmsw4s0mz, 2026-08-16): when the model's first hop
  * goes STRAIGHT to a tool (no acknowledgement first — the playbook asks for
@@ -51,7 +51,6 @@ const FILLER_PHRASES = ["One moment.", "Just a moment.", "Hang on.", "One sec."]
  * filler that over-fired was 1.2 s. Test seam: SessionDeps.thinkingFillerMs.
  */
 const THINKING_FILLER_AFTER_MS = 2_500;
-const THINKING_FILLER_PHRASES = ["Sure thing.", "Got it.", "Alright.", "Okay."];
 /**
  * BOOKKEEPING MERGE (latency, Luigi's live call 2026-08-15: 2.9 s of silence
  * after "my name is Sam" because set_fulfilment + set_customer forced a second
@@ -66,6 +65,11 @@ const THINKING_FILLER_PHRASES = ["Sure thing.", "Got it.", "Alright.", "Okay."];
 const MERGEABLE_TOOLS = new Set(["set_customer"]);
 const isMergeableCall = (name: string, input: any): boolean =>
   MERGEABLE_TOOLS.has(name) || (name === "set_fulfilment" && String(input?.type ?? "").toLowerCase() === "pickup" && !input?.street);
+
+/** Bare acknowledgement before a tool call ("Yep.", "Yeah.") — held in the TTS
+ *  buffer and merged with the next sentence so the caller hears one phrase, not
+ *  a choppy one-word utterance followed by silence while the tool runs. */
+const BARE_ACK_RE = /^(ok(ay)?|yes|yeah|yep|sure|alright|right|got it|yup|mhm)\W*$/i;
 
 const SILENT_TURN_RETRY_MS = 1_200;
 /** A tail fragment counts only this soon after the previous reply finished. */
@@ -230,6 +234,11 @@ export class CallSession {
   private narrationDropped = 0;
   /** Digit → words substitutions made before the voice (spoken-numbers.ts). */
   private numbersVerbalized = 0;
+  /** The greeting Nabil spoke at the top of the call (set externally for Media
+   *  Streams; reconstructed from config for ConversationRelay). Used to detect
+   *  speakerphone echo: the ASR picks up the speaker output and sends it as
+   *  caller speech, which the model would answer as a real utterance. */
+  private greetingText = "";
   /** Epoch millis when AI handed the call to a human — billing stops here. */
   private transferredAt: number | null = null;
   private ttfaMsList: number[] = [];
@@ -276,6 +285,19 @@ export class CallSession {
     };
   }
 
+  /** Called by the server layer (Media Streams) to store the greeting Nabil
+   *  spoke, so echo detection works against the exact text. Also seeds
+   *  lastSpokenText so the stale-interrupt detector recognises a greeting echo
+   *  interrupt as stale (the greeting wasn't spoken through the session's TTS
+   *  path, so lastSpokenText would otherwise be empty). */
+  setGreeting(text: string) {
+    const t = (text || "").trim();
+    if (t) {
+      this.greetingText = t;
+      this.lastSpokenText = t;
+    }
+  }
+
   /** Test/sim accessor: the authoritative cart. */
   debugCart(): CartEngine {
     return this.ctx.cart;
@@ -303,6 +325,16 @@ export class CallSession {
         if (msg.lang) this.language = msg.lang;
         this.lastPromptAt = this.now();
         if (text) {
+          // GREETING ECHO GUARD (call cmsw33f3l, 2026-08-16): on speakerphone
+          // the ASR picks up Nabil's own greeting from the speaker and sends it
+          // as caller speech. Drop it before it reaches the model — a greeting
+          // echo is never a real utterance (nobody calls a restaurant and says
+          // "Thanks for calling Luigi's"). Only the first prompt can be an echo;
+          // after the caller has spoken once, the ASR is locked on their voice.
+          if (this.userTurns === 0 && this.isGreetingEcho(text)) {
+            this.events.emit({ type: "greeting_echo_dropped", turn: this.turnIndex, text });
+            break;
+          }
           clearTimeout(this.resumeTimer);
           this.resumeTimer = undefined;
           clearTimeout(this.silentTurnTimer);
@@ -676,7 +708,8 @@ export class CallSession {
       this.thinkingFillerTimer = setTimeout(() => {
         this.thinkingFillerTimer = undefined;
         if (spokeAnything || fillerUsed || this.interrupted || this.now() < this.protectedUntil) return;
-        const phrase = THINKING_FILLER_PHRASES[(this.fillerCount + turn) % THINKING_FILLER_PHRASES.length];
+        const thinkPhrases = voiceFillers(this.language ?? this.token.lang, "thinkingFillers");
+        const phrase = thinkPhrases[(this.fillerCount + turn) % thinkPhrases.length];
         this.lastFillerPhrase = phrase;
         this.fillerCount++;
         fillerUsed = { phrase, afterMs: this.now() - armedAt };
@@ -692,7 +725,8 @@ export class CallSession {
         // No "let me check that" while merely saving a name or "pickup" — the
         // caller heard exactly that on 2026-08-15 and asked "what happened?".
         if (fillerUsed || this.interrupted || this.now() < this.protectedUntil || toolName === "transfer_to_human" || toolName === "set_customer" || toolName === "set_fulfilment") return;
-        const phrase = FILLER_PHRASES.filter((p) => p !== this.lastFillerPhrase)[(this.fillerCount + turn) % (FILLER_PHRASES.length - 1)] ?? FILLER_PHRASES[0];
+        const toolPhrases = voiceFillers(this.language ?? this.token.lang, "fillers");
+        const phrase = toolPhrases.filter((p) => p !== this.lastFillerPhrase)[(this.fillerCount + turn) % (toolPhrases.length - 1)] ?? toolPhrases[0];
         this.lastFillerPhrase = phrase;
         this.fillerCount++;
         fillerUsed = { phrase, afterMs: this.now() - armedAt };
@@ -773,11 +807,11 @@ export class CallSession {
         this.events.emit({ type: "error", turn, where: "model", message: `${status || "stream"}: ${String((e as Error)?.message ?? e).slice(0, 200)}` });
         if (unrecoverable || this.streamFailures >= 2) {
           this.ctx.pendingTransfer = `voice service error${status ? ` (${status})` : ""}`;
-          this.speak(" I'm really sorry — I'm having trouble on my end, not with anything you said. Let me put you through to someone.", true);
+          this.speak(` ${voicePhrase(this.language ?? this.token.lang, "errorTransfer")}`, true);
           this.endTransfer(this.ctx.pendingTransfer);
           return;
         }
-        this.speak(" Sorry — that dropped on my end. Go ahead.", true);
+        this.speak(` ${voicePhrase(this.language ?? this.token.lang, "errorDropped")}`, true);
         return;
       }
       this.controller = null;
@@ -812,7 +846,7 @@ export class CallSession {
         this.truncations++;
         console.warn("[nabil-voice] max_tokens truncation", { callSid: this.token.callSid, hop: hops, continuation: continuations, spokenChars: assistantText.length });
         if (continuations > MAX_CONTINUATIONS) {
-          this.sendText(" — sorry, let me start that again.", true);
+          this.sendText(` ${voicePhrase(this.language ?? this.token.lang, "errorRestart")}`, true);
           break;
         }
         hops--;
@@ -1008,7 +1042,7 @@ export class CallSession {
     this.protectedText = "";
     this.bargedDuringProtected = false;
     if (barged && text) {
-      this.speak(` Sorry — let me say that again. ${text}`, false);
+      this.speak(` ${voicePhrase(this.language ?? this.token.lang, "errorRepeat")} ${text}`, false);
       this.transcript.push({ role: "assistant", text: `(repeated after barge-in) ${text}`, ts: new Date(this.now()).toISOString(), turn: this.turnIndex });
       this.events.emit({ type: "protected_respoken", turn: this.turnIndex, text });
     }
@@ -1129,8 +1163,15 @@ export class CallSession {
       if (!last) {
         const m = /^([\s\S]*?[.!?…]["')]?(?=\s|$))([\s\S]*)$/.exec(this.ttsBuffer);
         if (m && m[1].trim()) {
-          this.ttsBuffer = m[2];
-          this.speakClause(m[1], false);
+          // Bare filler hold: "Yep." or "Yeah." before a tool call sounds
+          // robotic when spoken alone. Replace its period with a comma so it
+          // merges with the next sentence: "Yep, got it, pickup it is."
+          if (BARE_ACK_RE.test(m[1].trim())) {
+            this.ttsBuffer = m[1].trim().replace(/[.!]$/, ", ") + m[2];
+          } else {
+            this.ttsBuffer = m[2];
+            this.speakClause(m[1], false);
+          }
         } else if (this.ttsBuffer.length >= 140) {
           // Long clause: cut at a point that doesn't split a number, so
           // "647-669-0808" is never half in one chunk and half in the next.
@@ -1183,6 +1224,27 @@ export class CallSession {
     return zoneStart;
   }
 
+  /** True when the caller's first utterance is Nabil's own greeting echoing
+   *  back from a speakerphone. Exact prefix match when the greeting text is
+   *  known; pattern fallback for standard openers otherwise. */
+  private isGreetingEcho(text: string): boolean {
+    const normWords = (s: string) =>
+      s.toLowerCase().replace(/[^a-z0-9\s]/g, "").split(/\s+/).filter(Boolean);
+    if (this.greetingText) {
+      const pw = normWords(text);
+      const gw = normWords(this.greetingText);
+      if (pw.length >= 3) {
+        let match = true;
+        for (let i = 0; i < pw.length && i < gw.length; i++) {
+          if (pw[i] !== gw[i]) { match = false; break; }
+        }
+        if (match && pw.length <= gw.length) return true;
+      }
+    }
+    const t = text.trim();
+    return /^this call may be recorded/i.test(t) || /^than(?:k you|ks) for calling\b/i.test(t);
+  }
+
   /**
    * The spoken form of text about to reach the voice: numbers as words on an
    * English call (spoken-numbers.ts); untouched otherwise. `silent` = a
@@ -1203,9 +1265,16 @@ export class CallSession {
   /** Sentence-chunk mode: forward a complete clause unless it is narration. */
   private speakClause(clause: string, last: boolean) {
     if (clause.trim() && isNarrationLeak(clause)) {
+      // Rescue a bare-ack filler ("Sure,") that was comma-merged into this
+      // narration clause — without this the caller hears silence.
+      const ci = clause.indexOf(", ");
+      if (ci > 0 && BARE_ACK_RE.test(clause.slice(0, ci).trim() + ".")) {
+        this.wsSendText(this.spokenForm(clause.slice(0, ci).trim() + "."), last);
+      } else if (last) {
+        this.wsSendText("", true);
+      }
       this.narrationDropped++;
       this.events.emit({ type: "narration_dropped", turn: this.turnIndex, text: clause.trim().slice(0, 300) });
-      if (last) this.wsSendText("", true);
       return;
     }
     this.wsSendText(this.spokenForm(clause), last);
@@ -1249,7 +1318,7 @@ export class CallSession {
     this.interrupted = true;
     this.controller?.abort();
     this.ctx.pendingTransfer = reason;
-    this.speak(" Sorry — one moment, I'm putting you through to the restaurant.", true);
+    this.speak(` ${voicePhrase(this.language ?? this.token.lang, "transferHold")}`, true);
     this.endTransfer(reason);
     // finalize() flips `finalized` first thing, so the onClose() that follows
     // Twilio tearing down the socket is a no-op rather than a second write.

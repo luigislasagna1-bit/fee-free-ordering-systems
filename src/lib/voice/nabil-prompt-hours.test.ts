@@ -75,7 +75,7 @@ describe("closed-hours + scheduling rules", () => {
     expect(withSms).toContain("prepared as soon as the kitchen is next open");
     expect(withSms).toContain("send_sms_link order_online");
 
-    const noSched = build(CLOSED_CONTEXT, { allowScheduledOrders: false });
+    const noSched = build(CLOSED_CONTEXT, { allowScheduledOrders: false, allowPizzaCombo: true });
     expect(noSched).toContain("a SPECIFIC later time or day can't be set by phone");
     expect(noSched).toContain("offer to take the order now instead");
     expect(noSched).not.toContain("send_sms_link order_online");
