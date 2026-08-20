@@ -2149,6 +2149,7 @@
       "pastDueExplainer": "このアドオンを有効に保つには、カード情報を更新するか、決済を再試行してください。",
       "payNow": "今すぐ支払う",
       "cancelInstead": "代わりにこのアドオンを解約する",
+      "paymentSuccess": "支払いが完了しました！アドオンを有効化しています…",
       "includedNoteUnlimited": "他の有料アドオンにすでに注文数無制限が含まれています — こちらは不要です。",
       "comingSoonBadge": "近日公開",
       "inDevelopmentPricing": "開発中 · 料金は未定",

@@ -2149,6 +2149,7 @@
       "pastDueExplainer": "Opdater dit kort eller prøv betalingen igen for at holde denne tilføjelse aktiv.",
       "payNow": "Betal nu",
       "cancelInstead": "Annuller denne tilføjelse i stedet",
+      "paymentSuccess": "Betaling gennemført! Din tilføjelse aktiveres nu…",
       "includedNoteUnlimited": "Dit andet betalte tilvalg inkluderer allerede ubegrænsede ordrer — du behøver ikke dette.",
       "comingSoonBadge": "Kommer snart",
       "inDevelopmentPricing": "Under udvikling · pris TBD",

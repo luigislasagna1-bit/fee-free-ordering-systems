@@ -2054,6 +2054,7 @@
       "pastDueExplainer": "Atnaujinkite kortelę arba pakartokite mokėjimą, kad šis priedas liktų aktyvus.",
       "payNow": "Mokėti dabar",
       "cancelInstead": "Atšaukite šį priedą",
+      "paymentSuccess": "Mokėjimas sėkmingas! Jūsų priedas aktyvuojamas…",
       "includedNoteUnlimited": "Kitas jūsų mokamas papildinys jau apima neribotus užsakymus — šio jums nereikia.",
       "comingSoonBadge": "Netrukus",
       "inDevelopmentPricing": "Kuriama · kaina bus nustatyta",

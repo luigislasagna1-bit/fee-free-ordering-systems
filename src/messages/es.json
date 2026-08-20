@@ -2149,6 +2149,7 @@
       "pastDueExplainer": "Actualice su tarjeta o reintente el pago para mantener este complemento activo.",
       "payNow": "Pagar ahora",
       "cancelInstead": "Cancelar este complemento en su lugar",
+      "paymentSuccess": "¡Pago exitoso! Activando tu add-on ahora…",
       "includedNoteUnlimited": "Tu otro complemento de pago ya incluye pedidos ilimitados — no necesitas este.",
       "comingSoonBadge": "Próximamente",
       "inDevelopmentPricing": "En desarrollo · precio por determinar",

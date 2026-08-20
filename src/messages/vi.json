@@ -2149,6 +2149,7 @@
       "pastDueExplainer": "Cập nhật thẻ hoặc thử lại thanh toán để giữ tiện ích bổ sung này hoạt động.",
       "payNow": "Thanh toán ngay",
       "cancelInstead": "Hủy tiện ích bổ sung này",
+      "paymentSuccess": "Thanh toán thành công! Đang kích hoạt tiện ích bổ sung của bạn…",
       "includedNoteUnlimited": "Tiện ích trả phí khác của bạn đã bao gồm đơn không giới hạn — bạn không cần cái này.",
       "comingSoonBadge": "Sắp ra mắt",
       "inDevelopmentPricing": "Đang phát triển · giá sẽ công bố sau",

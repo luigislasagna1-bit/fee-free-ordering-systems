@@ -2149,6 +2149,7 @@
       "pastDueExplainer": "Posodobite kartico ali ponovite plačilo, da bo ta dodatek ostal aktiven.",
       "payNow": "Plačaj zdaj",
       "cancelInstead": "Prekličite ta dodatek",
+      "paymentSuccess": "Plačilo uspešno! Aktivacija dodatka poteka…",
       "includedNoteUnlimited": "Vaš drugi plačljivi dodatek že vključuje neomejena naročila — tega ne potrebujete.",
       "comingSoonBadge": "Kmalu na voljo",
       "inDevelopmentPricing": "V razvoju · cena bo določena",

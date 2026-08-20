@@ -2149,6 +2149,7 @@
       "pastDueExplainer": "Bu eklentiyi aktif tutmak için kartınızı güncelleyin veya ödemeyi tekrar deneyin.",
       "payNow": "Şimdi öde",
       "cancelInstead": "Bunun yerine bu eklentiyi iptal edin",
+      "paymentSuccess": "Ödeme başarılı! Eklentiniz şimdi etkinleştiriliyor…",
       "includedNoteUnlimited": "Diğer ücretli eklentiniz zaten sınırsız sipariş içeriyor — buna ihtiyacınız yok.",
       "comingSoonBadge": "Çok Yakında",
       "inDevelopmentPricing": "Geliştirme aşamasında · fiyat belirleniyor",

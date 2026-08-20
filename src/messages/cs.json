@@ -2149,6 +2149,7 @@
       "pastDueExplainer": "Aktualizujte kartu nebo opakujte platbu, aby tento doplněk zůstal aktivní.",
       "payNow": "Zaplatit",
       "cancelInstead": "Zrušit tento doplněk",
+      "paymentSuccess": "Platba úspěšná! Aktivace doplňku probíhá…",
       "includedNoteUnlimited": "Váš jiný placený doplněk již zahrnuje neomezené objednávky — tento nepotřebujete.",
       "comingSoonBadge": "Připravujeme",
       "inDevelopmentPricing": "Ve vývoji · cena bude stanovena",

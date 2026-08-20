@@ -2149,6 +2149,7 @@
       "pastDueExplainer": "Frissítse kártyáját vagy próbálja újra a fizetést, hogy ez a kiegészítő aktív maradjon.",
       "payNow": "Fizetés most",
       "cancelInstead": "Ehelyett törölje ezt a kiegészítőt",
+      "paymentSuccess": "Fizetés sikeres! A kiegészítő aktiválása folyamatban…",
       "includedNoteUnlimited": "A másik fizetős bővítménye már tartalmaz korlátlan rendelést — erre nincs szüksége.",
       "comingSoonBadge": "Hamarosan",
       "inDevelopmentPricing": "Fejlesztés alatt · az ár még nem meghatározott",

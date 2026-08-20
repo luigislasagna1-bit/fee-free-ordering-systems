@@ -2149,6 +2149,7 @@
       "pastDueExplainer": "Zaktualizuj kartę lub ponów płatność, aby utrzymać ten dodatek aktywnym.",
       "payNow": "Zapłać teraz",
       "cancelInstead": "Anuluj ten dodatek",
+      "paymentSuccess": "Płatność powiodła się! Aktywacja dodatku w toku…",
       "includedNoteUnlimited": "Twój inny płatny dodatek już obejmuje nieograniczone zamówienia — ten nie jest potrzebny.",
       "comingSoonBadge": "Wkrótce dostępne",
       "inDevelopmentPricing": "W przygotowaniu · cena do ustalenia",

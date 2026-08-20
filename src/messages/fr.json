@@ -2149,6 +2149,7 @@
       "pastDueExplainer": "Mettez à jour votre carte ou relancez le paiement pour garder ce module actif.",
       "payNow": "Payer maintenant",
       "cancelInstead": "Annuler ce module à la place",
+      "paymentSuccess": "Paiement réussi ! Activation de votre add-on en cours…",
       "includedNoteUnlimited": "Votre autre module payant inclut déjà les commandes illimitées — celui-ci n'est pas nécessaire.",
       "comingSoonBadge": "Bientôt disponible",
       "inDevelopmentPricing": "En développement · tarif à définir",

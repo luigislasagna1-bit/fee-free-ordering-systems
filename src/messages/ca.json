@@ -2149,6 +2149,7 @@
       "pastDueExplainer": "Actualitzeu la targeta o torneu a provar el pagament per mantenir aquest complement actiu.",
       "payNow": "Paga ara",
       "cancelInstead": "Anul·leu aquest complement",
+      "paymentSuccess": "Pagament correcte! S’està activant el vostre complement…",
       "includedNoteUnlimited": "El vostre altre complement de pagament ja inclou comandes il·limitades — no necessiteu aquest.",
       "comingSoonBadge": "Properament",
       "inDevelopmentPricing": "En desenvolupament · preu per determinar",

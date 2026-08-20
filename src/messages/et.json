@@ -2149,6 +2149,7 @@
       "pastDueExplainer": "Uuendage oma kaarti või proovige makset uuesti, et see lisand aktiivsena hoida.",
       "payNow": "Maksa kohe",
       "cancelInstead": "Tühistage see lisand",
+      "paymentSuccess": "Makse õnnestus! Teie lisandi aktiveerimine on käimas…",
       "includedNoteUnlimited": "Sinu teine tasuline lisa sisaldab juba piiramatu arvu tellimusi — seda pole vaja.",
       "comingSoonBadge": "Tuleb peatselt",
       "inDevelopmentPricing": "Arenduses · hind täpsustub",

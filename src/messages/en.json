@@ -2598,6 +2598,7 @@
       "pastDueExplainer": "Update your card or retry the payment to keep this add-on active.",
       "payNow": "Pay Now",
       "cancelInstead": "Cancel this add-on instead",
+      "paymentSuccess": "Payment successful! Activating your add-on now…",
       "includedNoteUnlimited": "Your other paid add-on already includes unlimited orders — you don't need this one.",
       "comingSoonBadge": "Coming Soon",
       "inDevelopmentPricing": "In development · pricing TBD",

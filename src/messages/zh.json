@@ -2149,6 +2149,7 @@
       "pastDueExplainer": "请更新您的银行卡或重试付款，以保持此附加组件处于活跃状态。",
       "payNow": "立即支付",
       "cancelInstead": "改为取消此附加组件",
+      "paymentSuccess": "支付成功！正在为您激活附加组件…",
       "includedNoteUnlimited": "您的其他付费附加功能已含无限订单，无需订阅此项。",
       "comingSoonBadge": "即将推出",
       "inDevelopmentPricing": "开发中 · 定价待定",

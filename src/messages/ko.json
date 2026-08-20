@@ -2149,6 +2149,7 @@
       "pastDueExplainer": "이 애드온을 활성 상태로 유지하려면 카드를 업데이트하거나 결제를 다시 시도하세요.",
       "payNow": "지금 결제",
       "cancelInstead": "이 애드온을 대신 취소",
+      "paymentSuccess": "결제 성공! 애드온을 활성화하는 중…",
       "includedNoteUnlimited": "다른 유료 추가 기능에 이미 무제한 주문이 포함되어 있습니다 — 이 기능이 필요하지 않습니다.",
       "comingSoonBadge": "출시 예정",
       "inDevelopmentPricing": "개발 중 · 가격 미정",

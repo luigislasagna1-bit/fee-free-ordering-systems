@@ -72,6 +72,7 @@ export function AddOnsClient({
   const tCatalog = useTranslations("addOnCatalog");
   const [pendingSlug, setPendingSlug] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [paidSlug, setPaidSlug] = useState<string | null>(null);
   // Slug currently in the cancel-confirmation modal. Replaces the old
   // window.confirm() which had no "Don't cancel" + no visible date.
   const [cancelConfirm, setCancelConfirm] = useState<AddOnView | null>(null);
@@ -92,8 +93,9 @@ export function AddOnsClient({
         return;
       }
       if (data.paid) {
-        router.refresh();
+        setPaidSlug(slug);
         setPendingSlug(null);
+        setTimeout(() => router.refresh(), 3000);
         return;
       }
       if (data.url) {
@@ -304,7 +306,12 @@ export function AddOnsClient({
               )}
 
               <div className="mt-4 pt-4 border-t border-gray-100">
-                {pastDue ? (
+                {paidSlug === a.slug ? (
+                  <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-3 text-sm text-emerald-800 flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+                    <span className="font-semibold">{t("paymentSuccess")}</span>
+                  </div>
+                ) : pastDue ? (
                   <div className="space-y-3">
                     <div className="rounded-lg bg-rose-50 border border-rose-200 px-3 py-2.5 text-sm">
                       <div className="font-semibold text-rose-900 flex items-center gap-1.5">

@@ -2149,6 +2149,7 @@
       "pastDueExplainer": "Päivitä korttisi tai yritä maksua uudelleen pitääksesi tämän lisäosan aktiivisena.",
       "payNow": "Maksa nyt",
       "cancelInstead": "Peruuta tämä lisäosa sen sijaan",
+      "paymentSuccess": "Maksu onnistui! Lisäosaasi aktivoidaan nyt…",
       "includedNoteUnlimited": "Toinen maksullinen lisäominaisuutesi sisältää jo rajattomat tilaukset — et tarvitse tätä.",
       "comingSoonBadge": "Tulossa pian",
       "inDevelopmentPricing": "Kehitteillä · hinnoittelu ilmoitetaan",

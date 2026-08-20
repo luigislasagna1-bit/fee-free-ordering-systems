@@ -2149,6 +2149,7 @@
       "pastDueExplainer": "Oppdater kortet ditt eller prøv betalingen på nytt for å beholde dette tillegget aktivt.",
       "payNow": "Betal nå",
       "cancelInstead": "Avbryt dette tillegget i stedet",
+      "paymentSuccess": "Betaling vellykket! Tillegget ditt aktiveres nå…",
       "includedNoteUnlimited": "Det andre betalte tillegget ditt inkluderer allerede ubegrenset bestillinger — du trenger ikke dette.",
       "comingSoonBadge": "Kommer snart",
       "inDevelopmentPricing": "Under utvikling · pris ikke fastsatt",

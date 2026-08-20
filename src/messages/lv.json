@@ -2054,6 +2054,7 @@
       "pastDueExplainer": "Atjauniniet savu karti vai mēģiniet maksājumu vēlreiz, lai šis papildinājums paliktu aktīvs.",
       "payNow": "Maksāt tagad",
       "cancelInstead": "Atceliet šo papildinājumu",
+      "paymentSuccess": "Maksājums veiksmīgs! Jūsu papildinājums tiek aktivizēts…",
       "includedNoteUnlimited": "Jūsu cits maksas papildinājums jau ietver neierobežotus pasūtījumus — šis nav nepieciešams.",
       "comingSoonBadge": "Drīzumā",
       "inDevelopmentPricing": "Izstrādē · cena tiks paziņota",
