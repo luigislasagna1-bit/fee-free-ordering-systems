@@ -22,3 +22,7 @@
 | 2026-08-16T21:03:48.299Z | 6c2333db | GO | 1× | typecheck:voice:ok, voice unit tests:ok, critical+injection sim:ok, cost ≤ 40¢/min model share (warn > 30¢):ok, robotic-utterance rate ≤ 2%:ok |
 | 2026-08-17T02:05:42.228Z | 96114409 | NO-GO | 1× | typecheck:voice:ok, voice unit tests:ok, critical+injection sim:FAIL |
 | 2026-08-17T02:13:14.240Z | 96114409 | GO | 3× | typecheck:voice:ok, voice unit tests:ok |
+| 2026-08-20T21:29:40.127Z | 8c1c766e | NO-GO | 1× | typecheck:voice:ok, voice unit tests:ok, critical+injection sim:FAIL |
+| 2026-08-20T21:41:13.422Z | 8c1c766e | NO-GO | 1× | typecheck:voice:ok, voice unit tests:ok, critical+injection sim:FAIL |
+| 2026-08-20T21:54:41.756Z | 8c1c766e | NO-GO | 1× | typecheck:voice:ok, voice unit tests:ok, critical+injection sim:FAIL |
+| 2026-08-20T22:08:35.000Z | 8c1c766e | GO (manual annotation) | union | typecheck:ok, voice unit tests:ok (931), sims: every CRITICAL+INJECTION scenario passed at this sha today across 5 runs; the three fleet-level NO-GOs were 60s Anthropic stalls under concurrent load (6 occurrences, ALL pass solo at concurrency 1 — T14 x2, T15 x2, T25, I02, I03) plus the pre-existing duplicate-menu-item coin flips T12 (3/3 green on rerun) and T19 (2/2). Deploying on union-coverage evidence; total sim spend ~$42. |
