@@ -547,7 +547,7 @@ function mutationOut(ctx: ToolContext, r: MutationResult, verb: "added" | "chang
   };
 }
 
-export type RawSlot = { label: string; min: number; max: number; choices: Array<{ name: string; menuItemId: string; sizes?: string[] }> };
+export type RawSlot = { id?: string; label: string; min: number; max: number; choices: Array<{ name: string; menuItemId: string; sizes?: string[] }> };
 
 /**
  * A combo's slots (from the same item-options lookup get_item_options uses),
@@ -563,6 +563,7 @@ async function comboSlotsFor(ctx: ToolContext, comboId: string): Promise<RawSlot
     const raw = res?.combo?.slots;
     if (Array.isArray(raw)) {
       slots = raw.map((sl: any) => ({
+        id: String(sl?.id ?? ""),
         label: String(sl?.label ?? ""),
         min: Number(sl?.min ?? 0) || 0,
         max: Number(sl?.max ?? 0) || 0,
@@ -610,6 +611,56 @@ function comboUpchargeSummary(ctx: ToolContext, comboId: string): string | null 
   // scope disclosure to whichever ONE slot is being asked about right now,
   // and forbid reciting the whole list at once (Luigi call review, 08-20).
   return `Background only, do NOT recite this list: some choices in this combo cost extra — ${parts.join(", ")}. As you ask about EACH slot in turn, mention the SPECIFIC extra cost naturally ONLY if that slot's choice is one of these — never all at once, never before the caller has been asked anything.`;
+}
+
+/**
+ * The pick-time variant of comboUpchargeSummary (Luigi 2026-08-20: "announce
+ * those specific add-ons as extra IF chosen"): scoped to the picks the caller
+ * just made in update_line, so the reminder lands on the exact hop where the
+ * premium choice happens. Upcharges are keyed by item; the slot only
+ * namespaces them (and first-fit can land a pick in a different slot than the
+ * one it named), so matching is primarily by menuItemId, narrowed to one
+ * slot's entries when the pick's slotLabel maps cleanly to a slot id. Returns
+ * null when nothing premium was picked; falls back to the full summary when
+ * the picks can't be matched (pickId-only edits).
+ */
+export function comboUpchargeSummaryScoped(ctx: ToolContext, comboId: string, picks: unknown[], slots: RawSlot[] | null): string | null {
+  const upcharges = ctx.comboUpchargeCache?.get(comboId) as
+    | Record<string, { items?: Record<string, number>; variants?: Record<string, number> }>
+    | undefined;
+  if (!upcharges || typeof upcharges !== "object") return null;
+  const labelToId = new Map<string, string>();
+  for (const sl of slots ?? []) if (sl.id) labelToId.set(normLabel(sl.label), sl.id);
+
+  const parts: string[] = [];
+  const seen = new Set<string>();
+  let pickIdOnly = false;
+  for (const raw of picks) {
+    const p = raw as { menuItemId?: unknown; slotLabel?: unknown; pickId?: unknown } | null;
+    const itemId = typeof p?.menuItemId === "string" && p.menuItemId ? p.menuItemId : null;
+    if (!itemId) {
+      if (p?.pickId) pickIdOnly = true;
+      continue;
+    }
+    const slotId = typeof p?.slotLabel === "string" ? labelToId.get(normLabel(p.slotLabel)) : undefined;
+    const entries = slotId && upcharges[slotId] ? [upcharges[slotId]] : Object.values(upcharges);
+    const name = ctx.menu.get(itemId)?.name;
+    if (!name) continue;
+    for (const info of entries) {
+      const itemUp = info.items?.[itemId];
+      if (typeof itemUp === "number" && itemUp > 0 && !seen.has(`i|${itemId}`)) {
+        seen.add(`i|${itemId}`);
+        parts.push(`${name} (+${money(itemUp, ctx.currency)})`);
+      }
+      for (const [key, amount] of Object.entries(info.variants ?? {})) {
+        if (!key.startsWith(`${itemId}::`) || !(amount > 0) || seen.has(`v|${key}`)) continue;
+        seen.add(`v|${key}`);
+        parts.push(`${name} size upgrade (+${money(amount, ctx.currency)})`);
+      }
+    }
+  }
+  if (!parts.length) return pickIdOnly ? comboUpchargeSummary(ctx, comboId) : null;
+  return `The caller just chose a PREMIUM pick — confirm the choice and the extra cost in the same breath, naturally: ${parts.slice(0, 3).join(", ")}.`;
 }
 
 const normLabel = (s: unknown) => String(s ?? "").toLowerCase().replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
@@ -744,11 +795,24 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
                       const vUp = upInfo?.variants?.[vKey];
                       return vUp ? `${v.name} (+${money(vUp, ctx.currency)} upgrade)` : v.name;
                     });
+                    // A pizza slot child is a FULL pizza, not a fixed picture:
+                    // without this note the model concluded "one-topping pizza,
+                    // can't build a Philly Steak here" (call cmt1xfh2e, 08-20)
+                    // even though extra toppings and whole recipes compile and
+                    // price fine. Compact on purpose — this payload lands in
+                    // the conversation for every slot choice.
+                    const pc = c.pizzaConfig;
+                    const pizzaNote = pc
+                      ? `${Number(pc.includedToppings ?? 0)} topping${Number(pc.includedToppings ?? 0) === 1 ? "" : "s"} included; extras ${
+                          Number(pc.extraToppingPrice) > 0 ? `+${money(Number(pc.extraToppingPrice), ctx.currency)} each` : "allowed"
+                        }; any menu pizza buildable as a recipe`
+                      : null;
                     return {
                       name: c.name,
                       menuItemId: c.menuItemId,
                       ...(itemUp ? { upgrade: `+${money(itemUp, ctx.currency)}` } : {}),
                       ...(sizes.length ? { sizes } : {}),
+                      ...(pizzaNote ? { pizza: pizzaNote } : {}),
                     };
                   }),
                   ...(s.choices.length > MAX_SLOT_CHOICES || s.choicesTruncated ? { truncated: Math.max(0, s.choices.length - MAX_SLOT_CHOICES) || true } : {}),
@@ -759,7 +823,8 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         instruction:
           "Offer these in natural speech — a couple of options at a time, never a long list. A 'truncated' count means the list goes on: never tell a caller something isn't offered just because it isn't in a truncated list; ask add_to_order and let the server decide. " +
           "For a combo, pass each slot pick's menuItemId to add_to_order EXACTLY as given here, with its slotLabel. If sharedToppings is a number, the combo's pizzas SHARE that many toppings — any split is fine at no extra cost. " +
-          "A choice or size marked with an upgrade cost is a PREMIUM pick — say the amount naturally when offering it ('the large Fettuccine Alfredo is five dollars more' or 'that one's an upgrade'). Never hide the extra cost; always mention it BEFORE the caller commits.",
+          "A slot choice carrying a 'pizza' note is a full pizza: it takes extra toppings beyond the included count AND any menu pizza as a recipe (send halfRecipes with placement 'whole' on that pick) — never refuse a recipe because the slot is a one-topping pizza; the extras are simply charged, and the result's pricingNote gives you the amount to say. " +
+          "A choice or size marked with an upgrade cost is a PREMIUM pick — say the amount naturally when offering it ('the large Fettuccine Alfredo is five dollars more' or 'that one's an upgrade'), and the moment the caller picks it, confirm the amount in the same breath. Never hide the extra cost; always mention it BEFORE the caller commits.",
       };
       ctx.itemOptionsCache.set(wantedId, out);
       return out;
@@ -798,7 +863,10 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         removeToppings: input?.removeToppings,
       });
       const out = mutationOut(ctx, r, "added");
-      if (r.ok && slots) {
+      // Background premium list only while the combo still has open questions —
+      // once a line completes, the compiled pricingNote states the ACTUAL money
+      // and repeating the whole could-cost list would double-speak it.
+      if (r.ok && slots && r.line?.status === "needs_info") {
         const ups = comboUpchargeSummary(ctx, comboId);
         if (ups) out.instruction = `${ups} ${out.instruction}`;
       }
@@ -842,7 +910,22 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         }
       }
       const r = await cart.updateLine({ lineId, hint: sanitizeHint(hint, ctx.lastUserText) }, changes);
-      return mutationOut(ctx, r, "changed");
+      const out = mutationOut(ctx, r, "changed");
+      // Pick-time upcharge confirmation (Luigi 2026-08-20): update_line is the
+      // hop where slot choices actually land, and the add-time background list
+      // never fires here — so a premium pick used to go unannounced. Scoped to
+      // the picks just made; only while the line still has open questions (a
+      // completed line's pricingNote states the real total charge instead).
+      if (r.ok && Array.isArray(changes.picks) && changes.picks.length && r.line?.status === "needs_info") {
+        const t = cart.resolveTarget({ lineId: r.lineId });
+        if ("line" in t && t.line.kind === "combo") {
+          const comboMenuItemId = t.line.intent.menuItemId;
+          const slots = await comboSlotsFor(ctx, comboMenuItemId);
+          const ups = comboUpchargeSummaryScoped(ctx, comboMenuItemId, changes.picks, slots);
+          if (ups) out.instruction = `${ups} ${out.instruction}`;
+        }
+      }
+      return out;
     }
 
     case "remove_line": {

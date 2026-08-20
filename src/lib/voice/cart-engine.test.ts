@@ -612,4 +612,57 @@ describe("the SPOKEN layer (Luigi's live call 2026-08-15)", () => {
     expect(r.ok && r.speakExactly).toBe("1× Coke");
     expect(e.spokenOrder()).toBe("So that's 1× Coke.");
   });
+
+  it("a combo's priceParts own the spoken note — slot premium + pizza extras phrased apart, never lumped as 'extra toppings'", async () => {
+    const partsCompiler = (): Compiler => ({
+      async compile(req): Promise<CompileResponse> {
+        const it: any = req.intent;
+        return {
+          ok: true,
+          line: { menuItemId: it.menuItemId, variantId: null, quantity: it.quantity, modifiers: [] },
+          readBack: `${it.quantity}× Coke`,
+          spoken: "a Coke",
+          pricingNote: "Fettuccine Alfredo +$5.00, Build Your Own +$9.00",
+          surcharge: { amount: 14, direction: "extra" },
+          priceParts: [
+            { label: "Fettuccine Alfredo", amount: 5, kind: "slot_upcharge" },
+            { label: "Build Your Own", amount: 9, kind: "child_extras" },
+          ],
+          unresolved: [],
+          lineSubtotal: 2,
+        };
+      },
+    });
+    const e = new CartEngine({ compiler: partsCompiler(), menu: buildMenuIndex(MENU), askGroupIds: [], allowPizzaCombo: true, callerId: "6476690808" });
+    e.beginTurn();
+    const r = await e.addLine({ menuItemId: "dr_coke", quantity: 1 } as any);
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.pricingNote).toBe("Fettuccine Alfredo adds five dollars, and the extra toppings add nine dollars.");
+  });
+
+  it("empty priceParts (all under the threshold) means NO note — never a fallback to the lumped surcharge wording", async () => {
+    const tinyParts = (): Compiler => ({
+      async compile(req): Promise<CompileResponse> {
+        const it: any = req.intent;
+        return {
+          ok: true,
+          line: { menuItemId: it.menuItemId, variantId: null, quantity: it.quantity, modifiers: [] },
+          readBack: `${it.quantity}× Coke`,
+          spoken: "a Coke",
+          pricingNote: "Napkin +$0.05",
+          surcharge: { amount: 0.05, direction: "extra" },
+          priceParts: [{ label: "Napkin", amount: 0.05, kind: "slot_upcharge" }],
+          unresolved: [],
+          lineSubtotal: 2,
+        };
+      },
+    });
+    const e = new CartEngine({ compiler: tinyParts(), menu: buildMenuIndex(MENU), askGroupIds: [], allowPizzaCombo: true, callerId: "6476690808" });
+    e.beginTurn();
+    const r = await e.addLine({ menuItemId: "dr_coke", quantity: 1 } as any);
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.pricingNote).toBeNull();
+  });
 });

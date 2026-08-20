@@ -21,6 +21,7 @@ import { isNarrationLeak } from "./narration-filter";
 import { verbalizeNumbersEn } from "./spoken-numbers";
 import { voicePhrase, voiceFillers } from "./voice-i18n";
 import { captureError } from "./observability";
+import { noteStoreRequest } from "./warmup";
 
 /** maxCallSeconds timing (contract): wrap-up nudge at T-45s, hangup at T+15s. */
 const WRAP_UP_LEAD_MS = 45_000;
@@ -70,6 +71,70 @@ const isMergeableCall = (name: string, input: any): boolean =>
  *  buffer and merged with the next sentence so the caller hears one phrase, not
  *  a choppy one-word utterance followed by silence while the tool runs. */
 const BARE_ACK_RE = /^(ok(ay)?|yes|yeah|yep|sure|alright|right|got it|yup|mhm)\W*$/i;
+
+/* ── POST-FILLER ACK DE-DUP (Luigi call review, 2026-08-20) ────────────────
+ * The latency filler says "Sure thing." at 2.5 s; the model's reply then opens
+ * "Got it, delivering to…" — the caller hears two acks back to back, every
+ * turn the filler fires. Once a filler has played this turn, the first few
+ * reply deltas are HELD until the opener is decided, and a duplicated leading
+ * bare ack is dropped ("Got it, delivering…" → "Delivering…"). A reply that IS
+ * only a bare ack is kept whole (flushed at stream end). */
+
+/** Longest opener worth holding for — beyond this it cannot be a bare ack. */
+export const ACK_HOLD_MAX = 24;
+
+/** Leading bare-ack phrases for a locale, longest-first: a fixed English list
+ *  plus the locale's OWN filler phrases from voice-i18n (so "Compris," strips
+ *  for a French caller). Lowercase, trailing punctuation removed. A locale
+ *  with no matches simply never strips — safe fallback. */
+export function leadAcksFor(lang: string | null | undefined): string[] {
+  const out = new Set<string>();
+  const clean = (s: string) => s.toLowerCase().replace(/[\s.!,…]+$/g, "").trim();
+  for (const p of voiceFillers(lang ?? null, "fillers")) out.add(clean(p));
+  for (const p of voiceFillers(lang ?? null, "thinkingFillers")) out.add(clean(p));
+  if (!lang || /^en/i.test(String(lang))) {
+    for (const p of ["sure thing", "sounds good", "all right", "alright", "got it", "you got it", "perfect", "great", "okay", "ok", "yes", "yeah", "yep", "yup", "sure", "mhm"]) out.add(p);
+  }
+  return [...out].filter(Boolean).sort((a, b) => b.length - a.length);
+}
+
+export type AckStripDecision = { kind: "strip"; emit: string } | { kind: "pass" } | { kind: "hold" };
+
+/** Decide what to do with the held opening of a reply: `strip` (emit the text
+ *  after a duplicated leading ack, capitalized), `pass` (emit verbatim — no
+ *  leading ack, or the "ack" is really content like "Okay?" or "Right now…"),
+ *  or `hold` (could still become either; wait for more deltas). */
+export function ackStripDecision(held: string, acks: string[]): AckStripDecision {
+  const offset = held.length - held.trimStart().length;
+  const body = held.slice(offset);
+  if (!body) return held.length >= ACK_HOLD_MAX ? { kind: "pass" } : { kind: "hold" };
+  const lower = body.toLowerCase();
+  for (const ack of acks) {
+    if (lower.startsWith(ack)) {
+      const rest = body.slice(ack.length);
+      // Ack + punctuation + real content → strip the ack, keep the content.
+      // Whitespace may precede the separator ("Sure thing — adding that").
+      const m = /^\s*[,.!…—–-]+\s*(\S[\s\S]*)$/.exec(rest);
+      if (m) {
+        const emit = m[1];
+        return { kind: "strip", emit: emit.charAt(0).toLocaleUpperCase() + emit.slice(1) };
+      }
+      // "Okay?" is a question, not an ack; "Okay so…" (no punctuation) reads
+      // fine and is left alone. A trailing letter means the "ack" was just a
+      // prefix of a longer word ("ok" in "okays") — try the next candidate.
+      if (/^\s*\?/.test(rest)) return { kind: "pass" };
+      if (/^[a-zÀ-ɏ']/i.test(rest)) continue;
+      if (/^\s*$/.test(rest) || /^\s*[,.!…—–-]+\s*$/.test(rest)) {
+        return held.length >= ACK_HOLD_MAX ? { kind: "pass" } : { kind: "hold" };
+      }
+      return { kind: "pass" };
+    }
+    if (ack.startsWith(lower)) {
+      return held.length >= ACK_HOLD_MAX ? { kind: "pass" } : { kind: "hold" };
+    }
+  }
+  return { kind: "pass" };
+}
 
 const SILENT_TURN_RETRY_MS = 1_200;
 /** A tail fragment counts only this soon after the previous reply finished. */
@@ -165,7 +230,12 @@ type PerRequest = { hop: number; ttftMs: number | null; totalMs: number; cacheRe
 export class CallSession {
   private messages: any[] = [];
   private messageMeta: MessageMeta[] = [];
-  private system = "";
+  /** The system prompt as Anthropic blocks: [0] = the STABLE store prefix
+   *  (playbook + menu) carrying the long-TTL cache breakpoint; [1] = the
+   *  VOLATILE "RIGHT NOW" tail (open/paused/ETA/demo/test), deliberately
+   *  unmarked so flipping it never invalidates the ~40k-token prefix. The
+   *  init-failure fallback is a single unmarked block. */
+  private systemBlocks: Array<{ type: "text"; text: string; cache_control?: { type: "ephemeral"; ttl: "5m" | "1h" } }> = [];
   private callFacts = "";
   private callFactsSent = false;
   private ctx: ToolContext;
@@ -302,6 +372,7 @@ export class CallSession {
       modelConfig: { thinking: CONFIG.thinking, maxTokens: CONFIG.maxTokens, effort: CONFIG.effort },
       menuSnapshotHash: null,
       cfgHash: null,
+      systemStableHash: null,
       sttModel: token.sttModel ?? null,
       ttsVoice: token.ttsVoice ?? null,
     };
@@ -498,16 +569,27 @@ export class CallSession {
       });
 
       const built = buildSystemPrompt({ menu, context, returningCaller, cfg: this.ctx.cfg, callerPhone: this.token.from, isDemo: !!this.token.isDemo, isTestOrder: !!this.token.isTestOrder });
-      this.system = built.system;
+      this.systemBlocks = [
+        // The stable half is byte-identical across calls to the same store —
+        // cache it with a long TTL so the dinner rush (and the warm-up cycle)
+        // reads it. The volatile half rides AFTER the breakpoint on purpose.
+        { type: "text", text: built.stable, cache_control: { type: "ephemeral", ttl: CONFIG.cacheTtl } },
+        { type: "text", text: built.volatile },
+      ];
       this.callFacts = built.callFacts;
       this.versions.menuSnapshotHash = this.menuHash;
       this.versions.cfgHash = quickHash(this.ctx.cfg);
+      this.versions.systemStableHash = quickHash(built.stable);
       this.versions.promptVersion = quickHash([PLAYBOOK_STYLE, PLAYBOOK_PROTOCOL, this.ctx.cfg.allowPizzaCombo, this.ctx.cfg.canTakeOrders, this.ctx.cfg.canBookReservations]);
     } catch (e) {
       console.error("[nabil-voice] init failed", e);
       captureError(e, { where: "init", callSid: this.token.callSid, restaurantId: this.token.restaurantId });
       this.events.emit({ type: "error", turn: 0, where: "init", message: String((e as Error)?.message ?? e) });
-      this.system = `You are Nabil, the phone assistant for this restaurant. Apologize that you're having trouble accessing the menu right now and offer to connect the caller to a team member (call transfer_to_human).`;
+      // Single unmarked block: it is far below the model's minimum cacheable
+      // prefix anyway, and a marker here would just burn a breakpoint.
+      this.systemBlocks = [
+        { type: "text", text: `You are Nabil, the phone assistant for this restaurant. Apologize that you're having trouble accessing the menu right now and offer to connect the caller to a team member (call transfer_to_human).` },
+      ];
     }
     this.tools = toolsForConfig(this.ctx.cfg);
     this.versions.toolsVersion = quickHash(this.tools);
@@ -709,6 +791,9 @@ export class CallSession {
     let spokenThisTurn = "";
     let ttfaMs: number | null = null;
     let fillerUsed: { phrase: string; afterMs: number } | null = null;
+    /** A filler has played this turn and the NEXT reply opener has not been
+     *  de-dup-checked yet — see ACK_HOLD_MAX / ackStripDecision. */
+    let ackStripArmed = false;
     let mergedBookkeeping = false;
     const toolOutputsThisTurn: unknown[] = [];
     const toolNamesThisTurn: string[] = [];
@@ -735,6 +820,7 @@ export class CallSession {
         this.lastFillerPhrase = phrase;
         this.fillerCount++;
         fillerUsed = { phrase, afterMs: this.now() - armedAt };
+        ackStripArmed = true;
         spokeAnything = true;
         this.speak(`${phrase} `, false);
         this.events.emit({ type: "filler", turn, hop: 1, tool: null, afterMs: this.now() - armedAt, phrase, kind: "thinking" });
@@ -752,6 +838,7 @@ export class CallSession {
         this.lastFillerPhrase = phrase;
         this.fillerCount++;
         fillerUsed = { phrase, afterMs: this.now() - armedAt };
+        ackStripArmed = true;
         spokeAnything = true;
         this.speak(`${phrase} `, false);
         this.events.emit({ type: "filler", turn, hop, tool: toolName, afterMs: this.now() - armedAt, phrase });
@@ -770,9 +857,9 @@ export class CallSession {
       const params: any = {
         model: CONFIG.model,
         max_tokens: CONFIG.maxTokens,
-        // The store prefix (system + menu) is byte-identical across calls to
-        // the same store — cache it with a long TTL so the dinner rush reads it.
-        system: [{ type: "text", text: this.system, cache_control: { type: "ephemeral", ttl: CONFIG.cacheTtl } }],
+        // Two blocks: the stable store prefix (cached, 1h) then the live
+        // "RIGHT NOW" tail — see systemBlocks. Built once per call in init().
+        system: this.systemBlocks as any,
         tools: this.tools as any,
         messages: cached.messages as any,
       };
@@ -786,15 +873,43 @@ export class CallSession {
 
       const requestStartedAt = this.now();
       this.modelRequests++;
+      noteStoreRequest(this.token.slug);
       let ttftMs: number | null = null;
       let assistantText = "";
+      /** Reply opening held by the post-filler ack de-dup; null once decided. */
+      let ackHold: string | null = null;
+      let ackDecided = false;
       stream.on("text", (delta: string) => {
         if (this.interrupted) return;
         if (ttftMs === null) ttftMs = this.now() - requestStartedAt;
         if (ttfaMs === null) ttfaMs = this.now() - turnStarted;
+        // stopFiller BEFORE any hold-return: a timer firing mid-hold would
+        // speak a second filler on top of the reply we are about to play.
+        stopFiller();
+        if (ackStripArmed && !ackDecided) {
+          // A filler already acknowledged the caller — hold the first deltas
+          // and drop a duplicated leading bare ack ("Got it, delivering…" →
+          // "Delivering…"). Held text is not yet in assistantText, so the
+          // transcript/claims-guard stay byte-consistent with the wire; the
+          // model's own history is unaffected (it gets final.content).
+          ackHold = (ackHold ?? "") + delta;
+          const d = ackStripDecision(ackHold, leadAcksFor(this.language ?? this.token.lang));
+          if (d.kind === "hold") return;
+          ackDecided = true;
+          ackStripArmed = false;
+          let emit = ackHold;
+          if (d.kind === "strip") {
+            this.events.emit({ type: "ack_stripped", turn, dropped: ackHold.slice(0, Math.max(0, ackHold.length - d.emit.length)).trim() });
+            emit = d.emit;
+          }
+          ackHold = null;
+          if (!emit) return;
+          delta = emit;
+        } else {
+          ackDecided = true;
+        }
         assistantText += delta;
         this.currentStreamText = assistantText;
-        stopFiller();
         spokeAnything = true;
         if (this.now() < this.protectedUntil) this.protectedText += delta;
         this.sendText(delta, false);
@@ -838,6 +953,19 @@ export class CallSession {
       }
       this.controller = null;
       this.streamFailures = 0;
+
+      // A reply still held by the ack de-dup at stream end is a bare ack and
+      // nothing more ("Sure thing." before a tool hop) — keep it verbatim.
+      if (ackHold !== null) {
+        const held: string = ackHold;
+        ackHold = null;
+        ackDecided = true;
+        assistantText += held;
+        this.currentStreamText = assistantText;
+        spokeAnything = true;
+        if (this.now() < this.protectedUntil) this.protectedText += held;
+        this.sendText(held, false);
+      }
 
       this.pushMessage({ role: "assistant", content: final.content }, { turn, kind: "assistant" });
       if (assistantText.trim()) {

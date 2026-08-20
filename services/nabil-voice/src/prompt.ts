@@ -173,7 +173,21 @@ function upsellSection(context: any, cfg: AgentConfig, currency: string): string
   return `\n## UPSELL SUGGESTIONS\nSuggest AT MOST ONE of these per call, only when it fits what they're ordering, price included. Never after they decline extras, never during the read-back or after placing. If declined, drop it for good.\n${lines.join("\n")}\n`;
 }
 
-export type BuiltPrompt = { system: string; callFacts: string };
+export type BuiltPrompt = {
+  /** `stable + "\n\n" + volatile` — for callers that want the whole prompt. */
+  system: string;
+  /** Byte-identical across calls to the same store until the MENU or CONFIG
+   *  actually changes: playbook + store identity + FAQ + upsells + menu. This
+   *  is the ~40k-token block the 1h cache breakpoint sits on — nothing that
+   *  flips during a service day (open/close, pauses, ETAs, demo/test flags)
+   *  may appear in it, or every flip re-writes the whole prefix. */
+  stable: string;
+  /** The live tail — open-now, pauses, live ETAs, the CLOSED overrides and
+   *  the per-call DEMO/TEST sections. Rendered AFTER the cache breakpoint so
+   *  flipping any of it costs a few hundred tokens, not the 40k prefix. */
+  volatile: string;
+  callFacts: string;
+};
 
 export function buildSystemPrompt(args: {
   menu: any;
@@ -199,10 +213,14 @@ export function buildSystemPrompt(args: {
 
   const pickupEta = context?.pickup?.estimatedMinutes;
   const deliveryEta = context?.delivery?.estimatedMinutes;
-  const etaLine = cfg.quoteEta
-    ? pickupEta || deliveryEta
+  // Split by volatility: the live ETA numbers move during service (→ volatile
+  // block), while "never promise timing" is a standing rule (→ stable block).
+  const liveEtaLine =
+    cfg.quoteEta && (pickupEta || deliveryEta)
       ? `- Estimated ready times (approximate — "about", never a promise): ${[pickupEta ? `pickup about ${pickupEta} minutes` : "", deliveryEta ? `delivery about ${deliveryEta} minutes` : ""].filter(Boolean).join(", ")}`
-      : ""
+      : "";
+  const etaRule = cfg.quoteEta
+    ? ""
     : "- NEVER promise or estimate how long an order will take; say it will be ready as soon as possible and the store can confirm timing.";
   // One rule, two halves, and it must never contradict the CLOSED section:
   // (1) a SPECIFIC later time or day cannot be set by phone (the order tools
@@ -222,24 +240,34 @@ export function buildSystemPrompt(args: {
   const paymentLine = "- Payment: orders are pay at the store / on pickup (cash or card in person). Never ask for card numbers over the phone." +
     (context?.delivery?.cashDeliveryBlocked ? " Delivery is PREPAID-only — explain and offer pickup instead (or transfer)." : "");
 
-  const system = `${playbookText(cfg)}
+  // STABLE half — everything here must be byte-identical across every call to
+  // this store until the menu/config genuinely changes (it sits under the 1h
+  // cache breakpoint). Live state goes in the RIGHT NOW block below instead.
+  const stable = `${playbookText(cfg)}
 
 ## About ${name}
 - Your name is ${cfg.agentName}. If asked your name, or when introducing yourself, say ${cfg.agentName}.
 - You: ${caps.length ? caps.join(", ") : "help callers and connect them to staff"}.
-- Services available: ${servicesText(context, cfg)}
-- Open now: ${openNow ? "yes" : "no"}${todayHours ? ` (today: ${todayHours})` : ""}
 - Address: ${address || "n/a"}
-${minOrder ? `- Delivery minimum: ${fmtMoney(minOrder, currency)}\n` : ""}${etaLine}
-${schedulingRule}
+${minOrder ? `- Delivery minimum: ${fmtMoney(minOrder, currency)}\n` : ""}${etaRule ? `${etaRule}\n` : ""}${schedulingRule}
 ${paymentLine}
-${afterHoursSection(context, cfg)}${faqSection(context, cfg)}${upsellSection(context, cfg, currency)}${
+${faqSection(context, cfg)}${upsellSection(context, cfg, currency)}${
     cfg.languages.length
       ? `\n## Language\nThe phone system detects the caller's language. Answer in the language they speak; if they switch, switch with them. Keep item names exactly as on the menu.\n`
       : ""
   }
 # MENU (live — ${name}). Item ids in [id:…] are what add_to_order takes. Option lists are names only; "+N more" means the list is truncated — get_item_options has the full one.
-${menuText(menu, cfg.allowPizzaCombo)}${isDemo ? `\n\n## DEMO MODE\nThis is a DEMO line for prospective restaurant owners. Take the order completely naturally — the caller should experience exactly what their own customers would. After placing, the tool will tell you it's a demo; relay that warmly and mention feefreeordering.com/nabil-ai. Keep the call under 4 minutes.\n` : ""}${isTestOrder ? `\n\n## TEST MODE\nThe restaurant owner is testing the agent while it is turned off for customers. Take the order completely naturally — they should experience exactly what a real caller would. The place_order tool will confirm it as a test (no kitchen ticket, no printer). After placing, let them know it was a test order and nothing was sent to the kitchen.\n` : ""}`;
+${menuText(menu, cfg.allowPizzaCombo)}`;
+
+  // VOLATILE half — the live tail. It renders AFTER the menu, so the OVERRIDES
+  // framing matters: when closed/paused state conflicts with anything above
+  // (including the ordering flow), this section wins.
+  const volatile = `## RIGHT NOW (live — this section OVERRIDES anything above when they conflict)
+- Services available: ${servicesText(context, cfg)}
+- Open now: ${openNow ? "yes" : "no"}${todayHours ? ` (today: ${todayHours})` : ""}
+${liveEtaLine ? `${liveEtaLine}\n` : ""}${afterHoursSection(context, cfg)}${isDemo ? `\n## DEMO MODE\nThis is a DEMO line for prospective restaurant owners. Take the order completely naturally — the caller should experience exactly what their own customers would. After placing, the tool will tell you it's a demo; relay that warmly and mention feefreeordering.com/nabil-ai. Keep the call under 4 minutes.\n` : ""}${isTestOrder ? `\n## TEST MODE\nThe restaurant owner is testing the agent while it is turned off for customers. Take the order completely naturally — they should experience exactly what a real caller would. The place_order tool will confirm it as a test (no kitchen ticket, no printer). After placing, let them know it was a test order and nothing was sent to the kitchen.\n` : ""}`;
+
+  const system = `${stable}\n\n${volatile}`;
 
   // Per-call facts — first user turn only.
   const facts: string[] = [];
@@ -257,5 +285,5 @@ ${menuText(menu, cfg.allowPizzaCombo)}${isDemo ? `\n\n## DEMO MODE\nThis is a DE
     const last = returningCaller.lastOrder?.items?.map((i: any) => `${i.quantity}× ${i.name}`).join(", ");
     facts.push(`Returning caller (${returningCaller.orderCount ?? 0} past orders).${last ? ` Last order: ${last}. You may offer "the usual".` : ""} Greet them by first name.`);
   }
-  return { system, callFacts: facts.join("\n") };
+  return { system, stable, volatile, callFacts: facts.join("\n") };
 }

@@ -71,6 +71,31 @@ export function spokenSurcharge(
     : `That's ${spokenMoney(s.amount)} less than the standard build.`;
 }
 
+/**
+ * The combo compiler's per-pick money → ONE spoken sentence, or null.
+ * "Fettuccine Alfredo adds five dollars, and the extra toppings add nine
+ * dollars." Slot premiums name the pick; a lone pizza-extras part skips the
+ * item name (menu code names sound wrong aloud), naming it only when several
+ * pizzas need telling apart. Parts under the threshold are dropped.
+ */
+export function spokenPriceParts(
+  parts: Array<{ label: string; amount: number; kind: "slot_upcharge" | "child_extras" }> | null | undefined,
+): string | null {
+  const xs = (Array.isArray(parts) ? parts : []).filter((p) => Number(p?.amount) >= MIN_SPOKEN_SURCHARGE);
+  if (!xs.length) return null;
+  const extrasCount = xs.filter((p) => p.kind === "child_extras").length;
+  const phrase = (p: (typeof xs)[number]) =>
+    p.kind === "child_extras"
+      ? extrasCount === 1
+        ? `the extra toppings add ${spokenMoney(p.amount)}`
+        : `the ${p.label} extra toppings add ${spokenMoney(p.amount)}`
+      : `${p.label} adds ${spokenMoney(p.amount)}`;
+  const list = xs.map(phrase);
+  const body =
+    list.length === 1 ? list[0] : list.length === 2 ? `${list[0]}, and ${list[1]}` : `${list.slice(0, -1).join(", ")}, and ${list[list.length - 1]}`;
+  return `${body.charAt(0).toUpperCase()}${body.slice(1)}.`;
+}
+
 /** "So that's X, Y, and Z." — the pre-quote read-back joiner. */
 export function spokenOrderText(lines: string[]): string {
   const xs = lines.filter((l) => l && l.trim());

@@ -36,7 +36,7 @@
 import { basketSignature, fnv1a } from "./basket-signature";
 import { norm, stem, sameName } from "./fuzzy";
 import type { MenuIndex, MenuKind } from "./menu-index";
-import { spokenOrderText, spokenSurcharge } from "./spoken-money";
+import { spokenOrderText, spokenPriceParts, spokenSurcharge } from "./spoken-money";
 
 /* ────────────────────────────── intent model ───────────────────────────── */
 
@@ -199,6 +199,10 @@ export type CompileResponse =
       pricingNote: string | null;
       /** Raw over-allowance money — spoken here (words, threshold), never read from pricingNote. */
       surcharge?: { amount: number; direction: "extra" | "less" } | null;
+      /** Combo only: the per-pick money the combo engine will book (slot
+       *  premiums + per-pizza extras). When present it REPLACES surcharge as
+       *  the source of the spoken note — see materialize(). */
+      priceParts?: Array<{ label: string; amount: number; kind: "slot_upcharge" | "child_extras" }>;
       unresolved: string[];
       halves?: Halves | null;
       lineSubtotal?: number | null;
@@ -1504,7 +1508,12 @@ export class CartEngine {
       readBack,
       spoken,
       halves: res.halves ?? null,
-      pricingNote: spokenSurcharge(res.surcharge, res.pricingNote ?? null),
+      // A combo's priceParts decompose its money (slot premium vs pizza
+      // extras) — when present they OWN the spoken note; lumping the combined
+      // surcharge into "extra toppings add…" would mis-name a slot premium.
+      pricingNote: Array.isArray(res.priceParts)
+        ? spokenPriceParts(res.priceParts)
+        : spokenSurcharge(res.surcharge, res.pricingNote ?? null),
       status: complete ? "complete" : "needs_info",
       questions: unresolved.slice(),
       aliases: buildAliases(kind, intent, entry?.name ?? "", res, this.deps.menu),

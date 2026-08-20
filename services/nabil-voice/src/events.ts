@@ -37,6 +37,10 @@ export type CallEvent = CallEventBase &
     | { type: "interrupt"; heard: string | null; stale: boolean; duringProtected: boolean }
     | { type: "protected_respoken"; text: string }
     | { type: "narration_dropped"; text: string }
+    /** A duplicated bare ack the post-filler de-dup removed from the reply's
+     *  opening ("Got it," after the filler already said an ack). `dropped` is
+     *  the removed opener — short by construction (ACK_HOLD_MAX). */
+    | { type: "ack_stripped"; dropped: string }
     /** Digits the model wrote were turned into words before the voice heard
      *  them (spoken-numbers.ts). Count only: the raw text is already in the
      *  turn's `model_text` (redacted app-side), the pass is deterministic, and

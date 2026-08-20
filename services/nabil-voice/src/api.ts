@@ -103,3 +103,10 @@ export const api = {
  *  the simulator can stand up an offline backend (menu snapshot + the real
  *  compiler in-process) and drive the REAL session against it. */
 export type VoiceApi = typeof api;
+
+/** Every store whose agent can take a call right now — feeds the prompt-cache
+ *  warmer (warmup.ts). Deliberately NOT on the `api` object: the sim's offline
+ *  backend implements VoiceApi and never warms. */
+export function fetchActiveStores(): Promise<{ stores: Array<{ slug: string }> }> {
+  return getInternal(`/api/internal/voice/active-stores`);
+}

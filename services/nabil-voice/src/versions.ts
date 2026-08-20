@@ -47,6 +47,10 @@ export type Versions = {
   modelConfig: Record<string, unknown>;
   menuSnapshotHash: string | null;
   cfgHash: string | null;
+  /** Hash of the STABLE system block (the 1h-cached prefix). Two calls to the
+   *  same store with different values here explain a cache miss: the menu or
+   *  config changed between them. Null until init() builds the prompt. */
+  systemStableHash: string | null;
   sttModel: string | null;
   ttsVoice: string | null;
 };

@@ -10,6 +10,7 @@ import { WebSocketServer } from "ws";
 import { CONFIG, verifyCallToken, type CallToken } from "./config";
 import { CallSession } from "./session";
 import { fallbackMapStatus, fallbackTwiml, handleFallback, startFallbackRefresh } from "./fallback";
+import { startCacheWarm } from "./warmup";
 import { captureError, createRefractory, flushObservability, hasErrorSink } from "./observability";
 import { createMediaSession, type MediaSessionHandle } from "./media/media-session";
 import { createDeepgramStt } from "./media/stt";
@@ -450,4 +451,8 @@ server.listen(CONFIG.port, () => {
   // min). Deliberately NOT awaited and never fatal: the fallback handler is a
   // safety net, and a safety net must not be able to stop the service booting.
   startFallbackRefresh();
+  // Keep every active store's 1h prompt-cache entry hot (boot + every 50 min)
+  // so the first caller after a deploy or a quiet hour gets a warm prefix.
+  // Same policy: fire-and-forget, warn-never-crash (warmup.ts).
+  startCacheWarm(anthropic);
 });

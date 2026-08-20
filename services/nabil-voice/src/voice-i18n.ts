@@ -26,7 +26,11 @@ type VoicePhrases = { fillers: string[]; thinkingFillers: string[] } & Record<Ph
 const P: Record<string, VoicePhrases> = {
   en: {
     fillers: ["One moment.", "Just a moment.", "Hang on.", "One sec."],
-    thinkingFillers: ["Sure thing.", "Got it.", "Alright.", "Okay."],
+    // "Got it." / bare "Okay." are deliberately absent: the model's own reply
+    // often opens with exactly those words, so the caller heard "Got it. …
+    // Got it, delivering to…" (Luigi call review 2026-08-20). Keep these
+    // distinct from `fillers` too — the two timers can fire back to back.
+    thinkingFillers: ["Sure thing.", "Alright.", "Let's see.", "Okay then."],
     errorTransfer: "I'm really sorry — I'm having trouble on my end, not with anything you said. Let me put you through to someone.",
     errorDropped: "Sorry — that dropped on my end. Go ahead.",
     errorRestart: "— sorry, let me start that again.",
