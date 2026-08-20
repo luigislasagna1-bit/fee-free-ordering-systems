@@ -604,7 +604,12 @@ function comboUpchargeSummary(ctx: ToolContext, comboId: string): string | null 
     }
   }
   if (!parts.length) return null;
-  return `PREMIUM PICKS in this combo (tell the caller BEFORE they choose): ${parts.join(", ")}. Always mention the extra cost naturally when offering these options.`;
+  // Reference only — NOT a script to recite. Call cmsw... (2026-08-19 combo
+  // upcharge launch) reads this list next to "ask ONE question" and dumped
+  // every premium pick across every slot into one massive turn. The fix:
+  // scope disclosure to whichever ONE slot is being asked about right now,
+  // and forbid reciting the whole list at once (Luigi call review, 08-20).
+  return `Background only, do NOT recite this list: some choices in this combo cost extra — ${parts.join(", ")}. As you ask about EACH slot in turn, mention the SPECIFIC extra cost naturally ONLY if that slot's choice is one of these — never all at once, never before the caller has been asked anything.`;
 }
 
 const normLabel = (s: unknown) => String(s ?? "").toLowerCase().replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();

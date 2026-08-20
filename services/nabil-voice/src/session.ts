@@ -299,7 +299,7 @@ export class CallSession {
       promptVersion: quickHash([PLAYBOOK_STYLE, PLAYBOOK_PROTOCOL]),
       toolsVersion: quickHash(TOOLS),
       model: CONFIG.model,
-      modelConfig: { thinking: CONFIG.thinking, maxTokens: CONFIG.maxTokens, effort: "low" },
+      modelConfig: { thinking: CONFIG.thinking, maxTokens: CONFIG.maxTokens, effort: CONFIG.effort },
       menuSnapshotHash: null,
       cfgHash: null,
       sttModel: token.sttModel ?? null,
@@ -778,7 +778,7 @@ export class CallSession {
       };
       if (CONFIG.thinking === "adaptive") {
         params.thinking = { type: "adaptive" };
-        params.output_config = { effort: "low" };
+        params.output_config = { effort: CONFIG.effort };
       } else {
         params.thinking = { type: "disabled" };
       }

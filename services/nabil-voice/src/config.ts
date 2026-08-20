@@ -24,6 +24,12 @@ export const CONFIG = {
    *  time-to-first-token tax on every "yes". Decided by benchmark
    *  (scripts/nabil-bench.ts); overridable per deploy without a code change. */
   thinking: (process.env.NABIL_THINKING || "adaptive") as "adaptive" | "off",
+  /** Adaptive-thinking depth. Defaults to "low" — on a live phone line,
+   *  latency trumps thinking depth. The Aug 17-19 production calls (3 min
+   *  avg, all orders correct) ran at "low" and were noticeably faster and
+   *  more natural than "high" (which added audible silence gaps between
+   *  turns). Override via NABIL_EFFORT if a future model needs more room. */
+  effort: (process.env.NABIL_EFFORT || "low") as "low" | "medium" | "high" | "xhigh" | "max",
   /** Output budget per model request. Spoken replies are one or two sentences;
    *  the headroom is for reasoning when thinking is on. */
   maxTokens: parseInt(process.env.NABIL_MAX_TOKENS || "2048", 10),
