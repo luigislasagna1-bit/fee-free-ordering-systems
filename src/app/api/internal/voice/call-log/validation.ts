@@ -140,6 +140,7 @@ export const EVENT_TYPES = new Set([
   "narration_dropped",
   "tail_fragment",
   "numbers_verbalized",
+  "greeting_echo_dropped",
   "turn",
   "call_end",
   "error",

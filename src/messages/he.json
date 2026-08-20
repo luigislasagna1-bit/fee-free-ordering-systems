@@ -4517,7 +4517,8 @@
           "payloadLabel": "נתונים",
           "numbersVerbalizedLabel": "מספרים שנאמרו במילים ({count})",
           "narrationDroppedLabel": "משפט של \"חשיבה בקול\" הוסר לפני ההקראה",
-          "tailFragmentLabel": "קטע סיום נבלע"
+          "tailFragmentLabel": "קטע סיום נבלע",
+          "greetingEchoLabel": "הד ברכה הוסר"
         },
         "report": {
           "button": "דיווח על שיחה זו",

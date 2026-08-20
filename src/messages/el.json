@@ -4517,7 +4517,8 @@
           "payloadLabel": "Δεδομένα",
           "numbersVerbalizedLabel": "Αριθμοί που ειπώθηκαν ολογράφως ({count})",
           "narrationDroppedLabel": "Πρόταση «σκέψης φωναχτά» αφαιρέθηκε πριν από τη φωνή",
-          "tailFragmentLabel": "Απορροφήθηκε καταληκτικό θραύσμα"
+          "tailFragmentLabel": "Απορροφήθηκε καταληκτικό θραύσμα",
+          "greetingEchoLabel": "Η ηχώ χαιρετισμού αφαιρέθηκε"
         },
         "report": {
           "button": "Αναφορά αυτής της κλήσης",

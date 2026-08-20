@@ -4517,7 +4517,8 @@
           "payloadLabel": "Data",
           "numbersVerbalizedLabel": "Čísla vyslovená slovy ({count})",
           "narrationDroppedLabel": "Věta „přemýšlení nahlas“ odstraněna před hlasem",
-          "tailFragmentLabel": "Koncový fragment pohlcen"
+          "tailFragmentLabel": "Koncový fragment pohlcen",
+          "greetingEchoLabel": "Echo pozdravu odstraněno"
         },
         "report": {
           "button": "Nahlásit tento hovor",

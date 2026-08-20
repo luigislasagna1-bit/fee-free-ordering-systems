@@ -342,6 +342,13 @@ function EventRow({ e, t, interruptedTag }: { e: TimelineEvent; t: T; interrupte
           <Chip tone="warn">{t("narrationDroppedLabel")}</Chip> <span className="text-gray-700">“{s(p.text)}”</span>
         </div>
       );
+    case "greeting_echo_dropped":
+      return (
+        <div className="text-xs text-gray-500">
+          <Meta e={e} />
+          <Chip tone="muted">{t("greetingEchoLabel")}</Chip> <span className="text-gray-700">"{s(p.text)}"</span>
+        </div>
+      );
     // A one-to-three-word tail that arrived right after a reply and was folded in.
     case "tail_fragment":
       return (

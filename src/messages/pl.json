@@ -4517,7 +4517,8 @@
           "payloadLabel": "Dane",
           "numbersVerbalizedLabel": "Liczby wypowiedziane słownie ({count})",
           "narrationDroppedLabel": "Zdanie „myślenia na głos” usunięte przed odczytaniem",
-          "tailFragmentLabel": "Końcowy fragment wchłonięty"
+          "tailFragmentLabel": "Końcowy fragment wchłonięty",
+          "greetingEchoLabel": "Echo powitania usunięte"
         },
         "report": {
           "button": "Zgłoś tę rozmowę",

@@ -4517,7 +4517,8 @@
           "payloadLabel": "Adatok",
           "numbersVerbalizedLabel": "Számok szavakkal kimondva ({count})",
           "narrationDroppedLabel": "„Hangos gondolkodás” mondat eltávolítva a beszéd előtt",
-          "tailFragmentLabel": "Záró töredék beolvasztva"
+          "tailFragmentLabel": "Záró töredék beolvasztva",
+          "greetingEchoLabel": "Üdvözlés-visszhang eldobva"
         },
         "report": {
           "button": "Hívás jelentése",

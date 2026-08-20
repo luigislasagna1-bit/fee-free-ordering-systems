@@ -4517,7 +4517,8 @@
           "payloadLabel": "Podaci",
           "numbersVerbalizedLabel": "Brojevi izgovoreni riječima ({count})",
           "narrationDroppedLabel": "Rečenica „razmišljanja naglas” uklonjena prije glasa",
-          "tailFragmentLabel": "Završni fragment apsorbiran"
+          "tailFragmentLabel": "Završni fragment apsorbiran",
+          "greetingEchoLabel": "Eho pozdrava uklonjen"
         },
         "report": {
           "button": "Prijavi ovaj poziv",

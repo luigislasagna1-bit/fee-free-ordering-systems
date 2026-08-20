@@ -4517,7 +4517,8 @@
           "payloadLabel": "Gegevens",
           "numbersVerbalizedLabel": "Getallen in woorden uitgesproken ({count})",
           "narrationDroppedLabel": "Hardop-denken-zin verwijderd vóór de spraak",
-          "tailFragmentLabel": "Afsluitend fragment opgenomen"
+          "tailFragmentLabel": "Afsluitend fragment opgenomen",
+          "greetingEchoLabel": "Begroetingsecho verwijderd"
         },
         "report": {
           "button": "Dit gesprek melden",

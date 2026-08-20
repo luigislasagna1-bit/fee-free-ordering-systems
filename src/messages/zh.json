@@ -4517,7 +4517,8 @@
           "payloadLabel": "数据",
           "numbersVerbalizedLabel": "数字以文字读出（{count}）",
           "narrationDroppedLabel": "“自言自语”句子在发声前已移除",
-          "tailFragmentLabel": "已吸收句尾片段"
+          "tailFragmentLabel": "已吸收句尾片段",
+          "greetingEchoLabel": "已丢弃问候回声"
         },
         "report": {
           "button": "报告此通话",

@@ -4517,7 +4517,8 @@
           "payloadLabel": "Data",
           "numbersVerbalizedLabel": "Siffror utlästa med ord ({count})",
           "narrationDroppedLabel": "Mening med högt tänkande borttagen före rösten",
-          "tailFragmentLabel": "Avslutande fragment absorberat"
+          "tailFragmentLabel": "Avslutande fragment absorberat",
+          "greetingEchoLabel": "Hälsningseko borttagen"
         },
         "report": {
           "button": "Rapportera det här samtalet",

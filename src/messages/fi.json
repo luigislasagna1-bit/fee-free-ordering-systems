@@ -4517,7 +4517,8 @@
           "payloadLabel": "Tiedot",
           "numbersVerbalizedLabel": "Numerot lausuttu sanoina ({count})",
           "narrationDroppedLabel": "Ääneen ajattelun lause poistettiin ennen puhetta",
-          "tailFragmentLabel": "Loppufragmentti sulautettu"
+          "tailFragmentLabel": "Loppufragmentti sulautettu",
+          "greetingEchoLabel": "Tervehdyskaiku poistettu"
         },
         "report": {
           "button": "Ilmoita tästä puhelusta",

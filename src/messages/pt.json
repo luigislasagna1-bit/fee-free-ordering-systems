@@ -4517,7 +4517,8 @@
           "payloadLabel": "Dados",
           "numbersVerbalizedLabel": "Números ditos por extenso ({count})",
           "narrationDroppedLabel": "Frase de «pensar em voz alta» removida antes da voz",
-          "tailFragmentLabel": "Fragmento final absorvido"
+          "tailFragmentLabel": "Fragmento final absorvido",
+          "greetingEchoLabel": "Eco de saudação eliminado"
         },
         "report": {
           "button": "Reportar esta chamada",

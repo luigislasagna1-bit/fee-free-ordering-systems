@@ -4517,7 +4517,8 @@
           "payloadLabel": "Données",
           "numbersVerbalizedLabel": "Nombres énoncés en toutes lettres ({count})",
           "narrationDroppedLabel": "Phrase de « réflexion à voix haute » supprimée avant la voix",
-          "tailFragmentLabel": "Fragment de fin absorbé"
+          "tailFragmentLabel": "Fragment de fin absorbé",
+          "greetingEchoLabel": "Écho de salutation supprimé"
         },
         "report": {
           "button": "Signaler cet appel",

@@ -4517,7 +4517,8 @@
           "payloadLabel": "Dữ liệu",
           "numbersVerbalizedLabel": "Số được đọc bằng chữ ({count})",
           "narrationDroppedLabel": "Câu \"suy nghĩ thành tiếng\" đã bị bỏ trước khi đọc",
-          "tailFragmentLabel": "Đã gộp mảnh cuối câu"
+          "tailFragmentLabel": "Đã gộp mảnh cuối câu",
+          "greetingEchoLabel": "Đã loại tiếng vọng lời chào"
         },
         "report": {
           "button": "Báo cáo cuộc gọi này",

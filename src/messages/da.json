@@ -4517,7 +4517,8 @@
           "payloadLabel": "Data",
           "numbersVerbalizedLabel": "Tal udtalt med ord ({count})",
           "narrationDroppedLabel": "Sætning med højttænkning fjernet før stemmen",
-          "tailFragmentLabel": "Afsluttende fragment optaget"
+          "tailFragmentLabel": "Afsluttende fragment optaget",
+          "greetingEchoLabel": "Hilsen-ekko fjernet"
         },
         "report": {
           "button": "Rapportér dette opkald",

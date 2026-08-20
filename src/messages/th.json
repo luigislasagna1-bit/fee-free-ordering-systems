@@ -4517,7 +4517,8 @@
           "payloadLabel": "ข้อมูล",
           "numbersVerbalizedLabel": "อ่านตัวเลขเป็นคำพูด ({count})",
           "narrationDroppedLabel": "ตัดประโยค “คิดดัง ๆ” ออกก่อนเปล่งเสียง",
-          "tailFragmentLabel": "ซึมซับเศษคำท้ายประโยค"
+          "tailFragmentLabel": "ซึมซับเศษคำท้ายประโยค",
+          "greetingEchoLabel": "ตัดเสียงสะท้อนคำทักทาย"
         },
         "report": {
           "button": "รายงานสายนี้",

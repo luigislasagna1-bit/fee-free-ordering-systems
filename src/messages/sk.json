@@ -4517,7 +4517,8 @@
           "payloadLabel": "Dáta",
           "numbersVerbalizedLabel": "Čísla vyslovené slovami ({count})",
           "narrationDroppedLabel": "Veta „premýšľania nahlas“ odstránená pred hlasom",
-          "tailFragmentLabel": "Koncový fragment pohltený"
+          "tailFragmentLabel": "Koncový fragment pohltený",
+          "greetingEchoLabel": "Echo pozdravu odstránené"
         },
         "report": {
           "button": "Nahlásiť tento hovor",

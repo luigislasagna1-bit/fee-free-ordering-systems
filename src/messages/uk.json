@@ -4517,7 +4517,8 @@
           "payloadLabel": "Дані",
           "numbersVerbalizedLabel": "Числа вимовлено словами ({count})",
           "narrationDroppedLabel": "Фразу «роздумів уголос» вилучено перед озвученням",
-          "tailFragmentLabel": "Кінцевий фрагмент поглинуто"
+          "tailFragmentLabel": "Кінцевий фрагмент поглинуто",
+          "greetingEchoLabel": "Луна привітання вилучена"
         },
         "report": {
           "button": "Повідомити про цей дзвінок",

@@ -4517,7 +4517,8 @@
           "payloadLabel": "Podatki",
           "numbersVerbalizedLabel": "Števila izgovorjena z besedami ({count})",
           "narrationDroppedLabel": "Stavek »razmišljanja na glas« odstranjen pred glasom",
-          "tailFragmentLabel": "Končni fragment absorbiran"
+          "tailFragmentLabel": "Končni fragment absorbiran",
+          "greetingEchoLabel": "Odmev pozdrava odstranjen"
         },
         "report": {
           "button": "Prijavi ta klic",

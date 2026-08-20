@@ -4517,7 +4517,8 @@
           "payloadLabel": "Veri",
           "numbersVerbalizedLabel": "Sayılar sözcüklerle söylendi ({count})",
           "narrationDroppedLabel": "\"Sesli düşünme\" cümlesi seslendirilmeden önce çıkarıldı",
-          "tailFragmentLabel": "Sondaki parça özümsendi"
+          "tailFragmentLabel": "Sondaki parça özümsendi",
+          "greetingEchoLabel": "Karşılama yankısı kaldırıldı"
         },
         "report": {
           "button": "Bu aramayı bildir",

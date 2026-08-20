@@ -4517,7 +4517,8 @@
           "payloadLabel": "Данни",
           "numbersVerbalizedLabel": "Числа, изговорени с думи ({count})",
           "narrationDroppedLabel": "Изречение „мислене на глас“ премахнато преди озвучаване",
-          "tailFragmentLabel": "Завършващ фрагмент погълнат"
+          "tailFragmentLabel": "Завършващ фрагмент погълнат",
+          "greetingEchoLabel": "Ехото на поздрава е премахнато"
         },
         "report": {
           "button": "Докладвай това обаждане",

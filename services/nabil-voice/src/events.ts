@@ -43,6 +43,7 @@ export type CallEvent = CallEventBase &
      *  a phone number in WORDS would slip past the digit-shaped redaction. */
     | { type: "numbers_verbalized"; count: number }
     | { type: "tail_fragment"; text: string; early?: boolean }
+    | { type: "greeting_echo_dropped"; text: string }
     | { type: "compaction"; droppedMessages: number; bytesBefore: number; bytesAfter: number }
     | { type: "cache_miss"; request: number; uncached: number }
     | { type: "hallucination_suspect"; kind: string; sentence: string; evidence: string[] }

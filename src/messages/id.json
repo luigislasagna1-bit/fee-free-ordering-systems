@@ -4517,7 +4517,8 @@
           "payloadLabel": "Data",
           "numbersVerbalizedLabel": "Angka diucapkan dengan kata ({count})",
           "narrationDroppedLabel": "Kalimat \"berpikir keras\" dihapus sebelum suara",
-          "tailFragmentLabel": "Fragmen akhir diserap"
+          "tailFragmentLabel": "Fragmen akhir diserap",
+          "greetingEchoLabel": "Gema sapaan dihapus"
         },
         "report": {
           "button": "Laporkan panggilan ini",

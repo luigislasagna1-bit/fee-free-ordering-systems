@@ -4517,7 +4517,8 @@
           "payloadLabel": "Andmed",
           "numbersVerbalizedLabel": "Numbrid öeldud sõnadega ({count})",
           "narrationDroppedLabel": "Valjusti mõtlemise lause eemaldati enne hääle esitust",
-          "tailFragmentLabel": "Lõpufragment neelati"
+          "tailFragmentLabel": "Lõpufragment neelati",
+          "greetingEchoLabel": "Tervituse kaja eemaldatud"
         },
         "report": {
           "button": "Teata sellest kõnest",

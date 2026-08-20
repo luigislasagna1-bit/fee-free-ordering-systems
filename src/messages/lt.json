@@ -4517,7 +4517,8 @@
           "payloadLabel": "Duomenys",
           "numbersVerbalizedLabel": "Skaičiai ištarti žodžiais ({count})",
           "narrationDroppedLabel": "„Mąstymo balsu“ sakinys pašalintas prieš balsą",
-          "tailFragmentLabel": "Galinis fragmentas įtrauktas"
+          "tailFragmentLabel": "Galinis fragmentas įtrauktas",
+          "greetingEchoLabel": "Pasisveikinimo aidas pašalintas"
         },
         "report": {
           "button": "Pranešti apie šį skambutį",

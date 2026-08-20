@@ -4845,7 +4845,8 @@
           "payloadLabel": "Payload",
           "numbersVerbalizedLabel": "Numbers spoken as words ({count})",
           "narrationDroppedLabel": "Thinking-aloud sentence dropped before the voice",
-          "tailFragmentLabel": "Trailing fragment absorbed"
+          "tailFragmentLabel": "Trailing fragment absorbed",
+          "greetingEchoLabel": "Greeting echo dropped"
         },
         "report": {
           "button": "Report this call",

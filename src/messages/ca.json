@@ -4517,7 +4517,8 @@
           "payloadLabel": "Dades",
           "numbersVerbalizedLabel": "Números dits amb lletres ({count})",
           "narrationDroppedLabel": "Frase de «pensar en veu alta» eliminada abans de la veu",
-          "tailFragmentLabel": "Fragment final absorbit"
+          "tailFragmentLabel": "Fragment final absorbit",
+          "greetingEchoLabel": "Eco de salutació eliminat"
         },
         "report": {
           "button": "Informa d'aquesta trucada",

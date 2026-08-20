@@ -4517,7 +4517,8 @@
           "payloadLabel": "Daten",
           "numbersVerbalizedLabel": "Zahlen als Wörter gesprochen ({count})",
           "narrationDroppedLabel": "Laut-Denken-Satz vor der Sprachausgabe entfernt",
-          "tailFragmentLabel": "Nachgestelltes Fragment aufgenommen"
+          "tailFragmentLabel": "Nachgestelltes Fragment aufgenommen",
+          "greetingEchoLabel": "Begrüßungsecho verworfen"
         },
         "report": {
           "button": "Diesen Anruf melden",

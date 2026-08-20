@@ -4517,7 +4517,8 @@
           "payloadLabel": "Date",
           "numbersVerbalizedLabel": "Numere rostite în cuvinte ({count})",
           "narrationDroppedLabel": "Propoziție de „gândire cu voce tare” eliminată înainte de voce",
-          "tailFragmentLabel": "Fragment final absorbit"
+          "tailFragmentLabel": "Fragment final absorbit",
+          "greetingEchoLabel": "Ecou de salut eliminat"
         },
         "report": {
           "button": "Raportează acest apel",

@@ -4517,7 +4517,8 @@
           "payloadLabel": "Данные",
           "numbersVerbalizedLabel": "Числа произнесены словами ({count})",
           "narrationDroppedLabel": "Фраза «размышления вслух» удалена до озвучивания",
-          "tailFragmentLabel": "Завершающий фрагмент поглощён"
+          "tailFragmentLabel": "Завершающий фрагмент поглощён",
+          "greetingEchoLabel": "Эхо приветствия удалено"
         },
         "report": {
           "button": "Сообщить об этом звонке",

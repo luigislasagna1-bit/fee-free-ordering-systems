@@ -4742,7 +4742,8 @@
           "payloadLabel": "डेटा",
           "numbersVerbalizedLabel": "संख्याएँ शब्दों में बोली गईं ({count})",
           "narrationDroppedLabel": "आवाज़ से पहले “ज़ोर से सोचने” वाला वाक्य हटाया गया",
-          "tailFragmentLabel": "अंतिम टुकड़ा समाहित किया गया"
+          "tailFragmentLabel": "अंतिम टुकड़ा समाहित किया गया",
+          "greetingEchoLabel": "अभिवादन प्रतिध्वनि हटाई गई"
         },
         "report": {
           "button": "इस कॉल की रिपोर्ट करें",

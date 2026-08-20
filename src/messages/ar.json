@@ -4517,7 +4517,8 @@
           "payloadLabel": "البيانات",
           "numbersVerbalizedLabel": "أرقام نُطقت ككلمات ({count})",
           "narrationDroppedLabel": "حُذفت جملة تفكير بصوت عالٍ قبل النطق",
-          "tailFragmentLabel": "تم استيعاب المقطع اللاحق"
+          "tailFragmentLabel": "تم استيعاب المقطع اللاحق",
+          "greetingEchoLabel": "تم إزالة صدى التحية"
         },
         "report": {
           "button": "الإبلاغ عن هذه المكالمة",
