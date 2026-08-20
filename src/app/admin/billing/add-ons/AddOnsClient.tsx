@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { CheckCircle2, Loader2, AlertCircle, X, Clock, RefreshCw, ArrowRight, Settings, Rocket } from "lucide-react";
+import { CheckCircle2, Loader2, AlertCircle, AlertTriangle, X, Clock, RefreshCw, ArrowRight, Settings, Rocket, CreditCard } from "lucide-react";
 import { localizedAddOnName, localizedAddOnDescription } from "@/lib/addon-catalog-i18n";
 
 /**
@@ -75,6 +75,28 @@ export function AddOnsClient({
   // Slug currently in the cancel-confirmation modal. Replaces the old
   // window.confirm() which had no "Don't cancel" + no visible date.
   const [cancelConfirm, setCancelConfirm] = useState<AddOnView | null>(null);
+
+  async function retryPayment(slug: string) {
+    setError(null);
+    setPendingSlug(slug);
+    try {
+      const r = await fetch("/api/admin/add-ons/retry-payment", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ addOnSlug: slug }),
+      });
+      const data = await r.json();
+      if (!r.ok || !data?.url) {
+        setError(data?.error || t("errorRetryPayment"));
+        setPendingSlug(null);
+        return;
+      }
+      window.location.href = data.url;
+    } catch (e: any) {
+      setError(e?.message || t("errorRetryPayment"));
+      setPendingSlug(null);
+    }
+  }
 
   async function subscribe(slug: string) {
     setError(null);
@@ -174,6 +196,7 @@ export function AddOnsClient({
           const dollars = (a.monthlyPriceCents / 100).toFixed(2);
           const active =
             a.isSubscribed && ["active", "trialing"].includes(a.subscription?.status || "");
+          const pastDue = a.isSubscribed && a.subscription?.status === "past_due";
           const scheduled = a.subscription?.cancelAtPeriodEnd;
           const notSynced = !a.stripePriceId;
           const busy = pendingSlug === a.slug;
@@ -192,7 +215,9 @@ export function AddOnsClient({
             <div
               key={a.id}
               className={`rounded-xl border bg-white p-5 ${
-                a.comingSoon && !active
+                pastDue
+                  ? "border-rose-300 ring-1 ring-rose-200"
+                  : a.comingSoon && !active
                   ? "border-amber-200 bg-gradient-to-br from-white to-amber-50/40"
                   : scheduled
                   ? "border-amber-300 ring-1 ring-amber-200"
@@ -205,7 +230,13 @@ export function AddOnsClient({
                 <div className="flex-1">
                   <div className="flex items-center gap-2 flex-wrap">
                     <h3 className="font-semibold text-gray-900">{name}</h3>
-                    {a.comingSoon && !active && (
+                    {pastDue && (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full">
+                        <AlertTriangle className="w-2.5 h-2.5" />
+                        {t("pastDueTitle")}
+                      </span>
+                    )}
+                    {a.comingSoon && !active && !pastDue && (
                       <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
                         <Rocket className="w-2.5 h-2.5" />
                         {t("comingSoonBadge")}
@@ -214,7 +245,10 @@ export function AddOnsClient({
                   </div>
                   <p className="text-sm text-gray-600 mt-1">{description}</p>
                 </div>
-                {active && !scheduled && (
+                {pastDue && (
+                  <AlertTriangle className="w-5 h-5 text-rose-600 flex-shrink-0" />
+                )}
+                {active && !scheduled && !pastDue && (
                   <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
                 )}
                 {scheduled && (
@@ -260,7 +294,53 @@ export function AddOnsClient({
               )}
 
               <div className="mt-4 pt-4 border-t border-gray-100">
-                {scheduled ? (
+                {pastDue ? (
+                  <div className="space-y-3">
+                    <div className="rounded-lg bg-rose-50 border border-rose-200 px-3 py-2.5 text-sm">
+                      <div className="font-semibold text-rose-900 flex items-center gap-1.5">
+                        <AlertTriangle className="w-4 h-4" />
+                        {t("pastDueTitle")}
+                      </div>
+                      <div className="text-rose-800 mt-0.5">
+                        {periodEnd ? (
+                          <>
+                            {t("pastDueWasDue")}{" "}
+                            <strong>
+                              {periodEnd.toLocaleDateString(undefined, {
+                                month: "long",
+                                day: "numeric",
+                                year: "numeric",
+                              })}
+                            </strong>
+                            . {t("pastDueExplainer")}
+                          </>
+                        ) : (
+                          t("pastDueExplainer")
+                        )}
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => retryPayment(a.slug)}
+                      disabled={busy}
+                      className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-rose-600 text-white hover:bg-rose-700 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      {busy ? (
+                        <><Loader2 className="w-4 h-4 animate-spin" /> {t("loading")}</>
+                      ) : (
+                        <><CreditCard className="w-4 h-4" /> {t("payNow")}</>
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setCancelConfirm(a)}
+                      disabled={busy}
+                      className="w-full text-xs font-medium text-gray-500 hover:text-red-600 hover:underline disabled:opacity-50"
+                    >
+                      {t("cancelInstead")}
+                    </button>
+                  </div>
+                ) : scheduled ? (
                   // Scheduled-cancellation state: the add-on stays live until
                   // the period ends; "Keep this service" resumes it.
                   <div className="space-y-3">

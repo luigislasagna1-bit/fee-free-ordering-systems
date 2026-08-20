@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import {
   CreditCard, AlertTriangle, CheckCircle2, Clock, ExternalLink, Loader2,
-  ShoppingBag, Plus, XCircle, Download,
+  ShoppingBag, Plus, XCircle, Download, ArrowRight,
 } from "lucide-react";
 import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
 import { localizedAddOnName, localizedAddOnDescription } from "@/lib/addon-catalog-i18n";
@@ -769,12 +769,21 @@ function AddOnRowItem({
             <CheckCircle2 className="w-3 h-3" />
             {t("alreadyIncluded")}
           </span>
+        ) : isPastDue ? (
+          <Link
+            href={`/admin/billing/add-ons?addon=${catalog.slug}`}
+            className="inline-flex items-center gap-1 text-xs font-bold text-rose-700 hover:text-rose-800 mt-1 bg-rose-50 px-2 py-1 rounded-md"
+          >
+            <CreditCard className="w-3 h-3" />
+            {t("payNow")}
+            <ArrowRight className="w-3 h-3" />
+          </Link>
         ) : (
           <Link
             href={`/admin/billing/add-ons${mine ? `?addon=${catalog.slug}` : ""}`}
             className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700 mt-1"
           >
-            {isActive || isPastDue ? t("manage") : isCancelled ? t("reSubscribe") : catalog.comingSoon ? t("learnMore") : t("subscribe")}
+            {isActive ? t("manage") : isCancelled ? t("reSubscribe") : catalog.comingSoon ? t("learnMore") : t("subscribe")}
             <ExternalLink className="w-3 h-3" />
           </Link>
         )}

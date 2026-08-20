@@ -77,6 +77,15 @@ export async function POST(req: NextRequest) {
   if (existing && ["active", "trialing"].includes(existing.status) && !convertingComplimentary) {
     return NextResponse.json({ error: "already_subscribed" }, { status: 409 });
   }
+  // A past_due subscription already exists in Stripe — creating a SECOND one
+  // would double-bill when both eventually collect. The owner must pay the
+  // open invoice on the existing subscription instead (retry-payment route).
+  if (existing && existing.status === "past_due" && existing.stripeSubscriptionId) {
+    return NextResponse.json(
+      { error: "past_due", code: "past_due" },
+      { status: 409 },
+    );
+  }
 
   // Dependencies — if this add-on requires others, ensure they're active.
   let deps: string[] = [];
