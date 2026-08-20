@@ -167,6 +167,17 @@ describe("capTranscript", () => {
     ])!;
     expect(t).toEqual([{ role: "agent", text: "kept" }]);
   });
+
+  it("preserves toolName and ok on tool turns, ignores them on non-tool turns", () => {
+    const t = capTranscript([
+      { role: "tool", text: "add_to_order: cuid123", ts: 1700000000000, toolName: "add_to_order", ok: true },
+      { role: "tool", text: "place_order", ts: 1700000001000, toolName: "place_order", ok: false },
+      { role: "user", text: "Hi", ts: 1700000002000, toolName: "sneaky", ok: true },
+    ])!;
+    expect(t[0]).toEqual({ role: "tool", text: "add_to_order: cuid123", ts: 1700000000000, toolName: "add_to_order", ok: true });
+    expect(t[1]).toEqual({ role: "tool", text: "place_order", ts: 1700000001000, toolName: "place_order", ok: false });
+    expect(t[2]).toEqual({ role: "user", text: "Hi", ts: 1700000002000 });
+  });
 });
 
 // ── Event log (directive §25–§27) ──────────────────────────────────────────

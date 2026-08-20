@@ -25,7 +25,7 @@ export type MessageMeta = {
   toolNames?: string[];
 };
 
-export type TranscriptEntry = { role: string; text: string; ts: string; turn?: number };
+export type TranscriptEntry = { role: string; text: string; ts: string; turn?: number; toolName?: string; ok?: boolean };
 
 export const KEEP_TURNS = 8;
 export const COMPACT_EVERY_TURNS = 12;
@@ -91,6 +91,7 @@ export function digestLines(transcript: TranscriptEntry[], fromTurnExclusive: nu
     const text = String(t.text ?? "").replace(/\s+/g, " ").trim();
     if (!text || ACK.test(text)) continue;
     if (/^\(You were interrupted|^\(You are nearing|^\(continue exactly/.test(text)) continue;
+    if (t.role === "tool") continue;
     const who = t.role === "user" ? "Caller" : "Nabil";
     out.push(`${who}: ${text.length > 120 ? text.slice(0, 117) + "…" : text}`);
   }

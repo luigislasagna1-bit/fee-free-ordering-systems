@@ -34,6 +34,8 @@ export type TranscriptTurn = {
   role: string;
   text: string;
   ts?: number;
+  toolName?: string;
+  ok?: boolean;
 };
 
 export interface StartData {
@@ -269,11 +271,13 @@ export function capTranscript(v: unknown): TranscriptTurn[] | undefined {
     const turn: TranscriptTurn = { role, text };
     if (typeof t.ts === "number" && Number.isFinite(t.ts)) turn.ts = t.ts;
     else if (typeof t.ts === "string" && t.ts.length <= 40) {
-      // The voice service stamps ISO strings (session.ts) — normalize to epoch
-      // millis so the stored shape stays uniformly [{ role, text, ts:number }].
-      // Normalizing on ingest means an un-upgraded voice service keeps working.
       const ms = Date.parse(t.ts);
       if (!Number.isNaN(ms)) turn.ts = ms;
+    }
+    if (role === "tool") {
+      const tn = str(t.toolName, 40);
+      if (tn) turn.toolName = tn;
+      if (typeof t.ok === "boolean") turn.ok = t.ok;
     }
     out.push(turn);
   }

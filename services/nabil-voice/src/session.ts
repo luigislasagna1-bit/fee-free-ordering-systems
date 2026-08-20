@@ -119,6 +119,28 @@ const EVENT_FLUSH_EVERY_TURNS = 10;
  *  this only saves the 1 MB round trip on every call. */
 const KNOWN_MENU_HASHES = new Set<string>();
 
+function toolTranscriptText(name: string, input: any, out: any): string {
+  const i = input ?? {};
+  const o = out ?? {};
+  switch (name) {
+    case "find_menu_item": return i.hint ? `find_menu_item: "${i.hint}"` : "find_menu_item";
+    case "get_item_options": return `get_item_options: ${i.menuItemId ?? ""}`;
+    case "add_to_order": return `add_to_order: ${i.menuItemId ?? i.hint ?? ""}${i.size ? ` (${i.size})` : ""}`;
+    case "update_line": return `update_line: ${i.lineId ?? ""}`;
+    case "remove_line": return `remove_line: ${i.lineId ?? i.hint ?? ""}`;
+    case "set_fulfilment": return `set_fulfilment: ${i.type ?? ""}${i.address ? ` — ${i.address}` : ""}`;
+    case "set_customer": return `set_customer: ${i.name ?? ""}`;
+    case "get_order_state": return "get_order_state";
+    case "quote_order": return `quote_order${o.speakExactly ? `: ${o.speakExactly.replace(/\s+/g, " ").slice(0, 80)}` : ""}`;
+    case "place_order": return `place_order${o.orderNumber ? `: ${o.orderNumber}` : ""}`;
+    case "check_reservation_availability": return `check_reservation_availability: ${i.date ?? ""} (${i.partySize ?? "?"})`;
+    case "book_reservation": return `book_reservation${o.reservationCode ? `: ${o.reservationCode}` : ""}`;
+    case "transfer_to_human": return `transfer_to_human${i.reason ? `: ${i.reason}` : ""}`;
+    case "send_sms_link": return `send_sms_link: ${i.type ?? ""}`;
+    default: return name;
+  }
+}
+
 export type SessionDeps = {
   api?: VoiceApi;
   now?: () => number;
@@ -882,6 +904,7 @@ export class CallSession {
           const after = this.ctx.cart.cartHash();
           noteToolResult(this.dialogue, turn, block.name, block.input, out, after);
           this.events.emit({ type: "tool_result", turn, hop: hops, toolUseId: block.id, name: block.name, ok, code: (out as any)?.code ?? null, ms, output: out, cartHashAfter: after });
+          this.transcript.push({ role: "tool", text: toolTranscriptText(block.name, block.input, out), ts: new Date(this.now()).toISOString(), turn, toolName: block.name, ok });
           if (before !== after) {
             const st = stateOf(out);
             this.events.emit({ type: "cart", turn, hash: after, lines: st?.lines ?? null, problems: st?.problems ?? null, fulfilment: st?.fulfilment ?? null });
@@ -1377,7 +1400,12 @@ export class CallSession {
         customerId: this.customerId,
         transferReason: this.ctx.pendingTransfer,
         transferredAtIso: this.transferredAt ? new Date(this.transferredAt).toISOString() : null,
-        transcript: this.transcript.map(({ role, text, ts }) => ({ role, text, ts })),
+        transcript: this.transcript.map((e) => {
+          const base: Record<string, unknown> = { role: e.role, text: e.text, ts: e.ts };
+          if (e.toolName) base.toolName = e.toolName;
+          if (e.ok !== undefined) base.ok = e.ok;
+          return base;
+        }),
         model: CONFIG.model,
         tokensIn: this.usageIn,
         tokensOut: this.usageOut,

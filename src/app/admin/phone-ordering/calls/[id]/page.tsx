@@ -29,7 +29,7 @@ import CallReportsCard, { type CallReportView } from "./CallReportsCard";
  * everyday page never pays for the events query.
  */
 
-type TranscriptTurn = { role?: string; text?: string; ts?: number | string };
+type TranscriptTurn = { role?: string; text?: string; ts?: number | string; toolName?: string; ok?: boolean };
 
 /** A call is capped at 600 events by the service; the take is a safety net. */
 const MAX_TIMELINE_EVENTS = 2000;
@@ -396,6 +396,19 @@ export default async function CallDetailPage({
                 return (
                   <div key={i} className="flex justify-center">
                     <span className="text-[11px] italic text-gray-400 text-center max-w-[85%]">{raw.trim()}</span>
+                  </div>
+                );
+              }
+              if (turn.role === "tool") {
+                const label = turn.toolName ? t(`tool_${turn.toolName}` as any) : raw;
+                const detail = raw.includes(": ") ? raw.slice(raw.indexOf(": ") + 2) : null;
+                return (
+                  <div key={i} className="flex justify-center">
+                    <span className={`inline-flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-full ${turn.ok === false ? "bg-red-50 text-red-500" : "bg-blue-50 text-blue-500"}`}>
+                      <ListTree className="w-3 h-3 flex-shrink-0" />
+                      <span className="font-medium">{label}</span>
+                      {detail && <span className={`truncate max-w-[200px] ${turn.ok === false ? "text-red-400" : "text-blue-400"}`}>{detail}</span>}
+                    </span>
                   </div>
                 );
               }
