@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Pregunteu per l'aparcament",
         "goLiveTryOrder": "Proveu de fer una comanda per recollir",
         "goLiveHint": "Quan estigueu satisfets, activeu l'interruptor de dalt per començar a rebre trucades reals."
+      },
+      "closure": {
+        "title": "Tancament temporal",
+        "description": "Posa en pausa serveis per a un descans, una punta de feina o un esdeveniment privat. Nabil continua responent — les persones que truquen saben de seguida què està en pausa i poden demanar el que segueix actiu.",
+        "pauseEverything": "Selecciona-ho tot",
+        "selectNone": "Esborra la selecció",
+        "pause1h": "1 hora",
+        "pause6h": "6 hores",
+        "pause12h": "12 hores",
+        "untilTomorrow": "Fins demà",
+        "untilMonday": "Fins dilluns",
+        "custom": "Personalitzat…",
+        "customApply": "Pausa fins a aquesta hora",
+        "customDate": "Data",
+        "customTime": "Hora",
+        "customHint": "Hora local del restaurant.",
+        "pausedToast": "En pausa — la propera trucada ja ho sentirà.",
+        "resumedToast": "Reprès — la propera trucada torna a la normalitat.",
+        "sharedNote": "És el mateix interruptor que el web i l'app de cuina: un servei en pausa ho està a tot arreu, i tot es reprèn automàticament quan s'acaba el temps.",
+        "greetingLabel": "Missatge de tancament (opcional)",
+        "greetingPlaceholder": "p. ex. Aquesta nit tanquem per un esdeveniment privat — tornem demà a les 11!",
+        "greetingHint": "Es diu a qui truca en la salutació en lloc de l'avís automàtic mentre hi ha alguna cosa en pausa. Es conserva per a la propera vegada — esborra'l per tornar a l'avís automàtic.",
+        "greetingSave": "Desa el missatge",
+        "greetingSaved": "Missatge de tancament desat.",
+        "greetingSaveError": "No s'ha pogut desar el missatge.",
+        "chipOne": "{service} en pausa fins a les {time}",
+        "chipMany": "{count} serveis en pausa"
       }
     },
     "customerDetailPage": {

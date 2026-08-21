@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Kérdezzen rá a parkolásra",
         "goLiveTryOrder": "Próbáljon meg elvitelre rendelni",
         "goLiveHint": "Ha elégedett, kapcsolja be a fenti kapcsolót, hogy valódi hívásokat fogadjon."
+      },
+      "closure": {
+        "title": "Ideiglenes zárás",
+        "description": "Szüneteltessen szolgáltatásokat szünet, roham vagy zártkörű rendezvény idejére. A Nabil továbbra is felveszi — a hívók azonnal megtudják, mi szünetel, és rendelhetik azt, ami működik.",
+        "pauseEverything": "Összes kijelölése",
+        "selectNone": "Kijelölés törlése",
+        "pause1h": "1 óra",
+        "pause6h": "6 óra",
+        "pause12h": "12 óra",
+        "untilTomorrow": "Holnapig",
+        "untilMonday": "Hétfőig",
+        "custom": "Egyéni…",
+        "customApply": "Szüneteltetés eddig az időpontig",
+        "customDate": "Dátum",
+        "customTime": "Időpont",
+        "customHint": "Az étterem helyi ideje.",
+        "pausedToast": "Szüneteltetve — már a következő hívás hallani fogja.",
+        "resumedToast": "Folytatva — a következő hívás már a megszokott.",
+        "sharedNote": "Ez ugyanaz a kapcsoló, mint a weboldalon és a konyhai appban: a szüneteltetett szolgáltatás mindenhol szünetel, és az idő lejártával minden magától folytatódik.",
+        "greetingLabel": "Zárási üzenet (nem kötelező)",
+        "greetingPlaceholder": "pl. Ma este zártkörű rendezvény miatt zárva — holnap 11-kor újra nyitunk!",
+        "greetingHint": "A hívóknak a köszöntésben hangzik el az automatikus értesítés helyett, amíg valami szünetel. Megmarad legközelebbre — törölje, hogy újra az automatikus értesítés szóljon.",
+        "greetingSave": "Üzenet mentése",
+        "greetingSaved": "Zárási üzenet elmentve.",
+        "greetingSaveError": "Az üzenetet nem sikerült menteni.",
+        "chipOne": "{service} szünetel eddig: {time}",
+        "chipMany": "{count} szolgáltatás szünetel"
       }
     },
     "customerDetailPage": {

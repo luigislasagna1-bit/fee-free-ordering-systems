@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Tanyakan tempat parkir",
         "goLiveTryOrder": "Coba lakukan pemesanan untuk diambil",
         "goLiveHint": "Setelah Anda puas, aktifkan sakelar di atas untuk mulai menerima panggilan sungguhan."
+      },
+      "closure": {
+        "title": "Penutupan Sementara",
+        "description": "Jeda layanan saat istirahat, jam sibuk, atau acara pribadi. Nabil tetap menjawab — penelepon langsung diberi tahu apa yang dijeda dan tetap bisa memesan yang masih berjalan.",
+        "pauseEverything": "Pilih semua",
+        "selectNone": "Hapus pilihan",
+        "pause1h": "1 jam",
+        "pause6h": "6 jam",
+        "pause12h": "12 jam",
+        "untilTomorrow": "Sampai besok",
+        "untilMonday": "Sampai Senin",
+        "custom": "Kustom…",
+        "customApply": "Jeda sampai waktu ini",
+        "customDate": "Tanggal",
+        "customTime": "Waktu",
+        "customHint": "Waktu setempat restoran.",
+        "pausedToast": "Dijeda — panggilan berikutnya langsung mendengarnya.",
+        "resumedToast": "Dilanjutkan — panggilan berikutnya kembali normal.",
+        "sharedNote": "Ini sakelar yang sama dengan situs web dan aplikasi dapur Anda: layanan yang dijeda berhenti di mana pun, dan semuanya otomatis berjalan lagi saat waktunya habis.",
+        "greetingLabel": "Pesan penutupan (opsional)",
+        "greetingPlaceholder": "mis. Malam ini kami tutup untuk acara pribadi — buka lagi besok jam 11!",
+        "greetingHint": "Diucapkan kepada penelepon dalam sapaan menggantikan pemberitahuan otomatis selama ada yang dijeda. Disimpan untuk lain kali — kosongkan untuk kembali ke pemberitahuan otomatis.",
+        "greetingSave": "Simpan pesan",
+        "greetingSaved": "Pesan penutupan disimpan.",
+        "greetingSaveError": "Pesan tidak dapat disimpan.",
+        "chipOne": "{service} dijeda sampai {time}",
+        "chipMany": "{count} layanan dijeda"
       }
     },
     "customerDetailPage": {

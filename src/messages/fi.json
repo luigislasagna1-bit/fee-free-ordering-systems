@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Kysy pysäköinnistä",
         "goLiveTryOrder": "Kokeile tehdä noutotilaus",
         "goLiveHint": "Kun olet tyytyväinen, kytke yläpuolella oleva kytkin päälle aloittaaksesi oikeiden puheluiden vastaanottamisen."
+      },
+      "closure": {
+        "title": "Tilapäinen sulkeminen",
+        "description": "Keskeytä palveluita tauon, ruuhkan tai yksityistilaisuuden ajaksi. Nabil vastaa edelleen — soittajille kerrotaan heti, mikä on tauolla, ja he voivat tilata sitä mikä toimii.",
+        "pauseEverything": "Valitse kaikki",
+        "selectNone": "Tyhjennä valinta",
+        "pause1h": "1 tunti",
+        "pause6h": "6 tuntia",
+        "pause12h": "12 tuntia",
+        "untilTomorrow": "Huomiseen asti",
+        "untilMonday": "Maanantaihin asti",
+        "custom": "Mukautettu…",
+        "customApply": "Keskeytä tähän aikaan asti",
+        "customDate": "Päivämäärä",
+        "customTime": "Aika",
+        "customHint": "Ravintolan paikallista aikaa.",
+        "pausedToast": "Keskeytetty — jo seuraava puhelu kuulee sen.",
+        "resumedToast": "Palautettu — seuraava puhelu on taas normaali.",
+        "sharedNote": "Tämä on sama kytkin kuin verkkosivulla ja keittiösovelluksessa: keskeytetty palvelu on tauolla kaikkialla, ja kaikki palautuu automaattisesti ajan päättyessä.",
+        "greetingLabel": "Sulkemisviesti (valinnainen)",
+        "greetingPlaceholder": "esim. Tänä iltana suljettu yksityistilaisuuden vuoksi — takaisin huomenna klo 11!",
+        "greetingHint": "Sanotaan soittajille tervehdyksessä automaattisen ilmoituksen sijaan, kun jokin on tauolla. Säilyy seuraavaa kertaa varten — tyhjennä palataksesi automaattiseen ilmoitukseen.",
+        "greetingSave": "Tallenna viesti",
+        "greetingSaved": "Sulkemisviesti tallennettu.",
+        "greetingSaveError": "Viestiä ei voitu tallentaa.",
+        "chipOne": "{service} tauolla {time} asti",
+        "chipMany": "{count} palvelua tauolla"
       }
     },
     "customerDetailPage": {

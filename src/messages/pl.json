@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Zapytaj o parking",
         "goLiveTryOrder": "Spróbuj złożyć zamówienie na wynos",
         "goLiveHint": "Gdy będziesz zadowolony, włącz przełącznik powyżej, aby zacząć odbierać prawdziwe połączenia."
+      },
+      "closure": {
+        "title": "Tymczasowe zamknięcie",
+        "description": "Wstrzymaj usługi na przerwę, szczyt lub imprezę zamkniętą. Nabil dalej odbiera — dzwoniący od razu słyszą, co jest wstrzymane, i mogą zamówić to, co działa.",
+        "pauseEverything": "Zaznacz wszystko",
+        "selectNone": "Wyczyść zaznaczenie",
+        "pause1h": "1 godzina",
+        "pause6h": "6 godzin",
+        "pause12h": "12 godzin",
+        "untilTomorrow": "Do jutra",
+        "untilMonday": "Do poniedziałku",
+        "custom": "Niestandardowo…",
+        "customApply": "Wstrzymaj do tej godziny",
+        "customDate": "Data",
+        "customTime": "Godzina",
+        "customHint": "Czas lokalny restauracji.",
+        "pausedToast": "Wstrzymano — usłyszy to już następny telefon.",
+        "resumedToast": "Wznowiono — następny telefon będzie już normalny.",
+        "sharedNote": "To ten sam przełącznik co na stronie i w aplikacji kuchennej: wstrzymana usługa jest wstrzymana wszędzie, a po upływie czasu wszystko wznawia się automatycznie.",
+        "greetingLabel": "Komunikat o zamknięciu (opcjonalnie)",
+        "greetingPlaceholder": "np. Dziś wieczorem zamknięte z powodu imprezy prywatnej — wracamy jutro o 11!",
+        "greetingHint": "Wypowiadany dzwoniącym w powitaniu zamiast automatycznego komunikatu, dopóki coś jest wstrzymane. Zapisany na następny raz — wyczyść, aby wrócić do komunikatu automatycznego.",
+        "greetingSave": "Zapisz komunikat",
+        "greetingSaved": "Komunikat o zamknięciu zapisany.",
+        "greetingSaveError": "Nie udało się zapisać komunikatu.",
+        "chipOne": "{service} wstrzymane do {time}",
+        "chipMany": "Wstrzymane usługi: {count}"
       }
     },
     "customerDetailPage": {

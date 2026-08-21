@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "주차장 물어보기",
         "goLiveTryOrder": "포장 주문 시도해보기",
         "goLiveHint": "만족스러우시면 위의 스위치를 켜서 실제 전화를 받기 시작하세요."
+      },
+      "closure": {
+        "title": "임시 휴업",
+        "description": "휴식, 혼잡 시간대, 프라이빗 행사 동안 서비스를 일시 중단하세요. Nabil은 계속 전화를 받으며, 무엇이 중단됐는지 바로 알리고 운영 중인 서비스는 주문받습니다.",
+        "pauseEverything": "모두 선택",
+        "selectNone": "선택 해제",
+        "pause1h": "1시간",
+        "pause6h": "6시간",
+        "pause12h": "12시간",
+        "untilTomorrow": "내일까지",
+        "untilMonday": "월요일까지",
+        "custom": "직접 설정…",
+        "customApply": "이 시각까지 일시 중단",
+        "customDate": "날짜",
+        "customTime": "시간",
+        "customHint": "레스토랑 현지 시간 기준입니다.",
+        "pausedToast": "일시 중단됨 — 바로 다음 전화부터 안내됩니다.",
+        "resumedToast": "재개됨 — 다음 전화부터 정상 운영됩니다.",
+        "sharedNote": "웹사이트 및 주방 앱과 같은 스위치입니다. 중단된 서비스는 모든 곳에서 중단되며, 시간이 끝나면 자동으로 재개됩니다.",
+        "greetingLabel": "휴업 안내 메시지 (선택)",
+        "greetingPlaceholder": "예: 오늘 밤은 프라이빗 행사로 휴업합니다 — 내일 11시에 다시 열어요!",
+        "greetingHint": "무언가 중단된 동안 자동 안내 대신 인사말에서 이 메시지를 읽어줍니다. 다음을 위해 저장되며, 지우면 자동 안내로 돌아갑니다.",
+        "greetingSave": "메시지 저장",
+        "greetingSaved": "휴업 안내 메시지가 저장되었습니다.",
+        "greetingSaveError": "메시지를 저장하지 못했습니다.",
+        "chipOne": "{service} {time}까지 일시 중단",
+        "chipMany": "서비스 {count}개 일시 중단"
       }
     },
     "customerDetailPage": {

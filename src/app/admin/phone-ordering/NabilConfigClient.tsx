@@ -11,6 +11,7 @@ import TextLinksManager, { type TextLink } from "./TextLinksManager";
 import BlockedCallersManager, { type BlockedRow } from "./BlockedCallersManager";
 import DayDealsManager from "./DayDealsManager";
 import VoicePicker from "./VoicePicker";
+import TemporaryClosureCard from "./TemporaryClosureCard";
 
 /** The owner-editable VoiceAgentConfig fields this form round-trips. The
  *  index signature carries any extra DB columns through the PATCH untouched. */
@@ -148,6 +149,9 @@ export default function NabilConfigClient({
       // form's state is seeded once at mount, so replaying that snapshot would
       // silently un-pause (or re-pause) a live line the owner toggled since.
       delete body.enabled;
+      // `pauseGreeting` is owned by TemporaryClosureCard (same reasoning —
+      // replaying the mount snapshot would clobber a message saved since).
+      delete body.pauseGreeting;
       const res = await fetch("/api/admin/phone-ordering", {
         method: "PATCH",
         headers: { "content-type": "application/json" },
@@ -196,6 +200,11 @@ export default function NabilConfigClient({
       {/* ── General ─────────────────────────────────────────────────── */}
       {sub === "general" && (
         <div className="space-y-5">
+          {/* Temporary Closure (Loman parity) — self-saving, outside the sticky
+              save bar: pause state lives on Restaurant, not this form's cfg. */}
+          <TemporaryClosureCard
+            initialPauseGreeting={typeof cfg.pauseGreeting === "string" ? cfg.pauseGreeting : ""}
+          />
           <Section title={t("agentIdentity")}>
             <Text label={t("agentName")} value={cfg.agentName} placeholder="Nabil" onChange={(v) => set("agentName", v.slice(0, 40))} />
             <p className="text-xs text-gray-500">{t("agentNameHint")}</p>

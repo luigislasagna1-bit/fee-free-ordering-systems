@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Pergunte sobre estacionamento",
         "goLiveTryOrder": "Tente fazer um pedido para retirada",
         "goLiveHint": "Quando estiver satisfeito, ative o botão acima para começar a receber ligações de verdade."
+      },
+      "closure": {
+        "title": "Fechamento temporário",
+        "description": "Pause serviços para um intervalo, um pico de movimento ou um evento privado. O Nabil continua atendendo — quem liga fica sabendo na hora o que está pausado e pode pedir o que segue funcionando.",
+        "pauseEverything": "Selecionar tudo",
+        "selectNone": "Limpar seleção",
+        "pause1h": "1 hora",
+        "pause6h": "6 horas",
+        "pause12h": "12 horas",
+        "untilTomorrow": "Até amanhã",
+        "untilMonday": "Até segunda-feira",
+        "custom": "Personalizado…",
+        "customApply": "Pausar até este horário",
+        "customDate": "Data",
+        "customTime": "Horário",
+        "customHint": "Horário local do restaurante.",
+        "pausedToast": "Pausado — a próxima ligação já vai ouvir o aviso.",
+        "resumedToast": "Retomado — a próxima ligação volta ao normal.",
+        "sharedNote": "É o mesmo interruptor do site e do app da cozinha: um serviço pausado fica pausado em todo lugar, e tudo volta automaticamente quando o tempo acaba.",
+        "greetingLabel": "Mensagem de fechamento (opcional)",
+        "greetingPlaceholder": "ex. Hoje à noite estamos fechados para um evento privado — voltamos amanhã às 11!",
+        "greetingHint": "É falado para quem liga na saudação, no lugar do aviso automático, enquanto algo estiver pausado. Fica salvo para a próxima vez — apague para voltar ao aviso automático.",
+        "greetingSave": "Salvar mensagem",
+        "greetingSaved": "Mensagem de fechamento salva.",
+        "greetingSaveError": "Não foi possível salvar a mensagem.",
+        "chipOne": "{service} pausado até {time}",
+        "chipMany": "{count} serviços pausados"
       }
     },
     "customerDetailPage": {

@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Otoparkı sorun",
         "goLiveTryOrder": "Gel-al siparişi vermeyi deneyin",
         "goLiveHint": "Duyduklarınızdan memnun kaldığınızda, gerçek aramaları almaya başlamak için yukarıdaki anahtarı açın."
+      },
+      "closure": {
+        "title": "Geçici Kapanış",
+        "description": "Mola, yoğunluk veya özel etkinlik için hizmetleri duraklatın. Nabil telefona yanıt vermeye devam eder — arayanlara neyin duraklatıldığı hemen söylenir ve çalışan hizmetlerden sipariş verebilirler.",
+        "pauseEverything": "Tümünü seç",
+        "selectNone": "Seçimi temizle",
+        "pause1h": "1 saat",
+        "pause6h": "6 saat",
+        "pause12h": "12 saat",
+        "untilTomorrow": "Yarına kadar",
+        "untilMonday": "Pazartesiye kadar",
+        "custom": "Özel…",
+        "customApply": "Bu saate kadar duraklat",
+        "customDate": "Tarih",
+        "customTime": "Saat",
+        "customHint": "Restoranın yerel saati.",
+        "pausedToast": "Duraklatıldı — hemen bir sonraki arama bunu duyacak.",
+        "resumedToast": "Devam ediyor — bir sonraki arama normale döner.",
+        "sharedNote": "Bu, web siteniz ve mutfak uygulamanızla aynı anahtardır: duraklatılan bir hizmet her yerde duraklatılır ve süre dolunca her şey otomatik olarak devam eder.",
+        "greetingLabel": "Kapanış mesajı (isteğe bağlı)",
+        "greetingPlaceholder": "örn. Bu akşam özel bir etkinlik için kapalıyız — yarın 11'de döneceğiz!",
+        "greetingHint": "Bir şey duraklatıldığı sürece arayanlara karşılamada otomatik bildirim yerine söylenir. Bir dahaki sefere saklanır — otomatik bildirime dönmek için temizleyin.",
+        "greetingSave": "Mesajı kaydet",
+        "greetingSaved": "Kapanış mesajı kaydedildi.",
+        "greetingSaveError": "Mesaj kaydedilemedi.",
+        "chipOne": "{service} {time} saatine kadar duraklatıldı",
+        "chipMany": "{count} hizmet duraklatıldı"
       }
     },
     "customerDetailPage": {

@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Pitajte za parking",
         "goLiveTryOrder": "Pokušajte naručiti preuzimanje",
         "goLiveHint": "Kada budete zadovoljni, uključite prekidač iznad za primanje pravih poziva."
+      },
+      "closure": {
+        "title": "Privremeno zatvaranje",
+        "description": "Pauzirajte usluge zbog pauze, gužve ili privatnog događaja. Nabil se i dalje javlja — pozivatelji odmah čuju što je pauzirano i mogu naručiti ono što radi.",
+        "pauseEverything": "Odaberi sve",
+        "selectNone": "Poništi odabir",
+        "pause1h": "1 sat",
+        "pause6h": "6 sati",
+        "pause12h": "12 sati",
+        "untilTomorrow": "Do sutra",
+        "untilMonday": "Do ponedjeljka",
+        "custom": "Prilagođeno…",
+        "customApply": "Pauziraj do ovog vremena",
+        "customDate": "Datum",
+        "customTime": "Vrijeme",
+        "customHint": "Lokalno vrijeme restorana.",
+        "pausedToast": "Pauzirano — već sljedeći poziv će to čuti.",
+        "resumedToast": "Nastavljeno — sljedeći poziv je opet normalan.",
+        "sharedNote": "To je isti prekidač kao na web stranici i u kuhinjskoj aplikaciji: pauzirana usluga pauzirana je svugdje, a sve se automatski nastavlja kad vrijeme istekne.",
+        "greetingLabel": "Poruka o zatvaranju (neobavezno)",
+        "greetingPlaceholder": "npr. Večeras smo zatvoreni zbog privatnog događaja — vraćamo se sutra u 11!",
+        "greetingHint": "Izgovara se pozivateljima u pozdravu umjesto automatske obavijesti dok je nešto pauzirano. Čuva se za sljedeći put — obrišite ga za povratak na automatsku obavijest.",
+        "greetingSave": "Spremi poruku",
+        "greetingSaved": "Poruka o zatvaranju spremljena.",
+        "greetingSaveError": "Poruku nije bilo moguće spremiti.",
+        "chipOne": "{service} pauzirano do {time}",
+        "chipMany": "Pauzirane usluge: {count}"
       }
     },
     "customerDetailPage": {

@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Spør om parkering",
         "goLiveTryOrder": "Prøv å legge inn en avhentingsbestilling",
         "goLiveHint": "Når du er fornøyd, slå på bryteren ovenfor for å begynne å ta imot ekte samtaler."
+      },
+      "closure": {
+        "title": "Midlertidig stenging",
+        "description": "Sett tjenester på pause ved pause, rush eller et privat arrangement. Nabil fortsetter å svare — innringere får beskjed med en gang og kan bestille det som fortsatt går.",
+        "pauseEverything": "Velg alle",
+        "selectNone": "Fjern valg",
+        "pause1h": "1 time",
+        "pause6h": "6 timer",
+        "pause12h": "12 timer",
+        "untilTomorrow": "Til i morgen",
+        "untilMonday": "Til mandag",
+        "custom": "Egendefinert…",
+        "customApply": "Pause til dette tidspunktet",
+        "customDate": "Dato",
+        "customTime": "Tidspunkt",
+        "customHint": "Restaurantens lokale tid.",
+        "pausedToast": "Satt på pause — allerede neste anrop hører det.",
+        "resumedToast": "Gjenopptatt — neste anrop er tilbake til normalt.",
+        "sharedNote": "Det er samme bryter som på nettsiden og kjøkkenappen: en pauset tjeneste er satt på pause overalt, og alt gjenopptas automatisk når tiden er ute.",
+        "greetingLabel": "Stengemelding (valgfri)",
+        "greetingPlaceholder": "f.eks. Vi er stengt i kveld pga. et privat arrangement — tilbake i morgen kl. 11!",
+        "greetingHint": "Sies til innringere i hilsenen i stedet for den automatiske meldingen mens noe er på pause. Beholdes til neste gang — tøm feltet for å bruke den automatiske meldingen igjen.",
+        "greetingSave": "Lagre melding",
+        "greetingSaved": "Stengemelding lagret.",
+        "greetingSaveError": "Kunne ikke lagre meldingen.",
+        "chipOne": "{service} på pause til {time}",
+        "chipMany": "{count} tjenester på pause"
       }
     },
     "customerDetailPage": {

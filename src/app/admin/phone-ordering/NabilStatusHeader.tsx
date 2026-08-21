@@ -1,29 +1,47 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { PhoneOutgoing } from "lucide-react";
+import { PhoneOutgoing, Pause } from "lucide-react";
 
 /**
  * Number + live status strip shown above the tabs on every Nabil dashboard
  * tab: the "Active — handling calls" green dot, the master Enable toggle
- * (reuses the existing /api/admin/phone-ordering PATCH) and a "test call"
- * hint with a tel: link to the restaurant's own Nabil number.
+ * (reuses the existing /api/admin/phone-ordering PATCH), a "test call"
+ * hint with a tel: link — and, whenever a service is paused (Temporary
+ * Closure), an amber chip naming it, linking to the Settings card. The pause
+ * itself lives on Restaurant (*PausedUntil, shared with website + kitchen).
  */
 export default function NabilStatusHeader({
   initialEnabled,
   phoneNumber,
+  pausedServices = [],
+  hoursFormat = "12h",
 }: {
   initialEnabled: boolean;
   phoneNumber: string | null;
+  pausedServices?: Array<{ service: string; until: string }>;
+  hoursFormat?: "12h" | "24h";
 }) {
   const t = useTranslations("admin.phoneOrderingPage.overview");
   const tc = useTranslations("admin.phoneOrderingPage.config");
+  const tp = useTranslations("admin.phoneOrderingPage.closure");
+  const tSvc = useTranslations("admin.services");
   const router = useRouter();
   const [enabled, setEnabled] = useState(initialEnabled);
   const [saving, setSaving] = useState(false);
+
+  const untilLabel = (iso: string) => {
+    const d = new Date(iso);
+    const sameDay = d.toDateString() === new Date().toDateString();
+    const hourCycle = hoursFormat === "24h" ? ("h23" as const) : ("h12" as const);
+    return sameDay
+      ? d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit", hourCycle })
+      : d.toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hourCycle });
+  };
 
   const toggle = async () => {
     const next = !enabled;
@@ -72,6 +90,17 @@ export default function NabilStatusHeader({
             <PhoneOutgoing className="w-3.5 h-3.5" />
             {t("testCall")}
           </a>
+        )}
+        {pausedServices.length > 0 && (
+          <Link
+            href="?tab=settings"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-amber-300 bg-amber-50 text-amber-900 text-xs font-semibold hover:bg-amber-100 transition"
+          >
+            <Pause className="w-3 h-3" />
+            {pausedServices.length === 1
+              ? tp("chipOne", { service: tSvc(pausedServices[0].service), time: untilLabel(pausedServices[0].until) })
+              : tp("chipMany", { count: pausedServices.length })}
+          </Link>
         )}
       </div>
       <label className="flex items-center gap-3 cursor-pointer">

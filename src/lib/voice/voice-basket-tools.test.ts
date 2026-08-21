@@ -1368,3 +1368,86 @@ describe("set_fulfilment: a full address the check can't place is read back and 
     expect(String(partial.instruction)).toContain("Ask for the city");
   });
 });
+
+/* ══════════════════ temporary closure (owner pause) gates ══════════════════ */
+
+describe("temporary closure (owner pause) gates", () => {
+  const FUTURE = new Date(Date.now() + 3600_000).toISOString();
+  const PAST = new Date(Date.now() - 3600_000).toISOString();
+  const PAUSED = { offered: true, pausedNow: true, pausedUntil: FUTURE, resumesLocal: "this evening at 8:00 PM" };
+  const OPEN = { offered: true, pausedNow: false };
+
+  it("set_fulfilment refuses a paused delivery BEFORE address/cart work, naming pickup + the resume time", async () => {
+    const { ctx, api } = makeCtx();
+    ctx.services = { pickup: OPEN, delivery: PAUSED };
+    const r = await run(ctx, "set_fulfilment", { type: "delivery", street: "1166 McEachern" });
+    expect(r.error).toBe(true);
+    expect(r.code).toBe("service_paused");
+    expect(r.notSet).toBe(true);
+    expect(r.alternatives).toEqual(["pickup"]);
+    expect(r.resumesLocal).toBe("this evening at 8:00 PM");
+    expect(String(r.message)).toContain("Offer pickup instead");
+    expect(ctx.cart.fulfilment().type).not.toBe("delivery");
+    expect(api.checkAddress).not.toHaveBeenCalled();
+  });
+
+  it("paused pickup mirrors: refuses and offers delivery", async () => {
+    const { ctx } = makeCtx();
+    ctx.services = { pickup: PAUSED, delivery: OPEN };
+    const r = await run(ctx, "set_fulfilment", { type: "pickup" });
+    expect(r.code).toBe("service_paused");
+    expect(r.alternatives).toEqual(["delivery"]);
+  });
+
+  it("no alternative when the other channel is not offered", async () => {
+    const { ctx } = makeCtx();
+    ctx.services = { pickup: { offered: false, pausedNow: false }, delivery: PAUSED };
+    const r = await run(ctx, "set_fulfilment", { type: "delivery", street: "1166 McEachern" });
+    expect(r.code).toBe("service_paused");
+    expect(r.alternatives).toEqual([]);
+    expect(String(r.message)).toContain("No orders can be taken right now");
+  });
+
+  it("an EXPIRED pause self-heals mid-call (timestamp beats a stale pausedNow)", async () => {
+    const { ctx, api } = makeCtx();
+    ctx.services = { pickup: OPEN, delivery: { offered: true, pausedNow: true, pausedUntil: PAST, resumesLocal: "earlier" } };
+    const r = await run(ctx, "set_fulfilment", { type: "delivery", street: "1166 McEachern" });
+    expect(r.code).not.toBe("service_paused");
+    expect(api.checkAddress).toHaveBeenCalled();
+  });
+
+  it("absent ctx.services (older Vercel payload) does not gate", async () => {
+    const { ctx } = makeCtx();
+    const r = await run(ctx, "set_fulfilment", { type: "delivery", street: "1166 McEachern" });
+    expect(r.code).not.toBe("service_paused");
+  });
+
+  it("quote_order maps the /api/orders 423 into the same refusal (mid-call pause flip)", async () => {
+    const { ctx, api } = makeCtx();
+    await addPizza(ctx);
+    await ready(ctx); // pickup fulfilment set BEFORE the pause lands
+    ctx.services = { pickup: PAUSED, delivery: OPEN };
+    api.dryRunOrder.mockResolvedValue({ ok: false, status: 423, json: { code: "service_paused", resumesAtIso: FUTURE } });
+    const r = await run(ctx, "quote_order");
+    expect(r.error).toBe(true);
+    expect(r.code).toBe("service_paused");
+    expect(r.notQuoted).toBe(true);
+    expect(r.resumesAtIso).toBe(FUTURE);
+    expect(r.alternatives).toEqual(["delivery"]);
+  });
+
+  it("place_order 423 carries resumesAtIso + alternatives and stays not-placed", async () => {
+    const { ctx, api } = makeCtx();
+    await addPizza(ctx);
+    await ready(ctx);
+    await run(ctx, "quote_order");
+    ctx.services = { pickup: PAUSED, delivery: OPEN };
+    api.placeOrder.mockResolvedValue({ ok: false, status: 423, json: { code: "service_paused", resumesAtIso: FUTURE } });
+    const r = await run(ctx, "place_order");
+    expect(r.code).toBe("service_paused");
+    expect(r.notPlaced).toBe(true);
+    expect(r.resumesAtIso).toBe(FUTURE);
+    expect(r.alternatives).toEqual(["delivery"]);
+    expect(String(r.message)).toContain("Offer delivery instead");
+  });
+});

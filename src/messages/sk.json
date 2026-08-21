@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Opýtajte sa na parkovanie",
         "goLiveTryOrder": "Skúste zadať objednávku na vyzdvihnutie",
         "goLiveHint": "Keď budete spokojní, zapnite prepínač vyššie a začnite prijímať skutočné hovory."
+      },
+      "closure": {
+        "title": "Dočasné zatvorenie",
+        "description": "Pozastavte služby počas prestávky, náporu alebo súkromnej akcie. Nabil ďalej dvíha telefón — volajúci sa hneď dozvedia, čo je pozastavené, a môžu si objednať to, čo funguje.",
+        "pauseEverything": "Vybrať všetko",
+        "selectNone": "Zrušiť výber",
+        "pause1h": "1 hodina",
+        "pause6h": "6 hodín",
+        "pause12h": "12 hodín",
+        "untilTomorrow": "Do zajtra",
+        "untilMonday": "Do pondelka",
+        "custom": "Vlastné…",
+        "customApply": "Pozastaviť do tohto času",
+        "customDate": "Dátum",
+        "customTime": "Čas",
+        "customHint": "Miestny čas reštaurácie.",
+        "pausedToast": "Pozastavené — už najbližší hovor to bude počuť.",
+        "resumedToast": "Obnovené — najbližší hovor je opäť normálny.",
+        "sharedNote": "Je to ten istý prepínač ako na webe a v kuchynskej aplikácii: pozastavená služba je pozastavená všade a po uplynutí času sa všetko samo obnoví.",
+        "greetingLabel": "Správa o zatvorení (voliteľné)",
+        "greetingPlaceholder": "napr. Dnes večer máme súkromnú akciu — zajtra o 11 sme späť!",
+        "greetingHint": "Zaznie volajúcim v pozdrave namiesto automatického oznámenia, kým je niečo pozastavené. Uloží sa na nabudúce — vymazaním sa vráti automatické oznámenie.",
+        "greetingSave": "Uložiť správu",
+        "greetingSaved": "Správa o zatvorení uložená.",
+        "greetingSaveError": "Správu sa nepodarilo uložiť.",
+        "chipOne": "{service} pozastavené do {time}",
+        "chipMany": "Pozastavené služby: {count}"
       }
     },
     "customerDetailPage": {

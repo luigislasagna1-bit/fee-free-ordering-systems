@@ -20,7 +20,7 @@ const BOOL_FIELDS = [
   "smsConfirmations", "recordCalls",
 ] as const;
 const STR_FIELDS = [
-  "openGreeting", "closedGreeting", "primaryLanguage", "ttsProvider", "sttProvider",
+  "openGreeting", "closedGreeting", "pauseGreeting", "primaryLanguage", "ttsProvider", "sttProvider",
   "voice", "transferToNumber", "afterHoursBehavior", "pickupPaymentMode",
   "deliveryPaymentMode", "payByLinkPrepMode", "agentName",
 ] as const;
@@ -71,6 +71,9 @@ export async function PATCH(req: NextRequest) {
         if (AFTER_HOURS.has(v)) data[k] = v;
       } else if (k === "openGreeting" || k === "closedGreeting") {
         data[k] = v.slice(0, 200); // ≤200 chars, matches the ConversationRelay greeting
+      } else if (k === "pauseGreeting") {
+        // Temporary Closure message — empty ⇒ null (auto-composed notice used).
+        data[k] = v ? v.slice(0, 200) : null;
       } else if (k === "agentName") {
         data[k] = v ? v.slice(0, 40) : null; // empty ⇒ null ⇒ voice service falls back to "Nabil"
       } else if (k === "voice") {

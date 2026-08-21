@@ -5120,6 +5120,33 @@
         "goLiveTryParking": "Ask about parking",
         "goLiveTryOrder": "Try placing a pickup order",
         "goLiveHint": "When you're happy with what you hear, flip the switch above to start taking real calls."
+      },
+      "closure": {
+        "title": "Temporary Closure",
+        "description": "Pause services for a break, a rush, or a private event. Nabil keeps answering — callers are told right away what's paused and can still order what's running.",
+        "pauseEverything": "Select all",
+        "selectNone": "Clear selection",
+        "pause1h": "1 hour",
+        "pause6h": "6 hours",
+        "pause12h": "12 hours",
+        "untilTomorrow": "Until tomorrow",
+        "untilMonday": "Until Monday",
+        "custom": "Custom…",
+        "customApply": "Pause until this time",
+        "customDate": "Date",
+        "customTime": "Time",
+        "customHint": "Restaurant's local time.",
+        "pausedToast": "Paused — the very next call will hear it.",
+        "resumedToast": "Resumed — the next call is back to normal.",
+        "sharedNote": "This is the same switch as your website and kitchen app: a paused service is paused everywhere, and everything resumes automatically when the time runs out.",
+        "greetingLabel": "Closure message (optional)",
+        "greetingPlaceholder": "e.g. We're closed for a private event tonight — back tomorrow at 11!",
+        "greetingHint": "Spoken to callers in the greeting instead of the automatic notice while anything is paused. Kept for next time — clear it to use the automatic notice again.",
+        "greetingSave": "Save message",
+        "greetingSaved": "Closure message saved.",
+        "greetingSaveError": "Couldn't save the message.",
+        "chipOne": "{service} paused until {time}",
+        "chipMany": "{count} services paused"
       }
     },
     "reportOrdersList": {

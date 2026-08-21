@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Paklauskite apie stovėjimo aikštelę",
         "goLiveTryOrder": "Pabandykite pateikti atsiėmimo užsakymą",
         "goLiveHint": "Kai būsite patenkinti, įjunkite jungiklį aukščiau, kad pradėtumėte priimti tikrus skambučius."
+      },
+      "closure": {
+        "title": "Laikinas uždarymas",
+        "description": "Pristabdykite paslaugas pertraukai, piko metui ar privačiam renginiui. Nabil toliau atsiliepia — skambinantieji iškart sužino, kas pristabdyta, ir gali užsisakyti tai, kas veikia.",
+        "pauseEverything": "Pasirinkti viską",
+        "selectNone": "Išvalyti pasirinkimą",
+        "pause1h": "1 valanda",
+        "pause6h": "6 valandos",
+        "pause12h": "12 valandų",
+        "untilTomorrow": "Iki rytojaus",
+        "untilMonday": "Iki pirmadienio",
+        "custom": "Pasirinktinis…",
+        "customApply": "Pristabdyti iki šio laiko",
+        "customDate": "Data",
+        "customTime": "Laikas",
+        "customHint": "Restorano vietos laikas.",
+        "pausedToast": "Pristabdyta — jau kitas skambutis tai išgirs.",
+        "resumedToast": "Atnaujinta — kitas skambutis vėl įprastas.",
+        "sharedNote": "Tai tas pats jungiklis kaip svetainėje ir virtuvės programėlėje: pristabdyta paslauga pristabdyta visur, o laikui pasibaigus viskas atsinaujina automatiškai.",
+        "greetingLabel": "Uždarymo žinutė (neprivaloma)",
+        "greetingPlaceholder": "pvz. Šįvakar uždaryta dėl privataus renginio — grįžtame rytoj 11 val.!",
+        "greetingHint": "Kol kas nors pristabdyta, skambinantiesiems pasisveikinime sakoma ši žinutė vietoj automatinio pranešimo. Išsaugoma kitam kartui — ištrinkite, kad grįžtų automatinis pranešimas.",
+        "greetingSave": "Išsaugoti žinutę",
+        "greetingSaved": "Uždarymo žinutė išsaugota.",
+        "greetingSaveError": "Nepavyko išsaugoti žinutės.",
+        "chipOne": "{service} pristabdyta iki {time}",
+        "chipMany": "Pristabdytos paslaugos: {count}"
       }
     },
     "customerDetailPage": {

@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Întrebați despre parcare",
         "goLiveTryOrder": "Încercați să plasați o comandă pentru ridicare",
         "goLiveHint": "Când sunteți mulțumit, activați comutatorul de mai sus pentru a prelua apeluri reale."
+      },
+      "closure": {
+        "title": "Închidere temporară",
+        "description": "Puneți pe pauză servicii pentru o pauză, un vârf de activitate sau un eveniment privat. Nabil răspunde în continuare — apelanții află imediat ce este în pauză și pot comanda ce funcționează.",
+        "pauseEverything": "Selectează tot",
+        "selectNone": "Golește selecția",
+        "pause1h": "1 oră",
+        "pause6h": "6 ore",
+        "pause12h": "12 ore",
+        "untilTomorrow": "Până mâine",
+        "untilMonday": "Până luni",
+        "custom": "Personalizat…",
+        "customApply": "Pauză până la această oră",
+        "customDate": "Data",
+        "customTime": "Ora",
+        "customHint": "Ora locală a restaurantului.",
+        "pausedToast": "În pauză — chiar următorul apel va auzi anunțul.",
+        "resumedToast": "Reluat — următorul apel revine la normal.",
+        "sharedNote": "Este același întrerupător ca pe site și în aplicația de bucătărie: un serviciu în pauză e în pauză peste tot, iar totul se reia automat când expiră timpul.",
+        "greetingLabel": "Mesaj de închidere (opțional)",
+        "greetingPlaceholder": "ex. În seara asta suntem închiși pentru un eveniment privat — revenim mâine la 11!",
+        "greetingHint": "Este rostit apelanților în salut, în locul anunțului automat, cât timp ceva este în pauză. Rămâne salvat pentru data viitoare — ștergeți-l pentru a reveni la anunțul automat.",
+        "greetingSave": "Salvează mesajul",
+        "greetingSaved": "Mesajul de închidere a fost salvat.",
+        "greetingSaveError": "Mesajul nu a putut fi salvat.",
+        "chipOne": "{service} în pauză până la {time}",
+        "chipMany": "{count} servicii în pauză"
       }
     },
     "customerDetailPage": {

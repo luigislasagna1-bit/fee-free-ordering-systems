@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "駐車場について聞いてみる",
         "goLiveTryOrder": "受け取り注文を試してみる",
         "goLiveHint": "満足したら、上のスイッチをオンにして本番の電話対応を開始してください。"
+      },
+      "closure": {
+        "title": "一時休止",
+        "description": "休憩・混雑・貸切イベントの間、サービスを一時停止できます。Nabil は応答を続け、何が停止中かをすぐに伝え、動いているサービスの注文は受け付けます。",
+        "pauseEverything": "すべて選択",
+        "selectNone": "選択を解除",
+        "pause1h": "1時間",
+        "pause6h": "6時間",
+        "pause12h": "12時間",
+        "untilTomorrow": "明日まで",
+        "untilMonday": "月曜まで",
+        "custom": "カスタム…",
+        "customApply": "この時刻まで一時停止",
+        "customDate": "日付",
+        "customTime": "時刻",
+        "customHint": "レストランの現地時間です。",
+        "pausedToast": "一時停止しました — 次の着信からすぐ案内されます。",
+        "resumedToast": "再開しました — 次の着信から通常どおりです。",
+        "sharedNote": "ウェブサイトやキッチンアプリと同じスイッチです。一時停止したサービスはすべての場所で停止し、時間が来ればすべて自動的に再開します。",
+        "greetingLabel": "休止メッセージ（任意）",
+        "greetingPlaceholder": "例：本日夜は貸切営業のため休止中です。明日11時に再開します！",
+        "greetingHint": "何かが一時停止中の間、自動アナウンスの代わりに挨拶でこのメッセージを読み上げます。次回のために保存されます。空にすると自動アナウンスに戻ります。",
+        "greetingSave": "メッセージを保存",
+        "greetingSaved": "休止メッセージを保存しました。",
+        "greetingSaveError": "メッセージを保存できませんでした。",
+        "chipOne": "{service}は{time}まで一時停止中",
+        "chipMany": "{count}件のサービスが一時停止中"
       }
     },
     "customerDetailPage": {

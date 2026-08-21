@@ -527,6 +527,9 @@ export class CallSession {
         this.api.returningCaller(this.token.slug, this.token.from).catch(() => ({ found: false })),
       ]);
       this.ctx.cashDeliveryBlocked = !!context?.delivery?.cashDeliveryBlocked;
+      // Owner service pauses (Temporary Closure) — the set_fulfilment gate
+      // reads these so a paused channel is refused before the order is built.
+      this.ctx.services = context?.services ?? null;
       this.ctx.cfg = normalizeAgentConfig(context?.config);
       if (this.token.isDemo && (!this.ctx.cfg.maxCallSeconds || this.ctx.cfg.maxCallSeconds > 240)) {
         this.ctx.cfg.maxCallSeconds = 240;

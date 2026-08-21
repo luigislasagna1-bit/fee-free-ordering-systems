@@ -26,6 +26,8 @@ import { priceOrder, resolveSimAddress, type OrderBody } from "./fake-pricer";
 
 export type FakeBackendOpts = {
   open?: boolean;
+  /** Owner service pauses (Temporary Closure) — patched into context.services. */
+  paused?: Partial<Record<"pickup" | "delivery", { pausedUntil?: string; resumesLocal?: string }>>;
   soldOut?: string[];
   returningCaller?: unknown;
   latencyMs?: number;
@@ -140,6 +142,19 @@ export function createFakeBackend(snapshot: MenuSnapshot, opts: FakeBackendOpts 
           c.open.isOpenNow = opts.open;
           if (opts.open && c.open.status?.kind !== "open") c.open.status = { kind: "open", closesAt: "11:00 PM" };
           if (!opts.open && c.open.status?.kind === "open") c.open.status = { kind: "closed_today" };
+        }
+        if (opts.paused) {
+          c.services = c.services ?? {};
+          for (const k of ["pickup", "delivery"] as const) {
+            const p = opts.paused[k];
+            if (!p) continue;
+            c.services[k] = {
+              ...(c.services[k] ?? { offered: true }),
+              pausedNow: true,
+              ...(p.pausedUntil ? { pausedUntil: p.pausedUntil } : {}),
+              ...(p.resumesLocal ? { resumesLocal: p.resumesLocal } : {}),
+            };
+          }
         }
         c.config = { ...(c.config ?? {}), ...(opts.config ?? {}) };
         return c;

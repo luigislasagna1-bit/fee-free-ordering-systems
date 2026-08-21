@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Fråga om parkering",
         "goLiveTryOrder": "Prova att lägga en avhämtningsbeställning",
         "goLiveHint": "När du är nöjd, slå på reglaget ovan för att börja ta emot riktiga samtal."
+      },
+      "closure": {
+        "title": "Tillfällig stängning",
+        "description": "Pausa tjänster för en paus, en rusning eller ett privat evenemang. Nabil fortsätter att svara — de som ringer får veta direkt vad som är pausat och kan beställa det som är igång.",
+        "pauseEverything": "Välj alla",
+        "selectNone": "Rensa val",
+        "pause1h": "1 timme",
+        "pause6h": "6 timmar",
+        "pause12h": "12 timmar",
+        "untilTomorrow": "Till i morgon",
+        "untilMonday": "Till måndag",
+        "custom": "Anpassat…",
+        "customApply": "Pausa till denna tid",
+        "customDate": "Datum",
+        "customTime": "Tid",
+        "customHint": "Restaurangens lokala tid.",
+        "pausedToast": "Pausat — redan nästa samtal hör det.",
+        "resumedToast": "Återupptaget — nästa samtal är som vanligt igen.",
+        "sharedNote": "Det är samma reglage som på webbplatsen och köksappen: en pausad tjänst är pausad överallt, och allt återupptas automatiskt när tiden går ut.",
+        "greetingLabel": "Stängningsmeddelande (valfritt)",
+        "greetingPlaceholder": "t.ex. Vi har stängt i kväll för ett privat evenemang — tillbaka i morgon kl. 11!",
+        "greetingHint": "Sägs till dem som ringer i hälsningen i stället för det automatiska meddelandet medan något är pausat. Sparas till nästa gång — rensa för att använda det automatiska meddelandet igen.",
+        "greetingSave": "Spara meddelande",
+        "greetingSaved": "Stängningsmeddelande sparat.",
+        "greetingSaveError": "Kunde inte spara meddelandet.",
+        "chipOne": "{service} pausad till {time}",
+        "chipMany": "{count} tjänster pausade"
       }
     },
     "customerDetailPage": {

@@ -65,6 +65,10 @@ export type Scenario = {
   taxonomy: string[];
   backend?: {
     open?: boolean;
+    /** Owner service pauses (Temporary Closure). Omit `pausedUntil` in
+     *  committed scenarios so the timestamp gate never self-heals the pause
+     *  as wall-clock time passes — bare `pausedNow` gates forever. */
+    paused?: Partial<Record<"pickup" | "delivery", { pausedUntil?: string; resumesLocal?: string }>>;
     soldOut?: string[]; // menuItemIds forced sold out
     returningCaller?: unknown;
     /** ms of latency added to every backend call (tests the filler + timeouts). */

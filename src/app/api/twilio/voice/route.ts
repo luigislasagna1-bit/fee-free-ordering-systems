@@ -10,6 +10,7 @@ import { liveOpenStatus } from "@/lib/restaurant-hours";
 import { holidayEffectToday } from "@/lib/holiday-rules";
 import { rememberFallbackNumber, safetyNetTwiml } from "@/lib/voice/twiml-safety-net";
 import { primeFallbackNumbers } from "@/lib/voice/fallback-memo-prime";
+import { buildPauseAnnouncement } from "@/lib/voice/pause-announcement";
 import { reportError } from "@/lib/report-error";
 
 /**
@@ -255,6 +256,12 @@ async function handle(req: NextRequest, params: Record<string, string>) {
               alertPhone: true,
               timezone: true, hoursFormat: true,
               openingHours: true, holidays: true,
+              // Temporary Closure — the greeting announces a paused order
+              // channel up front (Luigi 2026-08-20), so the caller hears it
+              // before saying a word. Read fresh per call: a pause set in the
+              // dashboard reaches the very next call.
+              acceptsPickup: true, acceptsDelivery: true, acceptsReservations: true,
+              pickupPausedUntil: true, deliveryPausedUntil: true, reservationsPausedUntil: true,
               voiceAgentConfig: true,
             },
           },
@@ -380,6 +387,8 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   const live = liveOpenStatus(restaurant.openingHours as never, new Date(), fmt, todayHol, tz);
   const isOpen = live.kind === "open";
 
+  const lang = restaurant.defaultLanguage || cfg.primaryLanguage || "en";
+
   const openGreeting = (cfg.openGreeting || `Thanks for calling ${restaurant.name}. How can I help you?`).trim();
   const closedGreeting =
     (cfg.closedGreeting || `Thanks for calling ${restaurant.name}. We're currently closed, but I can still help.`).trim();
@@ -387,9 +396,27 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   // Consent: prepend a short "may be recorded" notice when recording is on
   // (the owner enabled it). Keeps two-party-consent jurisdictions covered.
   const notice = cfg.recordCalls ? "This call may be recorded for quality and training. " : "";
-  const greeting = notice + baseGreeting;
-
-  const lang = restaurant.defaultLanguage || cfg.primaryLanguage || "en";
+  // Temporary Closure (Luigi 2026-08-20): a paused order channel is announced
+  // IN the greeting — deterministic, before the model says a word — so a
+  // caller wanting delivery hears "delivery is paused, pickup is available"
+  // immediately. Only while open: closedGreeting already frames a closed
+  // store, and the volatile prompt carries the closed+paused interplay. The
+  // owner's own pauseGreeting (Temporary Closure card) replaces the auto
+  // sentence. The caller can barge over the greeting, so the prompt ALSO
+  // mandates restating the pause in the first substantive reply.
+  const pauseLine = isOpen
+    ? buildPauseAnnouncement({
+        pickup: { offered: restaurant.acceptsPickup, pausedUntil: restaurant.pickupPausedUntil },
+        delivery: { offered: restaurant.acceptsDelivery, pausedUntil: restaurant.deliveryPausedUntil },
+        reservations: { offered: restaurant.acceptsReservations, pausedUntil: restaurant.reservationsPausedUntil },
+        timezone: restaurant.timezone,
+        hoursFormat: fmt,
+        lang,
+        customGreeting: cfg.pauseGreeting,
+        canBookReservations: cfg.canBookReservations,
+      })
+    : "";
+  const greeting = notice + baseGreeting + (pauseLine ? ` ${pauseLine}` : "");
 
   // Domain-biased ASR (the biggest accuracy lever we own): feed the LIVE menu
   // vocabulary — item names AND topping/crust/sauce names — to Deepgram via the

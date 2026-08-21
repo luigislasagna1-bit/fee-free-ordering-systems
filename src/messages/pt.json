@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Pergunte pelo estacionamento",
         "goLiveTryOrder": "Experimente fazer um pedido para levantamento",
         "goLiveHint": "Quando estiver satisfeito, ative o interruptor acima para começar a receber chamadas reais."
+      },
+      "closure": {
+        "title": "Encerramento temporário",
+        "description": "Pause serviços para uma pausa, um pico de trabalho ou um evento privado. O Nabil continua a atender — quem liga fica logo a saber o que está em pausa e pode pedir o que continua ativo.",
+        "pauseEverything": "Selecionar tudo",
+        "selectNone": "Limpar seleção",
+        "pause1h": "1 hora",
+        "pause6h": "6 horas",
+        "pause12h": "12 horas",
+        "untilTomorrow": "Até amanhã",
+        "untilMonday": "Até segunda-feira",
+        "custom": "Personalizado…",
+        "customApply": "Pausar até esta hora",
+        "customDate": "Data",
+        "customTime": "Hora",
+        "customHint": "Hora local do restaurante.",
+        "pausedToast": "Em pausa — já a próxima chamada o ouvirá.",
+        "resumedToast": "Retomado — a próxima chamada volta ao normal.",
+        "sharedNote": "É o mesmo interruptor do site e da app de cozinha: um serviço em pausa fica em pausa em todo o lado, e tudo retoma automaticamente quando o tempo termina.",
+        "greetingLabel": "Mensagem de encerramento (opcional)",
+        "greetingPlaceholder": "ex. Esta noite estamos fechados para um evento privado — voltamos amanhã às 11!",
+        "greetingHint": "É dito a quem liga na saudação, em vez do aviso automático, enquanto algo estiver em pausa. Fica guardado para a próxima vez — apague-o para voltar ao aviso automático.",
+        "greetingSave": "Guardar mensagem",
+        "greetingSaved": "Mensagem de encerramento guardada.",
+        "greetingSaveError": "Não foi possível guardar a mensagem.",
+        "chipOne": "{service} em pausa até às {time}",
+        "chipMany": "{count} serviços em pausa"
       }
     },
     "customerDetailPage": {

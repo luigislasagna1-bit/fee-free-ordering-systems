@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Hỏi về chỗ đỗ xe",
         "goLiveTryOrder": "Thử đặt một đơn hàng mang đi",
         "goLiveHint": "Khi bạn hài lòng, hãy bật công tắc phía trên để bắt đầu nhận cuộc gọi thật."
+      },
+      "closure": {
+        "title": "Tạm đóng cửa",
+        "description": "Tạm dừng dịch vụ khi nghỉ giải lao, lúc cao điểm hoặc sự kiện riêng. Nabil vẫn trả lời — người gọi được báo ngay dịch vụ nào đang tạm dừng và vẫn đặt được dịch vụ còn hoạt động.",
+        "pauseEverything": "Chọn tất cả",
+        "selectNone": "Bỏ chọn",
+        "pause1h": "1 giờ",
+        "pause6h": "6 giờ",
+        "pause12h": "12 giờ",
+        "untilTomorrow": "Đến ngày mai",
+        "untilMonday": "Đến thứ Hai",
+        "custom": "Tùy chỉnh…",
+        "customApply": "Tạm dừng đến thời điểm này",
+        "customDate": "Ngày",
+        "customTime": "Giờ",
+        "customHint": "Theo giờ địa phương của nhà hàng.",
+        "pausedToast": "Đã tạm dừng — cuộc gọi kế tiếp sẽ nghe thông báo ngay.",
+        "resumedToast": "Đã mở lại — cuộc gọi kế tiếp trở lại bình thường.",
+        "sharedNote": "Đây là cùng một công tắc với trang web và ứng dụng bếp: dịch vụ tạm dừng sẽ dừng ở mọi nơi, và mọi thứ tự động hoạt động lại khi hết giờ.",
+        "greetingLabel": "Lời nhắn khi đóng cửa (không bắt buộc)",
+        "greetingPlaceholder": "vd: Tối nay chúng tôi đóng cửa vì sự kiện riêng — mai 11 giờ mở lại!",
+        "greetingHint": "Được đọc cho người gọi trong lời chào thay cho thông báo tự động khi có dịch vụ tạm dừng. Được lưu cho lần sau — xóa để dùng lại thông báo tự động.",
+        "greetingSave": "Lưu lời nhắn",
+        "greetingSaved": "Đã lưu lời nhắn khi đóng cửa.",
+        "greetingSaveError": "Không thể lưu lời nhắn.",
+        "chipOne": "{service} tạm dừng đến {time}",
+        "chipMany": "{count} dịch vụ đang tạm dừng"
       }
     },
     "customerDetailPage": {

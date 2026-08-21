@@ -72,4 +72,53 @@ export const R01: Scenario = {
   },
 };
 
-export const REGRESSION: Scenario[] = [R01];
+/**
+ * Temporary Closure (Luigi 2026-08-20): delivery paused from the Nabil
+ * dashboard. Nabil must announce the pause unprompted, never take a delivery
+ * order, offer pickup, and complete the order as pickup. `paused` carries only
+ * `resumesLocal` (no timestamp) so the committed scenario never self-heals as
+ * wall-clock time passes.
+ */
+export const R02: Scenario = {
+  id: "R_pause_delivery",
+  title: "Delivery paused → announce it, refuse delivery, complete a pickup order",
+  suite: ["regression"],
+  restaurant: L.restaurant,
+  taxonomy: ["regression", "pause", "fulfilment", "pickup"],
+  backend: { paused: { delivery: { resumesLocal: "this evening at 8:00 PM" } } },
+  caller: {
+    mode: "script",
+    turns: [
+      "Hi, I'd like a large pizza with pepperoni for delivery please.",
+      { say: "Oh okay — pickup works then.", ifAsked: { "paused|pick ?up|delivery|instead": "Oh okay — pickup works then." } },
+      "That's everything.",
+      "Yes, place it.",
+    ] satisfies CallerTurn[],
+    answers: {
+      ...DA(),
+      "pick ?up or delivery|delivery or pick ?up|for pickup or": "Pickup, please.",
+    },
+    maxTurns: 24,
+  },
+  expected: {
+    cart: {
+      lines: [
+        {
+          item: L.large1,
+          // Same price for the same toppings across the 1/2/3-topping SKUs —
+          // the known duplicate-menu-item coin flip (T12/T19 class).
+          itemAlt: [L.large2, L.large3],
+          qty: 1,
+          options: [],
+          halves: { left: [], right: [], whole: ["pepperoni"] },
+        },
+      ],
+    },
+    fulfilment: { type: "pickup" },
+    customer: { name: "Sam" },
+    mustPlace: true,
+    mustSay: ["delivery[^.?!]*paused|paused[^.?!]*delivery|not\\s+doing\\s+delivery"],
+  },
+};
+
+export const REGRESSION: Scenario[] = [R01, R02];

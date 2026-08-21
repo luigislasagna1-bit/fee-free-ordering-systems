@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Küsige parkimise kohta",
         "goLiveTryOrder": "Proovige teha kaasavõtutellimus",
         "goLiveHint": "Kui olete rahul, lülitage ülal olev lüliti sisse, et hakata vastu võtma päris kõnesid."
+      },
+      "closure": {
+        "title": "Ajutine sulgemine",
+        "description": "Peata teenuseid pausi, tipptunni või eraürituse ajaks. Nabil vastab edasi — helistajatele öeldakse kohe, mis on peatatud, ja nad saavad tellida seda, mis töötab.",
+        "pauseEverything": "Vali kõik",
+        "selectNone": "Tühista valik",
+        "pause1h": "1 tund",
+        "pause6h": "6 tundi",
+        "pause12h": "12 tundi",
+        "untilTomorrow": "Homseni",
+        "untilMonday": "Esmaspäevani",
+        "custom": "Kohandatud…",
+        "customApply": "Peata selle ajani",
+        "customDate": "Kuupäev",
+        "customTime": "Kellaaeg",
+        "customHint": "Restorani kohalik aeg.",
+        "pausedToast": "Peatatud — juba järgmine kõne kuuleb seda.",
+        "resumedToast": "Taastatud — järgmine kõne on jälle tavaline.",
+        "sharedNote": "See on sama lüliti mis veebilehel ja köögirakenduses: peatatud teenus on peatatud kõikjal ning kõik taastub automaatselt, kui aeg saab läbi.",
+        "greetingLabel": "Sulgemisteade (valikuline)",
+        "greetingPlaceholder": "nt Täna õhtul oleme eraürituse tõttu suletud — homme kell 11 tagasi!",
+        "greetingHint": "Öeldakse helistajatele tervituses automaatse teate asemel, kuni midagi on peatatud. Jääb järgmiseks korraks alles — kustuta, et taas automaatset teadet kasutada.",
+        "greetingSave": "Salvesta teade",
+        "greetingSaved": "Sulgemisteade salvestatud.",
+        "greetingSaveError": "Teadet ei õnnestunud salvestada.",
+        "chipOne": "{service} peatatud kuni {time}",
+        "chipMany": "{count} teenust peatatud"
       }
     },
     "customerDetailPage": {

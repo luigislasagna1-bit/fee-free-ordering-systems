@@ -1,9 +1,6 @@
 import prisma from "@/lib/db";
 import {
-  dateKeyInTimezone,
-  formatHour,
   liveOpenStatus,
-  localDowAndHHMM,
   statusForToday,
   nextOpenAt,
   type LiveOpenStatus,
@@ -32,7 +29,18 @@ import { shouldDispatchToShipday, shipdayPayAtDoorEnabled } from "@/lib/shipday"
 
 /* ─────────────────────────────── types ─────────────────────────────────── */
 
-export type VoiceServiceStatus = { offered: boolean; pausedNow: boolean };
+export type VoiceServiceStatus = {
+  offered: boolean;
+  pausedNow: boolean;
+  /** UTC ISO of the pause end — for machines (the tool gate compares it to
+   *  Date.now() so a pause that expires MID-CALL self-heals). Absent when not
+   *  paused; optional so older snapshots/fixtures stay valid. */
+  pausedUntil?: string | null;
+  /** The same moment in the restaurant's local time and words ("this evening
+   *  at 8:00 PM"), computed here like open.nextOpenLocal — a FACT, never left
+   *  to the model (see describeNextOpen). Absent when not paused. */
+  resumesLocal?: string | null;
+};
 
 export type VoiceContextZone = {
   name: string;
@@ -106,6 +114,12 @@ export type VoiceContextPayload = {
   };
   faqs: Array<{ q: string; a: string; category: string | null }>;
   upsells: Array<{ name: string; price: number; note: string | null }>;
+  /** Owner-written Temporary Closure message (VoiceAgentConfig.pauseGreeting),
+   *  spoken/relayed INSTEAD of the auto-composed pause notice while any service
+   *  is paused. Top-level (not in `config`) because it is live state the
+   *  volatile prompt block reads, not an agent behavior gate. Optional so older
+   *  snapshots/fixtures stay valid. */
+  pauseGreeting?: string | null;
 };
 
 export type VoiceContextError = { error: string; code: "missing_slug" | "not_found" };
@@ -116,54 +130,11 @@ export type VoiceContextResult =
 
 /* ─────────────────────────────── helpers ───────────────────────────────── */
 
-const WEEKDAY = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-/**
- * "tomorrow (Saturday) at 10:00 AM" — the next opening moment as the caller
- * would say it, in the RESTAURANT's timezone and its 12h/24h preference.
- *
- * WHY (2026-08-16, Luigi's 00:30 call): the prompt used to hand the model the
- * raw UTC ISO ("…T14:00:00Z") plus "say that in local time", and it answered
- * "we reopen at two o'clock this afternoon" — the UTC hour — for a store that
- * opens at 10. Timezone arithmetic is a fact, and facts are computed here.
- *
- * Pure and exported for the test. `today` / `tomorrow` are decided on local
- * calendar dates (not 24 h deltas), so a 00:30 call correctly says "tomorrow"
- * for a 10 AM opening even though it is only 9½ hours away.
- */
-export function describeNextOpen(
-  next: Date,
-  now: Date,
-  timezone: string | undefined,
-  format: "12h" | "24h",
-): string {
-  const tz = timezone || "UTC";
-  const { dow, hhmm } = localDowAndHHMM(next, tz);
-  const time = formatHour(hhmm, format) || hhmm;
-  let dayKeyNext: string;
-  let dayKeyNow: string;
-  let dayKeyTomorrow: string;
-  try {
-    dayKeyNext = dateKeyInTimezone(next, tz);
-    dayKeyNow = dateKeyInTimezone(now, tz);
-    // Local "tomorrow" = the local date 24 h from now (DST shifts by ±1 h can't
-    // move a date key by a whole day at any hour except exactly midnight, and a
-    // one-hour miss there still yields a correct weekday name below).
-    dayKeyTomorrow = dateKeyInTimezone(new Date(now.getTime() + 24 * 3600 * 1000), tz);
-  } catch {
-    return `${WEEKDAY[dow] ?? ""} at ${time}`.trim();
-  }
-  if (dayKeyNext === dayKeyNow) {
-    // Same local date. A 00:30 caller asking "for tomorrow" hears "this
-    // morning at 10:00 AM" — correct AND natural, where "today" would sound
-    // like a contradiction of what they just said.
-    const hour = parseInt(hhmm.slice(0, 2), 10);
-    const part = hour < 12 ? "this morning" : hour < 17 ? "this afternoon" : "this evening";
-    return `${part} at ${time}`;
-  }
-  if (dayKeyNext === dayKeyTomorrow) return `tomorrow (${WEEKDAY[dow]}) at ${time}`;
-  return `${WEEKDAY[dow]} at ${time}`;
-}
+// Extracted to its own prisma-free module (2026-08-20) so the Twilio greeting
+// composer + pure libs can use it without importing the DB client; re-exported
+// here so every existing import keeps working.
+export { describeNextOpen } from "./local-time-words";
+import { describeNextOpen } from "./local-time-words";
 
 /* ─────────────────────────────── builder ───────────────────────────────── */
 
@@ -221,6 +192,7 @@ export async function buildVoiceContextPayload(rawSlug: string): Promise<VoiceCo
         // that switched phone orders to prepaid saw nothing change.
         pickupPaymentMode: true,
         deliveryPaymentMode: true,
+        pauseGreeting: true,
       },
     }),
     prisma.voiceFaq.findMany({
@@ -259,7 +231,17 @@ export async function buildVoiceContextPayload(rawSlug: string): Promise<VoiceCo
   const nextOpen = nextOpenAt(hours, now, tz, holidays, null);
 
   const pausedNow = (until: Date | null) => !!until && until.getTime() > now.getTime();
-  const svc = (offered: boolean, until: Date | null): VoiceServiceStatus => ({ offered: !!offered, pausedNow: pausedNow(until) });
+  const svc = (offered: boolean, until: Date | null): VoiceServiceStatus =>
+    pausedNow(until)
+      ? {
+          offered: !!offered,
+          pausedNow: true,
+          pausedUntil: until!.toISOString(),
+          // Same local-words formatter the reopen time uses — "this evening at
+          // 8:00 PM" — so the agent can SAY when the service is back.
+          resumesLocal: describeNextOpen(until!, now, tz, fmt),
+        }
+      : { offered: !!offered, pausedNow: false };
 
   // Mirror the /api/orders guard: cash delivery is impossible when ShipDay
   // dispatches (the third-party driver can't collect at the door) — UNLESS the
@@ -357,6 +339,9 @@ export async function buildVoiceContextPayload(rawSlug: string): Promise<VoiceCo
         price: u.menuItem.price,
         note: u.note ?? null,
       })),
+      // Owner's Temporary Closure message — replaces the auto pause notice in
+      // the greeting + prompt while any service is paused (Luigi 2026-08-20).
+      pauseGreeting: cfg?.pauseGreeting?.trim() || null,
     },
   };
 }

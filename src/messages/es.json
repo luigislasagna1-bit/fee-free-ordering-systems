@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Pregunte por el estacionamiento",
         "goLiveTryOrder": "Intente hacer un pedido para recoger",
         "goLiveHint": "Cuando esté satisfecho, active el interruptor de arriba para empezar a recibir llamadas reales."
+      },
+      "closure": {
+        "title": "Cierre temporal",
+        "description": "Pausa servicios por un descanso, una hora punta o un evento privado. Nabil sigue contestando — quienes llaman se enteran al instante de qué está en pausa y pueden pedir lo que sigue activo.",
+        "pauseEverything": "Seleccionar todo",
+        "selectNone": "Quitar selección",
+        "pause1h": "1 hora",
+        "pause6h": "6 horas",
+        "pause12h": "12 horas",
+        "untilTomorrow": "Hasta mañana",
+        "untilMonday": "Hasta el lunes",
+        "custom": "Personalizado…",
+        "customApply": "Pausar hasta esta hora",
+        "customDate": "Fecha",
+        "customTime": "Hora",
+        "customHint": "Hora local del restaurante.",
+        "pausedToast": "En pausa — la próxima llamada ya lo escuchará.",
+        "resumedToast": "Reanudado — la próxima llamada vuelve a la normalidad.",
+        "sharedNote": "Es el mismo interruptor que tu web y la app de cocina: un servicio en pausa lo está en todas partes, y todo se reanuda solo cuando se acaba el tiempo.",
+        "greetingLabel": "Mensaje de cierre (opcional)",
+        "greetingPlaceholder": "p. ej. Esta noche cerramos por un evento privado — ¡volvemos mañana a las 11!",
+        "greetingHint": "Se dice a quienes llaman en el saludo en lugar del aviso automático mientras algo esté en pausa. Se conserva para la próxima vez — bórralo para volver al aviso automático.",
+        "greetingSave": "Guardar mensaje",
+        "greetingSaved": "Mensaje de cierre guardado.",
+        "greetingSaveError": "No se pudo guardar el mensaje.",
+        "chipOne": "{service} en pausa hasta las {time}",
+        "chipMany": "{count} servicios en pausa"
       }
     },
     "customerDetailPage": {

@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "询问停车场",
         "goLiveTryOrder": "尝试下一个自取订单",
         "goLiveHint": "当您满意后，打开上方的开关即可开始接听真实来电。"
+      },
+      "closure": {
+        "title": "临时暂停营业",
+        "description": "在休息、高峰或包场活动期间暂停服务。Nabil 会继续接听电话——来电者会立即得知哪些服务已暂停，仍可订购正常运营的服务。",
+        "pauseEverything": "全选",
+        "selectNone": "清除选择",
+        "pause1h": "1 小时",
+        "pause6h": "6 小时",
+        "pause12h": "12 小时",
+        "untilTomorrow": "暂停至明天",
+        "untilMonday": "暂停至周一",
+        "custom": "自定义…",
+        "customApply": "暂停至该时间",
+        "customDate": "日期",
+        "customTime": "时间",
+        "customHint": "餐厅当地时间。",
+        "pausedToast": "已暂停——下一通来电即会听到提示。",
+        "resumedToast": "已恢复——下一通来电恢复正常。",
+        "sharedNote": "这与您的网站和后厨应用是同一个开关：暂停的服务会在所有渠道同时暂停，时间一到全部自动恢复。",
+        "greetingLabel": "暂停提示语（可选）",
+        "greetingPlaceholder": "例如：今晚因包场活动暂停营业——明天 11 点恢复！",
+        "greetingHint": "有服务暂停期间，会在问候语中向来电者播报这段话，代替自动提示。内容会保留供下次使用——清空即恢复自动提示。",
+        "greetingSave": "保存提示语",
+        "greetingSaved": "暂停提示语已保存。",
+        "greetingSaveError": "无法保存提示语。",
+        "chipOne": "{service}暂停至 {time}",
+        "chipMany": "{count} 项服务已暂停"
       }
     },
     "customerDetailPage": {

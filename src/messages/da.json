@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Spørg om parkering",
         "goLiveTryOrder": "Prøv at afgive en afhentningsordre",
         "goLiveHint": "Når du er tilfreds, så slå kontakten ovenfor til for at begynde at tage rigtige opkald."
+      },
+      "closure": {
+        "title": "Midlertidig lukning",
+        "description": "Sæt tjenester på pause ved travlhed, en pause eller et privat arrangement. Nabil bliver ved med at svare — dem der ringer får det at vide med det samme og kan stadig bestille det, der kører.",
+        "pauseEverything": "Vælg alle",
+        "selectNone": "Ryd valg",
+        "pause1h": "1 time",
+        "pause6h": "6 timer",
+        "pause12h": "12 timer",
+        "untilTomorrow": "Indtil i morgen",
+        "untilMonday": "Indtil mandag",
+        "custom": "Tilpasset…",
+        "customApply": "Pause indtil dette tidspunkt",
+        "customDate": "Dato",
+        "customTime": "Tidspunkt",
+        "customHint": "Restaurantens lokale tid.",
+        "pausedToast": "Sat på pause — allerede næste opkald hører det.",
+        "resumedToast": "Genoptaget — næste opkald er tilbage til normalt.",
+        "sharedNote": "Det er samme kontakt som på hjemmesiden og køkken-appen: en pauset tjeneste er sat på pause overalt, og alt genoptages automatisk, når tiden udløber.",
+        "greetingLabel": "Lukningsbesked (valgfri)",
+        "greetingPlaceholder": "f.eks. Vi har lukket i aften pga. et privat arrangement — tilbage i morgen kl. 11!",
+        "greetingHint": "Siges til dem der ringer i hilsenen i stedet for den automatiske besked, mens noget er på pause. Gemmes til næste gang — ryd feltet for at bruge den automatiske besked igen.",
+        "greetingSave": "Gem besked",
+        "greetingSaved": "Lukningsbesked gemt.",
+        "greetingSaveError": "Kunne ikke gemme beskeden.",
+        "chipOne": "{service} på pause indtil {time}",
+        "chipMany": "{count} tjenester på pause"
       }
     },
     "customerDetailPage": {

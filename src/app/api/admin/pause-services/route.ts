@@ -9,7 +9,11 @@
  * control in the backend, not only the app.
  *
  *   GET  → { enabled, pausedUntil, hoursFormat }  (current state for the control)
- *   POST → { services[], untilIso? | durationMinutes? | restOfDay? | resume? }
+ *   POST → { services[], untilIso? | durationMinutes? | restOfDay?
+ *            | untilStartOfDay? ("tomorrow"|"monday") | untilLocal? {date,time}
+ *            | resume? }   — resolved by src/lib/pause-until.ts in the
+ *            restaurant's timezone (the Nabil Temporary Closure card uses the
+ *            two newer shapes; the kitchen twin keeps the original three)
  *
  * Restaurant is always derived from the SESSION (never the client) → a write can
  * only ever touch the caller's own restaurant.
@@ -17,7 +21,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import { parseLocalDateTimeInTz, dateKeyInTimezone } from "@/lib/restaurant-hours";
+import { resolvePauseUntil, type PauseUntilBody } from "@/lib/pause-until";
 
 type ServiceKey =
   | "pickup" | "delivery" | "dineIn" | "catering" | "takeOut" | "reservations";
@@ -72,13 +76,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  let body: {
-    services?: string[];
-    untilIso?: string | null;
-    durationMinutes?: number;
-    restOfDay?: boolean;
-    resume?: boolean;
-  };
+  let body: { services?: string[] } & PauseUntilBody;
   try {
     body = await req.json();
   } catch {
@@ -97,35 +95,20 @@ export async function POST(req: NextRequest) {
     cols.push(SERVICE_TO_COLUMN[s as ServiceKey]);
   }
 
-  // null = resume (clear the pause). Otherwise resolve the resume instant from
-  // one of the three input shapes — identical to the kitchen route.
-  let until: Date | null;
-  if (body.resume === true || body.untilIso === null) {
-    until = null;
-  } else if (typeof body.untilIso === "string" && body.untilIso) {
-    const d = new Date(body.untilIso);
-    if (Number.isNaN(d.getTime())) {
-      return NextResponse.json({ error: "Invalid untilIso" }, { status: 400 });
-    }
-    until = d;
-  } else if (typeof body.durationMinutes === "number" && body.durationMinutes > 0) {
-    until = new Date(Date.now() + body.durationMinutes * 60_000);
-  } else if (body.restOfDay) {
-    // 23:59 TODAY in the restaurant's local timezone (DST-aware), not the
-    // server clock — matches the kitchen route.
-    const r = await prisma.restaurant.findUnique({
-      where: { id: restaurantId },
-      select: { timezone: true },
-    });
-    const tz = r?.timezone ?? "UTC";
-    const localDate = dateKeyInTimezone(new Date(), tz);
-    until = parseLocalDateTimeInTz(localDate, 23, 59, tz);
-  } else {
-    return NextResponse.json(
-      { error: "Must provide untilIso, durationMinutes, restOfDay, or resume: true" },
-      { status: 400 },
-    );
+  // null = resume (clear the pause). Otherwise resolve the resume instant —
+  // shared resolver (src/lib/pause-until.ts) so the Temporary Closure card's
+  // "until Monday" / custom local-time picks compute in the RESTAURANT's
+  // timezone server-side. Behavior-identical to the kitchen route for the
+  // original shapes (untilIso / durationMinutes / restOfDay / resume).
+  const r = await prisma.restaurant.findUnique({
+    where: { id: restaurantId },
+    select: { timezone: true },
+  });
+  const resolved = resolvePauseUntil(body, r?.timezone ?? "UTC");
+  if (!resolved.ok) {
+    return NextResponse.json({ error: resolved.error }, { status: 400 });
   }
+  const until = resolved.until;
 
   const data: Record<string, Date | null> = {};
   for (const col of cols) data[col] = until;

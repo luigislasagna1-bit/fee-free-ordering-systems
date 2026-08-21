@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Chiedi del parcheggio",
         "goLiveTryOrder": "Prova a fare un ordine da asporto",
         "goLiveHint": "Quando sei soddisfatto, attiva l'interruttore qui sopra per iniziare a ricevere chiamate reali."
+      },
+      "closure": {
+        "title": "Chiusura temporanea",
+        "description": "Metti in pausa i servizi per una pausa, un momento di punta o un evento privato. Nabil continua a rispondere — chi chiama viene avvisato subito e può ordinare ciò che è ancora attivo.",
+        "pauseEverything": "Seleziona tutto",
+        "selectNone": "Annulla selezione",
+        "pause1h": "1 ora",
+        "pause6h": "6 ore",
+        "pause12h": "12 ore",
+        "untilTomorrow": "Fino a domani",
+        "untilMonday": "Fino a lunedì",
+        "custom": "Personalizzato…",
+        "customApply": "Metti in pausa fino a quest'ora",
+        "customDate": "Data",
+        "customTime": "Ora",
+        "customHint": "Ora locale del ristorante.",
+        "pausedToast": "In pausa — già la prossima chiamata lo sentirà.",
+        "resumedToast": "Ripreso — la prossima chiamata torna alla normalità.",
+        "sharedNote": "È lo stesso interruttore del sito e dell'app cucina: un servizio in pausa lo è ovunque, e tutto riprende da solo allo scadere del tempo.",
+        "greetingLabel": "Messaggio di chiusura (facoltativo)",
+        "greetingPlaceholder": "es. Stasera siamo chiusi per un evento privato — torniamo domani alle 11!",
+        "greetingHint": "Viene detto a chi chiama nel saluto al posto dell'avviso automatico finché qualcosa è in pausa. Resta salvato per la prossima volta — cancellalo per tornare all'avviso automatico.",
+        "greetingSave": "Salva messaggio",
+        "greetingSaved": "Messaggio di chiusura salvato.",
+        "greetingSaveError": "Impossibile salvare il messaggio.",
+        "chipOne": "{service} in pausa fino alle {time}",
+        "chipMany": "{count} servizi in pausa"
       }
     },
     "customerDetailPage": {

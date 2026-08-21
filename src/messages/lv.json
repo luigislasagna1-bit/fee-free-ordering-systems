@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Pajautājiet par autostāvvietu",
         "goLiveTryOrder": "Mēģiniet veikt līdzņemšanas pasūtījumu",
         "goLiveHint": "Kad esat apmierināts, ieslēdziet slēdzi augstāk, lai sāktu pieņemt īstus zvanus."
+      },
+      "closure": {
+        "title": "Pagaidu slēgšana",
+        "description": "Apturiet pakalpojumus pārtraukumam, drūzmai vai privātam pasākumam. Nabil turpina atbildēt — zvanītājiem uzreiz pasaka, kas ir apturēts, un viņi var pasūtīt to, kas darbojas.",
+        "pauseEverything": "Atlasīt visu",
+        "selectNone": "Notīrīt atlasi",
+        "pause1h": "1 stunda",
+        "pause6h": "6 stundas",
+        "pause12h": "12 stundas",
+        "untilTomorrow": "Līdz rītdienai",
+        "untilMonday": "Līdz pirmdienai",
+        "custom": "Pielāgots…",
+        "customApply": "Apturēt līdz šim laikam",
+        "customDate": "Datums",
+        "customTime": "Laiks",
+        "customHint": "Restorāna vietējais laiks.",
+        "pausedToast": "Apturēts — jau nākamais zvans to dzirdēs.",
+        "resumedToast": "Atsākts — nākamais zvans atkal ir kā parasti.",
+        "sharedNote": "Tas ir tas pats slēdzis kā vietnē un virtuves lietotnē: apturēts pakalpojums ir apturēts visur, un viss automātiski atsākas, kad laiks beidzas.",
+        "greetingLabel": "Slēgšanas ziņa (neobligāti)",
+        "greetingPlaceholder": "piem. Šovakar slēgts privāta pasākuma dēļ — atgriežamies rīt pulksten 11!",
+        "greetingHint": "Kamēr kaut kas ir apturēts, zvanītājiem sveicienā izrunā šo ziņu automātiskā paziņojuma vietā. Saglabājas nākamajai reizei — izdzēsiet, lai atgrieztos pie automātiskā paziņojuma.",
+        "greetingSave": "Saglabāt ziņu",
+        "greetingSaved": "Slēgšanas ziņa saglabāta.",
+        "greetingSaveError": "Neizdevās saglabāt ziņu.",
+        "chipOne": "{service} apturēts līdz {time}",
+        "chipMany": "Apturēti pakalpojumi: {count}"
       }
     },
     "customerDetailPage": {

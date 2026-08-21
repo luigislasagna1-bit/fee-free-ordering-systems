@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Vprašajte o parkirišču",
         "goLiveTryOrder": "Poskusite oddati naročilo za prevzem",
         "goLiveHint": "Ko boste zadovoljni, vklopite stikalo zgoraj, da začnete sprejemati prave klice."
+      },
+      "closure": {
+        "title": "Začasno zaprtje",
+        "description": "Zaustavite storitve med odmorom, navalom ali zasebnim dogodkom. Nabil še naprej odgovarja — klicatelji takoj izvedo, kaj je zaustavljeno, in lahko naročijo, kar deluje.",
+        "pauseEverything": "Izberi vse",
+        "selectNone": "Počisti izbiro",
+        "pause1h": "1 ura",
+        "pause6h": "6 ur",
+        "pause12h": "12 ur",
+        "untilTomorrow": "Do jutri",
+        "untilMonday": "Do ponedeljka",
+        "custom": "Po meri…",
+        "customApply": "Zaustavi do te ure",
+        "customDate": "Datum",
+        "customTime": "Ura",
+        "customHint": "Lokalni čas restavracije.",
+        "pausedToast": "Zaustavljeno — že naslednji klic bo to slišal.",
+        "resumedToast": "Nadaljevano — naslednji klic je spet običajen.",
+        "sharedNote": "To je isto stikalo kot na spletni strani in v kuhinjski aplikaciji: zaustavljena storitev je zaustavljena povsod, in vse se samodejno nadaljuje, ko čas poteče.",
+        "greetingLabel": "Sporočilo o zaprtju (neobvezno)",
+        "greetingPlaceholder": "npr. Nocoj smo zaprti zaradi zasebnega dogodka — nazaj jutri ob 11h!",
+        "greetingHint": "Klicateljem se izgovori v pozdravu namesto samodejnega obvestila, dokler je kaj zaustavljeno. Ostane shranjeno za naslednjič — izbrišite ga za vrnitev na samodejno obvestilo.",
+        "greetingSave": "Shrani sporočilo",
+        "greetingSaved": "Sporočilo o zaprtju shranjeno.",
+        "greetingSaveError": "Sporočila ni bilo mogoče shraniti.",
+        "chipOne": "{service} zaustavljeno do {time}",
+        "chipMany": "Zaustavljene storitve: {count}"
       }
     },
     "customerDetailPage": {

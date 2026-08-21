@@ -90,20 +90,73 @@ export function menuText(menu: any, canBuild = false): string {
   return lines.join("\n");
 }
 
-function servicesText(ctx: any, cfg: AgentConfig): string {
+function servicesText(ctx: any): string {
   const s = ctx?.services ?? {};
   const parts: string[] = [];
-  const pausedNote = cfg.smsConfirmations
-    ? "kitchen PAUSED right now — no immediate orders by phone; offer to text the online ordering link so the caller can schedule for after the pause"
-    : "kitchen PAUSED right now — no immediate orders by phone; apologize and suggest trying again after the pause";
   const entry = (k: string, label: string) => {
-    if (!s[k]?.offered) return;
-    parts.push(s[k]?.pausedNow ? `${label} (${pausedNote})` : label);
+    const svc = s[k];
+    if (!svc?.offered) return;
+    if (svc.pausedNow) {
+      // Owner pause (Temporary Closure). Resume time is a server-computed fact
+      // (resumesLocal); older payloads without it fall back to a plain note.
+      // Detail on how to handle it lives in the SERVICE PAUSED section below.
+      const resumes = typeof svc.resumesLocal === "string" && svc.resumesLocal ? ` — back ${svc.resumesLocal}` : "";
+      parts.push(`${label} (PAUSED by the owner right now${resumes} — no ASAP ${label} orders)`);
+      return;
+    }
+    parts.push(k === "delivery" && ctx?.delivery?.cashDeliveryBlocked ? `${label} (PREPAID only — no cash at door)` : label);
   };
   entry("pickup", "pickup");
-  entry("delivery", ctx?.delivery?.cashDeliveryBlocked ? "delivery (PREPAID only — no cash at door)" : "delivery");
+  entry("delivery", "delivery");
+  entry("takeOut", "take-out");
+  entry("dineIn", "dine-in");
+  entry("catering", "catering");
   entry("reservations", "reservations");
   return parts.length ? parts.join(", ") : "none right now";
+}
+
+/**
+ * Temporary Closure (owner pause) — volatile-only. Loman-parity behavior,
+ * Luigi 2026-08-20: Nabil keeps answering, names what's paused + when it's
+ * back, offers what still runs, and refuses paused-service orders. The
+ * greeting already announced it (twilio/voice route), but the caller can barge
+ * over a greeting — hence the first-substantive-reply mandate here. Phone
+ * order types are only pickup|delivery; other paused services are listed so
+ * questions get truthful answers.
+ */
+function pauseSection(context: any, cfg: AgentConfig): string {
+  const s = context?.services ?? {};
+  const isPaused = (k: string) => !!(s[k]?.offered && s[k]?.pausedNow);
+  const LABELS: Record<string, string> = {
+    pickup: "pickup", delivery: "delivery", takeOut: "take-out",
+    dineIn: "dine-in", catering: "catering", reservations: "reservations",
+  };
+  const withResume = (k: string) => {
+    const r = s[k]?.resumesLocal;
+    return typeof r === "string" && r ? `${LABELS[k]} (back ${r})` : LABELS[k];
+  };
+  const pausedAll = Object.keys(LABELS).filter(isPaused);
+  if (!pausedAll.length) return "";
+
+  const ownerMsg =
+    typeof context?.pauseGreeting === "string" && context.pauseGreeting.trim()
+      ? `\nThe owner's message to callers about this: "${context.pauseGreeting.trim().slice(0, 200)}" — convey it naturally when explaining the pause.`
+      : "";
+  const deflect = cfg.smsConfirmations
+    ? "For after the pause: a specific later time can't be set by phone — offer to text the online ordering link (send_sms_link order_online) where they can schedule it themselves."
+    : "For after the pause: a specific later time can't be set by phone — apologize and invite them to call back once it resumes.";
+
+  const orderChannels = ["pickup", "delivery"].filter((k) => s[k]?.offered);
+  const allOrdersPaused = orderChannels.length > 0 && orderChannels.every(isPaused);
+
+  if (allOrdersPaused) {
+    const reservationsOk = s.reservations?.offered && !s.reservations?.pausedNow && cfg.canBookReservations;
+    return `\n## TEMPORARILY CLOSED FOR ORDERS — owner pause (this OVERRIDES the ordering flow)\nThe owner has temporarily paused: ${pausedAll.map(withResume).join(", ")}. Do NOT take any order — say plainly, in your FIRST substantive reply, that ordering is paused right now${reservationsOk ? "; you can still book reservations and answer questions" : "; you can still answer questions"}. Give the resume time when you know it. ${deflect}${ownerMsg}\n`;
+  }
+
+  const available = orderChannels.filter((k) => !isPaused(k)).map((k) => LABELS[k]);
+  const availableWords = available.join(" or ");
+  return `\n## SERVICE PAUSED RIGHT NOW — owner pause (this OVERRIDES the ordering flow, including FLOW step 1)\nPaused by the owner: ${pausedAll.map(withResume).join(", ")}.\n- When asking how they'd like their order, offer ONLY ${availableWords} — never present a paused service as a choice.\n- State the pause plainly in your FIRST substantive reply even though the greeting mentioned it (the caller may have talked over the greeting): one short sentence naming what's paused, the resume time, and that ${availableWords} still works. Then move on — don't repeat it.\n- If they ask for the paused service anyway: apologize, give the resume time, and offer ${availableWords} instead. ${deflect}${ownerMsg}\n`;
 }
 
 /**
@@ -263,9 +316,9 @@ ${menuText(menu, cfg.allowPizzaCombo)}`;
   // framing matters: when closed/paused state conflicts with anything above
   // (including the ordering flow), this section wins.
   const volatile = `## RIGHT NOW (live — this section OVERRIDES anything above when they conflict)
-- Services available: ${servicesText(context, cfg)}
+- Services available: ${servicesText(context)}
 - Open now: ${openNow ? "yes" : "no"}${todayHours ? ` (today: ${todayHours})` : ""}
-${liveEtaLine ? `${liveEtaLine}\n` : ""}${afterHoursSection(context, cfg)}${isDemo ? `\n## DEMO MODE\nThis is a DEMO line for prospective restaurant owners. Take the order completely naturally — the caller should experience exactly what their own customers would. After placing, the tool will tell you it's a demo; relay that warmly and mention feefreeordering.com/nabil-ai. Keep the call under 4 minutes.\n` : ""}${isTestOrder ? `\n## TEST MODE\nThe restaurant owner is testing the agent while it is turned off for customers. Take the order completely naturally — they should experience exactly what a real caller would. The place_order tool will confirm it as a test (no kitchen ticket, no printer). After placing, let them know it was a test order and nothing was sent to the kitchen.\n` : ""}`;
+${liveEtaLine ? `${liveEtaLine}\n` : ""}${afterHoursSection(context, cfg)}${pauseSection(context, cfg)}${isDemo ? `\n## DEMO MODE\nThis is a DEMO line for prospective restaurant owners. Take the order completely naturally — the caller should experience exactly what their own customers would. After placing, the tool will tell you it's a demo; relay that warmly and mention feefreeordering.com/nabil-ai. Keep the call under 4 minutes.\n` : ""}${isTestOrder ? `\n## TEST MODE\nThe restaurant owner is testing the agent while it is turned off for customers. Take the order completely naturally — they should experience exactly what a real caller would. The place_order tool will confirm it as a test (no kitchen ticket, no printer). After placing, let them know it was a test order and nothing was sent to the kitchen.\n` : ""}`;
 
   const system = `${stable}\n\n${volatile}`;
 

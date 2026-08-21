@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Vraag naar parkeren",
         "goLiveTryOrder": "Probeer een afhaalbestelling te plaatsen",
         "goLiveHint": "Als u tevreden bent, zet u de schakelaar hierboven aan om echte gesprekken aan te nemen."
+      },
+      "closure": {
+        "title": "Tijdelijke sluiting",
+        "description": "Pauzeer diensten voor een pauze, drukte of een privé-evenement. Nabil blijft opnemen — bellers horen meteen wat gepauzeerd is en kunnen bestellen wat nog draait.",
+        "pauseEverything": "Alles selecteren",
+        "selectNone": "Selectie wissen",
+        "pause1h": "1 uur",
+        "pause6h": "6 uur",
+        "pause12h": "12 uur",
+        "untilTomorrow": "Tot morgen",
+        "untilMonday": "Tot maandag",
+        "custom": "Aangepast…",
+        "customApply": "Pauzeren tot dit tijdstip",
+        "customDate": "Datum",
+        "customTime": "Tijd",
+        "customHint": "Lokale tijd van het restaurant.",
+        "pausedToast": "Gepauzeerd — het eerstvolgende gesprek hoort het al.",
+        "resumedToast": "Hervat — het volgende gesprek is weer normaal.",
+        "sharedNote": "Dit is dezelfde schakelaar als je website en de keuken-app: een gepauzeerde dienst is overal gepauzeerd, en alles gaat automatisch weer verder als de tijd om is.",
+        "greetingLabel": "Sluitingsbericht (optioneel)",
+        "greetingPlaceholder": "bijv. Vanavond gesloten voor een privé-evenement — morgen om 11 uur weer open!",
+        "greetingHint": "Wordt in de begroeting tegen bellers gezegd in plaats van de automatische melding zolang er iets gepauzeerd is. Blijft bewaard voor de volgende keer — wis het om weer de automatische melding te gebruiken.",
+        "greetingSave": "Bericht opslaan",
+        "greetingSaved": "Sluitingsbericht opgeslagen.",
+        "greetingSaveError": "Kon het bericht niet opslaan.",
+        "chipOne": "{service} gepauzeerd tot {time}",
+        "chipMany": "{count} diensten gepauzeerd"
       }
     },
     "customerDetailPage": {

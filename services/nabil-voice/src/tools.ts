@@ -25,6 +25,15 @@ export type ToolContext = {
   cart: CartEngine;
   menu: MenuIndex;
   cashDeliveryBlocked: boolean;
+  /** Owner service pauses (Temporary Closure) from the call-start context —
+   *  set_fulfilment refuses a paused channel BEFORE the order is built instead
+   *  of letting place_order 423 at the very end (Luigi 2026-08-20). Optional:
+   *  an older Vercel payload without it simply doesn't gate here (the
+   *  /api/orders server guard still refuses at quote/place time). */
+  services?: {
+    pickup?: VoiceSvcPauseState | null;
+    delivery?: VoiceSvcPauseState | null;
+  } | null;
   /** Set by transfer_to_human — the session ends + hands off after the turn. */
   pendingTransfer: string | null;
   /** get_item_options payloads by id — the menu cannot change mid-call. */
@@ -47,6 +56,52 @@ export type ToolContext = {
    *  call — the second miss takes the order anyway, never asks a third time. */
   addressSpellAsked?: boolean;
 };
+
+export type VoiceSvcPauseState = {
+  offered?: boolean;
+  pausedNow?: boolean;
+  pausedUntil?: string | null;
+  resumesLocal?: string | null;
+};
+
+/** Owner pause, judged by TIMESTAMP when the payload carries one — so a pause
+ *  that EXPIRES mid-call self-heals instead of refusing for the whole call.
+ *  `pausedNow` alone (older payload) still gates. */
+function servicePausedNow(svc: VoiceSvcPauseState | null | undefined): boolean {
+  if (!svc) return false;
+  if (typeof svc.pausedUntil === "string" && svc.pausedUntil) {
+    const t = new Date(svc.pausedUntil).getTime();
+    if (Number.isFinite(t)) return t > Date.now();
+  }
+  return svc.pausedNow === true;
+}
+
+/** One refusal shape for every pause gate (set_fulfilment / quote_order /
+ *  place_order), so the agent hears the same story at every stage: what's
+ *  paused, when it's back, what to offer instead, and the after-the-pause
+ *  deflection (phone scheduling doesn't exist — the SMS link does). */
+function pauseRefusal(ctx: ToolContext, type: "pickup" | "delivery", extra: Record<string, unknown>): Record<string, unknown> {
+  const svc = ctx.services?.[type];
+  const resumes = svc && typeof svc.resumesLocal === "string" && svc.resumesLocal ? svc.resumesLocal : null;
+  const other: "pickup" | "delivery" = type === "delivery" ? "pickup" : "delivery";
+  const otherSvc = ctx.services?.[other];
+  const altOk = !!otherSvc?.offered && !servicePausedNow(otherSvc);
+  const deflect = ctx.cfg.smsConfirmations
+    ? " A specific later time can't be set by phone — offer to text the online ordering link (send_sms_link order_online) where they can schedule it for after the pause."
+    : " A specific later time can't be set by phone — apologize and invite them to call back after the pause.";
+  return {
+    error: true,
+    code: "service_paused",
+    service: type,
+    resumesLocal: resumes,
+    alternatives: altOk ? [other] : [],
+    message:
+      `${type === "delivery" ? "Delivery" : "Pickup"} is paused by the owner right now${resumes ? ` — back ${resumes}` : ""}. Do NOT take a ${type} order.` +
+      (altOk ? ` Offer ${other} instead.` : " No orders can be taken right now — apologize plainly.") +
+      deflect,
+    ...extra,
+  };
+}
 
 /** Words in a pizza's name that don't identify it ("Vegetable PIZZA", "the …"). */
 const RECIPE_NAME_STOP = new Set([
@@ -938,6 +993,11 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
     case "set_fulfilment": {
       const type = input?.type === "delivery" ? "delivery" : input?.type === "pickup" ? "pickup" : null;
       if (!type) return { error: true, code: "bad_type", message: "Say pickup or delivery." };
+      // Owner pause gate — refuse the paused channel HERE, before an address is
+      // taken or a cart is built, not at place_order after the whole order.
+      if (servicePausedNow(ctx.services?.[type])) {
+        return pauseRefusal(ctx, type, { notSet: true, state: cart.stateForModel() });
+      }
       if (type === "delivery" && ctx.cashDeliveryBlocked && ctx.cfg.deliveryPaymentMode !== "paid") {
         // Prepaid-only delivery with no phone payment: the honest answer is pickup or a link.
       }
@@ -1067,6 +1127,15 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       }
       const res = await api.dryRunOrder(orderBody(ctx));
       if (!res.ok) {
+        // Owner pause: the /api/orders guard 423s the dry run too (e.g. the
+        // pause landed mid-call, after set_fulfilment already passed). Same
+        // story as the other gates: name it, offer the alternative.
+        if (res.json?.code === "service_paused") {
+          return pauseRefusal(ctx, f.type === "delivery" ? "delivery" : "pickup", {
+            notQuoted: true,
+            resumesAtIso: res.json?.resumesAtIso ?? null,
+          });
+        }
         return {
           error: true,
           code: res.json?.code,
@@ -1203,14 +1272,10 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
           };
         }
         if (res.json?.code === "service_paused") {
-          return {
-            error: true,
-            code: "service_paused",
+          return pauseRefusal(ctx, cart.fulfilment().type === "delivery" ? "delivery" : "pickup", {
             notPlaced: true,
-            message: ctx.cfg.smsConfirmations
-              ? "The kitchen has ordering paused right now, and phone orders can't be scheduled ahead yet. Offer to text the caller the online ordering link (send_sms_link) so they can schedule it for after the pause themselves."
-              : "The kitchen has ordering paused right now, and phone orders can't be scheduled ahead yet. Apologize and invite the caller to try again after the pause.",
-          };
+            resumesAtIso: res.json?.resumesAtIso ?? null,
+          });
         }
         return { error: true, code: res.json?.code, notPlaced: true, message: res.json?.error || "Could not place the order." };
       }

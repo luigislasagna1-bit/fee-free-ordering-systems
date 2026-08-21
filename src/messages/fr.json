@@ -4792,6 +4792,33 @@
         "goLiveTryParking": "Demandez le parking",
         "goLiveTryOrder": "Essayez de passer une commande à emporter",
         "goLiveHint": "Une fois satisfait, activez l'interrupteur ci-dessus pour prendre de vrais appels."
+      },
+      "closure": {
+        "title": "Fermeture temporaire",
+        "description": "Mettez des services en pause pour une pause, un coup de feu ou un événement privé. Nabil continue de répondre — les appelants sont prévenus immédiatement et peuvent commander ce qui reste disponible.",
+        "pauseEverything": "Tout sélectionner",
+        "selectNone": "Effacer la sélection",
+        "pause1h": "1 heure",
+        "pause6h": "6 heures",
+        "pause12h": "12 heures",
+        "untilTomorrow": "Jusqu'à demain",
+        "untilMonday": "Jusqu'à lundi",
+        "custom": "Personnalisé…",
+        "customApply": "Mettre en pause jusqu'à cette heure",
+        "customDate": "Date",
+        "customTime": "Heure",
+        "customHint": "Heure locale du restaurant.",
+        "pausedToast": "En pause — le tout prochain appel l'entendra.",
+        "resumedToast": "Repris — le prochain appel redevient normal.",
+        "sharedNote": "C'est le même interrupteur que votre site et l'app cuisine : un service en pause l'est partout, et tout reprend automatiquement quand le temps est écoulé.",
+        "greetingLabel": "Message de fermeture (facultatif)",
+        "greetingPlaceholder": "ex. Ce soir, fermé pour un événement privé — de retour demain à 11 h !",
+        "greetingHint": "Dit aux appelants dans le message d'accueil à la place de l'annonce automatique tant que quelque chose est en pause. Conservé pour la prochaine fois — effacez-le pour revenir à l'annonce automatique.",
+        "greetingSave": "Enregistrer le message",
+        "greetingSaved": "Message de fermeture enregistré.",
+        "greetingSaveError": "Impossible d'enregistrer le message.",
+        "chipOne": "{service} en pause jusqu'à {time}",
+        "chipMany": "{count} services en pause"
       }
     },
     "customerDetailPage": {

@@ -2991,6 +2991,14 @@ model VoiceAgentConfig {
   openGreeting          String?
   closedGreeting        String?
   greetingsByLocale     Json?   // { "<locale>": { open, closed } } sparse overrides
+  /// Optional "Temporary Closure" message (≤200 chars) spoken INSTEAD of the
+  /// auto-composed pause notice while any service is paused (Restaurant
+  /// *PausedUntil columns — the same shared switch the website + kitchen app
+  /// honour). Persists across pauses (dormant while nothing is paused, never
+  /// auto-cleared on resume) so an owner's wording is kept for next time.
+  /// Written from the Nabil dashboard Temporary Closure card; read by the
+  /// Twilio greeting composer + the voice context payload. Luigi 2026-08-20.
+  pauseGreeting         String?
 
   // ── Languages ──
   primaryLanguage       String  @default("en")
