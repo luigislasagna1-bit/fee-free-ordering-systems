@@ -326,7 +326,19 @@ mediaWss.on("connection", (ws, req) => {
     shimWs.send = (sendData: string) => {
       try {
         const m = JSON.parse(sendData);
-        if (m.type === "text") mediaHandle?.sendText(m.token ?? "", !!m.last);
+        if (m.type === "text") {
+          mediaHandle?.sendText(m.token ?? "", !!m.last);
+        } else if (m.type === "end") {
+          // Drain remaining TTS, let session.onClose() write transferReason to DB
+          // via finalize() → api.logCall(), then close the real Twilio WS so
+          // Twilio fires the <Connect action> POST to after-stream which dials
+          // the store. 600ms covers the ~250ms finalize() HTTP round-trip.
+          const reason = (() => {
+            try { return JSON.parse(m.handoffData || "{}").reason ?? ""; } catch { return ""; }
+          })();
+          mediaHandle?.end(reason);
+          setTimeout(() => { if (ws.readyState === 1) ws.terminate(); }, 600);
+        }
       } catch { /* non-JSON passthrough */ }
     };
 

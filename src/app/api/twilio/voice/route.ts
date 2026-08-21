@@ -285,7 +285,7 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   // than telling a paying customer to go away. Never dead-air, never a dead
   // end: the fallback for "Nabil can't take this" is always a human phone.
   if (!line.enabled || !wss) {
-    const fallback = (cfg?.transferToNumber || restaurant.phone || "").trim();
+    const fallback = (cfg?.transferToNumber || restaurant.alertPhone || restaurant.phone || "").trim();
     if (fallback) {
       return twiml(
         `<Response><Dial answerOnBridge="true" timeout="25">${xml(fallback)}</Dial>` +
@@ -314,7 +314,7 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   // number matches the restaurant's phone, alert phone, or transfer number.
   const entitled = await hasFeature(restaurant.id, "phone_ordering_agent");
   if (!entitled) {
-    const fallback = (cfg?.transferToNumber || restaurant.phone || "").trim();
+    const fallback = (cfg?.transferToNumber || restaurant.alertPhone || restaurant.phone || "").trim();
     if (fallback) {
       return twiml(
         `<Response><Dial answerOnBridge="true" timeout="25">${xml(fallback)}</Dial>` +
@@ -324,7 +324,7 @@ async function handle(req: NextRequest, params: Record<string, string>) {
     return twiml(`<Response><Say voice="Polly.Joanna-Neural">${xml(GENERIC_MSG)}</Say></Response>`);
   }
   if (!cfg) {
-    const fallback = (restaurant.phone || "").trim();
+    const fallback = (restaurant.alertPhone || restaurant.phone || "").trim();
     if (fallback) {
       return twiml(
         `<Response><Dial answerOnBridge="true" timeout="25">${xml(fallback)}</Dial>` +
@@ -346,7 +346,7 @@ async function handle(req: NextRequest, params: Record<string, string>) {
       p.length >= 10 && (p === callerDigits || p.slice(-10) === callerDigits.slice(-10)),
     );
     if (!isOwnerCall) {
-      const fallback = (cfg.transferToNumber || restaurant.phone || "").trim();
+      const fallback = (cfg.transferToNumber || restaurant.alertPhone || restaurant.phone || "").trim();
       if (fallback) {
         return twiml(
           `<Response><Dial answerOnBridge="true" timeout="25">${xml(fallback)}</Dial>` +

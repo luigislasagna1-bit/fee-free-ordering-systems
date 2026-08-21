@@ -88,14 +88,23 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   const to = (params.To || "").trim();
 
   // Look up the handoff intent the voice service posted for this call.
+  // Retry up to 3× with 300ms gaps: the shimWs closes the Twilio WS and writes
+  // transferReason to DB in quick succession; a brief race can land the POST
+  // here before the DB write completes, causing a spurious ConversationRelay
+  // restart. The retry gives the write up to 600ms to land (well inside
+  // Twilio's 15s action-URL timeout).
   let reason = "";
   if (callSid) {
-    const call = await prisma.voiceCall.findFirst({
-      where: { callSid },
-      select: { transferReason: true },
-      orderBy: { startedAt: "desc" },
-    });
-    reason = call?.transferReason || "";
+    for (let attempt = 0; attempt < 3; attempt++) {
+      if (attempt > 0) await new Promise<void>((r) => setTimeout(r, 300));
+      const call = await prisma.voiceCall.findFirst({
+        where: { callSid },
+        select: { transferReason: true },
+        orderBy: { startedAt: "desc" },
+      });
+      reason = call?.transferReason || "";
+      if (reason) break;
+    }
   }
 
   if (reason === "call_time_limit") {
