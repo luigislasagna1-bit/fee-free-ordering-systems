@@ -415,7 +415,18 @@ async function handle(req: NextRequest, params: Record<string, string>) {
         canBookReservations: cfg.canBookReservations,
       })
     : "";
-  const greeting = notice + baseGreeting + (pauseLine ? ` ${pauseLine}` : "");
+  // When a service is paused, the pause info REPLACES the base greeting entirely
+  // so the caller doesn't hear "Is this for pickup or delivery?" followed by a
+  // correction. The owner's Temporary Closure message (if set) becomes the full
+  // greeting; if not set, we prepend "Thanks for calling [name]." to the
+  // auto-generated pause sentence. Closed-hours and unpaused paths are unchanged.
+  const greeting =
+    isOpen && pauseLine
+      ? notice +
+        (cfg.pauseGreeting?.trim()
+          ? pauseLine // custom: pauseLine is already the verbatim owner message
+          : `Thanks for calling ${restaurant.name}. ${pauseLine}`) // auto: add a hello
+      : notice + baseGreeting + (pauseLine ? ` ${pauseLine}` : "");
 
   // Domain-biased ASR (the biggest accuracy lever we own): feed the LIVE menu
   // vocabulary — item names AND topping/crust/sauce names — to Deepgram via the
