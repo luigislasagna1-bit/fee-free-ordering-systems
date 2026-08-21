@@ -156,7 +156,7 @@ function pauseSection(context: any, cfg: AgentConfig): string {
 
   const available = orderChannels.filter((k) => !isPaused(k)).map((k) => LABELS[k]);
   const availableWords = available.join(" or ");
-  return `\n## SERVICE PAUSED RIGHT NOW — owner pause (this OVERRIDES the ordering flow, including FLOW step 1)\nPaused by the owner: ${pausedAll.map(withResume).join(", ")}.\n- When asking how they'd like their order, offer ONLY ${availableWords} — never present a paused service as a choice.\n- State the pause plainly in your FIRST substantive reply even though the greeting mentioned it (the caller may have talked over the greeting): one short sentence naming what's paused, the resume time, and that ${availableWords} still works. Then move on — don't repeat it.\n- If they ask for the paused service anyway: apologize, give the resume time, and offer ${availableWords} instead. ${deflect}${ownerMsg}\n`;
+  return `\n## SERVICE PAUSED RIGHT NOW — owner pause (this OVERRIDES the ordering flow, including FLOW step 1)\nPaused by the owner: ${pausedAll.map(withResume).join(", ")}.\n- Do NOT ask "pickup or delivery?" — only ${availableWords} is active right now and there is no choice to make. Skip the question entirely.\n- In your FIRST substantive reply, say in one natural sentence what is paused, when it is back, and that ${availableWords} is still available. Then go straight to the food (for delivery, ask for the address). Don't repeat the pause after that.\n- If they ask for the paused service anyway: apologize, give the resume time, and offer ${availableWords} instead. ${deflect}${ownerMsg}\n`;
 }
 
 /**

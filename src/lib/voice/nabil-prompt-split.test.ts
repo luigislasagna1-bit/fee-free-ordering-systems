@@ -152,13 +152,16 @@ describe("temporary closure (owner pause) rendering", () => {
     expect(b.volatile).toContain("pickup, delivery (PAUSED");
   });
 
-  it("partial pause: overrides FLOW step 1, offers only the running channel, mandates first-reply announcement + SMS-link deflection", () => {
+  it("partial pause: overrides FLOW step 1, skips pickup/delivery question, mandates first-reply announcement + SMS-link deflection", () => {
     const b = built(pausedDelivery);
     expect(b.volatile).toContain("## SERVICE PAUSED RIGHT NOW");
-    expect(b.volatile).toContain("offer ONLY pickup");
+    expect(b.volatile).toContain("Do NOT ask");
+    expect(b.volatile).toContain("pickup is active right now");
     expect(b.volatile).toContain("FIRST substantive reply");
     expect(b.volatile).toContain("send_sms_link");
     expect(b.volatile).not.toContain("TEMPORARILY CLOSED FOR ORDERS");
+    // The question itself must not appear (the model must not be given the phrase to copy)
+    expect(b.volatile).not.toMatch(/offer ONLY pickup/);
   });
 
   it("smsConfirmations off swaps the deflection for call-back-later", () => {
