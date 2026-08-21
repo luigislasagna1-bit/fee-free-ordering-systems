@@ -112,6 +112,10 @@
     {
       "path": "/api/cron/nabil-usage-billing",
       "schedule": "15 0 1 * *"
+    },
+    {
+      "path": "/api/internal/voice/ping",
+      "schedule": "*/5 * * * *"
     }
   ]
 }

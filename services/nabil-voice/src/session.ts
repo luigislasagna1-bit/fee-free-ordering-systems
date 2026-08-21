@@ -38,7 +38,7 @@ const INTERRUPT_GRACE_MS = 800;
  *  tool + the next hop's TTFT), never on a plain answer's first-token latency.
  *  On 2026-08-15 the old 1.2 s any-turn filler spoke "One moment." on 12 of 17
  *  turns of a call whose plain TTFT was ~1 s. */
-const FILLER_AFTER_TOOL_MS = 1_500;
+const FILLER_AFTER_TOOL_MS = 1_000;
 /**
  * THINKING filler (call cmsw4s0mz, 2026-08-16): when the model's first hop
  * goes STRAIGHT to a tool (no acknowledgement first — the playbook asks for
@@ -1053,6 +1053,15 @@ export class CallSession {
         const results: any[] = [];
         let stateChanged = false;
         const toolNames: string[] = [];
+        // Flush any held bare-ack before tools block. BARE_ACK_RE converts
+        // "Sure." → "Sure, " and holds it waiting to merge with the next
+        // sentence. During a tool call there is no next sentence, so flush
+        // now so the caller hears the ack instead of silence until the filler.
+        if (this.ttsBuffer.trim()) {
+          const held = this.ttsBuffer;
+          this.ttsBuffer = "";
+          this.speakClause(held, false);
+        }
         for (const block of final.content) {
           if (block.type !== "tool_use") continue;
           toolNames.push(block.name);
