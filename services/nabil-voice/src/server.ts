@@ -345,6 +345,9 @@ mediaWss.on("connection", (ws, req) => {
       onPrompt: (text, lang) => {
         session?.onMessage(JSON.stringify({ type: "prompt", voicePrompt: text, lang }));
       },
+      onSpeechActivity: () => {
+        session?.noteCallerAudio();
+      },
       onInterrupt: (utteranceUntilInterrupt) => {
         session?.onMessage(JSON.stringify({ type: "interrupt", utteranceUntilInterrupt }));
       },

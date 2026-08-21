@@ -30,6 +30,10 @@ export interface MediaSessionOpts {
   onInterrupt: (utteranceUntilInterrupt: string) => void;
   onDtmf: (digit: string) => void;
   onEnd: () => void;
+  /** Fired on EVERY STT transcript event, interims included — live "the
+   *  caller is speaking right now" evidence. The session uses it to hold a
+   *  due filler instead of talking over them (session.noteCallerAudio). */
+  onSpeechActivity?: () => void;
 }
 
 export interface MediaSessionHandle {
@@ -126,6 +130,7 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
 
   function handleTranscript(t: SttTranscript) {
     if (destroyed) return;
+    opts.onSpeechActivity?.();
 
     if (isSpeaking) {
       const words = t.text.split(/\s+/).filter(Boolean);

@@ -199,3 +199,55 @@ describe("the session strips a double ack after a filler", () => {
     expect(ws.said()).toContain("Got it, one large pizza — what toppings?");
   });
 });
+
+/* ───────────── filler talk-over hold (calls cmt237qmr/cmt24gemw) ────────── */
+
+describe("a due filler HOLDS while the caller's mic still shows speech", () => {
+  const THINKING = voiceFillers("en", "thinkingFillers");
+  const saidFiller = (ws: ReturnType<typeof fakeWs>) => THINKING.some((p) => ws.said().includes(p));
+
+  async function holdSession(anthropic: ReturnType<typeof fakeAnthropic>, callerActiveHoldMs: number) {
+    const ws = fakeWs();
+    const s = new CallSession(ws as never, TOKEN, anthropic as never, { thinkingFillerMs: 30, callerActiveHoldMs } as never);
+    s.onMessage(JSON.stringify({ type: "setup" }));
+    await settle();
+    await settle();
+    return { ws, s };
+  }
+
+  it("caller still talking at the deadline → no filler; real silence later → it fires (late, once)", async () => {
+    const anthropic = fakeAnthropic([{ deltas: ["Here you go."], ttft: 700 }]);
+    const { ws, s } = await holdSession(anthropic, 150);
+
+    s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "I want" }));
+    s.noteCallerAudio(); // interim speech right as the turn starts
+    await settle(100); // past the 30ms deadline, inside the 150ms hold
+    expect(saidFiller(ws)).toBe(false);
+
+    await settle(300); // hold lapsed, still no reply text → the filler fires
+    expect(saidFiller(ws)).toBe(true);
+    expect(ws.spoken().filter((t) => THINKING.some((p) => t.token.includes(p)))).toHaveLength(1);
+  });
+
+  it("caller talking and the reply arrives during the hold → no filler at all", async () => {
+    const anthropic = fakeAnthropic([{ deltas: ["One large pizza — toppings?"], ttft: 80 }]);
+    const { ws, s } = await holdSession(anthropic, 60_000);
+
+    s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "A large pizza" }));
+    s.noteCallerAudio();
+    await settle(300);
+
+    expect(saidFiller(ws)).toBe(false);
+    expect(ws.said()).toContain("One large pizza — toppings?");
+  });
+
+  it("no speech activity ever noted (ConversationRelay) → today's behavior, filler at the deadline", async () => {
+    const anthropic = fakeAnthropic([{ deltas: ["Here you go."], ttft: 500 }]);
+    const { ws, s } = await holdSession(anthropic, 150);
+
+    s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "One second" }));
+    await settle(120);
+
+    expect(saidFiller(ws)).toBe(true);
+  });
+});

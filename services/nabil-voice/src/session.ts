@@ -53,6 +53,18 @@ const FILLER_AFTER_TOOL_MS = 1_500;
  */
 const THINKING_FILLER_AFTER_MS = 2_500;
 /**
+ * FILLER TALK-OVER HOLD (calls cmt237qmr + cmt24gemw, 2026-08-20): a due
+ * filler fired into the caller's CONTINUED speech 4 times across two calls —
+ * fragmented cadence (worst with heavy accents) means the 2.5 s timer lands
+ * inside pauses that are not the end of the thought, and the caller hears the
+ * agent "talk over" them. The Media Streams path stamps noteCallerAudio() on
+ * every Deepgram event (interims included), so a due filler HOLDS while the
+ * mic showed speech this recently and re-checks until real silence.
+ * ConversationRelay has no such signal — the stamp stays 0 and behavior there
+ * is unchanged.
+ */
+const CALLER_ACTIVE_HOLD_MS = 1_000;
+/**
  * BOOKKEEPING MERGE (latency, Luigi's live call 2026-08-15: 2.9 s of silence
  * after "my name is Sam" because set_fulfilment + set_customer forced a second
  * model hop before "Thanks, Sam"). When a hop's tools are ALL of these, ALL
@@ -217,6 +229,10 @@ export type SessionDeps = {
   /** Silence before the THINKING filler speaks (no assistant text yet this
    *  turn). 0 disables it. Default THINKING_FILLER_AFTER_MS. */
   thinkingFillerMs?: number;
+  /** How recently the caller's mic must have shown speech for a due filler to
+   *  HOLD instead of firing (see noteCallerAudio). Default
+   *  CALLER_ACTIVE_HOLD_MS; only the Media Streams path feeds the signal. */
+  callerActiveHoldMs?: number;
 };
 
 type PerRequest = { hop: number; ttftMs: number | null; totalMs: number; cacheRead: number; cacheWrite: number; uncached: number; stop: string | null };
@@ -259,6 +275,10 @@ export class CallSession {
   private earlyFragmentTimer: ReturnType<typeof setTimeout> | undefined;
   private readonly earlyFragmentMs: number;
   private readonly thinkingFillerMs: number;
+  private readonly callerActiveHoldMs: number;
+  /** Last time the caller's mic showed speech (Media Streams stamps this on
+   *  every Deepgram event, interims included). 0 on ConversationRelay. */
+  private lastCallerAudioAt = 0;
   private thinkingFillerTimer: ReturnType<typeof setTimeout> | undefined;
   /** Last REAL barge-in (not stale, not during a protected sentence): the caller
    *  was talking over the reply, so what follows is a real utterance, never an
@@ -346,6 +366,7 @@ export class CallSession {
     this.now = deps.now ?? Date.now;
     this.earlyFragmentMs = deps.earlyFragmentMs ?? EARLY_FRAGMENT_MS;
     this.thinkingFillerMs = deps.thinkingFillerMs ?? THINKING_FILLER_AFTER_MS;
+    this.callerActiveHoldMs = deps.callerActiveHoldMs ?? CALLER_ACTIVE_HOLD_MS;
     this.events = deps.events ?? createEventSink(this.now);
     this.startedAt = this.now();
     const cfg = normalizeAgentConfig(undefined);
@@ -376,6 +397,13 @@ export class CallSession {
       sttModel: token.sttModel ?? null,
       ttsVoice: token.ttsVoice ?? null,
     };
+  }
+
+  /** Called by the media layer on EVERY STT event (interim transcripts
+   *  included) — live evidence the caller is speaking right now. A due filler
+   *  holds while this is fresh instead of talking over them. */
+  noteCallerAudio() {
+    this.lastCallerAudioAt = this.now();
   }
 
   /** Called by the server layer (Media Streams) to store the greeting Nabil
@@ -815,9 +843,16 @@ export class CallSession {
     if (this.thinkingFillerMs > 0 && !synthetic) {
       clearTimeout(this.thinkingFillerTimer);
       const armedAt = this.now();
-      this.thinkingFillerTimer = setTimeout(() => {
+      const recheckMs = Math.min(500, Math.max(50, this.thinkingFillerMs));
+      const fire = () => {
         this.thinkingFillerTimer = undefined;
         if (spokeAnything || fillerUsed || this.interrupted || this.now() < this.protectedUntil) return;
+        if (this.now() - this.lastCallerAudioAt < this.callerActiveHoldMs) {
+          // The caller is still talking — speaking a filler now IS the
+          // talk-over. Re-check until real silence (or the reply arrives).
+          this.thinkingFillerTimer = setTimeout(fire, recheckMs);
+          return;
+        }
         const thinkPhrases = voiceFillers(this.language ?? this.token.lang, "thinkingFillers");
         const phrase = thinkPhrases[(this.fillerCount + turn) % thinkPhrases.length];
         this.lastFillerPhrase = phrase;
@@ -827,15 +862,21 @@ export class CallSession {
         spokeAnything = true;
         this.speak(`${phrase} `, false);
         this.events.emit({ type: "filler", turn, hop: 1, tool: null, afterMs: this.now() - armedAt, phrase, kind: "thinking" });
-      }, this.thinkingFillerMs);
+      };
+      this.thinkingFillerTimer = setTimeout(fire, this.thinkingFillerMs);
     }
     const armFiller = (toolName: string, hop: number) => {
       stopFiller();
       const armedAt = this.now();
-      this.fillerTimer = setTimeout(() => {
+      const fire = () => {
         // No "let me check that" while merely saving a name or "pickup" — the
         // caller heard exactly that on 2026-08-15 and asked "what happened?".
         if (fillerUsed || this.interrupted || this.now() < this.protectedUntil || toolName === "transfer_to_human" || toolName === "set_customer" || toolName === "set_fulfilment") return;
+        if (this.now() - this.lastCallerAudioAt < this.callerActiveHoldMs) {
+          // The caller is still talking — hold, re-check until real silence.
+          this.fillerTimer = setTimeout(fire, 500);
+          return;
+        }
         const toolPhrases = voiceFillers(this.language ?? this.token.lang, "fillers");
         const phrase = toolPhrases.filter((p) => p !== this.lastFillerPhrase)[(this.fillerCount + turn) % (toolPhrases.length - 1)] ?? toolPhrases[0];
         this.lastFillerPhrase = phrase;
@@ -845,7 +886,8 @@ export class CallSession {
         spokeAnything = true;
         this.speak(`${phrase} `, false);
         this.events.emit({ type: "filler", turn, hop, tool: toolName, afterMs: this.now() - armedAt, phrase });
-      }, FILLER_AFTER_TOOL_MS);
+      };
+      this.fillerTimer = setTimeout(fire, FILLER_AFTER_TOOL_MS);
     };
 
     let hops = 0;
