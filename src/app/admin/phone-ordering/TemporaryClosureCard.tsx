@@ -89,7 +89,7 @@ export default function TemporaryClosureCard({ initialPauseGreeting }: { initial
       if (selected.size === 0) { toast.error(tSvc("pause.pickFirst")); return; }
       setBusy(true);
       try {
-        const res = await fetch("/api/admin/pause-services", {
+        const res = await fetch("/api/admin/phone-ordering/pause", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ services: Array.from(selected), ...body }),
