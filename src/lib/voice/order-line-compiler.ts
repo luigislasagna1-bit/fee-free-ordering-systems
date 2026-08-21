@@ -1006,6 +1006,7 @@ export function compilePizzaLine(
   }
 
   const chargeLines: ToppingChargeLine[] = [];
+  const chargeLineSides: Array<"left" | "right" | "whole"> = [];
   const toppingsOut: NonNullable<CompileResult["toppings"]> = [];
   /** "placement|OptionName" of toppings/sauces that came from a half recipe (not spoken by name). */
   const recipeDerived = new Set<string>();
@@ -1069,6 +1070,7 @@ export function compilePizzaLine(
         optionPrice: opt.priceAdjustment,
         isHalf: placement !== "whole",
       });
+      chargeLineSides.push(placement);
     }
     spokenParts.push(
       `${count > 1 ? `${count}× ` : ""}${opt.name}${placement === "left" ? " on the left half" : placement === "right" ? " on the right half" : ""}`,
@@ -1153,6 +1155,7 @@ export function compilePizzaLine(
         name: `${placementPrefix("whole", isHalfHalf)}${opt.name}`,
       });
       chargeLines.push({ optionId: opt.modifierOptionId, optionPrice: opt.priceAdjustment, isHalf: false });
+      chargeLineSides.push("whole");
       // The kitchen ticket and the read-back must agree — a preset the caller
       // never mentioned is still on the pizza they're about to pay for.
       spokenParts.push(opt.name);
@@ -1198,6 +1201,7 @@ export function compilePizzaLine(
       includedToppings: cfg.includedToppings,
       halfToppingMultiplier: cfg.halfToppingMultiplier,
       reduceOnRemove: cfg.reduceOnRemove,
+      presetToppings: cfg.presetToppings ?? [],
     };
     // FAIL LOUD rather than sell a half-price pizza. If the store configured
     // preset toppings and NONE of them resolved against this item's groups, the
@@ -1225,13 +1229,26 @@ export function compilePizzaLine(
       const charges = priceToppingLines(pricing, chargeLines);
       const toppingTotal = charges.reduce((a, b) => a + b, 0) + toppingBaseAdjust(pricing);
       const extra = Math.round(toppingTotal * 100) / 100;
-      const halves = chargeLines.filter((l) => l.isHalf).length;
-      const wholes = chargeLines.length - halves;
-      const countLabel = `${wholes + halves} topping${wholes + halves === 1 ? "" : "s"}`;
+      const included = cfg.includedToppings;
       if (extra > 0) {
-        if (!opts.suppressPricingNote) pricingNote = `${countLabel}; ${cfg.includedToppings} included, so that's ${money(extra, currency)} extra.`;
+        let note: string;
+        const leftIdxs = chargeLineSides.map((s, i) => s === "left" ? i : -1).filter(i => i >= 0);
+        const rightIdxs = chargeLineSides.map((s, i) => s === "right" ? i : -1).filter(i => i >= 0);
+        if (leftIdxs.length > 0 && rightIdxs.length > 0) {
+          const leftTotal = Math.round(leftIdxs.reduce((a, i) => a + charges[i], 0) * 100) / 100;
+          const rightTotal = Math.round(rightIdxs.reduce((a, i) => a + charges[i], 0) * 100) / 100;
+          const ln = leftIdxs.length;
+          const rn = rightIdxs.length;
+          note = `Left half: ${ln} topping${ln === 1 ? "" : "s"} (${money(leftTotal, currency)}); Right half: ${rn} topping${rn === 1 ? "" : "s"} (${money(rightTotal, currency)}). Total extra: ${money(extra, currency)}.`;
+        } else {
+          const total = chargeLines.length;
+          note = `${total} topping${total === 1 ? "" : "s"}; ${included} included, so that's ${money(extra, currency)} extra.`;
+        }
+        if (!opts.suppressPricingNote) pricingNote = note;
         surcharge = { amount: extra, direction: "extra" };
       } else if (extra < 0) {
+        const total = chargeLines.length;
+        const countLabel = `${total} topping${total === 1 ? "" : "s"}`;
         if (!opts.suppressPricingNote) pricingNote = `${countLabel} — that's ${money(Math.abs(extra), currency)} less than the standard build.`;
         surcharge = { amount: Math.abs(extra), direction: "less" };
       }

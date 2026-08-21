@@ -332,6 +332,9 @@ export type PauseAnnouncementInput = {
   /** VoiceAgentConfig.pauseGreeting — owner's own wording, replaces the auto sentence. */
   customGreeting?: string | null;
   canBookReservations?: boolean;
+  /** Pre-computed next opening time (after the pause ends). When provided, the EN
+   *  announcement says "back tomorrow at 10:00 AM" instead of "back at 11:59 PM". */
+  nextOpenTime?: Date;
 };
 
 function pauseEnd(v: Date | string | null, now: Date): Date | null {
@@ -376,7 +379,10 @@ export function buildPauseAnnouncement(input: PauseAnnouncementInput): string {
   // formatter the reopen time uses — a FACT computed here, never by the model.
   if (t.onePausedAltTime) {
     try {
-      const time = describeNextOpen(pausedUntil, now, input.timezone || undefined, input.hoursFormat);
+      // Prefer the pre-computed next opening time (after the pause ends) so callers
+      // hear "back tomorrow at 10:00 AM" rather than the raw pause-end timestamp.
+      const resumeAt = input.nextOpenTime ?? pausedUntil;
+      const time = describeNextOpen(resumeAt, now, input.timezone || undefined, input.hoursFormat);
       return t.onePausedAltTime.replace("{service}", t[paused]).replace("{time}", time).replace("{alt}", t[alt]);
     } catch {
       /* fall through to the timeless line */

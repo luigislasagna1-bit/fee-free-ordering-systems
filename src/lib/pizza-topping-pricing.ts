@@ -54,6 +54,10 @@ export type ToppingPricingConfig = {
    *  LEGACY behaviour: the first `includedToppings` are free credits and removing
    *  below them does not refund (only toppings BEYOND the count add cost). */
   reduceOnRemove?: boolean;
+  /** Seeded preset topping option IDs / names — the pizza's own standard build.
+   *  Used for config-drift validation (seeded but unresolved = broken config).
+   *  Does NOT affect pricing — set includedToppings to cover standard presets. */
+  presetToppings?: string[];
 };
 
 /** Symmetric "pay-per-topping" is the default; only an explicit false opts a

@@ -6,7 +6,7 @@ import { resolveMenuRestaurantId } from "@/lib/brand";
 import { signNabilCallToken } from "@/lib/voice/session-token";
 import { packHints, storeVocabHints } from "@/lib/voice/speech-hints";
 import { buildVoiceAttrValue, ttsTuningFromEnv } from "@/lib/voice/elevenlabs-voices";
-import { liveOpenStatus } from "@/lib/restaurant-hours";
+import { liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
 import { holidayEffectToday } from "@/lib/holiday-rules";
 import { rememberFallbackNumber, safetyNetTwiml } from "@/lib/voice/twiml-safety-net";
 import { primeFallbackNumbers } from "@/lib/voice/fallback-memo-prime";
@@ -403,6 +403,19 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   // owner's own pauseGreeting (Temporary Closure card) replaces the auto
   // sentence. The caller can barge over the greeting, so the prompt ALSO
   // mandates restating the pause in the first substantive reply.
+  // Compute the restaurant's next opening time after the pause ends, so the
+  // greeting says "back tomorrow at 10:00 AM" instead of "back at 11:59 PM".
+  const nowMs = Date.now();
+  const pickupPauseEnd = restaurant.acceptsPickup && cfg.phonePickupPausedUntil &&
+    new Date(cfg.phonePickupPausedUntil as Date).getTime() > nowMs
+    ? new Date(cfg.phonePickupPausedUntil as Date) : null;
+  const deliveryPauseEnd = restaurant.acceptsDelivery && cfg.phoneDeliveryPausedUntil &&
+    new Date(cfg.phoneDeliveryPausedUntil as Date).getTime() > nowMs
+    ? new Date(cfg.phoneDeliveryPausedUntil as Date) : null;
+  const activePauseEnd = pickupPauseEnd ?? deliveryPauseEnd;
+  const pauseNextOpenTime = activePauseEnd
+    ? nextOpenAt(restaurant.openingHours as never, activePauseEnd, tz, restaurant.holidays as never, null) ?? undefined
+    : undefined;
   const pauseLine = isOpen
     ? buildPauseAnnouncement({
         pickup: { offered: restaurant.acceptsPickup, pausedUntil: cfg.phonePickupPausedUntil ?? null },
@@ -413,6 +426,7 @@ async function handle(req: NextRequest, params: Record<string, string>) {
         lang,
         customGreeting: cfg.pauseGreeting,
         canBookReservations: cfg.canBookReservations,
+        nextOpenTime: pauseNextOpenTime,
       })
     : "";
   // When a service is paused, the pause info REPLACES the base greeting entirely

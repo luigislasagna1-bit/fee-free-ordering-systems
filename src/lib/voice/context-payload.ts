@@ -245,9 +245,10 @@ export async function buildVoiceContextPayload(rawSlug: string): Promise<VoiceCo
           offered: !!offered,
           pausedNow: true,
           pausedUntil: until!.toISOString(),
-          // Same local-words formatter the reopen time uses — "this evening at
-          // 8:00 PM" — so the agent can SAY when the service is back.
-          resumesLocal: describeNextOpen(until!, now, tz, fmt),
+          // Use the restaurant's actual next opening time after the pause ends,
+          // not the raw pause-end timestamp (which is 23:59 for "until tomorrow").
+          // Callers hear "back tomorrow at 10:00 AM", not "back at 11:59 PM".
+          resumesLocal: describeNextOpen(nextOpenAt(hours, until!, tz, holidays, null) ?? until!, now, tz, fmt),
         }
       : { offered: !!offered, pausedNow: false };
 
