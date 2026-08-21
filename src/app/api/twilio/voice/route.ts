@@ -434,13 +434,24 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   // correction. The owner's Temporary Closure message (if set) becomes the full
   // greeting; if not set, we prepend "Thanks for calling [name]." to the
   // auto-generated pause sentence. Closed-hours and unpaused paths are unchanged.
-  const greeting =
+  const rawGreeting =
     isOpen && pauseLine
       ? notice +
         (cfg.pauseGreeting?.trim()
           ? pauseLine // custom: pauseLine is already the verbatim owner message
           : `Thanks for calling ${restaurant.name}. ${pauseLine}`) // auto: add a hello
       : notice + baseGreeting + (pauseLine ? ` ${pauseLine}` : "");
+  // ElevenLabs turbo ignores elevenlabsTextNormalization="auto" and improvises
+  // phone digit grouping — producing "41 - 6438 - 01 - 91" instead of the
+  // standard "416 - 438 - 0191" area-code grouping. The greeting bypasses
+  // session.ts's spokenForm() in both ConversationRelay (embedded in TwiML)
+  // and Media Streams (passed to speakText() on the Fly server). Verbalize
+  // North-American phone numbers here so both paths hear correct grouping.
+  // Same regex as spoken-numbers.ts line 175 — digits separated by space.
+  const greeting = rawGreeting.replace(
+    /(?<![\d-])(?:\+?1[\s.-]?)?\(?(\d{3})\)?[\s.-]?(\d{3})[\s.-]?(\d{4})(?![\d-])/g,
+    (_m, a, b, c) => `${[...a].join(" ")}, ${[...b].join(" ")}, ${[...c].join(" ")}`,
+  );
 
   // Domain-biased ASR (the biggest accuracy lever we own): feed the LIVE menu
   // vocabulary — item names AND topping/crust/sauce names — to Deepgram via the

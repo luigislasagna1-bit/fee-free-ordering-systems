@@ -489,6 +489,14 @@ export class CallSession {
           this.bargedDuringProtected = true;
           break;
         }
+        // In Media Streams mode every barge-in carries the TTS text as the heard
+        // payload, so heardTrim is always non-empty there. In ConversationRelay
+        // a pure noise event has no payload (heardTrim = ""). The resume timer
+        // is only useful for the noise case — when there IS a heard payload a
+        // real prompt event will always follow (Media Streams queues one in
+        // bargeIn(); ConversationRelay's STT delivers one via Twilio). Firing
+        // the timer on a real barge-in produces the "phantom new sentence" bug.
+        const interruptWasNoise = !heardTrim;
         this.interrupted = true;
         this.lastBargeInAt = this.now();
         this.ttsBuffer = ""; // never speak buffered text after the caller cut in
@@ -497,6 +505,7 @@ export class CallSession {
         this.controller?.abort();
         clearTimeout(this.resumeTimer);
         this.resumeTimer = setTimeout(() => {
+          if (!interruptWasNoise) return; // real barge-in — a prompt is coming; skip
           const last = this.messages[this.messages.length - 1];
           const lastText = typeof last?.content === "string" ? last.content : "";
           // Only resume when there IS a real partial to pick up.
