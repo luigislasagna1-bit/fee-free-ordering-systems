@@ -4810,7 +4810,7 @@
         "customHint": "Restoranın yerel saati.",
         "pausedToast": "Duraklatıldı — hemen bir sonraki arama bunu duyacak.",
         "resumedToast": "Devam ediyor — bir sonraki arama normale döner.",
-        "sharedNote": "Bu, web siteniz ve mutfak uygulamanızla aynı anahtardır: duraklatılan bir hizmet her yerde duraklatılır ve süre dolunca her şey otomatik olarak devam eder.",
+        "sharedNote": "Bu yalnızca telefon görüşmelerini etkiler — web sitenizin ve mutfak uygulamasının kendi hizmet kontrolleri vardır. Süre dolduğunda duraklatma otomatik olarak devam eder.",
         "greetingLabel": "Kapanış mesajı (isteğe bağlı)",
         "greetingPlaceholder": "örn. Bu akşam özel bir etkinlik için kapalıyız — yarın 11'de döneceğiz!",
         "greetingHint": "Bir şey duraklatıldığı sürece arayanlara karşılamada otomatik bildirim yerine söylenir. Bir dahaki sefere saklanır — otomatik bildirime dönmek için temizleyin.",

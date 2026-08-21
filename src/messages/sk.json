@@ -4810,7 +4810,7 @@
         "customHint": "Miestny čas reštaurácie.",
         "pausedToast": "Pozastavené — už najbližší hovor to bude počuť.",
         "resumedToast": "Obnovené — najbližší hovor je opäť normálny.",
-        "sharedNote": "Je to ten istý prepínač ako na webe a v kuchynskej aplikácii: pozastavená služba je pozastavená všade a po uplynutí času sa všetko samo obnoví.",
+        "sharedNote": "Toto ovplyvňuje iba telefónne hovory — váš web a aplikácia pre kuchyňu majú vlastné ovládacie prvky služby. Pauza sa automaticky obnoví, keď vyprší čas.",
         "greetingLabel": "Správa o zatvorení (voliteľné)",
         "greetingPlaceholder": "napr. Dnes večer máme súkromnú akciu — zajtra o 11 sme späť!",
         "greetingHint": "Zaznie volajúcim v pozdrave namiesto automatického oznámenia, kým je niečo pozastavené. Uloží sa na nabudúce — vymazaním sa vráti automatické oznámenie.",

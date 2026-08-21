@@ -4810,7 +4810,7 @@
         "customHint": "Heure locale du restaurant.",
         "pausedToast": "En pause — le tout prochain appel l'entendra.",
         "resumedToast": "Repris — le prochain appel redevient normal.",
-        "sharedNote": "C'est le même interrupteur que votre site et l'app cuisine : un service en pause l'est partout, et tout reprend automatiquement quand le temps est écoulé.",
+        "sharedNote": "Cela n'affecte que les appels téléphoniques — votre site web et l'application cuisine ont leurs propres contrôles de service. La pause reprend automatiquement lorsque le temps est écoulé.",
         "greetingLabel": "Message de fermeture (facultatif)",
         "greetingPlaceholder": "ex. Ce soir, fermé pour un événement privé — de retour demain à 11 h !",
         "greetingHint": "Dit aux appelants dans le message d'accueil à la place de l'annonce automatique tant que quelque chose est en pause. Conservé pour la prochaine fois — effacez-le pour revenir à l'annonce automatique.",

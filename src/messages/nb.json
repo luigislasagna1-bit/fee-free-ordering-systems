@@ -4810,7 +4810,7 @@
         "customHint": "Restaurantens lokale tid.",
         "pausedToast": "Satt på pause — allerede neste anrop hører det.",
         "resumedToast": "Gjenopptatt — neste anrop er tilbake til normalt.",
-        "sharedNote": "Det er samme bryter som på nettsiden og kjøkkenappen: en pauset tjeneste er satt på pause overalt, og alt gjenopptas automatisk når tiden er ute.",
+        "sharedNote": "Dette påvirker bare telefonsamtaler — nettstedet ditt og kjøkkenappen har egne tjenestekontroller. Pausen gjenopptas automatisk når tiden er ute.",
         "greetingLabel": "Stengemelding (valgfri)",
         "greetingPlaceholder": "f.eks. Vi er stengt i kveld pga. et privat arrangement — tilbake i morgen kl. 11!",
         "greetingHint": "Sies til innringere i hilsenen i stedet for den automatiske meldingen mens noe er på pause. Beholdes til neste gang — tøm feltet for å bruke den automatiske meldingen igjen.",

@@ -4810,7 +4810,7 @@
         "customHint": "Horário local do restaurante.",
         "pausedToast": "Pausado — a próxima ligação já vai ouvir o aviso.",
         "resumedToast": "Retomado — a próxima ligação volta ao normal.",
-        "sharedNote": "É o mesmo interruptor do site e do app da cozinha: um serviço pausado fica pausado em todo lugar, e tudo volta automaticamente quando o tempo acaba.",
+        "sharedNote": "Isso afeta apenas chamadas telefônicas — seu site e o aplicativo da cozinha têm seus próprios controles de serviço. A pausa é retomada automaticamente quando o tempo acabar.",
         "greetingLabel": "Mensagem de fechamento (opcional)",
         "greetingPlaceholder": "ex. Hoje à noite estamos fechados para um evento privado — voltamos amanhã às 11!",
         "greetingHint": "É falado para quem liga na saudação, no lugar do aviso automático, enquanto algo estiver pausado. Fica salvo para a próxima vez — apague para voltar ao aviso automático.",

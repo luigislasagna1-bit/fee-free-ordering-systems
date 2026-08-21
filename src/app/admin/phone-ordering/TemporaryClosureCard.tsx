@@ -7,18 +7,17 @@ import toast from "react-hot-toast";
 import { Pause, Play, Loader2, CheckCircle2, CalendarClock } from "lucide-react";
 
 /**
- * Temporary Closure — Loman-parity pause control INSIDE the Nabil dashboard
- * (Luigi 2026-08-20). Same shared switch as the website + kitchen app
- * (Restaurant *PausedUntil via /api/admin/pause-services): pausing delivery
- * here pauses it everywhere, Nabil keeps answering and announces it in the
- * greeting of the very next call, offering what still runs.
+ * Temporary Closure — phone-ONLY pause control inside the Nabil dashboard
+ * (Luigi 2026-08-20). Writes to VoiceAgentConfig.phone*PausedUntil via
+ * /api/admin/phone-ordering/pause — NOT to the shared Restaurant.*PausedUntil
+ * columns. The website and kitchen app are completely unaffected.
  *
  * Self-fetching like src/components/admin/PauseServicesControl.tsx (the admin
  * Services page twin) — deliberately a separate component: this one adds the
  * longer quick-picks (6h/12h/tomorrow/Monday/custom local time) and the
  * closure message. Saves inline, NOT through the settings form's sticky save
- * bar (pause state is live Restaurant state, not VoiceAgentConfig — except the
- * closure message, which PATCHes {pauseGreeting} alone).
+ * bar (pause state is live VoiceAgentConfig state — except the closure message,
+ * which PATCHes {pauseGreeting} alone on the main phone-ordering route).
  */
 type ServiceKey = "pickup" | "delivery" | "dineIn" | "catering" | "takeOut" | "reservations";
 const ALL: ServiceKey[] = ["pickup", "delivery", "dineIn", "catering", "takeOut", "reservations"];
@@ -51,7 +50,7 @@ export default function TemporaryClosureCard({ initialPauseGreeting }: { initial
   const [savingGreeting, setSavingGreeting] = useState(false);
 
   const load = useCallback(() => {
-    fetch("/api/admin/pause-services")
+    fetch("/api/admin/phone-ordering/pause")
       .then((r) => r.json())
       .then((d) => {
         if (d.enabled) setEnabled(d.enabled);

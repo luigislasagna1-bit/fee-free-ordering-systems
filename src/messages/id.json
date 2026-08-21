@@ -4810,7 +4810,7 @@
         "customHint": "Waktu setempat restoran.",
         "pausedToast": "Dijeda — panggilan berikutnya langsung mendengarnya.",
         "resumedToast": "Dilanjutkan — panggilan berikutnya kembali normal.",
-        "sharedNote": "Ini sakelar yang sama dengan situs web dan aplikasi dapur Anda: layanan yang dijeda berhenti di mana pun, dan semuanya otomatis berjalan lagi saat waktunya habis.",
+        "sharedNote": "Ini hanya memengaruhi panggilan telepon — situs web dan aplikasi dapur Anda memiliki kontrol layanan sendiri. Jeda berlanjut secara otomatis ketika waktu habis.",
         "greetingLabel": "Pesan penutupan (opsional)",
         "greetingPlaceholder": "mis. Malam ini kami tutup untuk acara pribadi — buka lagi besok jam 11!",
         "greetingHint": "Diucapkan kepada penelepon dalam sapaan menggantikan pemberitahuan otomatis selama ada yang dijeda. Disimpan untuk lain kali — kosongkan untuk kembali ke pemberitahuan otomatis.",

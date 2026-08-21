@@ -4810,7 +4810,7 @@
         "customHint": "Theo giờ địa phương của nhà hàng.",
         "pausedToast": "Đã tạm dừng — cuộc gọi kế tiếp sẽ nghe thông báo ngay.",
         "resumedToast": "Đã mở lại — cuộc gọi kế tiếp trở lại bình thường.",
-        "sharedNote": "Đây là cùng một công tắc với trang web và ứng dụng bếp: dịch vụ tạm dừng sẽ dừng ở mọi nơi, và mọi thứ tự động hoạt động lại khi hết giờ.",
+        "sharedNote": "Điều này chỉ ảnh hưởng đến các cuộc gọi điện thoại — trang web và ứng dụng bếp của bạn có các điều khiển dịch vụ riêng. Tạm dừng sẽ tự động tiếp tục khi hết thời gian.",
         "greetingLabel": "Lời nhắn khi đóng cửa (không bắt buộc)",
         "greetingPlaceholder": "vd: Tối nay chúng tôi đóng cửa vì sự kiện riêng — mai 11 giờ mở lại!",
         "greetingHint": "Được đọc cho người gọi trong lời chào thay cho thông báo tự động khi có dịch vụ tạm dừng. Được lưu cho lần sau — xóa để dùng lại thông báo tự động.",

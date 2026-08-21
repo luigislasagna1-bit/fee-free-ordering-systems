@@ -4810,7 +4810,7 @@
         "customHint": "Lokale tijd van het restaurant.",
         "pausedToast": "Gepauzeerd — het eerstvolgende gesprek hoort het al.",
         "resumedToast": "Hervat — het volgende gesprek is weer normaal.",
-        "sharedNote": "Dit is dezelfde schakelaar als je website en de keuken-app: een gepauzeerde dienst is overal gepauzeerd, en alles gaat automatisch weer verder als de tijd om is.",
+        "sharedNote": "Dit is alleen van invloed op telefoongesprekken — uw website en keukenapp hebben hun eigen servicebedieningen. De pauze wordt automatisch hervat wanneer de tijd om is.",
         "greetingLabel": "Sluitingsbericht (optioneel)",
         "greetingPlaceholder": "bijv. Vanavond gesloten voor een privé-evenement — morgen om 11 uur weer open!",
         "greetingHint": "Wordt in de begroeting tegen bellers gezegd in plaats van de automatische melding zolang er iets gepauzeerd is. Blijft bewaard voor de volgende keer — wis het om weer de automatische melding te gebruiken.",

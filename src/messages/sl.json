@@ -4810,7 +4810,7 @@
         "customHint": "Lokalni čas restavracije.",
         "pausedToast": "Zaustavljeno — že naslednji klic bo to slišal.",
         "resumedToast": "Nadaljevano — naslednji klic je spet običajen.",
-        "sharedNote": "To je isto stikalo kot na spletni strani in v kuhinjski aplikaciji: zaustavljena storitev je zaustavljena povsod, in vse se samodejno nadaljuje, ko čas poteče.",
+        "sharedNote": "To vpliva samo na telefonske klice — vaše spletno mesto in aplikacija za kuhinjo imata lastne kontrole storitev. Premor se samodejno nadaljuje, ko čas poteče.",
         "greetingLabel": "Sporočilo o zaprtju (neobvezno)",
         "greetingPlaceholder": "npr. Nocoj smo zaprti zaradi zasebnega dogodka — nazaj jutri ob 11h!",
         "greetingHint": "Klicateljem se izgovori v pozdravu namesto samodejnega obvestila, dokler je kaj zaustavljeno. Ostane shranjeno za naslednjič — izbrišite ga za vrnitev na samodejno obvestilo.",

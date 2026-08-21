@@ -2992,13 +2992,24 @@ model VoiceAgentConfig {
   closedGreeting        String?
   greetingsByLocale     Json?   // { "<locale>": { open, closed } } sparse overrides
   /// Optional "Temporary Closure" message (≤200 chars) spoken INSTEAD of the
-  /// auto-composed pause notice while any service is paused (Restaurant
-  /// *PausedUntil columns — the same shared switch the website + kitchen app
-  /// honour). Persists across pauses (dormant while nothing is paused, never
-  /// auto-cleared on resume) so an owner's wording is kept for next time.
+  /// auto-composed pause notice while any phone-only service is paused. Persists
+  /// across pauses (dormant while nothing is paused, never auto-cleared on resume).
   /// Written from the Nabil dashboard Temporary Closure card; read by the
   /// Twilio greeting composer + the voice context payload. Luigi 2026-08-20.
   pauseGreeting         String?
+
+  // ── Phone-only service pause timestamps (Luigi 2026-08-20) ──────────────
+  // These are the PHONE-ONLY equivalents of Restaurant.*PausedUntil. The
+  // Nabil AI Temporary Closure card writes here ONLY — the website and kitchen
+  // app continue to use the shared Restaurant.*PausedUntil columns. The voice
+  // context builder (context-payload.ts) reads from here, never from the
+  // shared columns, so pausing a service by phone never affects the website.
+  phonePickupPausedUntil       DateTime?
+  phoneDeliveryPausedUntil     DateTime?
+  phoneDineInPausedUntil       DateTime?
+  phoneTakeOutPausedUntil      DateTime?
+  phoneCateringPausedUntil     DateTime?
+  phoneReservationsPausedUntil DateTime?
 
   // ── Languages ──
   primaryLanguage       String  @default("en")

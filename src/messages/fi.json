@@ -4810,7 +4810,7 @@
         "customHint": "Ravintolan paikallista aikaa.",
         "pausedToast": "Keskeytetty — jo seuraava puhelu kuulee sen.",
         "resumedToast": "Palautettu — seuraava puhelu on taas normaali.",
-        "sharedNote": "Tämä on sama kytkin kuin verkkosivulla ja keittiösovelluksessa: keskeytetty palvelu on tauolla kaikkialla, ja kaikki palautuu automaattisesti ajan päättyessä.",
+        "sharedNote": "Tämä vaikuttaa vain puheluihin — verkkosivustollasi ja keittiösovelluksella on omat palveluohjaimet. Tauko jatkuu automaattisesti, kun aika loppuu.",
         "greetingLabel": "Sulkemisviesti (valinnainen)",
         "greetingPlaceholder": "esim. Tänä iltana suljettu yksityistilaisuuden vuoksi — takaisin huomenna klo 11!",
         "greetingHint": "Sanotaan soittajille tervehdyksessä automaattisen ilmoituksen sijaan, kun jokin on tauolla. Säilyy seuraavaa kertaa varten — tyhjennä palataksesi automaattiseen ilmoitukseen.",

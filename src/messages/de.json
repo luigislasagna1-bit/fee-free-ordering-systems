@@ -4810,7 +4810,7 @@
         "customHint": "Ortszeit des Restaurants.",
         "pausedToast": "Pausiert — schon der nächste Anruf hört es.",
         "resumedToast": "Fortgesetzt — der nächste Anruf läuft wieder normal.",
-        "sharedNote": "Es ist derselbe Schalter wie auf Ihrer Website und in der Küchen-App: Ein pausierter Service ist überall pausiert, und alles läuft automatisch weiter, sobald die Zeit abläuft.",
+        "sharedNote": "Dies betrifft nur Telefonanrufe — Ihre Website und die Küchen-App haben eigene Servicesteuerungen. Die Pause wird automatisch fortgesetzt, wenn die Zeit abläuft.",
         "greetingLabel": "Schließungsnachricht (optional)",
         "greetingPlaceholder": "z. B. Heute Abend private Veranstaltung — morgen um 11 sind wir zurück!",
         "greetingHint": "Wird Anrufern in der Begrüßung anstelle des automatischen Hinweises vorgesprochen, solange etwas pausiert ist. Bleibt fürs nächste Mal gespeichert — leeren, um wieder den automatischen Hinweis zu nutzen.",

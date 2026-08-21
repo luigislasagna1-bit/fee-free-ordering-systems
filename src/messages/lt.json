@@ -4810,7 +4810,7 @@
         "customHint": "Restorano vietos laikas.",
         "pausedToast": "Pristabdyta — jau kitas skambutis tai išgirs.",
         "resumedToast": "Atnaujinta — kitas skambutis vėl įprastas.",
-        "sharedNote": "Tai tas pats jungiklis kaip svetainėje ir virtuvės programėlėje: pristabdyta paslauga pristabdyta visur, o laikui pasibaigus viskas atsinaujina automatiškai.",
+        "sharedNote": "Tai veikia tik telefoninius skambučius — jūsų svetainė ir virtuvės programa turi savo paslaugų valdiklius. Pauzė automatiškai atnaujinama, kai baigiasi laikas.",
         "greetingLabel": "Uždarymo žinutė (neprivaloma)",
         "greetingPlaceholder": "pvz. Šįvakar uždaryta dėl privataus renginio — grįžtame rytoj 11 val.!",
         "greetingHint": "Kol kas nors pristabdyta, skambinantiesiems pasisveikinime sakoma ši žinutė vietoj automatinio pranešimo. Išsaugoma kitam kartui — ištrinkite, kad grįžtų automatinis pranešimas.",

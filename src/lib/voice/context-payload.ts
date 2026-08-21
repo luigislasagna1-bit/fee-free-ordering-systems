@@ -193,6 +193,14 @@ export async function buildVoiceContextPayload(rawSlug: string): Promise<VoiceCo
         pickupPaymentMode: true,
         deliveryPaymentMode: true,
         pauseGreeting: true,
+        // Phone-only pause timestamps — separate from the shared
+        // Restaurant.*PausedUntil so a Nabil pause never affects the website.
+        phonePickupPausedUntil: true,
+        phoneDeliveryPausedUntil: true,
+        phoneDineInPausedUntil: true,
+        phoneTakeOutPausedUntil: true,
+        phoneCateringPausedUntil: true,
+        phoneReservationsPausedUntil: true,
       },
     }),
     prisma.voiceFaq.findMany({
@@ -273,12 +281,12 @@ export async function buildVoiceContextPayload(rawSlug: string): Promise<VoiceCo
         nextOpenLocal: nextOpen && live.kind !== "open" ? describeNextOpen(nextOpen, now, tz, fmt) : null,
       },
       services: {
-        pickup: svc(r.acceptsPickup, r.pickupPausedUntil),
-        delivery: svc(r.acceptsDelivery, r.deliveryPausedUntil),
-        dineIn: svc(r.acceptsDineIn, r.dineInPausedUntil),
-        takeOut: svc(r.acceptsTakeOut, r.takeOutPausedUntil),
-        catering: svc(r.acceptsCatering, r.cateringPausedUntil),
-        reservations: svc(r.acceptsReservations, r.reservationsPausedUntil),
+        pickup: svc(r.acceptsPickup, cfg?.phonePickupPausedUntil ?? null),
+        delivery: svc(r.acceptsDelivery, cfg?.phoneDeliveryPausedUntil ?? null),
+        dineIn: svc(r.acceptsDineIn, cfg?.phoneDineInPausedUntil ?? null),
+        takeOut: svc(r.acceptsTakeOut, cfg?.phoneTakeOutPausedUntil ?? null),
+        catering: svc(r.acceptsCatering, cfg?.phoneCateringPausedUntil ?? null),
+        reservations: svc(r.acceptsReservations, cfg?.phoneReservationsPausedUntil ?? null),
       },
       delivery: {
         minimumOrder: r.minimumOrder,

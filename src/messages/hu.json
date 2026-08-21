@@ -4810,7 +4810,7 @@
         "customHint": "Az étterem helyi ideje.",
         "pausedToast": "Szüneteltetve — már a következő hívás hallani fogja.",
         "resumedToast": "Folytatva — a következő hívás már a megszokott.",
-        "sharedNote": "Ez ugyanaz a kapcsoló, mint a weboldalon és a konyhai appban: a szüneteltetett szolgáltatás mindenhol szünetel, és az idő lejártával minden magától folytatódik.",
+        "sharedNote": "Ez csak a telefonhívásokat érinti — a webhelye és a konyhai alkalmazás saját szolgáltatásvezérlőkkel rendelkeznek. A szünet automatikusan folytatódik, amikor az idő lejár.",
         "greetingLabel": "Zárási üzenet (nem kötelező)",
         "greetingPlaceholder": "pl. Ma este zártkörű rendezvény miatt zárva — holnap 11-kor újra nyitunk!",
         "greetingHint": "A hívóknak a köszöntésben hangzik el az automatikus értesítés helyett, amíg valami szünetel. Megmarad legközelebbre — törölje, hogy újra az automatikus értesítés szóljon.",

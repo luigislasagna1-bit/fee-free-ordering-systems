@@ -4810,7 +4810,7 @@
         "customHint": "Restorāna vietējais laiks.",
         "pausedToast": "Apturēts — jau nākamais zvans to dzirdēs.",
         "resumedToast": "Atsākts — nākamais zvans atkal ir kā parasti.",
-        "sharedNote": "Tas ir tas pats slēdzis kā vietnē un virtuves lietotnē: apturēts pakalpojums ir apturēts visur, un viss automātiski atsākas, kad laiks beidzas.",
+        "sharedNote": "Tas ietekmē tikai tālruņa zvanus — jūsu vietnei un virtuves lietotnei ir savas pakalpojumu vadīklas. Pauze tiek automātiski atsākta, kad beidzas laiks.",
         "greetingLabel": "Slēgšanas ziņa (neobligāti)",
         "greetingPlaceholder": "piem. Šovakar slēgts privāta pasākuma dēļ — atgriežamies rīt pulksten 11!",
         "greetingHint": "Kamēr kaut kas ir apturēts, zvanītājiem sveicienā izrunā šo ziņu automātiskā paziņojuma vietā. Saglabājas nākamajai reizei — izdzēsiet, lai atgrieztos pie automātiskā paziņojuma.",

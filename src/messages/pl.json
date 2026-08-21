@@ -4810,7 +4810,7 @@
         "customHint": "Czas lokalny restauracji.",
         "pausedToast": "Wstrzymano — usłyszy to już następny telefon.",
         "resumedToast": "Wznowiono — następny telefon będzie już normalny.",
-        "sharedNote": "To ten sam przełącznik co na stronie i w aplikacji kuchennej: wstrzymana usługa jest wstrzymana wszędzie, a po upływie czasu wszystko wznawia się automatycznie.",
+        "sharedNote": "Dotyczy to tylko rozmów telefonicznych — Twoja witryna internetowa i aplikacja kuchenna mają własne kontrolki usług. Pauza wznawia się automatycznie po upływie czasu.",
         "greetingLabel": "Komunikat o zamknięciu (opcjonalnie)",
         "greetingPlaceholder": "np. Dziś wieczorem zamknięte z powodu imprezy prywatnej — wracamy jutro o 11!",
         "greetingHint": "Wypowiadany dzwoniącym w powitaniu zamiast automatycznego komunikatu, dopóki coś jest wstrzymane. Zapisany na następny raz — wyczyść, aby wrócić do komunikatu automatycznego.",

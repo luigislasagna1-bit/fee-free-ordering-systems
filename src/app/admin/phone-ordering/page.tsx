@@ -71,32 +71,36 @@ export default async function PhoneOrderingPage({
     const [config, number, pauseRow] = await Promise.all([
       prisma.voiceAgentConfig.findUnique({
         where: { restaurantId },
-        select: { enabled: true, transferToNumber: true, agentName: true, firstEnabledAt: true },
+        select: {
+          enabled: true, transferToNumber: true, agentName: true, firstEnabledAt: true,
+          // Phone-only pause timestamps (separate from the shared Restaurant.*PausedUntil).
+          phonePickupPausedUntil: true, phoneDeliveryPausedUntil: true,
+          phoneDineInPausedUntil: true, phoneCateringPausedUntil: true,
+          phoneTakeOutPausedUntil: true, phoneReservationsPausedUntil: true,
+        },
       }),
       prisma.voiceNumber.findFirst({ where: { restaurantId }, orderBy: { createdAt: "asc" }, select: { phoneNumber: true, status: true } }),
-      // Temporary Closure state for the always-visible header chip — an active
-      // pause should be impossible to miss from any tab (Luigi 2026-08-20).
+      // Which services the restaurant offers + hoursFormat for the header chip.
+      // The phone-specific pause timestamps come from VoiceAgentConfig above.
       prisma.restaurant.findUnique({
         where: { id: restaurantId },
         select: {
           hoursFormat: true,
           acceptsPickup: true, acceptsDelivery: true, acceptsDineIn: true,
           acceptsCatering: true, acceptsTakeOut: true, acceptsReservations: true,
-          pickupPausedUntil: true, deliveryPausedUntil: true, dineInPausedUntil: true,
-          cateringPausedUntil: true, takeOutPausedUntil: true, reservationsPausedUntil: true,
         },
       }),
     ]);
 
     const nowMs = Date.now();
-    const pausedServices = pauseRow
+    const pausedServices = pauseRow && config
       ? ([
-          ["pickup", pauseRow.acceptsPickup, pauseRow.pickupPausedUntil],
-          ["delivery", pauseRow.acceptsDelivery, pauseRow.deliveryPausedUntil],
-          ["dineIn", pauseRow.acceptsDineIn, pauseRow.dineInPausedUntil],
-          ["takeOut", pauseRow.acceptsTakeOut, pauseRow.takeOutPausedUntil],
-          ["catering", pauseRow.acceptsCatering, pauseRow.cateringPausedUntil],
-          ["reservations", pauseRow.acceptsReservations, pauseRow.reservationsPausedUntil],
+          ["pickup", pauseRow.acceptsPickup, config.phonePickupPausedUntil],
+          ["delivery", pauseRow.acceptsDelivery, config.phoneDeliveryPausedUntil],
+          ["dineIn", pauseRow.acceptsDineIn, config.phoneDineInPausedUntil],
+          ["takeOut", pauseRow.acceptsTakeOut, config.phoneTakeOutPausedUntil],
+          ["catering", pauseRow.acceptsCatering, config.phoneCateringPausedUntil],
+          ["reservations", pauseRow.acceptsReservations, config.phoneReservationsPausedUntil],
         ] as [string, boolean, Date | null][])
           .filter(([, offered, until]) => offered && !!until && until.getTime() > nowMs)
           .map(([service, , until]) => ({ service, until: (until as Date).toISOString() }))

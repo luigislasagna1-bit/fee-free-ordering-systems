@@ -257,11 +257,10 @@ async function handle(req: NextRequest, params: Record<string, string>) {
               timezone: true, hoursFormat: true,
               openingHours: true, holidays: true,
               // Temporary Closure — the greeting announces a paused order
-              // channel up front (Luigi 2026-08-20), so the caller hears it
-              // before saying a word. Read fresh per call: a pause set in the
-              // dashboard reaches the very next call.
+              // channel up front (Luigi 2026-08-20). Phone-only pause timestamps
+              // live on VoiceAgentConfig (cfg below) so pausing via Nabil
+              // settings never affects the website or kitchen app.
               acceptsPickup: true, acceptsDelivery: true, acceptsReservations: true,
-              pickupPausedUntil: true, deliveryPausedUntil: true, reservationsPausedUntil: true,
               voiceAgentConfig: true,
             },
           },
@@ -406,9 +405,9 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   // mandates restating the pause in the first substantive reply.
   const pauseLine = isOpen
     ? buildPauseAnnouncement({
-        pickup: { offered: restaurant.acceptsPickup, pausedUntil: restaurant.pickupPausedUntil },
-        delivery: { offered: restaurant.acceptsDelivery, pausedUntil: restaurant.deliveryPausedUntil },
-        reservations: { offered: restaurant.acceptsReservations, pausedUntil: restaurant.reservationsPausedUntil },
+        pickup: { offered: restaurant.acceptsPickup, pausedUntil: cfg.phonePickupPausedUntil ?? null },
+        delivery: { offered: restaurant.acceptsDelivery, pausedUntil: cfg.phoneDeliveryPausedUntil ?? null },
+        reservations: { offered: restaurant.acceptsReservations, pausedUntil: cfg.phoneReservationsPausedUntil ?? null },
         timezone: restaurant.timezone,
         hoursFormat: fmt,
         lang,

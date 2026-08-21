@@ -4810,7 +4810,7 @@
         "customHint": "Restorani kohalik aeg.",
         "pausedToast": "Peatatud — juba järgmine kõne kuuleb seda.",
         "resumedToast": "Taastatud — järgmine kõne on jälle tavaline.",
-        "sharedNote": "See on sama lüliti mis veebilehel ja köögirakenduses: peatatud teenus on peatatud kõikjal ning kõik taastub automaatselt, kui aeg saab läbi.",
+        "sharedNote": "See mõjutab ainult telefonikõnesid — teie veebisaidil ja köögirakendusel on oma teenusejuhtimised. Paus jätkub automaatselt, kui aeg lõpeb.",
         "greetingLabel": "Sulgemisteade (valikuline)",
         "greetingPlaceholder": "nt Täna õhtul oleme eraürituse tõttu suletud — homme kell 11 tagasi!",
         "greetingHint": "Öeldakse helistajatele tervituses automaatse teate asemel, kuni midagi on peatatud. Jääb järgmiseks korraks alles — kustuta, et taas automaatset teadet kasutada.",

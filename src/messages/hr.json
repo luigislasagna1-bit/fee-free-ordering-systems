@@ -4810,7 +4810,7 @@
         "customHint": "Lokalno vrijeme restorana.",
         "pausedToast": "Pauzirano — već sljedeći poziv će to čuti.",
         "resumedToast": "Nastavljeno — sljedeći poziv je opet normalan.",
-        "sharedNote": "To je isti prekidač kao na web stranici i u kuhinjskoj aplikaciji: pauzirana usluga pauzirana je svugdje, a sve se automatski nastavlja kad vrijeme istekne.",
+        "sharedNote": "Ovo utječe samo na telefonske pozive — vaša web stranica i kuhinjska aplikacija imaju vlastite kontrole usluga. Pauza se automatski nastavlja kada istekne vrijeme.",
         "greetingLabel": "Poruka o zatvaranju (neobavezno)",
         "greetingPlaceholder": "npr. Večeras smo zatvoreni zbog privatnog događaja — vraćamo se sutra u 11!",
         "greetingHint": "Izgovara se pozivateljima u pozdravu umjesto automatske obavijesti dok je nešto pauzirano. Čuva se za sljedeći put — obrišite ga za povratak na automatsku obavijest.",

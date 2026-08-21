@@ -4810,7 +4810,7 @@
         "customHint": "Hora local del restaurant.",
         "pausedToast": "En pausa — la propera trucada ja ho sentirà.",
         "resumedToast": "Reprès — la propera trucada torna a la normalitat.",
-        "sharedNote": "És el mateix interruptor que el web i l'app de cuina: un servei en pausa ho està a tot arreu, i tot es reprèn automàticament quan s'acaba el temps.",
+        "sharedNote": "Això només afecta les trucades telefòniques — el vostre lloc web i l'aplicació de cuina tenen els seus propis controls de servei. La pausa es reprèn automàticament quan s'acaba el temps.",
         "greetingLabel": "Missatge de tancament (opcional)",
         "greetingPlaceholder": "p. ex. Aquesta nit tanquem per un esdeveniment privat — tornem demà a les 11!",
         "greetingHint": "Es diu a qui truca en la salutació en lloc de l'avís automàtic mentre hi ha alguna cosa en pausa. Es conserva per a la propera vegada — esborra'l per tornar a l'avís automàtic.",
