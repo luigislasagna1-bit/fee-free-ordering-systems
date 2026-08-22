@@ -79,6 +79,20 @@ export async function POST(req: NextRequest) {
           .join(" ");
       break;
     }
+    case "tracking": {
+      // A5: the live status page of an order the caller asked about (any
+      // channel) — found by lookup_recent_orders, never typed by the model.
+      if (!body.orderId) {
+        return NextResponse.json({ error: "orderId required for tracking", code: "bad_request" }, { status: 400 });
+      }
+      const order = await prisma.order.findFirst({
+        where: { id: String(body.orderId), restaurantId: r.id },
+        select: { id: true, orderNumber: true },
+      });
+      if (!order) return NextResponse.json({ error: "Order not found", code: "not_found" }, { status: 404 });
+      msg = `${r.name} — track your order ${order.orderNumber}: ${restaurantOrderUrl(urlInfo, `/status/${order.id}`)}`;
+      break;
+    }
     case "menu":
       msg = `${r.name} menu & online ordering: ${link()}`;
       break;

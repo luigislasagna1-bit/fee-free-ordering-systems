@@ -4347,7 +4347,9 @@
         "transferDeflection": "Ko Nabil saka pārsavienošanas vietā",
         "transferDeflectionHint": "Tiek pateikts vārds vārdā. Atstājiet tukšu, lai izmantotu: „Mūsu personāls pašlaik gatavo pasūtījumus un nevar atbildēt uz zvaniem, bet es varu palīdzēt ar visu, kas saistīts ar restorānu.“",
         "transferTakeMessage": "Piedāvāt pieņemt ziņu",
-        "transferTakeMessageHint": "Kad zvanītāju nevar pārsavienot, Nabil piedāvā pieņemt ziņu un nosūta to SMS veidā uz jūsu pārsavienošanas numuru (vai brīdinājumu tālruni)."
+        "transferTakeMessageHint": "Kad zvanītāju nevar pārsavienot, Nabil piedāvā pieņemt ziņu un nosūta to SMS veidā uz jūsu pārsavienošanas numuru (vai brīdinājumu tālruni).",
+        "answerOrderStatus": "Informācija par jau veiktajiem pasūtījumiem (vietne, lietotne, tālrunis, piegāde)",
+        "answerOrderStatusHint": "Zvanītāji bieži jautā par tiešsaistē veiktu pasūtījumu. Nabil to atrod pēc viņu numura vai pasūtījuma numura un paziņo reālo statusu un paredzamo laiku — nekad minējumu. Atcelšana vai maiņa joprojām notiek caur cilvēku."
       },
       "apiErrors": {
         "featureLocked": "Jūsu plānā vēl nav iekļauts tālruņa pasūtījumu aģents.",

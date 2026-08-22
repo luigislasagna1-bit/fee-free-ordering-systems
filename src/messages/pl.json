@@ -4347,7 +4347,9 @@
         "transferDeflection": "Co Nabil mówi zamiast przełączać",
         "transferDeflectionHint": "Wypowiadane słowo w słowo. Zostaw puste, aby użyć: „Nasz personel jest zajęty przygotowywaniem zamówień i nie może teraz odbierać telefonów, ale mogę pomóc we wszystkim, co dotyczy restauracji.”",
         "transferTakeMessage": "Zaproponuj przyjęcie wiadomości",
-        "transferTakeMessageHint": "Gdy nie można przełączyć rozmowy, Nabil proponuje przyjęcie wiadomości i wysyła ją SMS-em na Twój numer do przełączania (lub telefon alarmowy)."
+        "transferTakeMessageHint": "Gdy nie można przełączyć rozmowy, Nabil proponuje przyjęcie wiadomości i wysyła ją SMS-em na Twój numer do przełączania (lub telefon alarmowy).",
+        "answerOrderStatus": "Informacje o złożonych już zamówieniach (strona, aplikacja, telefon, dostawa)",
+        "answerOrderStatusHint": "Dzwoniący często pytają o zamówienie złożone online. Nabil odnajduje je po ich numerze lub numerze zamówienia i podaje prawdziwy status oraz przewidywany czas — nigdy nie zgaduje. Anulowanie lub zmiana zamówienia nadal wymaga osoby."
       },
       "apiErrors": {
         "featureLocked": "Twój plan nie obejmuje jeszcze agenta zamówień telefonicznych.",

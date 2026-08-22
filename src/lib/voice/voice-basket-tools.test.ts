@@ -180,7 +180,9 @@ function makeCtx(o: { cfg?: Partial<AgentConfig>; from?: string; currency?: stri
     logCall: vi.fn(),
     logEvents: vi.fn(),
     leaveMessage: vi.fn(),
+    recentOrders: vi.fn(),
   };
+  api.recentOrders.mockResolvedValue({ found: 0, orders: [] });
   api.leaveMessage.mockResolvedValue({ ok: true, status: 200, json: { ok: true, id: "msg_1" } });
   api.placeOrder.mockResolvedValue({ ok: true, status: 200, json: { id: "ord_1", orderNumber: "ORD-1", total: 24.5 } });
   api.dryRunOrder.mockResolvedValue({ ok: true, status: 200, json: { total: 24.5, subtotal: 20, tax: 4.5 } });
@@ -1184,21 +1186,23 @@ describe("toolsForConfig", () => {
 
   it("everything on ⇒ the full surface, in TOOLS order", () => {
     expect(names({ canTakeOrders: true, canBookReservations: true, smsConfirmations: true })).toEqual(TOOLS.map((t) => t.name));
-    expect(TOOLS.map((t) => t.name)).toEqual([...ORDER, "check_reservation_availability", "book_reservation", "transfer_to_human", "leave_message", "send_sms_link"]);
+    expect(TOOLS.map((t) => t.name)).toEqual([...ORDER, "check_reservation_availability", "book_reservation", "transfer_to_human", "leave_message", "send_sms_link", "lookup_recent_orders"]);
   });
 
   it("ordering tools are gated on canTakeOrders, reservations on canBookReservations, texting on smsConfirmations — transfer always survives", () => {
     const noOrders = names({ canTakeOrders: false });
     for (const n of ORDER) expect(noOrders).not.toContain(n);
-    expect(noOrders).toEqual(["check_reservation_availability", "book_reservation", "transfer_to_human", "leave_message", "send_sms_link"]);
+    expect(noOrders).toEqual(["check_reservation_availability", "book_reservation", "transfer_to_human", "leave_message", "send_sms_link", "lookup_recent_orders"]);
     const noRes = names({ canBookReservations: false });
     expect(noRes).not.toContain("book_reservation");
     expect(noRes).not.toContain("check_reservation_availability");
     expect(names({ smsConfirmations: false })).not.toContain("send_sms_link");
-    expect(names({ canTakeOrders: false, canBookReservations: false, smsConfirmations: false })).toEqual(["transfer_to_human", "leave_message"]);
+    expect(names({ canTakeOrders: false, canBookReservations: false, smsConfirmations: false })).toEqual(["transfer_to_human", "leave_message", "lookup_recent_orders"]);
     // A1b: take-a-message is its own gate; transfer itself always survives.
     expect(names({ transferTakeMessage: false })).not.toContain("leave_message");
-    expect(names({ canTakeOrders: false, canBookReservations: false, smsConfirmations: false, transferTakeMessage: false })).toEqual(["transfer_to_human"]);
+    expect(names({ canTakeOrders: false, canBookReservations: false, smsConfirmations: false, transferTakeMessage: false })).toEqual(["transfer_to_human", "lookup_recent_orders"]);
+    // A5: order-status lookup is its own gate.
+    expect(names({ canAnswerOrderStatus: false })).not.toContain("lookup_recent_orders");
   });
 
   it("pizza/combo building is NOT a tool gate — the engine refuses inside add_to_order", async () => {
@@ -1627,5 +1631,86 @@ describe("A6 — reservation dates (C15)", () => {
     api.bookReservation.mockResolvedValue({ ok: true, status: 200, json: { confirmationCode: "ABC123", status: "confirmed" } });
     await run(ctx, "book_reservation", { customerName: "Ada Lovelace", partySize: 2, date: "tomorrow", time: "19:00" });
     expect(api.bookReservation).toHaveBeenCalledWith(expect.objectContaining({ date: "2026-08-23" }));
+  });
+});
+
+/* ═══════════════════ A5 — lookup_recent_orders grounds every status answer ═══════════════════ */
+
+describe("lookup_recent_orders grounds every status answer (A5)", () => {
+  const webOrder = {
+    id: "ord_web_1",
+    orderRef: "4821",
+    minutesAgo: 12,
+    source: "web",
+    thirdParty: false,
+    type: "pickup",
+    status: "accepted",
+    stage: "preparing",
+    itemCount: 2,
+    items: ["1× Large 2 Topping", "1× Garlic Bread"],
+    readyInMinutes: 9,
+    scheduledForIso: null,
+    dispatch: null,
+    matchedBy: "phone",
+  };
+
+  it("looks up by the caller's number, speaks the localized status verbatim and the real ready estimate", async () => {
+    const { ctx, api } = makeCtx({ from: "+16475550100" });
+    api.recentOrders.mockResolvedValue({ found: 1, orders: [webOrder] });
+    const r = await run(ctx, "lookup_recent_orders", {});
+    expect(api.recentOrders).toHaveBeenCalledWith("luigis", "6475550100", undefined); // caller ID, canonical digits
+    expect(r.ok).toBe(true);
+    expect(r.found).toBe(1);
+    expect(r.orders[0].statusSpoken).toBe("Your order is being prepared right now.");
+    expect(r.orders[0]).not.toHaveProperty("total");
+    expect(String(r.instruction)).toMatch(/about 9 minutes/);
+    expect(String(r.instruction)).toMatch(/Never invent a driver position/);
+    expect(ctx.statusOrders).toEqual([{ id: "ord_web_1", ref: "4821" }]);
+  });
+
+  it("passes a spoken order number through (digits only) and says so when nothing matches", async () => {
+    const { ctx, api } = makeCtx();
+    const r = await run(ctx, "lookup_recent_orders", { orderNumber: "ending 48-21" });
+    expect(api.recentOrders).toHaveBeenCalledWith("luigis", expect.any(String), "4821");
+    expect(r.found).toBe(0);
+    expect(String(r.instruction)).toMatch(/No order ending in 4821/);
+    expect(String(r.instruction)).toMatch(/Never guess a status/);
+  });
+
+  it("a third-party (DoorDash) order is flagged so the agent deflects to that app", async () => {
+    const { ctx, api } = makeCtx();
+    api.recentOrders.mockResolvedValue({ found: 1, orders: [{ ...webOrder, source: "doordash", thirdParty: true, type: "delivery" }] });
+    const r = await run(ctx, "lookup_recent_orders", {});
+    expect(r.orders[0].thirdParty).toBe(true);
+    expect(String(r.instruction)).toMatch(/third-party app/);
+  });
+
+  it("a delivery on the road speaks the out-for-delivery line; the lookup failing never invents a status", async () => {
+    const { ctx, api } = makeCtx();
+    api.recentOrders.mockResolvedValue({ found: 1, orders: [{ ...webOrder, type: "delivery", stage: "out_for_delivery", dispatch: { status: "picked_up" } }] });
+    const r = await run(ctx, "lookup_recent_orders", {});
+    expect(r.orders[0].statusSpoken).toBe("Your order is out for delivery and on its way to you.");
+    api.recentOrders.mockRejectedValueOnce(new Error("boom"));
+    const bad = await run(ctx, "lookup_recent_orders", {});
+    expect(bad.error).toBe(true);
+    expect(bad.code).toBe("lookup_failed");
+    expect(String(bad.instruction)).toMatch(/never guess/i);
+  });
+
+  it("send_sms_link tracking texts the looked-up order's live page; without a lookup it asks for one first", async () => {
+    const { ctx, api } = makeCtx();
+    const none = await run(ctx, "send_sms_link", { linkType: "tracking" });
+    expect(none.error).toBe(true);
+    expect(none.code).toBe("no_order_to_track");
+    api.recentOrders.mockResolvedValue({ found: 1, orders: [webOrder] });
+    await run(ctx, "lookup_recent_orders", {});
+    const sent = await run(ctx, "send_sms_link", { linkType: "tracking" });
+    expect(sent.ok).toBe(true);
+    expect(api.sendSms).toHaveBeenCalledWith(expect.objectContaining({ linkType: "tracking", orderId: "ord_web_1" }));
+  });
+
+  it("is gated by canAnswerOrderStatus", () => {
+    expect(toolsForConfig({ ...normalizeAgentConfig({}), canAnswerOrderStatus: false }).map((t) => t.name)).not.toContain("lookup_recent_orders");
+    expect(toolsForConfig(normalizeAgentConfig({})).map((t) => t.name)).toContain("lookup_recent_orders");
   });
 });

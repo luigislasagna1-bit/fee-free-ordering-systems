@@ -4347,7 +4347,9 @@
         "transferDeflection": "Ce que Nabil dit au lieu de transférer",
         "transferDeflectionHint": "Dit mot pour mot. Laissez vide pour : « Notre équipe est occupée à préparer les commandes et ne peut pas prendre d'appels pour le moment, mais je peux vous aider pour tout ce qui concerne le restaurant. »",
         "transferTakeMessage": "Proposer de prendre un message",
-        "transferTakeMessageHint": "Quand un client ne peut pas être transféré, Nabil propose de prendre un message et l'envoie par SMS à votre numéro de transfert (ou au téléphone d'alerte)."
+        "transferTakeMessageHint": "Quand un client ne peut pas être transféré, Nabil propose de prendre un message et l'envoie par SMS à votre numéro de transfert (ou au téléphone d'alerte).",
+        "answerOrderStatus": "Renseigner sur les commandes déjà passées (site, appli, téléphone, livraison)",
+        "answerOrderStatusHint": "Les clients appellent souvent pour une commande passée en ligne. Nabil la retrouve par leur numéro ou le numéro de commande et donne le vrai statut et l'heure prévue — jamais une supposition. Annuler ou modifier une commande passe toujours par une personne."
       },
       "apiErrors": {
         "featureLocked": "Votre forfait n'inclut pas encore l'agent de commande téléphonique.",

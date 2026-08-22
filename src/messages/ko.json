@@ -4347,7 +4347,9 @@
         "transferDeflection": "연결 대신 Nabil이 하는 말",
         "transferDeflectionHint": "그대로 읽습니다. 비워 두면 다음 문장을 사용합니다: “직원들이 지금 주문 준비로 바빠서 전화를 받을 수 없지만, 매장에 관한 일은 제가 도와드릴 수 있어요.”",
         "transferTakeMessage": "메시지 남기기 제안",
-        "transferTakeMessageHint": "연결할 수 없을 때 Nabil이 메시지를 받아 연결 번호(또는 알림 전화)로 문자로 보냅니다."
+        "transferTakeMessageHint": "연결할 수 없을 때 Nabil이 메시지를 받아 연결 번호(또는 알림 전화)로 문자로 보냅니다.",
+        "answerOrderStatus": "이미 접수된 주문 확인 (웹사이트, 앱, 전화, 배달)",
+        "answerOrderStatusHint": "온라인으로 주문한 고객이 전화로 문의하는 경우가 많아요. Nabil이 전화번호나 주문번호로 찾아 실제 상태와 예상 시간을 알려 드려요 — 절대 추측하지 않아요. 취소나 변경은 여전히 직원이 처리해요."
       },
       "apiErrors": {
         "featureLocked": "현재 플랜에는 전화 주문 에이전트가 아직 포함되어 있지 않습니다.",

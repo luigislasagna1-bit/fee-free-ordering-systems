@@ -4347,7 +4347,9 @@
         "transferDeflection": "Mit mond Nabil átkapcsolás helyett",
         "transferDeflectionHint": "Szó szerint hangzik el. Hagyja üresen ehhez: „A személyzet éppen a rendeléseket készíti, és most nem tud hívást fogadni, de bármiben segítek, ami az étteremmel kapcsolatos.”",
         "transferTakeMessage": "Üzenet felvételének felajánlása",
-        "transferTakeMessageHint": "Ha a hívót nem lehet átkapcsolni, Nabil felajánlja, hogy üzenetet vesz fel, és SMS-ben elküldi az átkapcsolási számára (vagy a riasztási telefonra)."
+        "transferTakeMessageHint": "Ha a hívót nem lehet átkapcsolni, Nabil felajánlja, hogy üzenetet vesz fel, és SMS-ben elküldi az átkapcsolási számára (vagy a riasztási telefonra).",
+        "answerOrderStatus": "Tájékoztatás már leadott rendelésekről (weboldal, app, telefon, kiszállítás)",
+        "answerOrderStatusHint": "A hívók gyakran egy online leadott rendelés miatt telefonálnak. Nabil a számuk vagy a rendelésszám alapján megkeresi, és a valós állapotot és várható időt mondja — sosem találgat. A lemondás vagy módosítás továbbra is emberhez kerül."
       },
       "apiErrors": {
         "featureLocked": "Az Ön csomagja még nem tartalmazza a telefonos rendelésfelvevő asszisztenst.",

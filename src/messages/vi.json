@@ -4347,7 +4347,9 @@
         "transferDeflection": "Nabil nói gì thay vì chuyển máy",
         "transferDeflectionHint": "Được nói nguyên văn. Để trống để dùng: “Nhân viên của chúng tôi đang bận chuẩn bị đơn hàng và hiện không thể nhận cuộc gọi, nhưng tôi có thể giúp mọi việc liên quan đến nhà hàng.”",
         "transferTakeMessage": "Đề nghị ghi lại lời nhắn",
-        "transferTakeMessageHint": "Khi không thể chuyển máy, Nabil đề nghị ghi lại lời nhắn và nhắn tin đến số chuyển máy của bạn (hoặc điện thoại cảnh báo)."
+        "transferTakeMessageHint": "Khi không thể chuyển máy, Nabil đề nghị ghi lại lời nhắn và nhắn tin đến số chuyển máy của bạn (hoặc điện thoại cảnh báo).",
+        "answerOrderStatus": "Thông tin về đơn đã đặt (website, ứng dụng, điện thoại, giao hàng)",
+        "answerOrderStatusHint": "Người gọi thường hỏi về đơn họ đã đặt trực tuyến. Nabil tra theo số điện thoại hoặc mã đơn và báo đúng trạng thái cùng thời gian dự kiến — không bao giờ đoán. Hủy hoặc thay đổi đơn vẫn cần gặp nhân viên."
       },
       "apiErrors": {
         "featureLocked": "Gói của bạn chưa bao gồm trợ lý nhận đơn qua điện thoại.",

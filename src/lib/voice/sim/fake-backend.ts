@@ -30,6 +30,8 @@ export type FakeBackendOpts = {
   paused?: Partial<Record<"pickup" | "delivery", { pausedUntil?: string; resumesLocal?: string }>>;
   soldOut?: string[];
   returningCaller?: unknown;
+  /** A5: what lookup_recent_orders finds — the recent-orders route's shape. */
+  recentOrders?: unknown;
   latencyMs?: number;
   failNext?: { method: string; code: string };
   config?: Record<string, unknown>;
@@ -161,6 +163,9 @@ export function createFakeBackend(snapshot: MenuSnapshot, opts: FakeBackendOpts 
       }),
 
     returningCaller: (slug: string, phone: string) => run("returningCaller", { slug, phone }, "get", () => clone(opts.returningCaller ?? { found: false })),
+    /** A5: seeded existing orders (any channel) for the order-status scenarios. */
+    recentOrders: (slug: string, phone: string, orderNumber?: string) =>
+      run("recentOrders", { slug, phone, orderNumber }, "get", () => clone(opts.recentOrders ?? { found: 0, orders: [] })),
 
     availability: (slug: string, date: string, partySize: number) =>
       run("availability", { slug, date, partySize }, "get", () => ({

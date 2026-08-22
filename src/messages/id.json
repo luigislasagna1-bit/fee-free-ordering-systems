@@ -4347,7 +4347,9 @@
         "transferDeflection": "Apa yang Nabil katakan alih-alih mengalihkan",
         "transferDeflectionHint": "Diucapkan kata demi kata. Kosongkan untuk: “Staf kami sedang sibuk menyiapkan pesanan dan tidak bisa menerima telepon saat ini, tetapi saya bisa membantu untuk apa pun tentang restoran.”",
         "transferTakeMessage": "Tawarkan untuk mencatat pesan",
-        "transferTakeMessageHint": "Saat penelepon tidak bisa dialihkan, Nabil menawarkan untuk mencatat pesan dan mengirimkannya lewat SMS ke nomor pengalihan Anda (atau telepon peringatan)."
+        "transferTakeMessageHint": "Saat penelepon tidak bisa dialihkan, Nabil menawarkan untuk mencatat pesan dan mengirimkannya lewat SMS ke nomor pengalihan Anda (atau telepon peringatan).",
+        "answerOrderStatus": "Memberi info pesanan yang sudah dibuat (situs, aplikasi, telepon, pengiriman)",
+        "answerOrderStatusHint": "Penelepon sering menanyakan pesanan yang mereka buat secara online. Nabil mencarinya lewat nomor mereka atau nomor pesanan dan menyampaikan status sebenarnya serta perkiraan waktu — tidak pernah menebak. Membatalkan atau mengubah pesanan tetap lewat petugas."
       },
       "apiErrors": {
         "featureLocked": "Paket Anda belum mencakup agen pemesanan telepon.",

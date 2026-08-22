@@ -4347,7 +4347,9 @@
         "transferDeflection": "Ką Nabil sako vietoj perjungimo",
         "transferDeflectionHint": "Sakoma žodis į žodį. Palikite tuščią, kad būtų naudojama: „Mūsų personalas šiuo metu ruošia užsakymus ir negali atsiliepti į skambučius, bet galiu padėti viskuo, kas susiję su restoranu.“",
         "transferTakeMessage": "Pasiūlyti priimti žinutę",
-        "transferTakeMessageHint": "Kai skambinančiojo negalima perjungti, Nabil pasiūlo priimti žinutę ir išsiunčia ją SMS žinute jūsų perjungimo numeriu (arba įspėjimų telefonu)."
+        "transferTakeMessageHint": "Kai skambinančiojo negalima perjungti, Nabil pasiūlo priimti žinutę ir išsiunčia ją SMS žinute jūsų perjungimo numeriu (arba įspėjimų telefonu).",
+        "answerOrderStatus": "Informacija apie jau pateiktus užsakymus (svetainė, programėlė, telefonas, pristatymas)",
+        "answerOrderStatusHint": "Skambinantieji dažnai klausia apie internetu pateiktą užsakymą. Nabil jį suranda pagal jų numerį arba užsakymo numerį ir praneša tikrąją būseną bei numatomą laiką — niekada nespėlioja. Atšaukimas ar keitimas ir toliau vyksta per žmogų."
       },
       "apiErrors": {
         "featureLocked": "Jūsų planas dar neapima užsakymų telefonu agento.",

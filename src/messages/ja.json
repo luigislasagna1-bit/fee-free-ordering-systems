@@ -4347,7 +4347,9 @@
         "transferDeflection": "転送の代わりに Nabil が伝える内容",
         "transferDeflectionHint": "そのまま一字一句読み上げます。空欄の場合：「スタッフはただいま注文の準備で手が離せず、お電話に出ることができませんが、お店に関することでしたら私が対応いたします。」",
         "transferTakeMessage": "伝言を預かることを提案する",
-        "transferTakeMessageHint": "転送できないとき、Nabil は伝言を預かることを提案し、転送先番号（または通知用電話）に SMS で送ります。"
+        "transferTakeMessageHint": "転送できないとき、Nabil は伝言を預かることを提案し、転送先番号（または通知用電話）に SMS で送ります。",
+        "answerOrderStatus": "注文済みの注文への対応（ウェブ、アプリ、電話、配達）",
+        "answerOrderStatusHint": "オンラインで注文したお客様からの問い合わせはよくあります。Nabil は電話番号または注文番号で注文を探し、実際の状況と予定時刻をお伝えします — 推測は一切しません。キャンセルや変更は引き続きスタッフが対応します。"
       },
       "apiErrors": {
         "featureLocked": "現在のプランには、電話注文エージェントはまだ含まれていません。",

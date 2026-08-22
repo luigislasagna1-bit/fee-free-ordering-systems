@@ -17,7 +17,7 @@ export const runtime = "nodejs";
 const BOOL_FIELDS = [
   "enabled", "ambientNoise", "canTakeOrders", "canBookReservations", "canAnswerFaq",
   "allowPizzaCombo", "offerDayDeals", "allowAnonymousCallers", "quoteEta", "allowScheduledOrders",
-  "smsConfirmations", "recordCalls", "transferTakeMessage",
+  "smsConfirmations", "recordCalls", "transferTakeMessage", "canAnswerOrderStatus",
 ] as const;
 const STR_FIELDS = [
   "openGreeting", "closedGreeting", "pauseGreeting", "primaryLanguage", "ttsProvider", "sttProvider",

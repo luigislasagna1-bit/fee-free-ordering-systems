@@ -87,10 +87,29 @@ export function transferPolicyText(cfg: AgentConfig): string {
   }
 }
 
+/**
+ * A5 (Luigi 2026-08-22): callers usually chase an order they placed ONLINE,
+ * in the app, or a delivery in transit. Grounding rule first; the tool is
+ * the only source. Rendered per store (stable text, cache-safe).
+ */
+export function orderStatusText(cfg: AgentConfig): string {
+  if (!cfg.canAnswerOrderStatus) {
+    return "## EXISTING ORDERS\nYou cannot look up orders that were already placed. If a caller asks about one (status, ready time, driver), say plainly that you can't see it and offer a person (transfer_to_human) or to take a message — never guess a status or a time.";
+  }
+  return (
+    "## EXISTING ORDERS — NEVER GUESS\n" +
+    "When a caller asks about an order they ALREADY placed — online, in the app, by phone, or a delivery on its way (\"is it ready?\", \"where's my driver?\", \"did you get my order?\") — call lookup_recent_orders FIRST and answer only from what it returns: status, ready estimate, driver stage. Never say \"on its way\", \"any minute\", \"about ten minutes\" or anything about a driver from memory. " +
+    "No order found: ask once for the order number from their receipt or text (last four digits are enough), call again; still nothing → offer a person or a message. " +
+    "Ordered through DoorDash, Uber Eats or Skip: that order and its driver are tracked in THAT app, not here — say so kindly and don't guess. " +
+    "Cancel or change an existing order: that needs a person (transfer_to_human; if transfers are off, take a message). Never read a full order number aloud and never state their address."
+  );
+}
+
 export function playbookText(cfg: AgentConfig): string {
   const parts = [PLAYBOOK_STYLE, PLAYBOOK_PROTOCOL];
   const policy = transferPolicyText(cfg);
   if (policy) parts.push(policy);
+  parts.push(orderStatusText(cfg));
   if (!cfg.canTakeOrders) parts.push("This line does NOT take orders. If asked, say phone ordering isn't available here and offer what you can do.");
   if (cfg.canBookReservations) parts.push(PLAYBOOK_RESERVATION_FLOW);
   else parts.push("This line does NOT book reservations. If asked, say so and offer what you can do.");

@@ -4347,7 +4347,9 @@
         "transferDeflection": "Nabil 不转接时说的话",
         "transferDeflectionHint": "逐字说出。留空则使用：“我们的员工正忙着准备订单，现在无法接听电话，但关于餐厅的任何事情我都可以帮您。”",
         "transferTakeMessage": "主动提出留言",
-        "transferTakeMessageHint": "无法转接时，Nabil 会主动提出留言，并通过短信发送到您的转接号码（或提醒电话）。"
+        "transferTakeMessageHint": "无法转接时，Nabil 会主动提出留言，并通过短信发送到您的转接号码（或提醒电话）。",
+        "answerOrderStatus": "查询已下的订单（网站、App、电话、外送）",
+        "answerOrderStatusHint": "来电者常常询问在线下的订单。Nabil 会按来电号码或订单号查找，并告知真实状态和预计时间——绝不猜测。取消或修改订单仍需转给人工。"
       },
       "apiErrors": {
         "featureLocked": "您的套餐尚未包含电话点餐助理。",

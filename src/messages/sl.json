@@ -4347,7 +4347,9 @@
         "transferDeflection": "Kaj Nabil reče namesto prevezave",
         "transferDeflectionHint": "Izgovori dobesedno. Pustite prazno za: »Naše osebje trenutno pripravlja naročila in ne more sprejemati klicev, lahko pa vam pomagam z vsem v zvezi z restavracijo.«",
         "transferTakeMessage": "Ponudi sprejem sporočila",
-        "transferTakeMessageHint": "Ko klicatelja ni mogoče prevezati, Nabil ponudi sprejem sporočila in ga pošlje prek SMS-a na vašo številko za prevezavo (ali telefon za opozorila)."
+        "transferTakeMessageHint": "Ko klicatelja ni mogoče prevezati, Nabil ponudi sprejem sporočila in ga pošlje prek SMS-a na vašo številko za prevezavo (ali telefon za opozorila).",
+        "answerOrderStatus": "Informacije o že oddanih naročilih (splet, aplikacija, telefon, dostava)",
+        "answerOrderStatusHint": "Klicatelji pogosto sprašujejo o naročilu, oddanem prek spleta. Nabil ga poišče po njihovi številki ali številki naročila in sporoči dejansko stanje in predvideni čas — nikoli ugibanja. Preklic ali sprememba naročila še vedno poteka prek osebe."
       },
       "apiErrors": {
         "featureLocked": "Vaš paket še ne vključuje agenta za telefonsko naročanje.",

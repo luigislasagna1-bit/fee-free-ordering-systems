@@ -5,6 +5,9 @@ import { phoneDigitsKey } from "@/lib/phone";
 import { VOICE_SENTINEL_DOMAIN } from "@/lib/voice/sentinel-identity";
 import { MIN_AGREEING, nameHintFromRecentVoiceOrders } from "@/lib/voice/name-hint";
 
+/** A5: how far back an unfinished order still counts as "open right now". */
+const OPEN_ORDER_WINDOW_MS = 3 * 60 * 60_000;
+
 export const runtime = "nodejs";
 
 /**
@@ -72,6 +75,34 @@ export async function GET(req: NextRequest) {
   // several customers, and greeting the caller as the wrong one ("Welcome back,
   // Maria") then offering "the usual" from somebody else's order history is a
   // privacy leak dressed up as a nice touch. Better to treat them as new.
+  // A5 (Luigi 2026-08-22): an order this NUMBER placed in the last few hours
+  // on ANY channel (website / app / phone) that isn't finished — surfaced on
+  // turn one so "is it ready?" is understood as a status question. Matched by
+  // customer rows behind the number AND by the order's own phone, so a guest
+  // web checkout counts too. Summary only; the live status is the lookup tool.
+  const openOrder = digits
+    ? await prisma.order.findFirst({
+        where: {
+          restaurantId: restaurant.id,
+          createdAt: { gte: new Date(Date.now() - OPEN_ORDER_WINDOW_MS) },
+          status: { in: ["pending", "accepted", "preparing", "ready"] },
+          OR: [...(candidates.length ? [{ customerId: { in: candidates.map((c) => c.id) } }] : []), { customerPhone: { contains: digits } }],
+        },
+        orderBy: { createdAt: "desc" },
+        select: { id: true, type: true, status: true, channel: true, createdAt: true, items: { select: { quantity: true, name: true }, take: 6 } },
+      })
+    : null;
+  const openOrderOut = openOrder
+    ? {
+        id: openOrder.id,
+        type: openOrder.type,
+        status: openOrder.status,
+        source: (openOrder.channel || "web").toLowerCase(),
+        minutesAgo: Math.max(0, Math.round((Date.now() - openOrder.createdAt.getTime()) / 60_000)),
+        items: openOrder.items.map((it) => ({ quantity: it.quantity, name: it.name })),
+      }
+    : null;
+
   const real = candidates.filter((c) => !(c.email ?? "").endsWith(VOICE_SENTINEL_DOMAIN));
   const customer = real.length === 1 ? real[0] : real.length === 0 ? (candidates[0] ?? null) : null;
 
@@ -97,7 +128,7 @@ export async function GET(req: NextRequest) {
         })
       : [];
     const hint = nameHintFromRecentVoiceOrders(recent.map((o) => o.customerName));
-    return NextResponse.json({ found: false, blocked: !!blocked, ...(hint ? { nameHint: hint } : {}) });
+    return NextResponse.json({ found: false, blocked: !!blocked, ...(hint ? { nameHint: hint } : {}), openOrder: openOrderOut });
   }
 
   // Compact last-order summary for a "the usual?" reorder prompt.
@@ -116,6 +147,7 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({
     found: true,
     blocked: !!blocked,
+    openOrder: openOrderOut,
     // Kept by the voice session and written to VoiceCall.customerId at the
     // end log — the dashboard's caller-history join depends on it.
     customerId: customer.id,

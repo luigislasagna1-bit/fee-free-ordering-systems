@@ -102,6 +102,7 @@ export type VoiceContextPayload = {
     canTakeOrders: boolean;
     canBookReservations: boolean;
     canAnswerFaq: boolean;
+    canAnswerOrderStatus: boolean;
     quoteEta: boolean;
     smsConfirmations: boolean;
     maxCallSeconds: number;
@@ -185,6 +186,7 @@ export async function buildVoiceContextPayload(rawSlug: string): Promise<VoiceCo
         canTakeOrders: true,
         canBookReservations: true,
         canAnswerFaq: true,
+        canAnswerOrderStatus: true,
         quoteEta: true,
         smsConfirmations: true,
         maxCallSeconds: true,
@@ -324,6 +326,7 @@ export async function buildVoiceContextPayload(rawSlug: string): Promise<VoiceCo
         canTakeOrders: cfg?.canTakeOrders ?? true,
         canBookReservations: cfg?.canBookReservations ?? true,
         canAnswerFaq: cfg?.canAnswerFaq ?? true,
+        canAnswerOrderStatus: cfg?.canAnswerOrderStatus ?? true,
         quoteEta: cfg?.quoteEta ?? true,
         smsConfirmations: cfg?.smsConfirmations ?? true,
         maxCallSeconds: cfg?.maxCallSeconds ?? 600,

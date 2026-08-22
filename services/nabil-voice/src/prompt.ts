@@ -263,6 +263,7 @@ export function buildSystemPrompt(args: {
   if (cfg.canTakeOrders) caps.push("take pickup/delivery orders");
   if (cfg.canBookReservations) caps.push("book reservations");
   if (cfg.canAnswerFaq) caps.push("answer questions");
+  if (cfg.canAnswerOrderStatus) caps.push("check on an order they already placed (website, app, phone or delivery)");
 
   const pickupEta = context?.pickup?.estimatedMinutes;
   const deliveryEta = context?.delivery?.estimatedMinutes;
@@ -339,6 +340,16 @@ ${liveEtaLine ? `${liveEtaLine}\n` : ""}${afterHoursSection(context, cfg)}${paus
   if (returningCaller?.found && returningCaller?.name) {
     const last = returningCaller.lastOrder?.items?.map((i: any) => `${i.quantity}× ${i.name}`).join(", ");
     facts.push(`Returning caller (${returningCaller.orderCount ?? 0} past orders).${last ? ` Last order: ${last}. You may offer "the usual".` : ""} Greet them by first name.`);
+  }
+  // A5: an order this number placed in the last few hours, on ANY channel —
+  // so "is it ready?" on turn one is recognised as a status question, never
+  // as a new order. The LIVE status still comes from lookup_recent_orders.
+  const open = returningCaller?.openOrder;
+  if (open && typeof open === "object") {
+    const items = Array.isArray(open.items) ? open.items.map((i: any) => `${i.quantity}× ${i.name}`).join(", ") : "";
+    facts.push(
+      `This number has an OPEN order right now: ${open.type ?? "order"} placed ${open.minutesAgo ?? "?"} min ago via ${open.source ?? "online"}${items ? ` (${items})` : ""}, status "${open.status ?? "?"}". If they ask about it, call lookup_recent_orders for the live status before saying anything about it.`,
+    );
   }
   return { system, stable, volatile, callFacts: facts.join("\n") };
 }

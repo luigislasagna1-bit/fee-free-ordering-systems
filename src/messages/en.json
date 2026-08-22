@@ -4675,7 +4675,9 @@
         "transferDeflection": "What Nabil says instead of transferring",
         "transferDeflectionHint": "Spoken word for word. Leave empty for: “Our staff are busy preparing orders and can't take calls right now, but I can help with anything about the restaurant.”",
         "transferTakeMessage": "Offer to take a message",
-        "transferTakeMessageHint": "When a caller can't be put through, Nabil offers to take a message and texts it to your transfer number (or alert phone)."
+        "transferTakeMessageHint": "When a caller can't be put through, Nabil offers to take a message and texts it to your transfer number (or alert phone).",
+        "answerOrderStatus": "Check on orders already placed (website, app, phone, delivery)",
+        "answerOrderStatusHint": "Callers often phone about an order they placed online. Nabil looks it up by their number or order number and reports the real status and ready time — never a guess. Cancelling or changing an order still goes to a person."
       },
       "apiErrors": {
         "featureLocked": "Your plan doesn't include the phone ordering agent yet.",

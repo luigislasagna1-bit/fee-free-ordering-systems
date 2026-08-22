@@ -4347,7 +4347,9 @@
         "transferDeflection": "Hva Nabil sier i stedet for å sette over",
         "transferDeflectionHint": "Sies ord for ord. La stå tomt for: «Personalet vårt er opptatt med å forberede bestillinger og kan ikke ta telefonen akkurat nå, men jeg kan hjelpe med alt som gjelder restauranten.»",
         "transferTakeMessage": "Tilby å ta imot en beskjed",
-        "transferTakeMessageHint": "Når en innringer ikke kan settes over, tilbyr Nabil å ta imot en beskjed og sender den på SMS til overføringsnummeret ditt (eller varslingstelefonen)."
+        "transferTakeMessageHint": "Når en innringer ikke kan settes over, tilbyr Nabil å ta imot en beskjed og sender den på SMS til overføringsnummeret ditt (eller varslingstelefonen).",
+        "answerOrderStatus": "Svare om bestillinger som allerede er lagt inn (nett, app, telefon, levering)",
+        "answerOrderStatusHint": "Innringere spør ofte om en bestilling de la inn på nett. Nabil finner den via nummeret deres eller ordrenummeret og oppgir reell status og forventet tid — aldri gjetting. Avbestilling eller endring går fortsatt via en person."
       },
       "apiErrors": {
         "featureLocked": "Planen din inkluderer ikke telefonbestillingsagenten ennå.",

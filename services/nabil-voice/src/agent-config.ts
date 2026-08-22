@@ -12,6 +12,7 @@ export type AgentConfig = {
   canTakeOrders: boolean;
   canBookReservations: boolean;
   canAnswerFaq: boolean;
+  canAnswerOrderStatus: boolean;
   /** May quote ready-time estimates (pickup/delivery minutes) to the caller. */
   quoteEta: boolean;
   /** Gates ALL texting: the send_sms_link tool, every prompt offer to text,
@@ -91,6 +92,7 @@ export function normalizeAgentConfig(raw: unknown): AgentConfig {
     canTakeOrders: bool(r.canTakeOrders, true),
     canBookReservations: bool(r.canBookReservations, true),
     canAnswerFaq: bool(r.canAnswerFaq, true),
+    canAnswerOrderStatus: bool(r.canAnswerOrderStatus, true),
     quoteEta: bool(r.quoteEta, true),
     smsConfirmations: bool(r.smsConfirmations, true),
     maxCallSeconds,

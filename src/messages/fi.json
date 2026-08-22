@@ -4347,7 +4347,9 @@
         "transferDeflection": "Mitä Nabil sanoo yhdistämisen sijaan",
         "transferDeflectionHint": "Sanotaan sanasta sanaan. Jätä tyhjäksi, jolloin käytetään: ”Henkilökuntamme valmistaa parhaillaan tilauksia eikä voi vastata puheluihin juuri nyt, mutta voin auttaa kaikessa ravintolaan liittyvässä.”",
         "transferTakeMessage": "Tarjoa viestin jättämistä",
-        "transferTakeMessageHint": "Kun soittajaa ei voi yhdistää, Nabil tarjoutuu ottamaan viestin ja lähettää sen tekstiviestinä siirtonumeroosi (tai hälytyspuhelimeen)."
+        "transferTakeMessageHint": "Kun soittajaa ei voi yhdistää, Nabil tarjoutuu ottamaan viestin ja lähettää sen tekstiviestinä siirtonumeroosi (tai hälytyspuhelimeen).",
+        "answerOrderStatus": "Vastaa jo tehdyistä tilauksista (verkko, sovellus, puhelin, toimitus)",
+        "answerOrderStatusHint": "Soittajat kysyvät usein verkossa tehdystä tilauksesta. Nabil hakee sen heidän numerollaan tai tilausnumerolla ja kertoo todellisen tilan ja arvioidun ajan — ei koskaan arvausta. Peruutus tai muutos hoidetaan edelleen ihmisen kautta."
       },
       "apiErrors": {
         "featureLocked": "Tilauspakettisi ei vielä sisällä puhelintilausagenttia.",

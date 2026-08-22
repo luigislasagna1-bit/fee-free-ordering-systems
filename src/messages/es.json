@@ -4347,7 +4347,9 @@
         "transferDeflection": "Lo que Nabil dice en lugar de transferir",
         "transferDeflectionHint": "Se dice palabra por palabra. Déjelo vacío para: «Nuestro personal está ocupado preparando pedidos y no puede atender llamadas ahora mismo, pero puedo ayudarle con cualquier cosa sobre el restaurante.»",
         "transferTakeMessage": "Ofrecer tomar un mensaje",
-        "transferTakeMessageHint": "Cuando no se puede pasar la llamada, Nabil ofrece tomar un mensaje y lo envía por SMS a su número de transferencia (o al teléfono de alertas)."
+        "transferTakeMessageHint": "Cuando no se puede pasar la llamada, Nabil ofrece tomar un mensaje y lo envía por SMS a su número de transferencia (o al teléfono de alertas).",
+        "answerOrderStatus": "Informar sobre pedidos ya realizados (web, app, teléfono, reparto)",
+        "answerOrderStatusHint": "Los clientes suelen llamar por un pedido hecho en línea. Nabil lo busca por su número o por el número de pedido e informa del estado real y la hora prevista — nunca una suposición. Cancelar o cambiar un pedido sigue pasando por una persona."
       },
       "apiErrors": {
         "featureLocked": "Tu plan aún no incluye el agente de pedidos por teléfono.",

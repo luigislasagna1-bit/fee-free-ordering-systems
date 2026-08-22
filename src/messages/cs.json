@@ -4347,7 +4347,9 @@
         "transferDeflection": "Co Nabil řekne místo přepojení",
         "transferDeflectionHint": "Říká se slovo od slova. Nechte prázdné pro: „Náš personál právě připravuje objednávky a nemůže teď přijímat hovory, ale mohu vám pomoci s čímkoli ohledně restaurace.“",
         "transferTakeMessage": "Nabídnout převzetí vzkazu",
-        "transferTakeMessageHint": "Když volajícího nelze přepojit, Nabil nabídne převzetí vzkazu a pošle ho SMS na vaše číslo pro přepojení (nebo na telefon pro upozornění)."
+        "transferTakeMessageHint": "Když volajícího nelze přepojit, Nabil nabídne převzetí vzkazu a pošle ho SMS na vaše číslo pro přepojení (nebo na telefon pro upozornění).",
+        "answerOrderStatus": "Informace o již zadaných objednávkách (web, aplikace, telefon, rozvoz)",
+        "answerOrderStatusHint": "Volající se často ptají na objednávku zadanou online. Nabil ji vyhledá podle jejich čísla nebo čísla objednávky a sdělí skutečný stav a odhadovaný čas — nikdy nehádá. Zrušení nebo změna objednávky jde stále přes člověka."
       },
       "apiErrors": {
         "featureLocked": "Váš tarif zatím nezahrnuje agenta pro telefonické objednávky.",

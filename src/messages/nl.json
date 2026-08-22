@@ -4347,7 +4347,9 @@
         "transferDeflection": "Wat Nabil zegt in plaats van doorverbinden",
         "transferDeflectionHint": "Wordt woordelijk uitgesproken. Laat leeg voor: „Ons team is druk met het bereiden van bestellingen en kan op dit moment geen telefoontjes aannemen, maar ik kan u helpen met alles over het restaurant.”",
         "transferTakeMessage": "Aanbieden een bericht aan te nemen",
-        "transferTakeMessageHint": "Als een beller niet kan worden doorverbonden, biedt Nabil aan een bericht aan te nemen en stuurt dit per sms naar uw doorverbindnummer (of alarmtelefoon)."
+        "transferTakeMessageHint": "Als een beller niet kan worden doorverbonden, biedt Nabil aan een bericht aan te nemen en stuurt dit per sms naar uw doorverbindnummer (of alarmtelefoon).",
+        "answerOrderStatus": "Informatie over al geplaatste bestellingen (website, app, telefoon, bezorging)",
+        "answerOrderStatusHint": "Bellers vragen vaak naar een online geplaatste bestelling. Nabil zoekt die op via hun nummer of het bestelnummer en meldt de echte status en verwachte tijd — nooit een gok. Annuleren of wijzigen gaat nog steeds via een persoon."
       },
       "apiErrors": {
         "featureLocked": "Je abonnement bevat de telefonische bestelassistent nog niet.",

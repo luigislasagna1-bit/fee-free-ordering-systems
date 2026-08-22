@@ -4347,7 +4347,9 @@
         "transferDeflection": "Was Nabil statt einer Weiterleitung sagt",
         "transferDeflectionHint": "Wird wörtlich gesprochen. Leer lassen für: „Unser Team ist gerade mit der Zubereitung von Bestellungen beschäftigt und kann im Moment keine Anrufe annehmen, aber ich helfe gern bei allem rund um das Restaurant.“",
         "transferTakeMessage": "Anbieten, eine Nachricht aufzunehmen",
-        "transferTakeMessageHint": "Wenn ein Anrufer nicht durchgestellt werden kann, bietet Nabil an, eine Nachricht aufzunehmen, und schickt sie per SMS an Ihre Weiterleitungsnummer (oder das Alarm-Telefon)."
+        "transferTakeMessageHint": "Wenn ein Anrufer nicht durchgestellt werden kann, bietet Nabil an, eine Nachricht aufzunehmen, und schickt sie per SMS an Ihre Weiterleitungsnummer (oder das Alarm-Telefon).",
+        "answerOrderStatus": "Auskunft zu bereits aufgegebenen Bestellungen (Website, App, Telefon, Lieferung)",
+        "answerOrderStatusHint": "Anrufer fragen oft nach einer online aufgegebenen Bestellung. Nabil sucht sie über ihre Nummer oder die Bestellnummer und nennt den echten Status und die voraussichtliche Zeit — nie eine Vermutung. Stornieren oder Ändern läuft weiterhin über eine Person."
       },
       "apiErrors": {
         "featureLocked": "Ihr Tarif enthält den Telefon-Bestellagenten noch nicht.",

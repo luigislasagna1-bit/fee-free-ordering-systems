@@ -4347,7 +4347,9 @@
         "transferDeflection": "Què diu el Nabil en comptes de transferir",
         "transferDeflectionHint": "Es diu paraula per paraula. Deixeu-ho buit per a: «El nostre personal està ocupat preparant comandes i ara mateix no pot atendre trucades, però puc ajudar-lo amb qualsevol cosa sobre el restaurant.»",
         "transferTakeMessage": "Oferir prendre un missatge",
-        "transferTakeMessageHint": "Quan no es pot passar la trucada, el Nabil ofereix prendre un missatge i l'envia per SMS al vostre número de transferència (o al telèfon d'alertes)."
+        "transferTakeMessageHint": "Quan no es pot passar la trucada, el Nabil ofereix prendre un missatge i l'envia per SMS al vostre número de transferència (o al telèfon d'alertes).",
+        "answerOrderStatus": "Informar sobre comandes ja fetes (web, app, telèfon, repartiment)",
+        "answerOrderStatusHint": "Els clients sovint truquen per una comanda feta en línia. El Nabil la cerca pel seu número o pel número de comanda i informa de l'estat real i l'hora prevista — mai una suposició. Cancel·lar o canviar una comanda continua passant per una persona."
       },
       "apiErrors": {
         "featureLocked": "El teu pla encara no inclou l'agent de comandes telefòniques.",

@@ -4347,7 +4347,9 @@
         "transferDeflection": "Hvad Nabil siger i stedet for at stille om",
         "transferDeflectionHint": "Siges ord for ord. Lad feltet stå tomt for: ”Vores personale har travlt med at tilberede ordrer og kan ikke tage imod opkald lige nu, men jeg kan hjælpe med alt om restauranten.”",
         "transferTakeMessage": "Tilbyd at tage imod en besked",
-        "transferTakeMessageHint": "Når et opkald ikke kan stilles om, tilbyder Nabil at tage imod en besked og sender den som sms til dit omstillingsnummer (eller alarmtelefonen)."
+        "transferTakeMessageHint": "Når et opkald ikke kan stilles om, tilbyder Nabil at tage imod en besked og sender den som sms til dit omstillingsnummer (eller alarmtelefonen).",
+        "answerOrderStatus": "Svare om allerede afgivne bestillinger (web, app, telefon, levering)",
+        "answerOrderStatusHint": "Folk ringer ofte om en bestilling, de har lagt online. Nabil finder den via deres nummer eller ordrenummeret og oplyser den rigtige status og forventede tid — aldrig et gæt. Annullering eller ændring går stadig via en person."
       },
       "apiErrors": {
         "featureLocked": "Din plan inkluderer endnu ikke telefonbestillingsagenten.",

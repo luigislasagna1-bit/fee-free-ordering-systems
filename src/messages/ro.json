@@ -4347,7 +4347,9 @@
         "transferDeflection": "Ce spune Nabil în loc să transfere",
         "transferDeflectionHint": "Rostit cuvânt cu cuvânt. Lăsați gol pentru: „Personalul nostru este ocupat cu pregătirea comenzilor și nu poate prelua apeluri acum, dar vă pot ajuta cu orice legat de restaurant.”",
         "transferTakeMessage": "Oferă preluarea unui mesaj",
-        "transferTakeMessageHint": "Când apelantul nu poate fi transferat, Nabil se oferă să preia un mesaj și îl trimite prin SMS la numărul de transfer (sau la telefonul de alertă)."
+        "transferTakeMessageHint": "Când apelantul nu poate fi transferat, Nabil se oferă să preia un mesaj și îl trimite prin SMS la numărul de transfer (sau la telefonul de alertă).",
+        "answerOrderStatus": "Informații despre comenzile deja plasate (site, aplicație, telefon, livrare)",
+        "answerOrderStatusHint": "Apelanții sună adesea pentru o comandă plasată online. Nabil o caută după numărul lor sau după numărul comenzii și comunică starea reală și ora estimată — niciodată o presupunere. Anularea sau modificarea unei comenzi trece în continuare printr-o persoană."
       },
       "apiErrors": {
         "featureLocked": "Planul dumneavoastră nu include încă agentul de comenzi telefonice.",

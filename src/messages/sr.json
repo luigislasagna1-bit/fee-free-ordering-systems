@@ -4347,7 +4347,9 @@
         "transferDeflection": "Šta Nabil kaže umesto prebacivanja",
         "transferDeflectionHint": "Izgovara se od reči do reči. Ostavite prazno za: „Naše osoblje trenutno priprema porudžbine i ne može da preuzima pozive, ali mogu da pomognem sa svime u vezi sa restoranom.”",
         "transferTakeMessage": "Ponudi primanje poruke",
-        "transferTakeMessageHint": "Kada pozivaoca nije moguće prebaciti, Nabil nudi da primi poruku i šalje je SMS-om na vaš broj za prebacivanje (ili telefon za obaveštenja)."
+        "transferTakeMessageHint": "Kada pozivaoca nije moguće prebaciti, Nabil nudi da primi poruku i šalje je SMS-om na vaš broj za prebacivanje (ili telefon za obaveštenja).",
+        "answerOrderStatus": "Informacije o već poslatim porudžbinama (veb, aplikacija, telefon, dostava)",
+        "answerOrderStatusHint": "Pozivaoci često pitaju za porudžbinu koju su poslali onlajn. Nabil je pronalazi po njihovom broju ili broju porudžbine i javlja stvarni status i procenjeno vreme — nikad nagađanje. Otkazivanje ili izmena porudžbine i dalje ide preko osobe."
       },
       "apiErrors": {
         "featureLocked": "Vaš plan još ne uključuje agenta za telefonsko naručivanje.",

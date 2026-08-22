@@ -70,6 +70,11 @@ export const api = {
   context: (slug: string) => getInternal(`/api/internal/voice/context?slug=${encodeURIComponent(slug)}`),
   returningCaller: (slug: string, phone: string) =>
     getInternal(`/api/internal/voice/returning-caller?slug=${encodeURIComponent(slug)}&phone=${encodeURIComponent(phone)}`),
+  /** A5: the status of orders the caller already placed on ANY channel. */
+  recentOrders: (slug: string, phone: string, orderNumber?: string) =>
+    getInternal(
+      `/api/internal/voice/recent-orders?slug=${encodeURIComponent(slug)}&phone=${encodeURIComponent(phone)}${orderNumber ? `&orderNumber=${encodeURIComponent(orderNumber)}` : ""}`,
+    ),
   availability: (slug: string, date: string, partySize: number) =>
     getInternal(
       `/api/internal/voice/reservation-availability?slug=${encodeURIComponent(slug)}&date=${encodeURIComponent(date)}&partySize=${partySize}`,

@@ -48,6 +48,8 @@ export type ToolContext = {
    *  context payload — the reservation tools resolve "today"/"tomorrow"/
    *  weekdays against it and refuse past dates. */
   localDate?: string | null;
+  /** A5: orders found by lookup_recent_orders this call (for the tracking text). */
+  statusOrders?: Array<{ id: string; ref: string | null }>;
   /** get_item_options payloads by id — the menu cannot change mid-call. */
   itemOptionsCache: Map<string, unknown>;
   /** Raw combo slots (label/min/max/choices) by combo id — for slot auto-fill. Lazily created. */
@@ -435,12 +437,25 @@ export const TOOLS = [
   },
   {
     name: "send_sms_link",
-    description: "Text the caller a link (their online-order page, menu, reservation, support, or an order receipt).",
+    description: "Text the caller a link (their online-order page, menu, reservation, support, an order receipt, or the live tracking page of an order found by lookup_recent_orders).",
     input_schema: {
       type: "object",
       additionalProperties: false,
-      properties: { linkType: { type: "string", enum: ["order_online", "menu", "reservation", "support", "receipt"] } },
+      properties: {
+        linkType: { type: "string", enum: ["order_online", "menu", "reservation", "support", "receipt", "tracking"] },
+        orderId: { type: "string", description: "tracking only: the id from lookup_recent_orders (defaults to the most recent one found)." },
+      },
       required: ["linkType"],
+    },
+  },
+  {
+    name: "lookup_recent_orders",
+    description:
+      "The ONLY source for the status of an order the caller already placed — on the website, the app, by phone, or a delivery on its way. Call it the moment they ask about an existing order ('is my order ready?', 'where's my driver?', 'did you get my online order?'). Searches this restaurant's orders from the last two days for the caller's number, or for an order number they read out. Never state a status, ready time or driver position without it.",
+    input_schema: {
+      type: "object",
+      additionalProperties: false,
+      properties: { orderNumber: { type: "string", description: "Only if the caller read one out (digits; the last 4 are enough)." } },
     },
   },
 ];
@@ -457,6 +472,7 @@ export function toolsForConfig(cfg: AgentConfig) {
     if ((t.name === "book_reservation" || t.name === "check_reservation_availability") && !cfg.canBookReservations) return false;
     if (t.name === "send_sms_link" && !cfg.smsConfirmations) return false;
     if (t.name === "leave_message" && !cfg.transferTakeMessage) return false;
+    if (t.name === "lookup_recent_orders" && !cfg.canAnswerOrderStatus) return false;
     return true;
   });
 }
@@ -1540,16 +1556,91 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
 
     case "send_sms_link": {
       const lastOrder = [...cart.placedOrders()].reverse().find((p) => p.orderId);
+      // A5: "tracking" texts the live page of an order found by lookup_recent_orders.
+      const trackingId = input.linkType === "tracking" ? String(input?.orderId || ctx.statusOrders?.[0]?.id || "") : "";
+      if (input.linkType === "tracking" && !trackingId) {
+        return { error: true, code: "no_order_to_track", needsInfo: true, instruction: "Call lookup_recent_orders first — there is no order to send a tracking link for." };
+      }
       const res = await api.sendSms({
         restaurantId: ctx.token.restaurantId,
         slug,
         to: cart.customer().phone || ctx.token.from,
         linkType: input.linkType,
-        orderId: lastOrder?.orderId ?? undefined,
+        orderId: input.linkType === "tracking" ? trackingId : (lastOrder?.orderId ?? undefined),
       });
       return res.ok
         ? { ok: true, ...(input.linkType === "receipt" && lastOrder?.orderId ? { instruction: "Tell them the text lets them follow the order's progress, not just a receipt." } : {}) }
         : { error: true };
+    }
+
+    case "lookup_recent_orders": {
+      // A5 (Luigi 2026-08-22): callers chase ONLINE/app/delivery orders by
+      // phone. This is the one grounded source — see recent-orders route.
+      const orderNumber = String(input?.orderNumber ?? "").replace(/\D/g, "");
+      const phone = cart.customer().phone || ctx.token.from || "";
+      let res: any;
+      try {
+        res = await api.recentOrders(slug, phone, orderNumber || undefined);
+      } catch {
+        return { error: true, code: "lookup_failed", instruction: "The order lookup is unavailable right now. Say you can't see their order at the moment, and offer a person or to try again in a moment — never guess a status." };
+      }
+      const orders: any[] = Array.isArray(res?.orders) ? res.orders : [];
+      ctx.statusOrders = orders.map((o) => ({ id: String(o.id), ref: o.orderRef ?? null }));
+      const lang = ctx.language ?? ctx.token.lang;
+      if (!orders.length) {
+        return {
+          ok: true,
+          found: 0,
+          instruction: orderNumber
+            ? `No order ending in ${orderNumber.slice(-4)} in the last two days for this restaurant. Say so plainly, check the number once, and if it still doesn't match offer a person (transfer_to_human) or a message (leave_message). Never guess a status.`
+            : "No order under this number in the last two days. Ask ONCE if they have the order number from their receipt or confirmation text (the last four digits are enough), then call again with it. If they don't, or it still isn't found, offer a person (transfer_to_human) or a message (leave_message). Never guess a status. If they ordered through DoorDash, Uber Eats or Skip, that order is tracked in that app, not here.",
+        };
+      }
+      const spokenStatus = (o: any) => {
+        const key =
+          o.stage === "out_for_delivery" ? "statusOutForDelivery"
+          : o.stage === "ready" ? (o.type === "delivery" ? "statusReadyDelivery" : "statusReadyPickup")
+          : o.stage === "preparing" || o.stage === "accepted" ? "statusPreparing"
+          : o.stage === "completed" ? "statusCompleted"
+          : o.stage === "cancelled" ? "statusCancelled"
+          : o.stage === "scheduled" ? "statusScheduled"
+          : "statusReceived";
+        return voicePhrase(lang, key as any);
+      };
+      const described = orders.map((o) => ({
+        id: o.id,
+        orderRef: o.orderRef,
+        placedMinutesAgo: o.minutesAgo,
+        source: o.source,
+        thirdParty: !!o.thirdParty,
+        type: o.type,
+        stage: o.stage,
+        itemCount: o.itemCount,
+        items: o.items,
+        readyInMinutes: o.readyInMinutes,
+        scheduledForIso: o.scheduledForIso,
+        dispatch: o.dispatch,
+        matchedBy: o.matchedBy,
+        ...(typeof o.total === "number" ? { total: o.total, totalSpoken: spokenMoney(o.total) } : {}),
+        statusSpoken: spokenStatus(o),
+      }));
+      const one = described.length === 1 ? described[0] : null;
+      return {
+        ok: true,
+        found: described.length,
+        orders: described,
+        instruction:
+          (one
+            ? `One order found (${one.type}, ${one.itemCount} item${one.itemCount === 1 ? "" : "s"}, placed ${one.placedMinutesAgo} min ago, ${one.stage}). `
+            : `${described.length} orders found — describe each briefly by its items and type and ask which one they mean if it matters. `) +
+          `State the status using statusSpoken VERBATIM (it is in the caller's language). ${
+            one && one.readyInMinutes !== null && one.readyInMinutes !== undefined && one.stage !== "completed" && one.stage !== "cancelled"
+              ? one.readyInMinutes > 0
+                ? `The estimated ready time is about ${one.readyInMinutes} minutes from now — say "about", never a promise. `
+                : "The estimated ready time has passed — say it should be ready any moment and the store will have it. "
+              : ""
+          }${one?.thirdParty ? "This order came through a third-party app — its driver and ETA are tracked in THAT app; say so and do not guess. " : ""}Never invent a driver position, a minute count or a reason. Never read a full order number aloud — refer to it by its items or its last four digits (orderRef). Do not state an address. If they want to CANCEL or CHANGE this order, that needs a person: transfer_to_human (or leave_message if transfers are off). Offer to text the live tracking link (send_sms_link tracking) when it's a delivery on its way.`,
+      };
     }
 
     default:

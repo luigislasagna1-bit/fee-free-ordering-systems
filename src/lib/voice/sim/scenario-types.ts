@@ -71,6 +71,8 @@ export type Scenario = {
     paused?: Partial<Record<"pickup" | "delivery", { pausedUntil?: string; resumesLocal?: string }>>;
     soldOut?: string[]; // menuItemIds forced sold out
     returningCaller?: unknown;
+    /** A5: seeded orders the caller already placed (recent-orders route shape). */
+    recentOrders?: unknown;
     /** ms of latency added to every backend call (tests the filler + timeouts). */
     latencyMs?: number;
     /** Fail the next call to this method once with this code. */

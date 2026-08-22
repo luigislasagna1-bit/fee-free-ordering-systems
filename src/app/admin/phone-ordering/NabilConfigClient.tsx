@@ -26,6 +26,7 @@ type Cfg = {
   canTakeOrders: boolean;
   canBookReservations: boolean;
   canAnswerFaq: boolean;
+  canAnswerOrderStatus: boolean;
   allowPizzaCombo: boolean;
   offerDayDeals: boolean;
   allowAnonymousCallers: boolean;
@@ -56,6 +57,7 @@ const DEFAULTS: Cfg = {
   canTakeOrders: true,
   canBookReservations: true,
   canAnswerFaq: true,
+  canAnswerOrderStatus: true,
   allowPizzaCombo: false,
   offerDayDeals: false,
   allowAnonymousCallers: true,
@@ -355,6 +357,8 @@ export default function NabilConfigClient({
             <Toggle label={t("takeOrders")} checked={!!cfg.canTakeOrders} onChange={(v) => set("canTakeOrders", v)} />
             <Toggle label={t("bookReservations")} checked={!!cfg.canBookReservations} onChange={(v) => set("canBookReservations", v)} />
             <Toggle label={t("answerFaq")} checked={!!cfg.canAnswerFaq} onChange={(v) => set("canAnswerFaq", v)} />
+            <Toggle label={t("answerOrderStatus")} checked={!!cfg.canAnswerOrderStatus} onChange={(v) => set("canAnswerOrderStatus", v)} />
+            <p className="text-xs text-gray-500">{t("answerOrderStatusHint")}</p>
             {/* Positive framing now that building is real — the old inverted
                 "transfer these" toggle described a limitation, not a choice. */}
             <Toggle label={t("buildPizzaCombo")} checked={!!cfg.allowPizzaCombo} onChange={(v) => set("allowPizzaCombo", v)} />

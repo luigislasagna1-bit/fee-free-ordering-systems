@@ -4347,7 +4347,9 @@
         "transferDeflection": "Nabil aktarmak yerine ne söyler",
         "transferDeflectionHint": "Kelimesi kelimesine söylenir. Şunun için boş bırakın: “Ekibimiz şu anda siparişleri hazırlamakla meşgul ve telefonlara bakamıyor, ama restoranla ilgili her konuda yardımcı olabilirim.”",
         "transferTakeMessage": "Mesaj almayı teklif et",
-        "transferTakeMessageHint": "Arayan aktarılamadığında Nabil mesaj almayı teklif eder ve bunu aktarma numaranıza (veya uyarı telefonuna) SMS ile gönderir."
+        "transferTakeMessageHint": "Arayan aktarılamadığında Nabil mesaj almayı teklif eder ve bunu aktarma numaranıza (veya uyarı telefonuna) SMS ile gönderir.",
+        "answerOrderStatus": "Verilmiş siparişler hakkında bilgi (web sitesi, uygulama, telefon, teslimat)",
+        "answerOrderStatusHint": "Arayanlar genellikle online verdikleri bir sipariş için arar. Nabil siparişi numaralarından veya sipariş numarasından bulur ve gerçek durumu ile tahmini süreyi söyler — asla tahmin yürütmez. İptal veya değişiklik yine bir kişiye yönlendirilir."
       },
       "apiErrors": {
         "featureLocked": "Planınız henüz telefonla sipariş asistanını içermiyor.",

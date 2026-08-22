@@ -4347,7 +4347,9 @@
         "transferDeflection": "Mida Nabil ütleb edasisuunamise asemel",
         "transferDeflectionHint": "Öeldakse sõna-sõnalt. Jätke tühjaks, et kasutada: „Meie personal valmistab praegu tellimusi ega saa hetkel kõnesid vastu võtta, kuid saan aidata kõiges, mis puudutab restorani.“",
         "transferTakeMessage": "Paku sõnumi vastuvõtmist",
-        "transferTakeMessageHint": "Kui helistajat ei saa edasi suunata, pakub Nabil sõnumi vastuvõtmist ja saadab selle SMS-iga teie edasisuunamise numbrile (või hoiatustelefonile)."
+        "transferTakeMessageHint": "Kui helistajat ei saa edasi suunata, pakub Nabil sõnumi vastuvõtmist ja saadab selle SMS-iga teie edasisuunamise numbrile (või hoiatustelefonile).",
+        "answerOrderStatus": "Teave juba esitatud tellimuste kohta (veeb, rakendus, telefon, kohaletoimetamine)",
+        "answerOrderStatusHint": "Helistajad küsivad sageli veebis tehtud tellimuse kohta. Nabil leiab selle nende numbri või tellimuse numbri järgi ning ütleb tegeliku oleku ja eeldatava aja — mitte kunagi oletust. Tühistamine või muutmine käib endiselt inimese kaudu."
       },
       "apiErrors": {
         "featureLocked": "Sinu pakett ei sisalda veel telefonitellimuste agenti.",
