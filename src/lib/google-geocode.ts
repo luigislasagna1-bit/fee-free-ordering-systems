@@ -11,9 +11,18 @@ import "server-only";
  * Cost: $5 per 1,000 requests — well inside the $200/month free credit.
  */
 
+export { isCoarseGeocode } from "./geocode-precision";
+
 const ENDPOINT = "https://maps.googleapis.com/maps/api/geocode/json";
 
 export type GoogleGeocodeResult = {
+  /** A6 (2026-08-22): what KIND of place the top result is, so a caller who
+   *  said a street is never pinned to a country/city centroid (call
+   *  cmt2iowvh: a country-level hit became "Zone 8, $49.99"). */
+  types?: string[];
+  /** ROOFTOP | RANGE_INTERPOLATED | GEOMETRIC_CENTER | APPROXIMATE */
+  locationType?: string | null;
+  partialMatch?: boolean;
   lat: number;
   lng: number;
   label: string;
@@ -66,9 +75,11 @@ export async function googleGeocode(
     if (status !== "OK" || !Array.isArray(results) || !results.length) return null;
 
     const top = results[0] as {
-      geometry?: { location?: { lat: number; lng: number } };
+      geometry?: { location?: { lat: number; lng: number }; location_type?: string };
       formatted_address?: string;
       address_components?: Array<{ long_name: string; types: string[] }>;
+      types?: string[];
+      partial_match?: boolean;
     };
     const loc = top?.geometry?.location;
     if (!loc || !Number.isFinite(loc.lat) || !Number.isFinite(loc.lng)) return null;
@@ -80,6 +91,9 @@ export async function googleGeocode(
       lng: loc.lng,
       label: label.length > 90 ? `${label.slice(0, 89)}…` : label,
       postcode: pcComp?.long_name || null,
+      types: Array.isArray(top.types) ? top.types.filter((t) => typeof t === "string") : [],
+      locationType: typeof top.geometry?.location_type === "string" ? top.geometry.location_type : null,
+      partialMatch: top.partial_match === true,
     };
   } catch {
     return null;

@@ -687,6 +687,8 @@ export class CallSession {
       // Owner service pauses (Temporary Closure) — the set_fulfilment gate
       // reads these so a paused channel is refused before the order is built.
       this.ctx.services = context?.services ?? null;
+      // A6: today's date in the restaurant's timezone for the reservation tools.
+      this.ctx.localDate = typeof context?.open?.localDate === "string" ? context.open.localDate : null;
       this.ctx.cfg = normalizeAgentConfig(context?.config);
       if (this.token.isDemo && (!this.ctx.cfg.maxCallSeconds || this.ctx.cfg.maxCallSeconds > 240)) {
         this.ctx.cfg.maxCallSeconds = 240;
@@ -1511,8 +1513,13 @@ export class CallSession {
       const lastIdx = this.messages.length - 1;
       const lastMeta = this.messageMeta[lastIdx];
       if (lastMeta && lastMeta.kind === "user" && lastMeta.turn === turn) {
-        this.messages.pop();
+        const popped = this.messages.pop() as { content?: unknown } | undefined;
         this.messageMeta.pop();
+        // A6: a merged bookkeeping hop parks its tool_result blocks in the NEXT
+        // user message — popping that message must put them back, or the
+        // replayed turn leaves a tool_use with no result (API 400).
+        const parked = Array.isArray(popped?.content) ? (popped!.content as Array<{ type?: string }>).filter((b) => b && b.type === "tool_result") : [];
+        if (parked.length) this.pendingToolResults.unshift(...(parked as never[]));
         const lastT = this.transcript[this.transcript.length - 1];
         if (lastT?.role === "user" && lastT?.turn === turn) this.transcript.pop();
         this.turnIndex = Math.max(0, this.turnIndex - 1);

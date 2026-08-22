@@ -386,6 +386,17 @@ const clampQty = (q: unknown, fallback = 1): number => {
   if (!Number.isFinite(n) || n < 1) return fallback;
   return Math.min(MAX_QTY_PER_LINE, n);
 };
+/** "Large 3 Topping" → 3; "Medium Two-Topping Pizza" → 2; anything else → 0. */
+const N_TOPPING_RE = /\b(\d{1,2}|one|two|three|four|five|six|seven|eight)[\s-]*toppings?\b/i;
+const WORD_N: Record<string, number> = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8 };
+export function nToppingRequirement(name: string | null | undefined): number {
+  const m = N_TOPPING_RE.exec(name ?? "");
+  if (!m) return 0;
+  const n = WORD_N[m[1].toLowerCase()] ?? parseInt(m[1], 10);
+  return Number.isFinite(n) ? n : 0;
+}
+const toppingCount = (ts: ToppingReq[] | undefined): number => (ts ?? []).reduce((n, t) => n + Math.max(1, t.count ?? 1), 0);
+
 const cleanTopping = (t: any): ToppingReq | null => {
   const name = typeof t?.name === "string" ? t.name.trim() : "";
   if (!name) return null;
@@ -1471,9 +1482,32 @@ export class CartEngine {
   }
 
   private materialize(lineId: string, kind: MenuKind, intent: LineIntent, res: Extract<CompileResponse, { ok: true }>, addedTurn: number): CartLine {
-    const unresolved = res.unresolved ?? [];
-    const complete = !!res.line && unresolved.length === 0;
+    const unresolved = [...(res.unresolved ?? [])];
+    let complete = !!res.line && unresolved.length === 0;
     const entry = this.deps.menu.get(intent.menuItemId);
+    // A6 / C17 (call cmt2iowvh: a combo's "Large 3 Topping" went out COMPLETE
+    // with zero toppings): an "N Topping" product with nothing on it is not
+    // finished — the caller was about to name them. One-topping products are
+    // left alone (a bare "1 Topping" is how a plain cheese pizza is often
+    // ordered); recipe-built pizzas (halfRecipes) carry their toppings.
+    if (complete && kind === "pizza") {
+      const pi = intent as PizzaIntent;
+      const need = nToppingRequirement(entry?.name);
+      if (need >= 2 && toppingCount(pi.toppings) === 0 && !(pi.halfRecipes?.length)) {
+        unresolved.push(`Which ${need} toppings would you like on the ${entry?.name ?? "pizza"}?`);
+        complete = false;
+      }
+    }
+    if (complete && kind === "combo") {
+      for (const p of (intent as ComboIntent).picks) {
+        const pe = this.deps.menu.get(p.menuItemId);
+        const need = nToppingRequirement(pe?.name);
+        if (need >= 2 && toppingCount(p.toppings) === 0 && !(p.halfRecipes?.length)) {
+          unresolved.push(`Which ${need} toppings would you like on the ${pe?.name ?? "pizza"}?`);
+          complete = false;
+        }
+      }
+    }
     // Canonicalise the caller's spoken topping names to what the compiler
     // resolved, so a later "remove mushrooms" finds "Mushroom" exactly.
     if (kind === "pizza" && Array.isArray(res.toppings) && res.toppings.length) {

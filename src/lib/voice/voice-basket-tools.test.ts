@@ -120,7 +120,9 @@ const located = (over: Record<string, unknown> = {}) => ({
     inside: true,
     lat: 43.51,
     lng: -79.88,
-    matchedAddress: "17 Commercial St, Milton",
+    // No matchedAddress by default: the tests below check many different
+    // spoken streets against this one stub, and A6's street-mismatch gate
+    // (tested with its own labelled hits further down) would flag them all.
     zoneName: "Zone 1",
     deliveryFee: 7.99,
     minimumOrder: 25,
@@ -679,13 +681,13 @@ describe("remove_line", () => {
 /* ═══════════════════════════════ quote_order ═══════════════════════════════ */
 
 describe("quote_order prices what place_order will charge", () => {
-  it("refuses without pickup/delivery settled or without a name (cart_invalid + problems)", async () => {
+  it("refuses without pickup/delivery settled (cart_invalid + problems) — a missing NAME never blocks a quote (A6/C16)", async () => {
     const { ctx, api } = makeCtx();
     await addPizza(ctx);
     const out = await run(ctx, "quote_order");
     expect(out.error).toBe(true);
     expect(out.code).toBe("cart_invalid");
-    expect(out.problems.map((p: any) => p.code)).toEqual(["fulfilment_missing", "customer_name_missing"]);
+    expect(out.problems.map((p: any) => p.code)).toEqual(["fulfilment_missing"]);
     expect(String(out.instruction)).toContain("Nothing was quoted");
     expect(api.dryRunOrder).not.toHaveBeenCalled();
     await run(ctx, "set_fulfilment", { type: "delivery" }); // no street yet
@@ -1511,5 +1513,119 @@ describe("transfer_to_human under the store transfer policy (A1b)", () => {
     expect(r.error).toBe(true);
     expect(r.code).toBe("message_empty");
     expect(api.leaveMessage).not.toHaveBeenCalled();
+  });
+});
+
+/* ═══════════════════════════ A6 engine-contract fixes ═══════════════════════════ */
+
+describe("A6 — quote never waits for a name (C16)", () => {
+  it("prices a pickup order with no name yet, and tells the model the name is still needed before placing", async () => {
+    const { ctx, api } = makeCtx();
+    await addPizza(ctx);
+    await run(ctx, "set_fulfilment", { type: "pickup" });
+    const q = await run(ctx, "quote_order");
+    expect(q.ok).toBe(true);
+    expect(q.total).toBe(24.5);
+    expect(q.nameNeeded).toBe(true);
+    expect(String(q.instruction)).toMatch(/still needs a NAME/);
+    expect(api.dryRunOrder).toHaveBeenCalledTimes(1);
+    // place_order still insists on the name.
+    const p = await run(ctx, "place_order");
+    expect(p.error).toBe(true);
+    expect(p.problems.map((x: any) => x.code)).toEqual(["customer_name_missing"]);
+    await run(ctx, "set_customer", { name: "Ada Lovelace" });
+    const q2 = await run(ctx, "quote_order");
+    expect(q2.nameNeeded).toBe(false);
+    expect(String(q2.instruction)).not.toMatch(/still needs a NAME/);
+  });
+});
+
+describe("A6 — a missing delivery field is NAMED (C12)", () => {
+  it("quote_order surfaces the field the order route wants and asks for just that", async () => {
+    const { ctx, api } = makeCtx();
+    await addPizza(ctx);
+    await run(ctx, "set_fulfilment", { type: "delivery", street: "933 Maple Avenue", city: "Milton" });
+    api.dryRunOrder.mockResolvedValueOnce({ ok: false, status: 400, json: { error: "Delivery address incomplete", code: "delivery_field_required", field: "buzzer" } });
+    const q = await run(ctx, "quote_order");
+    expect(q.error).toBe(true);
+    expect(q.code).toBe("delivery_field_required");
+    expect(q.field).toBe("buzzer");
+    expect(q.needsInfo).toBe(true);
+    expect(String(q.instruction)).toMatch(/missing the buzzer/);
+    expect(String(q.instruction)).toMatch(/Do not re-ask/);
+  });
+});
+
+describe("A6 — update_line never says 'changed' when nothing changed (C14)", () => {
+  it("an unknown key is a no_change, not a success", async () => {
+    const { ctx } = makeCtx();
+    await addPizza(ctx);
+    const r = await run(ctx, "update_line", { lineId: "L1", hint: "the pizza", bogusField: "extra cheese" });
+    expect(r.ok).toBe(true);
+    expect(r.changed).toBe(false);
+    expect(r.code).toBe("no_change");
+    expect(String(r.instruction)).toMatch(/NOTHING on that line changed/);
+  });
+  it("a real change is still reported as a change", async () => {
+    const { ctx } = makeCtx();
+    await addPizza(ctx);
+    const r = await run(ctx, "update_line", { lineId: "L1", hint: "the pizza", quantity: 2 });
+    expect(r.ok).toBe(true);
+    expect(r.code).not.toBe("no_change");
+    expect(ctx.cart.lines()[0].intent.quantity).toBe(2);
+  });
+});
+
+describe("A6 — the map matched a different street (C13)", () => {
+  const hit = (matchedAddress: string) => ({
+    ok: true,
+    status: 200,
+    json: { hasZones: true, located: true, inside: true, lat: 43.5, lng: -79.9, matchedAddress, postcode: "L9T 1A1", zoneName: "Zone 1", deliveryFee: 4.99, minimumOrder: 0, estimatedMinutes: 40 },
+  });
+  it("is a question, not a verified pin — and confirmAddress accepts it on the second call", async () => {
+    const { ctx, api } = makeCtx();
+    api.checkAddress.mockResolvedValue(hit("12 Rutland Crescent, Milton, ON L9T 1A1"));
+    const first = await run(ctx, "set_fulfilment", { type: "delivery", street: "12 Moreland Crescent", city: "Milton" });
+    expect(first.ok).toBe(true);
+    expect(first.streetMismatch).toBe(true);
+    expect(first.located).toBeNull();
+    expect(first.matchedAddress).toBe("12 Rutland Crescent, Milton, ON L9T 1A1");
+    expect(String(first.instruction)).toMatch(/DIFFERENT street/);
+    expect(ctx.cart.fulfilment().check?.located).toBeNull();
+    expect(ctx.cart.validate().some((p) => p.code === "address_unverified")).toBe(true);
+    // The caller confirms → same address + confirmAddress → the pin is accepted.
+    const second = await run(ctx, "set_fulfilment", { type: "delivery", street: "12 Moreland Crescent", city: "Milton", confirmAddress: true });
+    expect(second.located).toBe(true);
+    expect(second.streetMismatch).toBeUndefined();
+    expect(ctx.cart.fulfilment().check?.located).toBe(true);
+    expect(api.checkAddress).toHaveBeenCalledTimes(2);
+  });
+  it("the same street in a different spelling is accepted straight away", async () => {
+    const { ctx, api } = makeCtx();
+    api.checkAddress.mockResolvedValue(hit("1166 McEachern Crt, Milton, ON L9T 0A1"));
+    const r = await run(ctx, "set_fulfilment", { type: "delivery", street: "1166 McEachren Court", city: "Milton" });
+    expect(r.located).toBe(true);
+    expect(r.streetMismatch).toBeUndefined();
+  });
+});
+
+describe("A6 — reservation dates (C15)", () => {
+  it("'today' resolves to the restaurant's local date; a past date is refused with today echoed; not a struggle", async () => {
+    const { ctx, api } = makeCtx();
+    ctx.localDate = "2026-08-22";
+    api.availability.mockResolvedValue({ available: true, slots: ["17:00", "19:00"] });
+    const ok = await run(ctx, "check_reservation_availability", { date: "today", partySize: 2 });
+    expect(api.availability).toHaveBeenCalledWith("luigis", "2026-08-22", 2);
+    expect(ok.available).toBe(true);
+    const past = await run(ctx, "check_reservation_availability", { date: "2025-01-01", partySize: 2 });
+    expect(past.error).toBe(true);
+    expect(past.code).toBe("date_in_past");
+    expect(past.needsInfo).toBe(true);
+    expect(past.today).toBe("2026-08-22");
+    expect(String(past.instruction)).toMatch(/today is 2026-08-22/);
+    expect(api.availability).toHaveBeenCalledTimes(1);
+    api.bookReservation.mockResolvedValue({ ok: true, status: 200, json: { confirmationCode: "ABC123", status: "confirmed" } });
+    await run(ctx, "book_reservation", { customerName: "Ada Lovelace", partySize: 2, date: "tomorrow", time: "19:00" });
+    expect(api.bookReservation).toHaveBeenCalledWith(expect.objectContaining({ date: "2026-08-23" }));
   });
 });

@@ -531,7 +531,19 @@ async function placeOrder(req: NextRequest) {
         if (flatCity) data.city = sanitize(flatCity, 100);
         if (flatZip) data.postcode = sanitize(flatZip, 20);
       }
-      const missing = firstMissingRequiredField(cfg, data);
+      let missing = firstMissingRequiredField(cfg, data);
+      // A6 (2026-08-22): a PHONE order whose address was verified to a map pin
+      // (deliveryLat/Lng from check-address) never asks for a postal code —
+      // the playbook forbids asking and the pin already fixes the zone; the
+      // geocoder's postcode is back-filled when it has one. Web path untouched.
+      if (
+        missing === "postcode" &&
+        isVoiceOrder &&
+        Number.isFinite(Number((body as { deliveryLat?: unknown }).deliveryLat)) &&
+        Number.isFinite(Number((body as { deliveryLng?: unknown }).deliveryLng))
+      ) {
+        missing = null;
+      }
       if (missing) {
         return NextResponse.json(
           { error: "Delivery address incomplete", code: "delivery_field_required", field: missing },

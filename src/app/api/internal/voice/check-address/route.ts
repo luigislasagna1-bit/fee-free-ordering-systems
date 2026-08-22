@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { requireInternalKey } from "@/lib/voice/internal-auth";
 import { resolveAddress } from "@/lib/nominatim";
-import { googleGeocode } from "@/lib/google-geocode";
+import { googleGeocode, isCoarseGeocode } from "@/lib/google-geocode";
 import { getPlatformGoogleKey } from "@/lib/platform-maps";
 import { findZoneForPoint, type ZoneLike } from "@/lib/geocode";
 
@@ -119,7 +119,15 @@ export async function POST(req: NextRequest) {
     const q = [street, city, zip].filter(Boolean).join(", ");
     const platformKey = await getPlatformGoogleKey();
     const g = await googleGeocode(q, { country: restaurant.country, platformKey });
-    if (g) coords = { lat: g.lat, lng: g.lng, label: g.label, precise: true, postcode: g.postcode };
+    // A6 / C13 (2026-08-22): Google always answers SOMETHING — for an unknown
+    // street it hands back the city, the region or the whole country, and this
+    // fallback used to stamp that `precise: true` (call cmt2iowvh: a
+    // country-level hit became "Zone 8, $49.99"). An area is not an address.
+    if (g && isCoarseGeocode(g)) {
+      console.warn(`[check-address] coarse Google match rejected for "${q}" (${(g.types ?? []).join(",") || g.locationType || "?"})`);
+    } else if (g) {
+      coords = { lat: g.lat, lng: g.lng, label: g.label, precise: true, postcode: g.postcode };
+    }
   }
 
   if (!coords) {

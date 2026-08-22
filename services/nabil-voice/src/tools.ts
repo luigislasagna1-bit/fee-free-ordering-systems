@@ -9,6 +9,8 @@ import { spokenMoney } from "./spoken-money";
 import { norm, stem } from "./fuzzy";
 import { applyTransferPolicy } from "./transfer-policy";
 import { voicePhrase } from "./voice-i18n";
+import { streetMatches } from "./street-compare";
+import { normalizeReservationDate, type ReservationDate } from "./reservation-date";
 
 /**
  * The tools the model may call, and what they do.
@@ -42,6 +44,10 @@ export type ToolContext = {
    *  how many times they have explicitly asked for a person this call. */
   language?: string | null;
   transferAsks?: number;
+  /** A6: today's date (YYYY-MM-DD) in the restaurant's timezone, from the
+   *  context payload — the reservation tools resolve "today"/"tomorrow"/
+   *  weekdays against it and refuse past dates. */
+  localDate?: string | null;
   /** get_item_options payloads by id — the menu cannot change mid-call. */
   itemOptionsCache: Map<string, unknown>;
   /** Raw combo slots (label/min/max/choices) by combo id — for slot auto-fill. Lazily created. */
@@ -344,6 +350,10 @@ export const TOOLS = [
         street: { type: "string", description: "Street address or place name, as the caller said it ('933 Maple Avenue' or 'Milton Sports Center on Santa Maria Blvd')." },
         city: { type: "string" },
         zip: { type: "string", description: "Postal code — only if the caller offered it unprompted. Never ask for it." },
+        confirmAddress: {
+          type: "boolean",
+          description: "ONLY after the caller confirmed the matched address you read back when the result said streetMismatch. Never on the first call.",
+        },
       },
       required: ["type"],
     },
@@ -655,8 +665,25 @@ async function comboSlotsFor(ctx: ToolContext, comboId: string): Promise<RawSlot
   } catch {
     slots = null;
   }
-  ctx.comboSlotsCache.set(comboId, slots ?? []);
+  // A6: never cache a FAILED fetch — the next question about this combo gets
+  // another try instead of an empty slot list for the rest of the call.
+  if (slots) ctx.comboSlotsCache.set(comboId, slots);
   return slots;
+}
+
+/** A6 / C15: the reservation tools' answer to a date they cannot book. Marked
+ *  needsInfo — it is a question for the caller, not a tool failure. */
+function reservationDateError(d: Extract<ReservationDate, { ok: false }>) {
+  return {
+    error: true,
+    code: d.code,
+    needsInfo: true,
+    today: d.today,
+    instruction:
+      d.code === "date_in_past"
+        ? `That date is in the PAST — today is ${d.today}. Never book a past date. Ask the caller which day they mean (this week? next?) and call again with the exact YYYY-MM-DD.`
+        : `The date must be an exact YYYY-MM-DD${d.today ? ` (today is ${d.today})` : ""}. Work it out from what the caller said — "Friday", "the 30th" — and call again; ask only if it is genuinely ambiguous.`,
+  };
 }
 
 function comboUpchargeSummary(ctx: ToolContext, comboId: string): string | null {
@@ -950,6 +977,12 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
 
     case "update_line": {
       const { lineId, hint, ...changes } = input ?? {};
+      // A6 / C14 (call cmt3fiz81): an unknown key ("options") was silently
+      // ignored and the tool said ok:true while nothing changed. Alias the
+      // obvious one; everything else is caught by the no-change check below.
+      if (changes.options !== undefined && changes.setOptions === undefined) changes.setOptions = changes.options;
+      delete changes.options;
+      const hashBefore = cart.cartHash();
       if (changes.halfRecipes !== undefined || (Array.isArray(changes.picks) && changes.picks.some((p: any) => p?.halfRecipes !== undefined))) {
         // Only a recipe NEW to the line needs the caller to have named it.
         const t = cart.resolveTarget({ lineId, hint: sanitizeHint(hint, ctx.lastUserText) });
@@ -986,6 +1019,16 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       }
       const r = await cart.updateLine({ lineId, hint: sanitizeHint(hint, ctx.lastUserText) }, changes);
       const out = mutationOut(ctx, r, "changed");
+      if (r.ok && cart.cartHash() === hashBefore && r.line?.status !== "needs_info") {
+        return {
+          ...out,
+          ok: true,
+          changed: false,
+          code: "no_change",
+          instruction:
+            "NOTHING on that line changed. Either it was already that way — tell the caller it's already on the order — or what you sent isn't a field the line understands (use quantity, setOptions/addOptions/removeOptions, addToppings/removeToppings/moveTopping/toppings, picks, crust/sauce/cheese, notes, replaceWithItemId). Never tell the caller it was changed.",
+        };
+      }
       // Pick-time upcharge confirmation (Luigi 2026-08-20): update_line is the
       // hop where slot choices actually land, and the add-time background list
       // never fires here — so a premium pick used to go unannounced. Scoped to
@@ -1034,7 +1077,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
           instruction: "Delivery noted. Ask for the street address — house number and street, plus city — BEFORE taking any food, then call set_fulfilment again with it. Never ask for a postal code.",
         };
       }
-      if (!res.addressChanged && cart.fulfilment().check) {
+      if (!res.addressChanged && cart.fulfilment().check && !(input?.confirmAddress === true && cart.fulfilment().check!.located !== true)) {
         // Same address, already checked — don't re-geocode.
         const c = cart.fulfilment().check!;
         return { ok: true, fulfilment: "delivery", located: c.located, inside: c.inside, deliveryFee: c.fee, minimumOrder: c.minimumOrder, zoneName: c.zoneName, state: cart.stateForModel(), instruction: "Address already checked; carry on." };
@@ -1051,6 +1094,23 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         };
       }
       const j = check.json ?? {};
+      // A6 / C13 (call cmt3ezxz1: "Moreland" matched "Rutland" and was
+      // accepted as verified): a pin whose street shares nothing with what
+      // the caller said is a QUESTION, not a verified address.
+      const matched = typeof j.matchedAddress === "string" ? j.matchedAddress : "";
+      if (j.located === true && matched && input?.confirmAddress !== true && !streetMatches(street, matched)) {
+        cart.recordAddressCheck({ located: null });
+        return {
+          ok: true,
+          fulfilment: "delivery",
+          located: null,
+          streetMismatch: true,
+          heardStreet: street,
+          matchedAddress: matched,
+          state: cart.stateForModel(),
+          instruction: `The map matched a DIFFERENT street — "${matched}" — not what you heard ("${street}"). Do NOT accept it silently and do NOT mention maps or systems. Read the matched address back once and ask if that is right. If YES, call set_fulfilment again with the same address and confirmAddress: true. If NO, ask them to spell the street and call set_fulfilment again with the spelled street.`,
+        };
+      }
       if (j.postcode && !cart.fulfilment().zip) {
         cart.fulfilment().zip = String(j.postcode);
       }
@@ -1125,14 +1185,17 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
     }
 
     case "quote_order": {
-      const problems = cart.validate().filter((p) => p.blocking);
+      // A6 / C16 (calls cmt39vqdt, cmt3k65p7: "what's the total?" asked twice,
+      // the price withheld until a name was given): a NAME is needed to PLACE
+      // an order, never to price one.
+      const problems = cart.validate().filter((p) => p.blocking && p.code !== "customer_name_missing");
       if (problems.length) {
         return {
           error: true,
           code: "cart_invalid",
           problems,
           state: cart.stateForModel(),
-          instruction: "Nothing was quoted. Resolve the first blocking problem with the caller (ask the question, or settle pickup/delivery/name), then quote again.",
+          instruction: "Nothing was quoted. Resolve the first blocking problem with the caller (ask the question, or settle pickup/delivery), then quote again.",
         };
       }
       const f = cart.fulfilment();
@@ -1155,9 +1218,23 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
             resumesAtIso: res.json?.resumesAtIso ?? null,
           });
         }
+        // A6 / C12: name the missing delivery field so the model asks for THAT
+        // (it used to re-ask the whole address: calls cmt3ezxz1, cmt3gb64y).
+        const field = typeof res.json?.field === "string" ? res.json.field : null;
+        if (res.json?.code === "delivery_field_required" && field) {
+          return {
+            error: true,
+            code: "delivery_field_required",
+            field,
+            needsInfo: true,
+            message: res.json?.error || "Delivery address incomplete",
+            instruction: `The delivery address is missing the ${field}. Ask the caller for just that (one question), call set_fulfilment again with the full address including it, then quote again. Do not re-ask the parts you already have.`,
+          };
+        }
         return {
           error: true,
           code: res.json?.code,
+          ...(field ? { field } : {}),
           message: res.json?.error || "I couldn't price that order.",
           instruction: "Something in the order isn't orderable. Tell the caller plainly what the problem is and work with them to fix it.",
         };
@@ -1179,9 +1256,11 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         serviceFees: q.serviceFees,
         deposits: q.deposits,
         speakExactly: speak,
+        nameNeeded: !cart.customer().name,
         state: cart.stateForModel(),
         instruction:
-          "Read speakExactly back naturally — the whole order, then the EXACT total in those words (it is authoritative and includes tax). Do NOT mention any discount yet. Then ask for a plain yes. Only call place_order after they say yes; if they change anything, quote again.",
+          "Read speakExactly back naturally — the whole order, then the EXACT total in those words (it is authoritative and includes tax). Do NOT mention any discount yet. Then ask for a plain yes. Only call place_order after they say yes; if they change anything, quote again." +
+          (cart.customer().name ? "" : " The order still needs a NAME before it can be placed: after their yes, ask for a name (one question), set_customer, then place_order."),
       };
     }
 
@@ -1296,7 +1375,14 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
             resumesAtIso: res.json?.resumesAtIso ?? null,
           });
         }
-        return { error: true, code: res.json?.code, notPlaced: true, message: res.json?.error || "Could not place the order." };
+        const field = typeof res.json?.field === "string" ? res.json.field : null;
+        return {
+          error: true,
+          code: res.json?.code,
+          notPlaced: true,
+          ...(field ? { field, instruction: `THE ORDER WAS NOT PLACED: the delivery address is missing the ${field}. Ask for just that, call set_fulfilment again with it, quote again, then place.` } : {}),
+          message: res.json?.error || "Could not place the order.",
+        };
       }
       const orderId = res.json?.id != null ? String(res.json.id) : null;
       const orderNumber = res.json?.orderNumber != null ? String(res.json.orderNumber) : "";
@@ -1342,7 +1428,9 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
     }
 
     case "check_reservation_availability": {
-      const avail = await api.availability(slug, input.date, input.partySize);
+      const when = normalizeReservationDate(input?.date, ctx.localDate);
+      if (!when.ok) return reservationDateError(when);
+      const avail = await api.availability(slug, when.date, input.partySize);
       if ((avail as any)?.error) return avail;
       if (!(avail as any)?.available || !(avail as any)?.slots?.length) {
         return {
@@ -1375,12 +1463,14 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
           instruction: "The reservation has been confirmed. Let the caller know this was a demo — no real reservation was made, but that's exactly how a real call would go. Invite them to visit feefreeordering.com/nabil-ai to learn more.",
         };
       }
+      const when = normalizeReservationDate(input?.date, ctx.localDate);
+      if (!when.ok) return reservationDateError(when);
       const res = await api.bookReservation({
         restaurantSlug: slug,
         customerName: twoTokenName(input.customerName),
         customerPhone: input.customerPhone || ctx.token.from,
         partySize: input.partySize,
-        date: input.date,
+        date: when.date,
         time: input.time,
         notes: input.notes,
       });

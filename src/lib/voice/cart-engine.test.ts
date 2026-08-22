@@ -13,8 +13,7 @@ import {
   type CompileResponse,
   type Compiler,
   type PizzaIntent,
-  type ComboIntent,
-} from "../../../services/nabil-voice/src/cart-engine";
+  type ComboIntent, nToppingRequirement } from "../../../services/nabil-voice/src/cart-engine";
 import { buildMenuIndex } from "../../../services/nabil-voice/src/menu-index";
 
 const MENU = {
@@ -664,5 +663,42 @@ describe("the SPOKEN layer (Luigi's live call 2026-08-15)", () => {
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(r.pricingNote).toBeNull();
+  });
+});
+
+/* ═══════════════════ A6 / C17 — an "N Topping" pizza with nothing on it ═══════════════════ */
+
+describe("nToppingRequirement", () => {
+  it("reads the N out of the product name", () => {
+    expect(nToppingRequirement("Large 3 Topping")).toBe(3);
+    expect(nToppingRequirement("EXTRA Large 3 Topping")).toBe(3);
+    expect(nToppingRequirement("Medium Two-Topping Pizza")).toBe(2);
+    expect(nToppingRequirement("Large 1 Topping")).toBe(1);
+    expect(nToppingRequirement("Tuesday - Large Pizza Special")).toBe(0);
+    expect(nToppingRequirement("Build Your Own Pizza")).toBe(0);
+    expect(nToppingRequirement(undefined)).toBe(0);
+  });
+});
+
+describe("an N-topping pizza is not finished until its toppings are named (call cmt2iowvh)", () => {
+  it("a bare 'Large 3 Topping' comes back needs_info with the question; naming the toppings completes it", async () => {
+    const { e } = engine();
+    const bare = await e.addLine({ menuItemId: "pz_large", quantity: 1, toppings: [] });
+    expect(bare.ok).toBe(true);
+    const line = e.lines()[0];
+    expect(line.status).toBe("needs_info");
+    expect(line.questions[0]).toMatch(/Which 3 toppings/);
+    expect(e.validate().some((p) => p.code === "line_incomplete" && p.blocking)).toBe(true);
+    const fixed = await e.updateLine({ lineId: "L1" }, { toppings: [{ name: "pepperoni", placement: "whole" }, { name: "mushrooms", placement: "whole" }, { name: "bacon", placement: "whole" }] });
+    expect(fixed.ok).toBe(true);
+    expect(e.lines()[0].status).toBe("complete");
+  });
+  it("a double topping counts twice; fewer than N toppings is still allowed (the caller chose fewer)", async () => {
+    const { e } = engine();
+    await e.addLine({ menuItemId: "pz_large", quantity: 1, toppings: [{ name: "pepperoni", placement: "whole", count: 2 }] });
+    expect(e.lines()[0].status).toBe("complete");
+    const { e: e2 } = engine();
+    await e2.addLine({ menuItemId: "pz_large", quantity: 1, toppings: [{ name: "pepperoni", placement: "left" }] });
+    expect(e2.lines()[0].status).toBe("complete");
   });
 });
