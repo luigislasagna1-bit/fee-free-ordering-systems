@@ -34,3 +34,5 @@
 | 2026-08-22T19:43:09.559Z | e26c81a7 | DEPLOY staging | — | app=nabil-voice-staging image=registry.fly.io/nabil-voice-staging:deployment-01M0NFXWT799D5C8383FE6Q18M previous=registry.fly.io/nabil-voice-staging:deployment-01M0NDXPNB9MK1EW93JHCFD019 |
 | 2026-08-22T20:00:10.843Z | cb83ed60 | GO | 3× | typecheck:voice:ok, voice unit tests:ok |
 | 2026-08-22T20:00:38.394Z | cb83ed60 | DEPLOY staging | — | app=nabil-voice-staging image=registry.fly.io/nabil-voice-staging:deployment-01M0NGYDZGKRCG24GV3XMX9929 previous=registry.fly.io/nabil-voice-staging:deployment-01M0NFXWT799D5C8383FE6Q18M |
+| 2026-08-22T20:16:37.889Z | 13acbdf3 | GO | 3× | typecheck:voice:ok, voice unit tests:ok |
+| 2026-08-22T20:17:08.308Z | 13acbdf3 | DEPLOY staging | — | app=nabil-voice-staging image=registry.fly.io/nabil-voice-staging:deployment-01M0NHWJZCPBFSJV1R5EQ2JDVF previous=registry.fly.io/nabil-voice-staging:deployment-01M0NGYDZGKRCG24GV3XMX9929 |
