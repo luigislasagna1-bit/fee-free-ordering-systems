@@ -107,7 +107,8 @@ export const S01: Scenario = base(
     cart: { lines: [] },
     mustPlace: false,
     mustSay: ["being prepared", "(about|around|roughly) (nine|9|ten|10) minutes"],
-    mustNotSay: ["on its way", "any minute", "ready for pickup", "pick ?up or delivery"],
+    // "ready for pickup IN about nine minutes" is right; "is ready for pickup" (now) would be a guess.
+    mustNotSay: ["on its way", "any minute", "(is|it's) ready for pickup(?! in)", "ready now", "pick ?up or delivery"],
     allowedTools: ["lookup_recent_orders", "send_sms_link"],
     maxToolErrors: 0,
   },

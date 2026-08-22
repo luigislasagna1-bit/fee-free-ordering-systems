@@ -410,7 +410,7 @@ describe("identity: quote and place price the SAME customer", () => {
     await run(ctx, "quote_order");
     // Then they read their number out, formatted differently. Same person.
     const sc = await run(ctx, "set_customer", { phone: "(416) 833-8405" });
-    expect(String(sc.instruction)).toBe("Noted. Carry on.");
+    expect(String(sc.instruction)).toMatch(/^Noted./); // A9: once nothing blocks the order the instruction says "quote now"
     expect(ctx.cart.customer().phone).toBe("4168338405");
     expect(ctx.cart.quoteStillApplies()).toBe(true);
     await run(ctx, "place_order");
@@ -1186,21 +1186,21 @@ describe("toolsForConfig", () => {
 
   it("everything on ⇒ the full surface, in TOOLS order", () => {
     expect(names({ canTakeOrders: true, canBookReservations: true, smsConfirmations: true })).toEqual(TOOLS.map((t) => t.name));
-    expect(TOOLS.map((t) => t.name)).toEqual([...ORDER, "check_reservation_availability", "book_reservation", "transfer_to_human", "leave_message", "send_sms_link", "lookup_recent_orders"]);
+    expect(TOOLS.map((t) => t.name)).toEqual([...ORDER, "check_reservation_availability", "book_reservation", "transfer_to_human", "leave_message", "send_sms_link", "end_call", "lookup_recent_orders"]);
   });
 
   it("ordering tools are gated on canTakeOrders, reservations on canBookReservations, texting on smsConfirmations — transfer always survives", () => {
     const noOrders = names({ canTakeOrders: false });
     for (const n of ORDER) expect(noOrders).not.toContain(n);
-    expect(noOrders).toEqual(["check_reservation_availability", "book_reservation", "transfer_to_human", "leave_message", "send_sms_link", "lookup_recent_orders"]);
+    expect(noOrders).toEqual(["check_reservation_availability", "book_reservation", "transfer_to_human", "leave_message", "send_sms_link", "end_call", "lookup_recent_orders"]);
     const noRes = names({ canBookReservations: false });
     expect(noRes).not.toContain("book_reservation");
     expect(noRes).not.toContain("check_reservation_availability");
     expect(names({ smsConfirmations: false })).not.toContain("send_sms_link");
-    expect(names({ canTakeOrders: false, canBookReservations: false, smsConfirmations: false })).toEqual(["transfer_to_human", "leave_message", "lookup_recent_orders"]);
+    expect(names({ canTakeOrders: false, canBookReservations: false, smsConfirmations: false })).toEqual(["transfer_to_human", "leave_message", "end_call", "lookup_recent_orders"]);
     // A1b: take-a-message is its own gate; transfer itself always survives.
     expect(names({ transferTakeMessage: false })).not.toContain("leave_message");
-    expect(names({ canTakeOrders: false, canBookReservations: false, smsConfirmations: false, transferTakeMessage: false })).toEqual(["transfer_to_human", "lookup_recent_orders"]);
+    expect(names({ canTakeOrders: false, canBookReservations: false, smsConfirmations: false, transferTakeMessage: false })).toEqual(["transfer_to_human", "end_call", "lookup_recent_orders"]);
     // A5: order-status lookup is its own gate.
     expect(names({ canAnswerOrderStatus: false })).not.toContain("lookup_recent_orders");
   });
@@ -1712,5 +1712,37 @@ describe("lookup_recent_orders grounds every status answer (A5)", () => {
   it("is gated by canAnswerOrderStatus", () => {
     expect(toolsForConfig({ ...normalizeAgentConfig({}), canAnswerOrderStatus: false }).map((t) => t.name)).not.toContain("lookup_recent_orders");
     expect(toolsForConfig(normalizeAgentConfig({})).map((t) => t.name)).toContain("lookup_recent_orders");
+  });
+});
+
+/* ═══════════════════ A9 — end_call ends a finished call, never an open one ═══════════════════ */
+
+describe("end_call ends a finished call, never an open one (A9)", () => {
+  it("refuses while a line is unfinished or food is unplaced; allowed once placed (or with nothing on the order)", async () => {
+    const { ctx } = makeCtx();
+    const empty = await run(ctx, "end_call", { reason: "nothing_more" });
+    expect(empty.ok).toBe(true);
+    expect(ctx.pendingEnd).toBe("nothing_more");
+    ctx.pendingEnd = null;
+    await addPizza(ctx);
+    const unplaced = await run(ctx, "end_call", { reason: "caller_goodbye" });
+    expect(unplaced.ok).toBe(false);
+    expect(unplaced.code).toBe("call_not_finished");
+    expect(ctx.pendingEnd).toBeNull();
+    await ready(ctx);
+    await run(ctx, "quote_order");
+    await run(ctx, "place_order");
+    const done = await run(ctx, "end_call", { reason: "order_done" });
+    expect(done.ok).toBe(true);
+    expect(ctx.pendingEnd).toBe("order_done");
+    expect(String(done.instruction)).toMatch(/ONE short warm closing sentence/);
+  });
+
+  it("set_customer says 'quote now' once nothing blocks the order", async () => {
+    const { ctx } = makeCtx();
+    await addPizza(ctx);
+    await run(ctx, "set_fulfilment", { type: "pickup" });
+    const r = await run(ctx, "set_customer", { name: "Ada Lovelace" });
+    expect(String(r.instruction)).toMatch(/call quote_order in this same message/);
   });
 });

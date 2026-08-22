@@ -70,7 +70,7 @@ export type CallEvent = CallEventBase &
     /** A4: the line stayed silent after the greeting / a question — one
      *  re-prompt, then a polite close. `afterMs` = silence after our own
      *  (estimated) playout. */
-    | { type: "no_input"; stage: "reprompt" | "close"; after: "greeting" | "question"; afterMs: number }
+    | { type: "no_input"; stage: "reprompt" | "close"; after: "greeting" | "question" | "farewell"; afterMs: number }
     | { type: "interrupt"; heard: string | null; stale: boolean; duringProtected: boolean }
     | { type: "protected_respoken"; text: string }
     | { type: "narration_dropped"; text: string }

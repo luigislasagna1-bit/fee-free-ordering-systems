@@ -394,7 +394,10 @@ export async function runScenario(scn: Scenario, opts: RunScenarioOpts): Promise
       clarified: /\?/.test(ev.spoken ?? "") && !linesMutated,
     });
   }
-  if (nonSynthetic.length !== sends.length) {
+  // A9: the agent may END a finished call (end_call / silence after a farewell) — scripted lines after that
+  // close are simply never consumed, which is the point, not a miscount.
+  const cleanClose = ws.ended && /^caller_done(?::|$)/.test(ws.endReason ?? "");
+  if (nonSynthetic.length !== sends.length && !(cleanClose && nonSynthetic.length < sends.length)) {
     reasons.push(`turn accounting: ${sends.length} caller prompts but ${nonSynthetic.length} session turns`);
   }
 
@@ -480,11 +483,15 @@ export async function runScenario(scn: Scenario, opts: RunScenarioOpts): Promise
     if (typeof got !== "number") reasons.push(`no total was quoted (expected ${scn.expected.totalCents}¢)`);
     else if (Math.abs(Math.round(got * 100) - scn.expected.totalCents) > 0) reasons.push(`total ${Math.round(got * 100)}¢, expected ${scn.expected.totalCents}¢`);
   }
-  const transferred = ws.ended && !!ws.endReason && ws.endReason !== "end";
+  const endedByAgent = ws.ended && !!ws.endReason && ws.endReason !== "end";
+  const transferred = endedByAgent && !cleanClose;
   if (scn.expected.mustTransfer) {
     if (!transferred) reasons.push("expected a hand-off to a person, the call was never transferred");
   } else if (transferred) {
     reasons.push(`call ended by agent: ${ws.endReason}`);
+  } else if (cleanClose && scn.expected.mustPlace && !placed) {
+    // A9 guard: hanging up on an unplaced order is the one clean-close that is NOT clean.
+    reasons.push(`agent ended the call (${ws.endReason}) before placing the order`);
   }
 
   // Hallucination flags, latency, usage.

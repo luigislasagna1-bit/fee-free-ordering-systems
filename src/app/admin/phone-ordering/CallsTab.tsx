@@ -11,7 +11,7 @@ import Link from "next/link";
 import { collectedOf } from "@/lib/reports/collected";
 import { REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
 import { CALL_OUTCOMES } from "@/lib/voice/analytics";
-import { HANGUP_REASONS } from "@/lib/voice/after-stream-decision";
+import { isHangupReason } from "@/lib/voice/after-stream-decision";
 import { phoneDigitsKey } from "@/lib/phone";
 import { CallRowLink } from "./CallRowLink";
 import { CallerLink } from "./CallerLink";
@@ -259,7 +259,7 @@ export default async function CallsTab({
                       <OutcomeChip
                         outcome={c.outcome}
                         label={outcomeLabel(c.outcome)}
-                        transferred={!!c.transferReason && !HANGUP_REASONS.has(c.transferReason) && c.outcome === "order_placed"}
+                        transferred={!!c.transferReason && !isHangupReason(c.transferReason) && c.outcome === "order_placed"}
                       />
                     </td>
                     <td className="py-2.5 px-4 whitespace-nowrap text-right text-gray-600 tabular-nums">

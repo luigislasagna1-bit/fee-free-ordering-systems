@@ -138,8 +138,8 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   if (decision.action === "hangup_spam") {
     return twiml(`<Response><Say voice="Polly.Joanna-Neural">${xml(SPAM_BYE)}</Say><Hangup/></Response>`);
   }
-  if (decision.action === "hangup_no_input") {
-    // A4: Nabil already said its localized goodbye before ending — just hang up.
+  if (decision.action === "hangup_no_input" || decision.action === "hangup_done") {
+    // A4/A9: Nabil already said its goodbye before ending — just hang up.
     return twiml(`<Response><Hangup/></Response>`);
   }
   if (decision.action === "relay_fallback") {

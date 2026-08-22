@@ -50,6 +50,8 @@ export type ToolContext = {
   localDate?: string | null;
   /** A5: orders found by lookup_recent_orders this call (for the tracking text). */
   statusOrders?: Array<{ id: string; ref: string | null }>;
+  /** A9: set by end_call — the session hangs up after this turn's reply. */
+  pendingEnd?: string | null;
   /** get_item_options payloads by id — the menu cannot change mid-call. */
   itemOptionsCache: Map<string, unknown>;
   /** Raw combo slots (label/min/max/choices) by combo id — for slot auto-fill. Lazily created. */
@@ -446,6 +448,16 @@ export const TOOLS = [
         orderId: { type: "string", description: "tracking only: the id from lookup_recent_orders (defaults to the most recent one found)." },
       },
       required: ["linkType"],
+    },
+  },
+  {
+    name: "end_call",
+    description:
+      "Hang up politely when the conversation is finished: the order is placed and confirmed (or there was never an order), the caller has said goodbye or that there's nothing else, and you have said your one closing sentence. Call it IN THE SAME message as that closing sentence. Never while anything is still open.",
+    input_schema: {
+      type: "object",
+      additionalProperties: false,
+      properties: { reason: { type: "string", enum: ["order_done", "caller_goodbye", "nothing_more"] } },
     },
   },
   {
@@ -1186,13 +1198,19 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
 
     case "set_customer": {
       const r = cart.setCustomer({ name: input?.name, phone: input?.phone ? canonicalPhone(String(input.phone)) || String(input.phone) : undefined });
+      // A9 (C24): when the food and pickup/delivery are settled, the name was
+      // the last thing — say so, so the model quotes now instead of asking
+      // "anything else?" a third time.
+      const readyToQuote = cart.lines().length > 0 && !!cart.fulfilment().type && cart.validate().every((p) => !p.blocking);
       return {
         ok: true,
         customer: cart.customer(),
         state: cart.stateForModel(),
         instruction: r.phoneChanged
           ? "The callback number changed — if you already quoted a total, quote again before placing (a different number can be a different customer and a different price)."
-          : "Noted. Carry on.",
+          : readyToQuote
+            ? "Noted. Nothing blocks the order now — if the caller already said they're done, call quote_order in this same message; otherwise one last 'anything else?' at most."
+            : "Noted. Carry on.",
       };
     }
 
@@ -1571,6 +1589,25 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       return res.ok
         ? { ok: true, ...(input.linkType === "receipt" && lastOrder?.orderId ? { instruction: "Tell them the text lets them follow the order's progress, not just a receipt." } : {}) }
         : { error: true };
+    }
+
+    case "end_call": {
+      // A9 (C25: three or four goodbyes, then 48 s of idle line): the agent
+      // may end a finished call itself. Refused while anything is still open
+      // — an unfinished line, an unplaced cart, a hand-off in flight.
+      const lines = cart.lines();
+      const unfinished = lines.some((l) => l.status === "needs_info");
+      if (unfinished || (lines.length > 0 && !cart.placedOrders().length)) {
+        return {
+          ok: false,
+          code: "call_not_finished",
+          instruction: unfinished
+            ? "The order still has an unfinished line — finish it (or remove it) before ending the call."
+            : "There is food on the order that was never placed. Quote it and place it if the caller wants it, or remove it, before ending the call.",
+        };
+      }
+      ctx.pendingEnd = String(input?.reason || "nothing_more");
+      return { ok: true, instruction: "The call will end right after this message. Say ONE short warm closing sentence and nothing else — no questions." };
     }
 
     case "lookup_recent_orders": {

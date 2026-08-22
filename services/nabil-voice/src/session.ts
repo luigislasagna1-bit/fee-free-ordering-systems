@@ -75,6 +75,10 @@ const HOP_TTFT_WATCHDOG_MS = 8_000;
  */
 const NO_INPUT_REPROMPT_MS = 8_000;
 const NO_INPUT_CLOSE_MS = 30_000;
+/** A9 (C25): after Nabil's goodbye with nothing open, silence this long ends
+ *  the call — no nudge, no re-greeting, no 48 s of idle line. */
+const CLOSE_AFTER_FAREWELL_MS = 6_000;
+const FAREWELL_RE = /\b(?:bye|goodbye|good ?bye|see you|take care|have a (?:good|great|nice|wonderful|lovely)|enjoy|talk (?:to you )?soon|au revoir|ciao|adiós|adios|tschüss|tot ziens)\b[^?]*$/i;
 const SPEECH_MS_PER_CHAR = 65;
 const DEFAULT_GREETING_PLAYOUT_MS = 12_000;
 /**
@@ -979,12 +983,59 @@ export class CallSession {
     // A4: Nabil just spoke and the line is the caller's — if what it said was
     // a question (or a re-prompt), a silent line gets one nudge, then a close.
     const spokenTurn = this.turnSpokenSoFar.trim();
-    if (this.phase === "live" && !this.pendingPrompts.length && !this.hangUpRequested && /\?\s*$/.test(spokenTurn)) {
+    if (this.ctx.pendingEnd && this.phase === "live") {
+      // A9: the model called end_call — its closing sentence has been sent;
+      // end through the ordered path (hangup, never the store).
+      this.endCall(`caller_done:${this.ctx.pendingEnd}`, spokenTurn);
+    } else if (this.phase === "live" && !this.pendingPrompts.length && !this.hangUpRequested && /\?\s*$/.test(spokenTurn)) {
       this.armIdle("question", spokenTurn);
+    } else if (this.phase === "live" && !this.pendingPrompts.length && !this.hangUpRequested && FAREWELL_RE.test(spokenTurn) && this.nothingOpen()) {
+      // A9 (C25): a farewell with nothing open — if the caller says nothing
+      // more, hang up after a short grace instead of idling for a minute.
+      this.armClosing(spokenTurn);
     } else {
       clearTimeout(this.idleTimer);
       this.idleTimer = undefined;
     }
+  }
+
+  /** A9: nothing the caller could still be waiting on. */
+  private nothingOpen(): boolean {
+    const lines = this.ctx.cart.lines();
+    if (lines.some((l) => l.status === "needs_info")) return false;
+    if (lines.length > 0 && !this.ctx.cart.placedOrders().length) return false;
+    return true;
+  }
+
+  /** A9: after a farewell, end on the caller's silence (no nudge). */
+  private armClosing(spokenText: string) {
+    clearTimeout(this.idleTimer);
+    this.idleTimer = undefined;
+    if (this.noInputRepromptMs <= 0 || this.phase !== "live") return;
+    const playoutMs = Math.min(20_000, spokenText.length * this.speechMsPerChar);
+    this.idleArmedAt = this.now();
+    const check = () => {
+      this.idleTimer = undefined;
+      if (this.phase !== "live" || this.finalized || this.turnRunning || this.pendingPrompts.length) return;
+      if (this.lastPromptAt > this.idleArmedAt) return;
+      if (this.now() - this.lastCallerAudioAt < this.callerActiveHoldMs) {
+        this.idleTimer = setTimeout(check, 1_000);
+        return;
+      }
+      this.events.emit({ type: "no_input", turn: this.turnIndex, stage: "close", after: "farewell", afterMs: Math.max(0, this.now() - this.idleArmedAt - playoutMs) });
+      this.endCall("caller_done:farewell_silence", "");
+    };
+    this.idleTimer = setTimeout(check, playoutMs + CLOSE_AFTER_FAREWELL_MS);
+    this.idleTimer.unref?.();
+  }
+
+  /** A9: a finished call ends through the ORDERED end path with a hangup
+   *  reason (after-stream table → <Hangup/>, never the store). */
+  private endCall(reason: string, alreadySpoken: string) {
+    if (this.finalized || this.phase !== "live") return;
+    void alreadySpoken;
+    this.ctx.pendingTransfer ??= reason;
+    this.endTransfer(reason);
   }
 
   /** A4 — no-input watchdog. `spokenText` = what we just said (its playout is

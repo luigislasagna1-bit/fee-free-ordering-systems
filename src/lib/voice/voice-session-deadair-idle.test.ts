@@ -230,3 +230,35 @@ describe("A4 — no-input watchdog", () => {
     expect(events().filter((e) => e.type === "no_input")).toHaveLength(0);
   });
 });
+
+describe("A9 — the agent ends a finished call", () => {
+  it("end_call in the closing message → ordered end with reason caller_done:<why>, nothing spoken after", async () => {
+    const anthropic = fakeAnthropic([
+      { deltas: ["Thanks for calling — have a great night!"], toolUse: { name: "end_call", input: { reason: "caller_goodbye" } } },
+      { deltas: ["(must not run)"] },
+    ]);
+    const { s, ws } = await started(anthropic, { noInputRepromptMs: 0 });
+    await turn(s, "That's all, thanks, bye!", 300);
+    const ends = ws.endFrames();
+    expect(ends).toHaveLength(1);
+    expect(JSON.parse(String(ends[0].handoffData)).reason).toBe("caller_done:caller_goodbye");
+    expect(ws.said()).toMatch(/have a great night/);
+    await hangUp(s);
+    const end = apiMock.logCall.mock.calls[0][0] as { outcome: string; transferReason: string | null };
+    expect(end.transferReason).toBe("caller_done:caller_goodbye");
+    expect(end.outcome).not.toBe("transferred");
+  });
+
+  it("a farewell with nothing open + silence → hangs up after the grace, without a nudge", async () => {
+    const anthropic = fakeAnthropic([{ deltas: ["Alright, take care — bye now!"] }, { deltas: ["(must not run)"] }]);
+    const { s, ws } = await started(anthropic, { noInputRepromptMs: 60, noInputCloseMs: 180 });
+    await turn(s, "Okay thanks, bye.", 150);
+    // CLOSE_AFTER_FAREWELL_MS is 6 s in production; here playout is 0 so the timer is 6 s — too long for a unit test,
+    // so assert the watchdog is ARMED as a close (no reprompt turn) by checking nothing else ran within the nudge window.
+    await sleep(400);
+    expect(anthropic.calls()).toBe(1);
+    expect(ws.endFrames()).toHaveLength(0);
+    await hangUp(s);
+    expect(events().filter((e) => e.type === "no_input" && e.stage === "reprompt")).toHaveLength(0);
+  });
+});

@@ -14,6 +14,8 @@ export type AfterStreamDecision =
   | { action: "hangup_spam" }
   /** A4: the caller never spoke (or stopped) — Nabil already said goodbye. */
   | { action: "hangup_no_input" }
+  /** A9: the conversation finished (end_call, or silence after a farewell). */
+  | { action: "hangup_done" }
   | { action: "dial_store"; why: "transfer" | "stream_died" }
   | { action: "relay_fallback"; why: "no_row" | "legacy_no_reason" };
 
@@ -21,7 +23,12 @@ export type AfterStreamDecision =
  *  They travel in `VoiceCall.transferReason` only because that is the field
  *  the ordered end-path writes; the dashboard must not draw a transfer arrow
  *  for them (CallsTab). */
-export const HANGUP_REASONS: ReadonlySet<string> = new Set(["call_time_limit", "spam", "no_input"]);
+export const HANGUP_REASONS: ReadonlySet<string> = new Set(["call_time_limit", "spam", "no_input", "caller_done"]);
+/** `caller_done:<detail>` carries why (end_call reason / farewell_silence). */
+export function isHangupReason(reason: string): boolean {
+  const r = (reason || "").trim();
+  return HANGUP_REASONS.has(r) || r.startsWith("caller_done:");
+}
 
 export function decideAfterStream(input: {
   /** VoiceCall.transferReason for this callSid, "" when none. */
@@ -35,6 +42,7 @@ export function decideAfterStream(input: {
   if (reason === "call_time_limit") return { action: "hangup_time_limit" };
   if (reason === "spam") return { action: "hangup_spam" };
   if (reason === "no_input") return { action: "hangup_no_input" };
+  if (reason === "caller_done" || reason.startsWith("caller_done:")) return { action: "hangup_done" };
   if (reason) return { action: "dial_store", why: "transfer" };
   if (!input.rowExists) return { action: "relay_fallback", why: "no_row" };
   // The stream ran (we have a row) but the session ended without a hand-off
