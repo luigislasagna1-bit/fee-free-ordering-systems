@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Numerot lausuttu sanoina ({count})",
           "narrationDroppedLabel": "Ääneen ajattelun lause poistettiin ennen puhetta",
           "tailFragmentLabel": "Loppufragmentti sulautettu",
-          "greetingEchoLabel": "Tervehdyskaiku poistettu"
+          "greetingEchoLabel": "Tervehdyskaiku poistettu",
+          "handoffLabel": "Siirto henkilölle",
+          "handoffWritten": "syy tallennettu ennen siirtoa",
+          "handoffWriteFailed": "syytä ei tallennettu — ravintolaan soitettiin varareittiä pitkin",
+          "handoffSkipped": "ei siirtomerkintää tällä palvelimella",
+          "handoffHardClosed": "palvelu sulki puhelun — puhelinverkko ei koskaan katkaissut",
+          "handoffDropped": "{count, plural, one {# soittajan viesti ohitettu siirron jälkeen} other {# soittajan viestiä ohitettu siirron jälkeen}}"
         },
         "report": {
           "button": "Ilmoita tästä puhelusta",

@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Numeri pronunciati a parole ({count})",
           "narrationDroppedLabel": "Frase di «pensiero ad alta voce» eliminata prima della voce",
           "tailFragmentLabel": "Frammento finale assorbito",
-          "greetingEchoLabel": "Eco del saluto eliminato"
+          "greetingEchoLabel": "Eco del saluto eliminato",
+          "handoffLabel": "Passaggio a una persona",
+          "handoffWritten": "motivo salvato prima del passaggio",
+          "handoffWriteFailed": "motivo non salvato — il ristorante è stato chiamato tramite il percorso di riserva",
+          "handoffSkipped": "nessuna registrazione del passaggio su questo server",
+          "handoffHardClosed": "chiuso dal servizio — la rete telefonica non ha mai riagganciato",
+          "handoffDropped": "{count, plural, one {# messaggio del cliente ignorato dopo il passaggio} other {# messaggi del cliente ignorati dopo il passaggio}}"
         },
         "report": {
           "button": "Segnala questa chiamata",

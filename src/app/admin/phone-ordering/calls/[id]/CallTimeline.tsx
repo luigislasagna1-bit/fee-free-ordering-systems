@@ -402,6 +402,32 @@ function EventRow({ e, t, interruptedTag }: { e: TimelineEvent; t: T; interrupte
           <Chip tone="err">{t("errorLabel", { where: s(p.where) })}</Chip> <span className="text-red-800">{s(p.message)}</span>
         </div>
       );
+    case "transfer_handoff": {
+      // A1 (2026-08-22): the hand-off decision + whether its write landed
+      // before the relay was ended. Red when it did not — that is the case
+      // where the store was dialled from a fallback rather than the reason.
+      const outcome = String(p.outcome ?? "");
+      const tone = outcome === "handoff_written" ? "ok" : outcome === "handoff_skipped" ? "muted" : "err";
+      const outcomeKey =
+        outcome === "handoff_written"
+          ? "handoffWritten"
+          : outcome === "handoff_write_failed"
+            ? "handoffWriteFailed"
+            : outcome === "hard_closed"
+              ? "handoffHardClosed"
+              : "handoffSkipped";
+      const dropped = typeof p.droppedAfterEnd === "number" ? p.droppedAfterEnd : 0;
+      return (
+        <div className="text-xs text-gray-600">
+          <Meta e={e} />
+          <Chip tone={tone}>{t("handoffLabel")}</Chip>
+          <span className="ml-1">{t(outcomeKey)}</span>
+          {p.reason ? <span className="ml-1 italic">“{s(p.reason)}”</span> : null}
+          {typeof p.msToWrite === "number" && p.msToWrite > 0 ? <span className="ml-1 font-mono text-[10px] text-gray-400">{p.msToWrite}ms</span> : null}
+          {dropped > 0 ? <span className="ml-1 text-amber-700">· {t("handoffDropped", { count: dropped })}</span> : null}
+        </div>
+      );
+    }
     default:
       return (
         <div className="text-xs text-gray-500">

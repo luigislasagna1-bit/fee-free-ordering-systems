@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Brojevi izgovoreni rečima ({count})",
           "narrationDroppedLabel": "Rečenica „razmišljanja naglas” uklonjena pre glasa",
           "tailFragmentLabel": "Završni fragment apsorbovan",
-          "greetingEchoLabel": "Eho pozdrava uklonjen"
+          "greetingEchoLabel": "Eho pozdrava uklonjen",
+          "handoffLabel": "Prebacivanje na osobu",
+          "handoffWritten": "razlog sačuvan pre prebacivanja",
+          "handoffWriteFailed": "razlog nije sačuvan — restoran je pozvan rezervnom putanjom",
+          "handoffSkipped": "nema zapisa o prebacivanju na ovom serveru",
+          "handoffHardClosed": "zatvorio servis — telefonska mreža nikada nije prekinula vezu",
+          "handoffDropped": "{count, plural, one {# poruka pozivaoca zanemarena posle prebacivanja} few {# poruke pozivaoca zanemarene posle prebacivanja} other {# poruka pozivaoca zanemareno posle prebacivanja}}"
         },
         "report": {
           "button": "Prijavi ovaj poziv",

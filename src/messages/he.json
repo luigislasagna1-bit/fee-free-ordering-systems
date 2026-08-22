@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "מספרים שנאמרו במילים ({count})",
           "narrationDroppedLabel": "משפט של \"חשיבה בקול\" הוסר לפני ההקראה",
           "tailFragmentLabel": "קטע סיום נבלע",
-          "greetingEchoLabel": "הד ברכה הוסר"
+          "greetingEchoLabel": "הד ברכה הוסר",
+          "handoffLabel": "העברה לנציג",
+          "handoffWritten": "הסיבה נשמרה לפני ההעברה",
+          "handoffWriteFailed": "הסיבה לא נשמרה — המסעדה חויגה דרך מסלול הגיבוי",
+          "handoffSkipped": "אין רשומת העברה בשרת זה",
+          "handoffHardClosed": "נסגר על ידי השירות — רשת הטלפון מעולם לא ניתקה",
+          "handoffDropped": "{count, plural, one {הודעה אחת של המתקשר התעלמה לאחר ההעברה} two {שתי הודעות של המתקשר התעלמו לאחר ההעברה} other {# הודעות של המתקשר התעלמו לאחר ההעברה}}"
         },
         "report": {
           "button": "דיווח על שיחה זו",

@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Números dits amb lletres ({count})",
           "narrationDroppedLabel": "Frase de «pensar en veu alta» eliminada abans de la veu",
           "tailFragmentLabel": "Fragment final absorbit",
-          "greetingEchoLabel": "Eco de salutació eliminat"
+          "greetingEchoLabel": "Eco de salutació eliminat",
+          "handoffLabel": "Transferència a una persona",
+          "handoffWritten": "motiu desat abans de la transferència",
+          "handoffWriteFailed": "motiu no desat — s'ha trucat al restaurant per la via de reserva",
+          "handoffSkipped": "cap registre de transferència en aquest servidor",
+          "handoffHardClosed": "tancat pel servei — la xarxa telefònica no ha penjat mai",
+          "handoffDropped": "{count, plural, one {# missatge de qui truca ignorat després de la transferència} other {# missatges de qui truca ignorats després de la transferència}}"
         },
         "report": {
           "button": "Informa d'aquesta trucada",

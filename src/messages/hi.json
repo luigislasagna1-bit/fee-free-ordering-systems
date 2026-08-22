@@ -4772,7 +4772,13 @@
           "numbersVerbalizedLabel": "संख्याएँ शब्दों में बोली गईं ({count})",
           "narrationDroppedLabel": "आवाज़ से पहले “ज़ोर से सोचने” वाला वाक्य हटाया गया",
           "tailFragmentLabel": "अंतिम टुकड़ा समाहित किया गया",
-          "greetingEchoLabel": "अभिवादन प्रतिध्वनि हटाई गई"
+          "greetingEchoLabel": "अभिवादन प्रतिध्वनि हटाई गई",
+          "handoffLabel": "किसी व्यक्ति को सौंपना",
+          "handoffWritten": "सौंपने से पहले कारण सहेजा गया",
+          "handoffWriteFailed": "कारण सहेजा नहीं गया — रेस्तरां को बैकअप मार्ग से कॉल किया गया",
+          "handoffSkipped": "इस बैकएंड पर सौंपने का कोई रिकॉर्ड नहीं",
+          "handoffHardClosed": "सेवा द्वारा बंद — फ़ोन नेटवर्क ने कभी कॉल नहीं काटी",
+          "handoffDropped": "{count, plural, one {सौंपने के बाद कॉलर का # संदेश अनदेखा किया गया} other {सौंपने के बाद कॉलर के # संदेश अनदेखे किए गए}}"
         },
         "report": {
           "button": "इस कॉल की रिपोर्ट करें",

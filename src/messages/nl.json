@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Getallen in woorden uitgesproken ({count})",
           "narrationDroppedLabel": "Hardop-denken-zin verwijderd vóór de spraak",
           "tailFragmentLabel": "Afsluitend fragment opgenomen",
-          "greetingEchoLabel": "Begroetingsecho verwijderd"
+          "greetingEchoLabel": "Begroetingsecho verwijderd",
+          "handoffLabel": "Doorverbinden met een medewerker",
+          "handoffWritten": "reden opgeslagen vóór het doorverbinden",
+          "handoffWriteFailed": "reden niet opgeslagen — het restaurant is via de noodroute gebeld",
+          "handoffSkipped": "geen doorverbind-record op deze backend",
+          "handoffHardClosed": "gesloten door de service — het telefoonnetwerk heeft nooit opgehangen",
+          "handoffDropped": "{count, plural, one {# bericht van de beller genegeerd na het doorverbinden} other {# berichten van de beller genegeerd na het doorverbinden}}"
         },
         "report": {
           "button": "Dit gesprek melden",

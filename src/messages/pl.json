@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Liczby wypowiedziane słownie ({count})",
           "narrationDroppedLabel": "Zdanie „myślenia na głos” usunięte przed odczytaniem",
           "tailFragmentLabel": "Końcowy fragment wchłonięty",
-          "greetingEchoLabel": "Echo powitania usunięte"
+          "greetingEchoLabel": "Echo powitania usunięte",
+          "handoffLabel": "Przekazanie do pracownika",
+          "handoffWritten": "powód zapisany przed przekazaniem",
+          "handoffWriteFailed": "powód niezapisany — do restauracji zadzwoniono ścieżką awaryjną",
+          "handoffSkipped": "brak wpisu o przekazaniu na tym serwerze",
+          "handoffHardClosed": "zamknięte przez usługę — sieć telefoniczna nigdy się nie rozłączyła",
+          "handoffDropped": "{count, plural, one {# wiadomość dzwoniącego zignorowana po przekazaniu} few {# wiadomości dzwoniącego zignorowane po przekazaniu} other {# wiadomości dzwoniącego zignorowanych po przekazaniu}}"
         },
         "report": {
           "button": "Zgłoś tę rozmowę",

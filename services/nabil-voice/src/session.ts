@@ -188,7 +188,17 @@ export function isEarlyFragment(text: string, msSinceReplyEnd: number, windowMs:
 }
 /** Hard cap on how long one sentence may hold off barge-in. */
 const PROTECT_MAX_MS = 8_000;
+/** A8b — the subset of the media session's AsrMeta that rides the `asr` event. */
+type AsrMetaLite = { confidence?: number; rmsDb?: number | null; noiseFloorDb?: number | null; callerLevelDb?: number | null; wouldDropReason?: string | null };
 const STRUGGLE_LIMIT = 3;
+/** A1 (2026-08-22): after the session decides to hand off, the transfer reason is
+ *  written to the app FIRST (bounded by this), THEN the relay is ended — so the
+ *  <Connect action> route that dials the store never races the end record. */
+const HANDOFF_WRITE_MS = 2_500;
+/** If Twilio has not torn the socket down this long after `end`, the session
+ *  closes itself: no more turns, record written. (Two callers sat 7 min and
+ *  2.7 min in "still connecting…" on 2026-08-21 because nothing enforced this.) */
+const END_HARD_CLOSE_MS = 6_000;
 /** How often the event log is flushed to the app mid-call (crash-safety). */
 const EVENT_FLUSH_EVERY_TURNS = 10;
 
@@ -353,6 +363,16 @@ export class CallSession {
   private greetingText = "";
   /** Epoch millis when AI handed the call to a human — billing stops here. */
   private transferredAt: number | null = null;
+  /** A1 lifecycle: "live" takes turns; "ending" = hand-off decided (no new
+   *  turns, no prompts/interrupts/dtmf honoured); "ended" = record written.
+   *  The 2026-08-21 stuck transfers happened because nothing here existed:
+   *  transfer_to_human returned ok and the loop kept answering "Hello?". */
+  private phase: "live" | "ending" | "ended" = "live";
+  private droppedAfterEnd = 0;
+  /** A8b: the ASR numbers for the prompt about to become a turn (Media Streams only). */
+  private lastAsrMeta: AsrMetaLite | null = null;
+  private endingPromise: Promise<void> | null = null;
+  private hardCloseTimer: ReturnType<typeof setTimeout> | undefined;
   private ttfaMsList: number[] = [];
   private eventFlushInFlight: Promise<unknown> | null = null;
 
@@ -424,6 +444,14 @@ export class CallSession {
   debugCart(): CartEngine {
     return this.ctx.cart;
   }
+
+  /** A8b: the media session classified a transcript as background speech and
+   *  kept it away from the model — recorded so a wrongly dropped caller
+   *  utterance is visible in the timeline (and so thresholds can be tuned). */
+  noteAsrDropped(d: { text: string; reason: "low_energy" | "low_confidence" | "other_speaker"; confidence: number; rmsDb: number | null; noiseFloorDb: number | null; callerLevelDb: number | null }) {
+    if (this.finalized) return;
+    this.events.emit({ type: "asr_dropped", turn: this.turnIndex, ...d });
+  }
   debugVersions(): Versions {
     return this.versions;
   }
@@ -433,6 +461,13 @@ export class CallSession {
     try {
       msg = JSON.parse(raw);
     } catch {
+      return;
+    }
+    // After a hand-off decision the caller belongs to the human side. Anything
+    // the ASR still delivers ("Hello?", a DTMF press, a barge-in) is counted,
+    // never answered — a model turn here is exactly the stuck-transfer bug.
+    if (this.phase !== "live" && (msg.type === "prompt" || msg.type === "interrupt" || msg.type === "dtmf")) {
+      this.droppedAfterEnd++;
       return;
     }
     switch (msg.type) {
@@ -446,6 +481,10 @@ export class CallSession {
         const text = normalizeAsr(String(msg.voicePrompt ?? msg.text ?? msg.transcript ?? ""));
         if (msg.lang) this.language = msg.lang;
         this.lastPromptAt = this.now();
+        // A8b: Media Streams attaches the ASR confidence + energy numbers; they
+        // ride the next `asr` event so background thresholds are tuned on real
+        // calls. ConversationRelay sends nothing here.
+        this.lastAsrMeta = msg.asrMeta && typeof msg.asrMeta === "object" ? (msg.asrMeta as AsrMetaLite) : null;
         if (text) {
           // GREETING ECHO GUARD (call cmsw33f3l, 2026-08-16): on speakerphone
           // the ASR picks up Nabil's own greeting from the speaker and sends it
@@ -738,6 +777,9 @@ export class CallSession {
   }
 
   private async runTurn(userText: string, synthetic = false, mode: "normal" | "early_fragment_alone" = "normal") {
+    // Synthetic turns (resume after a noise interrupt, a held fragment, a
+    // silent-turn retry) can fire from timers after the hand-off decision.
+    if (this.phase !== "live") return;
     this.turnRunning = true;
     // A tail fragment absorbed since the last turn rides in as context, not as
     // a question to answer.
@@ -811,7 +853,8 @@ export class CallSession {
     }
 
     this.transcript.push({ role: "user", text: userText, ts: new Date(this.now()).toISOString(), turn });
-    this.events.emit({ type: "asr", turn, text: userText, lang: this.language, synthetic });
+    this.events.emit({ type: "asr", turn, text: userText, lang: this.language, synthetic, ...(this.lastAsrMeta ?? {}) });
+    this.lastAsrMeta = null;
 
     const asides = this.spokenAsides.splice(0);
     const extra: string[] = [];
@@ -1503,13 +1546,73 @@ export class CallSession {
     }
   }
 
+  /**
+   * Hand the caller to a person — the ONE path every transfer takes (caller
+   * request, struggle hand-off, model failure, time cap, deploy drain).
+   *
+   * Ordered by construction (A1, 2026-08-22):
+   *   1. phase → "ending": no further turn can start, no caller message is
+   *      answered (onMessage / runTurn guards), in-flight model work aborted.
+   *   2. the transfer reason is written to the app (bounded, HANDOFF_WRITE_MS)
+   *      — the goodbye sentence is already playing, so this costs no silence.
+   *   3. the relay is ended; Twilio's <Connect action> route reads the row
+   *      that now exists and dials the store.
+   *   4. a watchdog closes the socket ourselves if Twilio never does.
+   * Idempotent: a second call (tool + struggle in one turn, or a retry) is a no-op.
+   */
   private endTransfer(reason: string) {
+    if (this.phase !== "live") return;
+    this.phase = "ending";
     if (!this.transferredAt) this.transferredAt = this.now();
+    this.interrupted = true;
+    this.controller?.abort();
+    clearTimeout(this.resumeTimer);
+    clearTimeout(this.silentTurnTimer);
+    clearTimeout(this.fillerTimer);
+    clearTimeout(this.thinkingFillerTimer);
+    clearTimeout(this.earlyFragmentTimer);
+    this.endingPromise = this.runEndTransfer(reason);
+  }
+
+  private async runEndTransfer(reason: string): Promise<void> {
+    const turn = this.turnIndex;
+    const t0 = this.now();
+    let outcome: "handoff_written" | "handoff_write_failed" | "handoff_skipped" = "handoff_skipped";
+    const write = this.api.logHandoff;
+    if (typeof write === "function") {
+      try {
+        const r = await Promise.race([
+          write({
+            event: "handoff",
+            restaurantId: this.token.restaurantId,
+            callSid: this.token.callSid,
+            reason,
+            transferredAtIso: new Date(this.transferredAt ?? this.now()).toISOString(),
+          }),
+          new Promise<{ ok: false }>((resolve) => setTimeout(() => resolve({ ok: false }), HANDOFF_WRITE_MS)),
+        ]);
+        outcome = r?.ok ? "handoff_written" : "handoff_write_failed";
+      } catch {
+        outcome = "handoff_write_failed";
+      }
+    }
+    this.events.emit({ type: "transfer_handoff", turn, reason, outcome, msToWrite: this.now() - t0 });
     try {
       this.ws.send(JSON.stringify({ type: "end", handoffData: JSON.stringify({ reason }) }));
     } catch {
-      /* ignore */
+      /* socket already gone — finalize() still runs via onClose or the watchdog */
     }
+    clearTimeout(this.hardCloseTimer);
+    this.hardCloseTimer = setTimeout(() => {
+      if (this.finalized) return;
+      this.events.emit({ type: "transfer_handoff", turn: this.turnIndex, reason, outcome: "hard_closed", msToWrite: 0, droppedAfterEnd: this.droppedAfterEnd });
+      void this.finalize();
+      try {
+        (this.ws as { close?: (code?: number, reason?: string) => void }).close?.(1000, "handoff");
+      } catch {
+        /* ignore */
+      }
+    }, END_HARD_CLOSE_MS);
   }
 
   /**
@@ -1563,6 +1666,7 @@ export class CallSession {
     clearTimeout(this.fillerTimer);
     clearTimeout(this.thinkingFillerTimer);
     clearTimeout(this.earlyFragmentTimer);
+    clearTimeout(this.hardCloseTimer);
     void this.finalize();
   }
 
@@ -1570,10 +1674,25 @@ export class CallSession {
     if (this.finalized) return;
     this.finalized = true;
     for (let i = 0; this.turnRunning && i < 100; i++) await new Promise((r) => setTimeout(r, 100));
+    // A hand-off in flight: let its (bounded) write land first so the end
+    // record and the handoff row agree on transferReason/transferredAt.
+    if (this.endingPromise) {
+      await Promise.race([this.endingPromise, new Promise((r) => setTimeout(r, HANDOFF_WRITE_MS + 500))]).catch(() => undefined);
+    }
+    this.phase = "ended";
+    clearTimeout(this.hardCloseTimer);
     const outcome = this.outcome ?? (this.userTurns >= 2 ? "faq_answered" : "abandoned");
     const latency = this.latencySummary();
     const usage = { tokensIn: this.usageIn, tokensOut: this.usageOut, cacheRead: this.usageCacheRead, cacheWrite: this.usageCacheWrite };
-    this.events.emit({ type: "call_end", turn: this.turnIndex, outcome, latency, usage, costCents: this.costCents() });
+    this.events.emit({
+      type: "call_end",
+      turn: this.turnIndex,
+      outcome,
+      latency,
+      usage,
+      costCents: this.costCents(),
+      ...(this.droppedAfterEnd ? { droppedAfterEnd: this.droppedAfterEnd } : {}),
+    });
     if (this.eventFlushInFlight) await this.eventFlushInFlight.catch(() => undefined);
     const events = this.events.drain();
     try {

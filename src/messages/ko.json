@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "숫자를 말로 읽음 ({count})",
           "narrationDroppedLabel": "‘생각을 소리 내어 말한’ 문장을 음성 전에 제거함",
           "tailFragmentLabel": "끝부분 조각을 흡수함",
-          "greetingEchoLabel": "인사 에코 제거됨"
+          "greetingEchoLabel": "인사 에코 제거됨",
+          "handoffLabel": "직원에게 연결",
+          "handoffWritten": "연결 전에 사유 저장됨",
+          "handoffWriteFailed": "사유가 저장되지 않음 — 예비 경로로 매장에 전화함",
+          "handoffSkipped": "이 백엔드에 연결 기록 없음",
+          "handoffHardClosed": "서비스가 종료함 — 전화망이 끊지 않음",
+          "handoffDropped": "{count, plural, one {연결 후 발신자 메시지 #건 무시됨} other {연결 후 발신자 메시지 #건 무시됨}}"
         },
         "report": {
           "button": "이 통화 신고",

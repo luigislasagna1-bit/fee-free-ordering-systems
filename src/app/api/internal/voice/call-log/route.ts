@@ -7,7 +7,7 @@ import { startCallRecording } from "@/lib/voice/twilio-recording";
 import { generateCallIntelligence } from "@/lib/voice/call-intelligence";
 import { alertTotalsMismatch } from "@/lib/voice/totals-mismatch-alarm";
 import { redactEventPayload } from "@/lib/voice/event-redaction";
-import { parseStartBody, parseEndBody, parseEventsBody, parseMenuSnapshotBody, type ParsedEvent } from "./validation";
+import { parseStartBody, parseEndBody, parseEventsBody, parseMenuSnapshotBody, parseHandoffBody, type ParsedEvent } from "./validation";
 import { phoneDigitsKey } from "@/lib/phone";
 
 export const runtime = "nodejs";
@@ -56,7 +56,33 @@ export async function POST(req: NextRequest) {
 
   const b = await req.json().catch(() => ({}));
   const event =
-    b?.event === "start" ? "start" : b?.event === "events" ? "events" : b?.event === "menu-snapshot" ? "menu-snapshot" : "end";
+    b?.event === "start"
+      ? "start"
+      : b?.event === "events"
+        ? "events"
+        : b?.event === "menu-snapshot"
+          ? "menu-snapshot"
+          : b?.event === "handoff"
+            ? "handoff"
+            : "end";
+
+  if (event === "handoff") {
+    // A1 (2026-08-22): the service writes the hand-off reason BEFORE ending
+    // the relay session, so after-stream/handoff find it on the row instead of
+    // racing finalize(). Tiny, idempotent, never clobbers start/end fields.
+    const parsed = parseHandoffBody(b);
+    if (!parsed.ok) {
+      return NextResponse.json({ error: parsed.error, code: "bad_request" }, { status: 400 });
+    }
+    const { callSid, restaurantId, reason, transferredAt } = parsed.data;
+    const row = await prisma.voiceCall.upsert({
+      where: { callSid },
+      create: { callSid, restaurantId, fromNumber: "", toNumber: "", transferReason: reason, transferredAt },
+      update: { transferReason: reason, transferredAt },
+      select: { id: true },
+    });
+    return NextResponse.json({ ok: true, id: row.id });
+  }
 
   if (event === "start") {
     const parsed = parseStartBody(b);

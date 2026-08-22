@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "อ่านตัวเลขเป็นคำพูด ({count})",
           "narrationDroppedLabel": "ตัดประโยค “คิดดัง ๆ” ออกก่อนเปล่งเสียง",
           "tailFragmentLabel": "ซึมซับเศษคำท้ายประโยค",
-          "greetingEchoLabel": "ตัดเสียงสะท้อนคำทักทาย"
+          "greetingEchoLabel": "ตัดเสียงสะท้อนคำทักทาย",
+          "handoffLabel": "ส่งต่อให้พนักงาน",
+          "handoffWritten": "บันทึกเหตุผลก่อนส่งต่อแล้ว",
+          "handoffWriteFailed": "ไม่ได้บันทึกเหตุผล — โทรหาร้านผ่านเส้นทางสำรอง",
+          "handoffSkipped": "ไม่มีบันทึกการส่งต่อในระบบนี้",
+          "handoffHardClosed": "ปิดโดยระบบ — เครือข่ายโทรศัพท์ไม่ได้วางสาย",
+          "handoffDropped": "{count, plural, one {ข้อความของผู้โทร # รายการถูกละเว้นหลังส่งต่อ} other {ข้อความของผู้โทร # รายการถูกละเว้นหลังส่งต่อ}}"
         },
         "report": {
           "button": "รายงานสายนี้",

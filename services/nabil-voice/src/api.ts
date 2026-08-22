@@ -26,6 +26,10 @@ const READ_TIMEOUT_MS = 8_000;
  * through and offer a person — never silently retry.
  */
 const PLACE_TIMEOUT_MS = 20_000;
+/** The hand-off write runs while the "putting you through" sentence plays; past
+ *  this the session ends anyway (after-stream then dials the store from the row
+ *  that exists, or falls back) — never hold a caller for a log line. */
+const HANDOFF_TIMEOUT_MS = 2_500;
 
 async function getInternal<T = any>(path: string): Promise<T> {
   const res = await fetch(`${CONFIG.appBaseUrl}${path}`, {
@@ -97,6 +101,11 @@ export const api = {
   logCall: (body: unknown) => post(`/api/internal/voice/call-log`, body, true),
   /** event:"events" — a mid-call flush of the event log (crash-safe observability). */
   logEvents: (body: unknown) => post(`/api/internal/voice/call-log`, body, true),
+  /** event:"handoff" — the transfer reason, written BEFORE the relay session is
+   *  ended so the <Connect action> route never races the end record (A1,
+   *  2026-08-22: two callers sat for minutes while "still connecting"). Tight
+   *  timeout: it overlaps the goodbye sentence already playing. */
+  logHandoff: (body: unknown) => post(`/api/internal/voice/call-log`, body, true, HANDOFF_TIMEOUT_MS),
 };
 
 /** The service's whole view of the app. `CallSession` takes one of these so

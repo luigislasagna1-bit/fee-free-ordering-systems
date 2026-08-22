@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Nombres énoncés en toutes lettres ({count})",
           "narrationDroppedLabel": "Phrase de « réflexion à voix haute » supprimée avant la voix",
           "tailFragmentLabel": "Fragment de fin absorbé",
-          "greetingEchoLabel": "Écho de salutation supprimé"
+          "greetingEchoLabel": "Écho de salutation supprimé",
+          "handoffLabel": "Transfert à une personne",
+          "handoffWritten": "motif enregistré avant le transfert",
+          "handoffWriteFailed": "motif non enregistré — le restaurant a été appelé via la solution de secours",
+          "handoffSkipped": "aucun enregistrement de transfert sur ce serveur",
+          "handoffHardClosed": "fermé par le service — le réseau téléphonique n'a jamais raccroché",
+          "handoffDropped": "{count, plural, one {# message de l'appelant ignoré après le transfert} other {# messages de l'appelant ignorés après le transfert}}"
         },
         "report": {
           "button": "Signaler cet appel",

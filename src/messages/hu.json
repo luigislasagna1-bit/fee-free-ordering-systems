@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Számok szavakkal kimondva ({count})",
           "narrationDroppedLabel": "„Hangos gondolkodás” mondat eltávolítva a beszéd előtt",
           "tailFragmentLabel": "Záró töredék beolvasztva",
-          "greetingEchoLabel": "Üdvözlés-visszhang eldobva"
+          "greetingEchoLabel": "Üdvözlés-visszhang eldobva",
+          "handoffLabel": "Átadás egy munkatársnak",
+          "handoffWritten": "ok elmentve az átadás előtt",
+          "handoffWriteFailed": "ok nincs elmentve — az éttermet a tartalék úton hívtuk",
+          "handoffSkipped": "nincs átadási bejegyzés ezen a szerveren",
+          "handoffHardClosed": "a szolgáltatás zárta le — a telefonhálózat sosem bontotta a vonalat",
+          "handoffDropped": "{count, plural, one {# hívói üzenet figyelmen kívül hagyva az átadás után} other {# hívói üzenet figyelmen kívül hagyva az átadás után}}"
         },
         "report": {
           "button": "Hívás jelentése",

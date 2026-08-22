@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Skaitļi izrunāti vārdiem ({count})",
           "narrationDroppedLabel": "„Skaļas domāšanas” teikums noņemts pirms balss",
           "tailFragmentLabel": "Beigu fragments absorbēts",
-          "greetingEchoLabel": "Sveiciena atbalss noņemta"
+          "greetingEchoLabel": "Sveiciena atbalss noņemta",
+          "handoffLabel": "Nodošana cilvēkam",
+          "handoffWritten": "iemesls saglabāts pirms nodošanas",
+          "handoffWriteFailed": "iemesls nav saglabāts — restorānam zvanīts pa rezerves ceļu",
+          "handoffSkipped": "šajā serverī nav nodošanas ieraksta",
+          "handoffHardClosed": "pakalpojums beidza zvanu — tālruņa tīkls nekad nepārtrauca savienojumu",
+          "handoffDropped": "{count, plural, one {# zvanītāja ziņa ignorēta pēc nodošanas} other {# zvanītāja ziņas ignorētas pēc nodošanas}}"
         },
         "report": {
           "button": "Ziņot par šo zvanu",

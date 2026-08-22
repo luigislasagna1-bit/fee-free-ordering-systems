@@ -13,9 +13,67 @@ import type { TtsProvider, TtsChunk } from "./tts";
 import { getBed, BedReader } from "./bed";
 import { DuckRamp } from "./mixer";
 import { FramePacer } from "./pacer";
+import { mulawDecode } from "./mulaw";
 
 const BARGE_MIN_WORDS = 2;
 const BACKCHANNEL_RE = /^(?:mm-?hmm|yeah|okay|right|uh-?huh|sure|mhm|yep)[.!,]?$/i;
+
+/**
+ * A8b — BACKGROUND-SPEECH REJECTION (Luigi 2026-08-22: "the AI is listening to
+ * the radio, not the customer"). Call cmt4peul: a personal-injury radio ad
+ * behind the caller became four caller turns and four barge-ins. Deepgram
+ * transcribes whatever it hears; only WE know how loud the caller is. Every
+ * inbound 20 ms frame's RMS (dBFS) goes into a 30 s ring; a transcript's
+ * segment energy is compared with the call's noise floor (10th percentile of
+ * all frames) and the caller's own level (90th percentile of accepted
+ * segments). Thresholds here are the calibration defaults — every `asr` event
+ * carries the numbers so they are tuned on real calls, and dropping only
+ * happens behind the `background_rejection` channel flag.
+ */
+export type GateThresholds = {
+  /** Utterance confidence below this is not the caller. */
+  minConfidence: number;
+  /** Mean per-word confidence below this is not the caller. */
+  minWordConfidence: number;
+  /** A segment less than this many dB above the noise floor is background. */
+  minAboveFloorDb: number;
+  /** A segment more than this many dB below the caller's level is background. */
+  maxBelowCallerDb: number;
+};
+export const DEFAULT_GATE: GateThresholds = { minConfidence: 0.55, minWordConfidence: 0.5, minAboveFloorDb: 6, maxBelowCallerDb: 15 };
+const FRAME_WINDOW = 1500; // 30 s of 20 ms frames
+const MIN_FRAMES_FOR_FLOOR = 50; // 1 s of audio before the floor means anything
+const MIN_SEGMENTS_FOR_CALLER = 2;
+const MAX_CALLER_SEGMENTS = 50;
+const SEGMENT_PAD_MS = 100; // Deepgram vs Twilio clock slack
+
+export type AsrDropReason = "low_energy" | "low_confidence" | "other_speaker";
+export type AsrMeta = {
+  confidence: number;
+  rmsDb: number | null;
+  noiseFloorDb: number | null;
+  callerLevelDb: number | null;
+  /** What the gate WOULD have done had rejection been on (calibration). */
+  wouldDropReason: AsrDropReason | null;
+};
+export type AsrDropped = { text: string; reason: AsrDropReason; confidence: number; rmsDb: number | null; noiseFloorDb: number | null; callerLevelDb: number | null };
+
+/** RMS of one µ-law frame in dBFS (−100 dB floor for digital silence). */
+export function frameDb(mulaw: Uint8Array): number {
+  const pcm = mulawDecode(mulaw);
+  let sum = 0;
+  for (let i = 0; i < pcm.length; i++) {
+    const v = pcm[i] / 32768;
+    sum += v * v;
+  }
+  const rms = Math.sqrt(sum / Math.max(1, pcm.length));
+  return 20 * Math.log10(Math.max(rms, 1e-5));
+}
+
+function percentile(sorted: number[], p: number): number {
+  const i = Math.min(sorted.length - 1, Math.max(0, Math.floor(p * (sorted.length - 1))));
+  return sorted[i];
+}
 
 export interface MediaSessionOpts {
   token: CallToken;
@@ -26,7 +84,9 @@ export interface MediaSessionOpts {
   bedDuckDb?: number;
   greeting?: string;
   onSetup: () => void;
-  onPrompt: (text: string, lang?: string) => void;
+  /** `meta` (A8b) = ASR confidence + the segment's energy vs floor/caller
+   *  level, for the `asr` event. Absent only when the provider gave nothing. */
+  onPrompt: (text: string, lang?: string, meta?: AsrMeta) => void;
   onInterrupt: (utteranceUntilInterrupt: string) => void;
   onDtmf: (digit: string) => void;
   onEnd: () => void;
@@ -34,6 +94,13 @@ export interface MediaSessionOpts {
    *  caller is speaking right now" evidence. The session uses it to hold a
    *  due filler instead of talking over them (session.noteCallerAudio). */
   onSpeechActivity?: () => void;
+  /** A8b: a final the gate kept away from the model (radio/TV/other room). */
+  onAsrDropped?: (d: AsrDropped) => void;
+  /** A8b: when true, background-classified transcripts are DROPPED (never a
+   *  prompt, never a barge-in). When false they pass through, but every
+   *  `asr` event still carries the numbers + `wouldDropReason` for calibration. */
+  backgroundRejection?: boolean;
+  gate?: Partial<GateThresholds>;
 }
 
 export interface MediaSessionHandle {
@@ -51,6 +118,11 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
 
   let streamSid: string | null = null;
   let destroyed = false;
+  /** A1 (2026-08-22): set the moment the session hands off. From here the
+   *  caller belongs to the human side — transcripts are discarded (never a
+   *  prompt, never a barge-in), STT is closed at once, and only the TTS tail
+   *  is allowed to finish before the socket closes. */
+  let ending = false;
   let isSpeaking = false;
   let currentSpokenText = "";
   let markSeq = 0;
@@ -67,6 +139,73 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
   });
 
   let pendingTranscript = "";
+
+  // ── A8b: inbound energy + the background gate ────────────────────────
+  const G: GateThresholds = { ...DEFAULT_GATE, ...(opts.gate ?? {}) };
+  const frames: Array<{ ts: number; db: number }> = [];
+  let fallbackTs = 0;
+  const callerSegments: number[] = [];
+  let pendingMeta: AsrMeta | null = null;
+
+  function noteFrame(mulaw: Uint8Array, twilioTs: unknown) {
+    const ts = Number(twilioTs);
+    frames.push({ ts: Number.isFinite(ts) ? ts : fallbackTs, db: frameDb(mulaw) });
+    fallbackTs += 20;
+    if (frames.length > FRAME_WINDOW + 100) frames.splice(0, frames.length - FRAME_WINDOW);
+  }
+  function noiseFloor(): number | null {
+    if (frames.length < MIN_FRAMES_FOR_FLOOR) return null;
+    const sorted = frames.map((f) => f.db).sort((a, b) => a - b);
+    return percentile(sorted, 0.1);
+  }
+  function callerLevel(): number | null {
+    if (callerSegments.length < MIN_SEGMENTS_FOR_CALLER) return null;
+    return percentile([...callerSegments].sort((a, b) => a - b), 0.9);
+  }
+  /** Power-mean dB of the frames a transcript segment covers; null when the
+   *  provider gave no timing or the window has moved past it. */
+  function segmentDb(startSec: number | undefined, durationSec: number | undefined): number | null {
+    if (typeof startSec !== "number" || !Number.isFinite(startSec)) return null;
+    const from = startSec * 1000 - SEGMENT_PAD_MS;
+    const to = startSec * 1000 + (typeof durationSec === "number" && durationSec > 0 ? durationSec * 1000 : 0) + SEGMENT_PAD_MS;
+    let sum = 0;
+    let n = 0;
+    for (const f of frames) {
+      if (f.ts >= from && f.ts <= to) {
+        sum += Math.pow(10, f.db / 10);
+        n++;
+      }
+    }
+    if (!n) return null;
+    return 10 * Math.log10(sum / n);
+  }
+  type Classification = { background: boolean; reason: AsrDropReason | null; rmsDb: number | null; noiseFloorDb: number | null; callerLevelDb: number | null };
+  function classify(t: SttTranscript): Classification {
+    const rmsDb = segmentDb(t.start, t.duration);
+    const noiseFloorDb = noiseFloor();
+    const callerLevelDb = callerLevel();
+    const wordConf = t.words?.length ? t.words.reduce((a, w) => a + w.confidence, 0) / t.words.length : null;
+    let reason: AsrDropReason | null = null;
+    if (t.confidence < G.minConfidence || (wordConf !== null && wordConf < G.minWordConfidence)) reason = "low_confidence";
+    else if (rmsDb !== null && noiseFloorDb !== null && rmsDb < noiseFloorDb + G.minAboveFloorDb) reason = "low_energy";
+    else if (rmsDb !== null && callerLevelDb !== null && rmsDb < callerLevelDb - G.maxBelowCallerDb) reason = "low_energy";
+    return { background: !!opts.backgroundRejection && reason !== null, reason, rmsDb, noiseFloorDb, callerLevelDb };
+  }
+  function mergeMeta(c: Classification, confidence: number) {
+    if (!pendingMeta) {
+      pendingMeta = { confidence, rmsDb: c.rmsDb, noiseFloorDb: c.noiseFloorDb, callerLevelDb: c.callerLevelDb, wouldDropReason: c.reason };
+      return;
+    }
+    pendingMeta.confidence = Math.min(pendingMeta.confidence, confidence);
+    if (c.rmsDb !== null) pendingMeta.rmsDb = pendingMeta.rmsDb === null ? c.rmsDb : Math.max(pendingMeta.rmsDb, c.rmsDb);
+    pendingMeta.noiseFloorDb = c.noiseFloorDb ?? pendingMeta.noiseFloorDb;
+    pendingMeta.callerLevelDb = c.callerLevelDb ?? pendingMeta.callerLevelDb;
+    pendingMeta.wouldDropReason = pendingMeta.wouldDropReason ?? c.reason;
+  }
+  function noteCallerSegment(db: number) {
+    callerSegments.push(db);
+    if (callerSegments.length > MAX_CALLER_SEGMENTS) callerSegments.shift();
+  }
 
   // ── Twilio Media Streams events ──────────────────────────────────────
 
@@ -107,6 +246,7 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
       case "media":
         if (msg.media?.payload) {
           const audioBytes = Buffer.from(msg.media.payload, "base64");
+          noteFrame(audioBytes, msg.media.timestamp);
           stt.send(audioBytes);
         }
         break;
@@ -129,12 +269,16 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
   // ── STT events ──────────────────────────────────────────────────────
 
   function handleTranscript(t: SttTranscript) {
-    if (destroyed) return;
-    opts.onSpeechActivity?.();
+    if (destroyed || ending) return;
+    const cls = classify(t);
+    // Background speech is not "the caller is talking" — it must not hold a
+    // due filler either.
+    if (!cls.background) opts.onSpeechActivity?.();
 
     if (isSpeaking) {
       const words = t.text.split(/\s+/).filter(Boolean);
-      if (words.length >= BARGE_MIN_WORDS && !BACKCHANNEL_RE.test(t.text)) {
+      // A radio ad can never cut the agent off (cmt4peul: four barge-ins).
+      if (words.length >= BARGE_MIN_WORDS && !BACKCHANNEL_RE.test(t.text) && !cls.background) {
         if (!isEchoOfOwnSpeech(t.text)) {
           bargeIn(t.text);
         }
@@ -143,20 +287,24 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
     }
 
     if (t.isFinal) {
+      if (cls.background) {
+        opts.onAsrDropped?.({ text: t.text, reason: cls.reason!, confidence: t.confidence, rmsDb: cls.rmsDb, noiseFloorDb: cls.noiseFloorDb, callerLevelDb: cls.callerLevelDb });
+        return;
+      }
       pendingTranscript += (pendingTranscript ? " " : "") + t.text;
+      mergeMeta(cls, t.confidence);
+      if (cls.rmsDb !== null) noteCallerSegment(cls.rmsDb);
     }
 
     if (t.speechFinal && pendingTranscript) {
       emitPrompt(pendingTranscript, t.language);
-      pendingTranscript = "";
     }
   }
 
   function handleUtteranceEnd() {
-    if (destroyed) return;
+    if (destroyed || ending) return;
     if (pendingTranscript && !isSpeaking) {
       emitPrompt(pendingTranscript);
-      pendingTranscript = "";
     }
   }
 
@@ -260,8 +408,10 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
   }
 
   function emitPrompt(text: string, lang?: string) {
+    const meta = pendingMeta;
     pendingTranscript = "";
-    opts.onPrompt(text, lang);
+    pendingMeta = null;
+    opts.onPrompt(text, lang, meta ?? undefined);
   }
 
   // ── Cleanup ─────────────────────────────────────────────────────────
@@ -283,7 +433,19 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
       streamToken(text, last);
     },
     end(_reason: string) {
-      const maxWaitMs = 8_000;
+      if (destroyed || ending) return;
+      ending = true;
+      // Stop LISTENING immediately — a transcript after the hand-off decision
+      // must never become a prompt (the 2026-08-21 "still connecting…" loop).
+      try {
+        stt.close();
+      } catch {
+        /* already closed */
+      }
+      pendingTranscript = "";
+      // Let the goodbye sentence finish playing, then close. 3 s is plenty for
+      // one sentence; the old 8 s ceiling just delayed the store's phone ringing.
+      const maxWaitMs = 3_000;
       const start = Date.now();
       const drain = () => {
         if (pacer.voiceQueueLength === 0 || Date.now() - start > maxWaitMs) {

@@ -18,6 +18,14 @@ export interface SttTranscript {
   speechFinal: boolean;
   confidence: number;
   language?: string;
+  /** Segment timing in SECONDS since the stream started (Deepgram `start` +
+   *  `duration`). A8b maps these onto the inbound frame-energy buffer to tell
+   *  the caller from a radio in the background. Absent on providers without it. */
+  start?: number;
+  duration?: number;
+  /** Per-word confidence + timing — min/mean word confidence is a sharper
+   *  background signal than the utterance-level number. */
+  words?: Array<{ word: string; start: number; end: number; confidence: number }>;
 }
 
 export interface SttEvents {
@@ -114,6 +122,16 @@ export function createDeepgramStt(opts: DeepgramSttOpts, events: SttEvents): Stt
           speechFinal: !!data.speech_final,
           confidence: alt.confidence ?? 0,
           language: data.channel?.detected_language ?? undefined,
+          start: typeof data.start === "number" ? data.start : undefined,
+          duration: typeof data.duration === "number" ? data.duration : undefined,
+          words: Array.isArray(alt.words)
+            ? (alt.words as Array<Record<string, unknown>>).map((w) => ({
+                word: String(w.word ?? ""),
+                start: Number(w.start ?? 0),
+                end: Number(w.end ?? 0),
+                confidence: Number(w.confidence ?? 0),
+              }))
+            : undefined,
         };
         if (t.text) events.onTranscript(t);
       } else if (data.type === "UtteranceEnd") {

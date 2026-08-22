@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Čísla vyslovená slovy ({count})",
           "narrationDroppedLabel": "Věta „přemýšlení nahlas“ odstraněna před hlasem",
           "tailFragmentLabel": "Koncový fragment pohlcen",
-          "greetingEchoLabel": "Echo pozdravu odstraněno"
+          "greetingEchoLabel": "Echo pozdravu odstraněno",
+          "handoffLabel": "Předání člověku",
+          "handoffWritten": "důvod uložen před předáním",
+          "handoffWriteFailed": "důvod neuložen — restaurace byla volána záložní cestou",
+          "handoffSkipped": "na tomto serveru není záznam o předání",
+          "handoffHardClosed": "ukončeno službou — telefonní síť nikdy nezavěsila",
+          "handoffDropped": "{count, plural, one {# zpráva volajícího po předání ignorována} few {# zprávy volajícího po předání ignorovány} other {# zpráv volajícího po předání ignorováno}}"
         },
         "report": {
           "button": "Nahlásit tento hovor",

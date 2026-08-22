@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Siffror utlästa med ord ({count})",
           "narrationDroppedLabel": "Mening med högt tänkande borttagen före rösten",
           "tailFragmentLabel": "Avslutande fragment absorberat",
-          "greetingEchoLabel": "Hälsningseko borttagen"
+          "greetingEchoLabel": "Hälsningseko borttagen",
+          "handoffLabel": "Överlämning till en person",
+          "handoffWritten": "orsak sparad före överlämningen",
+          "handoffWriteFailed": "orsak inte sparad — restaurangen ringdes via reservvägen",
+          "handoffSkipped": "ingen överlämningspost på denna server",
+          "handoffHardClosed": "stängd av tjänsten — telefonnätet lade aldrig på",
+          "handoffDropped": "{count, plural, one {# meddelande från den som ringde ignorerades efter överlämningen} other {# meddelanden från den som ringde ignorerades efter överlämningen}}"
         },
         "report": {
           "button": "Rapportera det här samtalet",

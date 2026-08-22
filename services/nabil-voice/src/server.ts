@@ -9,6 +9,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { WebSocketServer } from "ws";
 import { CONFIG, verifyCallToken, type CallToken } from "./config";
 import { agentVersion } from "./versions";
+import { flagOn } from "./feature-flags";
 import { CallSession } from "./session";
 import { fallbackMapStatus, fallbackTwiml, handleFallback, startFallbackRefresh } from "./fallback";
 import { startCacheWarm } from "./warmup";
@@ -350,15 +351,16 @@ mediaWss.on("connection", (ws, req) => {
         if (m.type === "text") {
           mediaHandle?.sendText(m.token ?? "", !!m.last);
         } else if (m.type === "end") {
-          // Drain remaining TTS, let session.onClose() write transferReason to DB
-          // via finalize() → api.logCall(), then close the real Twilio WS so
-          // Twilio fires the <Connect action> POST to after-stream which dials
-          // the store. 600ms covers the ~250ms finalize() HTTP round-trip.
+          // A1 (2026-08-22): by the time the session sends `end`, the hand-off
+          // reason is ALREADY on the call row (session.runEndTransfer writes it
+          // first). The media session stops listening at once, lets the goodbye
+          // sentence finish (≤3 s), then cleanup → onEnd below closes the
+          // Twilio socket, and Twilio's <Connect action> POST to after-stream
+          // dials the store. No fixed timer racing a DB write any more.
           const reason = (() => {
             try { return JSON.parse(m.handoffData || "{}").reason ?? ""; } catch { return ""; }
           })();
           mediaHandle?.end(reason);
-          setTimeout(() => { if (ws.readyState === 1) ws.terminate(); }, 600);
         }
       } catch { /* non-JSON passthrough */ }
     };
@@ -375,9 +377,15 @@ mediaWss.on("connection", (ws, req) => {
         session.setGreeting(params?.greeting || "");
         session.onMessage(JSON.stringify({ type: "setup" }));
       },
-      onPrompt: (text, lang) => {
-        session?.onMessage(JSON.stringify({ type: "prompt", voicePrompt: text, lang }));
+      onPrompt: (text, lang, meta) => {
+        session?.onMessage(JSON.stringify({ type: "prompt", voicePrompt: text, lang, asrMeta: meta ?? null }));
       },
+      onAsrDropped: (d) => {
+        session?.noteAsrDropped(d);
+      },
+      // A8b: dropping is a promoted behaviour per lane; the numbers are
+      // always recorded so the thresholds are tuned on real calls first.
+      backgroundRejection: flagOn("background_rejection", CONFIG.channel, process.env.NABIL_FLAGS_CURRENT),
       onSpeechActivity: () => {
         session?.noteCallerAudio();
       },
@@ -392,6 +400,15 @@ mediaWss.on("connection", (ws, req) => {
           active.delete(session);
           session.onClose();
           session = null;
+        }
+        // Close the Twilio leg ourselves (a hand-off, the time cap, a pipeline
+        // death). When Twilio closed first (caller hung up) this is a no-op.
+        if (ws.readyState === 1) {
+          try {
+            ws.close(1000, "ended");
+          } catch {
+            /* ignore */
+          }
         }
       },
     });

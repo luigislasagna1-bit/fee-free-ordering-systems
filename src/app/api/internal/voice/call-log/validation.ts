@@ -145,10 +145,38 @@ export const EVENT_TYPES = new Set([
   // the stripper removed, so a transcript that differs from model history by
   // a leading "Got it," stays auditable in the timeline.
   "ack_stripped",
+  // Added 2026-08-22 (A1 transfer invariants): the hand-off decision, its
+  // write outcome, and how many caller messages were ignored after it.
+  "transfer_handoff",
+  // Added 2026-08-22 (A8b): a transcript the media session classified as
+  // background speech (radio/TV) and kept away from the model.
+  "asr_dropped",
   "turn",
   "call_end",
   "error",
 ]);
+
+export interface HandoffData {
+  callSid: string;
+  restaurantId: string;
+  reason: string;
+  transferredAt: Date;
+}
+
+/** event:"handoff" — written by the service BEFORE it ends the relay session,
+ *  so the <Connect action> route finds the reason instead of racing the end
+ *  record (A1, 2026-08-22). */
+export function parseHandoffBody(b: unknown): ParseResult<HandoffData> {
+  const o = (b && typeof b === "object" ? b : {}) as Record<string, unknown>;
+  const callSid = typeof o.callSid === "string" ? o.callSid.trim() : "";
+  const restaurantId = typeof o.restaurantId === "string" ? o.restaurantId.trim() : "";
+  if (!callSid || callSid.length > 64) return { ok: false, error: "callSid required" };
+  if (!restaurantId || restaurantId.length > 64) return { ok: false, error: "restaurantId required" };
+  const reason = typeof o.reason === "string" && o.reason.trim() ? o.reason.trim().slice(0, 300) : "caller request";
+  const at = typeof o.transferredAtIso === "string" ? new Date(o.transferredAtIso) : new Date();
+  const transferredAt = Number.isNaN(at.getTime()) ? new Date() : at;
+  return { ok: true, data: { callSid, restaurantId, reason, transferredAt } };
+}
 
 /** Same caps as the service (events.ts MAX_EVENTS_PER_CALL / MAX_EVENT_PAYLOAD_CHARS)
  *  — enforced again here because the service is not the trust boundary. */

@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Numere rostite în cuvinte ({count})",
           "narrationDroppedLabel": "Propoziție de „gândire cu voce tare” eliminată înainte de voce",
           "tailFragmentLabel": "Fragment final absorbit",
-          "greetingEchoLabel": "Ecou de salut eliminat"
+          "greetingEchoLabel": "Ecou de salut eliminat",
+          "handoffLabel": "Transfer către o persoană",
+          "handoffWritten": "motiv salvat înainte de transfer",
+          "handoffWriteFailed": "motiv nesalvat — restaurantul a fost apelat prin ruta de rezervă",
+          "handoffSkipped": "nicio înregistrare de transfer pe acest server",
+          "handoffHardClosed": "închis de serviciu — rețeaua telefonică nu a închis niciodată",
+          "handoffDropped": "{count, plural, one {# mesaj al apelantului ignorat după transfer} other {# mesaje ale apelantului ignorate după transfer}}"
         },
         "report": {
           "button": "Raportează acest apel",

@@ -18,7 +18,26 @@ export type CallEventBase = { seq: number; ts: string; turn: number | null };
 export type CallEvent = CallEventBase &
   (
     | { type: "call_start"; versions: Record<string, unknown>; from: string | null; to: string | null }
-    | { type: "asr"; text: string; lang: string | null; synthetic: boolean }
+    /** A8b: Media Streams finals carry the ASR confidence and the segment's
+     *  energy relative to the call's noise floor / caller level, so the
+     *  background-speech thresholds are calibrated on real calls. All optional
+     *  (ConversationRelay exposes none of it). */
+    | {
+        type: "asr";
+        text: string;
+        lang: string | null;
+        synthetic: boolean;
+        confidence?: number;
+        rmsDb?: number | null;
+        noiseFloorDb?: number | null;
+        callerLevelDb?: number | null;
+        /** What the gate would have done had rejection been on (calibration). */
+        wouldDropReason?: string | null;
+      }
+    /** A8b: a Deepgram final the media session classified as BACKGROUND
+     *  (radio/TV/another room) and did NOT hand to the model. The text stays
+     *  so a wrongly dropped caller utterance is visible in the timeline. */
+    | { type: "asr_dropped"; text: string; reason: "low_energy" | "low_confidence" | "other_speaker"; confidence: number; rmsDb: number | null; noiseFloorDb: number | null; callerLevelDb: number | null }
     | { type: "model_text"; text: string; hop: number; interrupted: boolean }
     | { type: "tool_use"; hop: number; toolUseId: string; name: string; input: unknown; cartHashBefore: string | null }
     | {
@@ -78,8 +97,17 @@ export type CallEvent = CallEventBase &
         /** The bookkeeping merge ended the turn after hop 1 (no second model request). */
         mergedBookkeeping?: boolean;
       }
-    | { type: "call_end"; outcome: string; latency: unknown; usage: unknown; costCents: number }
+    | { type: "call_end"; outcome: string; latency: unknown; usage: unknown; costCents: number; droppedAfterEnd?: number }
     | { type: "error"; where: string; message: string }
+    /** The session decided to hand the caller to a person (A1, 2026-08-22).
+     *  `outcome`: handoff_written = the reason reached the app BEFORE the
+     *  relay was ended (the after-stream/handoff route can act on it);
+     *  handoff_write_failed = timed out/failed, ended anyway; handoff_skipped
+     *  = this backend has no handoff write (sim); hard_closed = Twilio never
+     *  tore the socket down within END_HARD_CLOSE_MS, so the session closed
+     *  itself. `droppedAfterEnd` = caller messages ignored after the decision
+     *  (the 7-minute "still connecting" class, now impossible by construction). */
+    | { type: "transfer_handoff"; reason: string; outcome: "handoff_written" | "handoff_write_failed" | "handoff_skipped" | "hard_closed"; msToWrite: number; droppedAfterEnd?: number }
   );
 
 export type CallEventInput = CallEvent extends infer E ? (E extends CallEventBase ? Omit<E, "seq" | "ts"> : never) : never;

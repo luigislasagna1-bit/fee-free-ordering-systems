@@ -369,6 +369,13 @@ export function createFakeBackend(snapshot: MenuSnapshot, opts: FakeBackendOpts 
         logs.push({ event: "events", count: Array.isArray(b?.events) ? b!.events!.length : 0 });
         return { ok: true, status: 200, json: { ok: true, id: `vc_sim_${logs.length}` } };
       }),
+
+    /** A1: the hand-off reason the service writes BEFORE ending the relay. */
+    logHandoff: (body: unknown) =>
+      run("logHandoff", body, "post", (): PostResult => {
+        logs.push(clone(body));
+        return { ok: true, status: 200, json: { ok: true, id: `vc_sim_${logs.length}` } };
+      }),
   };
   return backend;
 }

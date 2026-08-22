@@ -4875,7 +4875,13 @@
           "numbersVerbalizedLabel": "Numbers spoken as words ({count})",
           "narrationDroppedLabel": "Thinking-aloud sentence dropped before the voice",
           "tailFragmentLabel": "Trailing fragment absorbed",
-          "greetingEchoLabel": "Greeting echo dropped"
+          "greetingEchoLabel": "Greeting echo dropped",
+          "handoffLabel": "Hand-off to a person",
+          "handoffWritten": "reason saved before the hand-off",
+          "handoffWriteFailed": "reason not saved — the store was dialled from the fallback",
+          "handoffSkipped": "no hand-off record on this backend",
+          "handoffHardClosed": "closed by the service — the phone network never hung up",
+          "handoffDropped": "{count, plural, one {# caller message ignored after the hand-off} other {# caller messages ignored after the hand-off}}"
         },
         "report": {
           "button": "Report this call",

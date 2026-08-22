@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Números ditos por extenso ({count})",
           "narrationDroppedLabel": "Frase de «pensar em voz alta» removida antes da voz",
           "tailFragmentLabel": "Fragmento final absorvido",
-          "greetingEchoLabel": "Eco de saudação eliminado"
+          "greetingEchoLabel": "Eco de saudação eliminado",
+          "handoffLabel": "Transferência para uma pessoa",
+          "handoffWritten": "motivo guardado antes da transferência",
+          "handoffWriteFailed": "motivo não guardado — o restaurante foi chamado pela via de recurso",
+          "handoffSkipped": "sem registo de transferência neste servidor",
+          "handoffHardClosed": "fechado pelo serviço — a rede telefónica nunca desligou",
+          "handoffDropped": "{count, plural, one {# mensagem do cliente ignorada após a transferência} other {# mensagens do cliente ignoradas após a transferência}}"
         },
         "report": {
           "button": "Reportar esta chamada",

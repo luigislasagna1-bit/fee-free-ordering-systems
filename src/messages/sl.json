@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Števila izgovorjena z besedami ({count})",
           "narrationDroppedLabel": "Stavek »razmišljanja na glas« odstranjen pred glasom",
           "tailFragmentLabel": "Končni fragment absorbiran",
-          "greetingEchoLabel": "Odmev pozdrava odstranjen"
+          "greetingEchoLabel": "Odmev pozdrava odstranjen",
+          "handoffLabel": "Predaja osebi",
+          "handoffWritten": "razlog shranjen pred predajo",
+          "handoffWriteFailed": "razlog ni shranjen — restavracija je bila poklicana po rezervni poti",
+          "handoffSkipped": "na tem strežniku ni zapisa o predaji",
+          "handoffHardClosed": "zaprla storitev — telefonsko omrežje ni nikoli odložilo",
+          "handoffDropped": "{count, plural, one {# sporočilo klicatelja prezrto po predaji} two {# sporočili klicatelja prezrti po predaji} few {# sporočila klicatelja prezrta po predaji} other {# sporočil klicatelja prezrtih po predaji}}"
         },
         "report": {
           "button": "Prijavi ta klic",

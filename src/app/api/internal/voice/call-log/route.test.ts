@@ -183,3 +183,30 @@ describe('event:"menu-snapshot"', () => {
     expect((await POST(post({ event: "menu-snapshot", restaurantId: "r1", hash: "no spaces!", payload: {} }))).status).toBe(400);
   });
 });
+
+describe('event:"handoff" (A1 — written before the relay is ended)', () => {
+  it("stamps transferReason + transferredAt on the call row, creating a stub if start never landed", async () => {
+    const res = await POST(post({ event: "handoff", callSid: "CA9", restaurantId: "r1", reason: "caller asked for a person", transferredAtIso: ISO }));
+    expect(res.status).toBe(200);
+    expect(prismaMock.voiceCall.upsert).toHaveBeenCalledTimes(1);
+    const arg = prismaMock.voiceCall.upsert.mock.calls[0][0];
+    expect(arg.where).toEqual({ callSid: "CA9" });
+    expect(arg.update).toEqual({ transferReason: "caller asked for a person", transferredAt: new Date(ISO) });
+    expect(arg.create).toMatchObject({ callSid: "CA9", restaurantId: "r1", transferReason: "caller asked for a person" });
+    // never touches the event tail or the end-only columns
+    expect(prismaMock.voiceCallEvent.createMany).not.toHaveBeenCalled();
+    expect(arg.update).not.toHaveProperty("outcome");
+  });
+  it("rejects a body without a callSid", async () => {
+    const res = await POST(post({ event: "handoff", restaurantId: "r1", reason: "x" }));
+    expect(res.status).toBe(400);
+    expect(prismaMock.voiceCall.upsert).not.toHaveBeenCalled();
+  });
+  it("defaults an empty reason and a bad timestamp rather than failing the hand-off", async () => {
+    const res = await POST(post({ event: "handoff", callSid: "CA9", restaurantId: "r1", reason: "", transferredAtIso: "not-a-date" }));
+    expect(res.status).toBe(200);
+    const arg = prismaMock.voiceCall.upsert.mock.calls[0][0];
+    expect(arg.update.transferReason).toBe("caller request");
+    expect(arg.update.transferredAt).toBeInstanceOf(Date);
+  });
+});

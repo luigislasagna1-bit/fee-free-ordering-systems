@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "数字を言葉で読み上げ（{count}）",
           "narrationDroppedLabel": "「考え声」の文を音声化前に除去",
           "tailFragmentLabel": "末尾の断片を吸収",
-          "greetingEchoLabel": "挨拶のエコーを除去"
+          "greetingEchoLabel": "挨拶のエコーを除去",
+          "handoffLabel": "担当者への引き継ぎ",
+          "handoffWritten": "引き継ぎ前に理由を保存済み",
+          "handoffWriteFailed": "理由が保存されませんでした — 予備経路で店舗に発信しました",
+          "handoffSkipped": "このバックエンドに引き継ぎ記録はありません",
+          "handoffHardClosed": "サービス側で終了 — 電話網が切断しなかったため",
+          "handoffDropped": "{count, plural, one {引き継ぎ後に発信者のメッセージ # 件を無視} other {引き継ぎ後に発信者のメッセージ # 件を無視}}"
         },
         "report": {
           "button": "この通話を報告",

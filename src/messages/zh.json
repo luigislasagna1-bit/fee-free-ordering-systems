@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "数字以文字读出（{count}）",
           "narrationDroppedLabel": "“自言自语”句子在发声前已移除",
           "tailFragmentLabel": "已吸收句尾片段",
-          "greetingEchoLabel": "已丢弃问候回声"
+          "greetingEchoLabel": "已丢弃问候回声",
+          "handoffLabel": "转接给人工",
+          "handoffWritten": "转接原因已在转接前保存",
+          "handoffWriteFailed": "转接原因未保存 — 已通过备用线路呼叫餐厅",
+          "handoffSkipped": "此后端没有转接记录",
+          "handoffHardClosed": "由服务端关闭 — 电话网络从未挂断",
+          "handoffDropped": "{count, plural, one {转接后忽略了 # 条来电者消息} other {转接后忽略了 # 条来电者消息}}"
         },
         "report": {
           "button": "报告此通话",

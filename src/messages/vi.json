@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Số được đọc bằng chữ ({count})",
           "narrationDroppedLabel": "Câu \"suy nghĩ thành tiếng\" đã bị bỏ trước khi đọc",
           "tailFragmentLabel": "Đã gộp mảnh cuối câu",
-          "greetingEchoLabel": "Đã loại tiếng vọng lời chào"
+          "greetingEchoLabel": "Đã loại tiếng vọng lời chào",
+          "handoffLabel": "Chuyển cho nhân viên",
+          "handoffWritten": "lý do đã được lưu trước khi chuyển",
+          "handoffWriteFailed": "lý do chưa được lưu — đã gọi nhà hàng qua đường dự phòng",
+          "handoffSkipped": "không có bản ghi chuyển cuộc gọi trên máy chủ này",
+          "handoffHardClosed": "dịch vụ đã đóng — mạng điện thoại không bao giờ ngắt",
+          "handoffDropped": "{count, plural, one {# tin nhắn của người gọi bị bỏ qua sau khi chuyển} other {# tin nhắn của người gọi bị bỏ qua sau khi chuyển}}"
         },
         "report": {
           "button": "Báo cáo cuộc gọi này",

@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Tal udtalt med ord ({count})",
           "narrationDroppedLabel": "Sætning med højttænkning fjernet før stemmen",
           "tailFragmentLabel": "Afsluttende fragment optaget",
-          "greetingEchoLabel": "Hilsen-ekko fjernet"
+          "greetingEchoLabel": "Hilsen-ekko fjernet",
+          "handoffLabel": "Overdragelse til en person",
+          "handoffWritten": "årsag gemt før overdragelsen",
+          "handoffWriteFailed": "årsag ikke gemt — restauranten blev ringet op via nødvejen",
+          "handoffSkipped": "ingen overdragelsespost på denne server",
+          "handoffHardClosed": "lukket af tjenesten — telefonnettet lagde aldrig på",
+          "handoffDropped": "{count, plural, one {# besked fra opkalderen ignoreret efter overdragelsen} other {# beskeder fra opkalderen ignoreret efter overdragelsen}}"
         },
         "report": {
           "button": "Rapportér dette opkald",

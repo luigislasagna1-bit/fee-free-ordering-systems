@@ -37,6 +37,10 @@ export const NABIL_FLAGS = {
   /** A3 — outcome classifier writes the new outcomes (abandoned_with_cart,
    *  incomplete, spam) for LIVE calls; off = the legacy classifier. */
   outcome_classifier_v2: "A3 durable telemetry",
+  /** A8b — Media Streams drops transcripts that read as BACKGROUND speech
+   *  (far below the caller's level / the noise floor, or low confidence):
+   *  never a prompt, never a barge-in. Off = every Deepgram final is the caller. */
+  background_rejection: "A8b background-speech rejection",
 } as const;
 
 export type NabilFlagName = keyof typeof NABIL_FLAGS;

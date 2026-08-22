@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Sayılar sözcüklerle söylendi ({count})",
           "narrationDroppedLabel": "\"Sesli düşünme\" cümlesi seslendirilmeden önce çıkarıldı",
           "tailFragmentLabel": "Sondaki parça özümsendi",
-          "greetingEchoLabel": "Karşılama yankısı kaldırıldı"
+          "greetingEchoLabel": "Karşılama yankısı kaldırıldı",
+          "handoffLabel": "Bir kişiye aktarma",
+          "handoffWritten": "neden aktarmadan önce kaydedildi",
+          "handoffWriteFailed": "neden kaydedilmedi — restoran yedek yol üzerinden arandı",
+          "handoffSkipped": "bu sunucuda aktarma kaydı yok",
+          "handoffHardClosed": "hizmet tarafından kapatıldı — telefon ağı hiç kapatmadı",
+          "handoffDropped": "{count, plural, one {aktarmadan sonra # arayan mesajı yok sayıldı} other {aktarmadan sonra # arayan mesajı yok sayıldı}}"
         },
         "report": {
           "button": "Bu aramayı bildir",

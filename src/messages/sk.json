@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Čísla vyslovené slovami ({count})",
           "narrationDroppedLabel": "Veta „premýšľania nahlas“ odstránená pred hlasom",
           "tailFragmentLabel": "Koncový fragment pohltený",
-          "greetingEchoLabel": "Echo pozdravu odstránené"
+          "greetingEchoLabel": "Echo pozdravu odstránené",
+          "handoffLabel": "Odovzdanie osobe",
+          "handoffWritten": "dôvod uložený pred odovzdaním",
+          "handoffWriteFailed": "dôvod neuložený — reštaurácia bola volaná záložnou cestou",
+          "handoffSkipped": "na tomto serveri nie je záznam o odovzdaní",
+          "handoffHardClosed": "ukončené službou — telefónna sieť nikdy nezavesila",
+          "handoffDropped": "{count, plural, one {# správa volajúceho po odovzdaní ignorovaná} few {# správy volajúceho po odovzdaní ignorované} other {# správ volajúceho po odovzdaní ignorovaných}}"
         },
         "report": {
           "button": "Nahlásiť tento hovor",

@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Angka diucapkan dengan kata ({count})",
           "narrationDroppedLabel": "Kalimat \"berpikir keras\" dihapus sebelum suara",
           "tailFragmentLabel": "Fragmen akhir diserap",
-          "greetingEchoLabel": "Gema sapaan dihapus"
+          "greetingEchoLabel": "Gema sapaan dihapus",
+          "handoffLabel": "Pengalihan ke staf",
+          "handoffWritten": "alasan disimpan sebelum pengalihan",
+          "handoffWriteFailed": "alasan tidak disimpan — restoran dihubungi lewat jalur cadangan",
+          "handoffSkipped": "tidak ada catatan pengalihan di backend ini",
+          "handoffHardClosed": "ditutup oleh layanan — jaringan telepon tidak pernah memutus panggilan",
+          "handoffDropped": "{count, plural, one {# pesan penelepon diabaikan setelah pengalihan} other {# pesan penelepon diabaikan setelah pengalihan}}"
         },
         "report": {
           "button": "Laporkan panggilan ini",

@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Skaičiai ištarti žodžiais ({count})",
           "narrationDroppedLabel": "„Mąstymo balsu“ sakinys pašalintas prieš balsą",
           "tailFragmentLabel": "Galinis fragmentas įtrauktas",
-          "greetingEchoLabel": "Pasisveikinimo aidas pašalintas"
+          "greetingEchoLabel": "Pasisveikinimo aidas pašalintas",
+          "handoffLabel": "Perdavimas žmogui",
+          "handoffWritten": "priežastis išsaugota prieš perdavimą",
+          "handoffWriteFailed": "priežastis neišsaugota — restoranui skambinta atsarginiu keliu",
+          "handoffSkipped": "šiame serveryje nėra perdavimo įrašo",
+          "handoffHardClosed": "uždarė paslauga — telefono tinklas niekada nepadėjo ragelio",
+          "handoffDropped": "{count, plural, one {# skambinančiojo žinutė ignoruota po perdavimo} few {# skambinančiojo žinutės ignoruotos po perdavimo} other {# skambinančiojo žinučių ignoruota po perdavimo}}"
         },
         "report": {
           "button": "Pranešti apie šį skambutį",

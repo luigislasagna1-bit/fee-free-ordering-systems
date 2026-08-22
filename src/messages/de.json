@@ -4547,7 +4547,13 @@
           "numbersVerbalizedLabel": "Zahlen als Wörter gesprochen ({count})",
           "narrationDroppedLabel": "Laut-Denken-Satz vor der Sprachausgabe entfernt",
           "tailFragmentLabel": "Nachgestelltes Fragment aufgenommen",
-          "greetingEchoLabel": "Begrüßungsecho verworfen"
+          "greetingEchoLabel": "Begrüßungsecho verworfen",
+          "handoffLabel": "Weitergabe an eine Person",
+          "handoffWritten": "Grund vor der Weitergabe gespeichert",
+          "handoffWriteFailed": "Grund nicht gespeichert — das Restaurant wurde über den Ausweichweg angerufen",
+          "handoffSkipped": "kein Weitergabe-Eintrag auf diesem Backend",
+          "handoffHardClosed": "vom Dienst beendet — das Telefonnetz hat nie aufgelegt",
+          "handoffDropped": "{count, plural, one {# Nachricht des Anrufers nach der Weitergabe ignoriert} other {# Nachrichten des Anrufers nach der Weitergabe ignoriert}}"
         },
         "report": {
           "button": "Diesen Anruf melden",
