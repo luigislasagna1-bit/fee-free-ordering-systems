@@ -110,6 +110,10 @@
       "schedule": "*/15 * * * *"
     },
     {
+      "path": "/api/cron/voice-evaluate",
+      "schedule": "7,22,37,52 * * * *"
+    },
+    {
       "path": "/api/cron/nabil-usage-billing",
       "schedule": "15 0 1 * *"
     },

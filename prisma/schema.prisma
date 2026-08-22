@@ -3435,6 +3435,11 @@ model VoiceCallEvaluation {
   reviewReasons    Json?
   /// LLM judge (Phase D part 2): pending | done | skipped | failed
   judgeStatus      String    @default("pending")
+  /// Retry bookkeeping for the judge cron: attempts so far, next earliest try
+  /// (backoff 15 min·2^attempts), dead-letter (failed) after 5.
+  judgeAttempts    Int       @default(0)
+  judgeNextAt      DateTime?
+  judgeCostCents   Int?
   judgeModel       String?
   judgeScore       Int?
   judgeFindings    Json?
@@ -3447,7 +3452,7 @@ model VoiceCallEvaluation {
   @@index([restaurantId, evaluatedAt])
   @@index([needsReview, evaluatedAt])
   @@index([coreVersion])
-  @@index([judgeStatus, evaluatedAt])
+  @@index([judgeStatus, judgeNextAt])
 }
 
 /// Phase B (2026-08-22) — everything that shaped ONE call, so a metric that
