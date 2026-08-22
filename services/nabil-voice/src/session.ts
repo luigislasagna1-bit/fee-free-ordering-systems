@@ -22,6 +22,7 @@ import { verbalizeNumbersEn } from "./spoken-numbers";
 import { voicePhrase, voiceFillers } from "./voice-i18n";
 import { applyTransferPolicy } from "./transfer-policy";
 import { spoolTelemetry } from "./telemetry-spool";
+import { createRobocallDetector } from "./robocall-detect";
 import { captureError } from "./observability";
 import { noteStoreRequest } from "./warmup";
 
@@ -452,6 +453,8 @@ export class CallSession {
   private readonly speechMsPerChar: number;
   private secondStageTimer?: NodeJS.Timeout;
   private idleTimer?: NodeJS.Timeout;
+  /** A11: IVR / robocall detector (one strong cue, or two weak ones). */
+  private readonly robocall = createRobocallDetector();
   /** A7 */
   private readonly leadingHoldMs: number;
   private leadingFragment = "";
@@ -848,6 +851,17 @@ export class CallSession {
   private async handlePrompt(text: string, synthetic = false) {
     if (!this.ready) {
       this.queued.push(text);
+      return;
+    }
+    // A11 (C34): a machine reading an IVR menu ("press one if open…") is not
+    // a caller. Classify `spam`, end through the ordered path (after-stream
+    // hangs up — never the store), and never spend a model turn on it.
+    if (!synthetic && this.phase === "live" && !/^\(/.test(text) && this.robocall.note(text)) {
+      this.events.emit({ type: "robocall_detected", turn: this.turnIndex, text: text.slice(0, 200), weakHits: this.robocall.weakHits });
+      this.transcript.push({ role: "user", text, ts: new Date(this.now()).toISOString(), turn: this.turnIndex });
+      this.outcome = "spam";
+      this.ctx.pendingTransfer ??= "spam";
+      this.endTransfer("spam");
       return;
     }
     // FLUX TAIL FRAGMENTS (2026-08-16): Deepgram Flux ends a turn at a short

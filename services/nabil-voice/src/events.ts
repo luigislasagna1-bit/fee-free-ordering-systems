@@ -71,6 +71,9 @@ export type CallEvent = CallEventBase &
      *  re-prompt, then a polite close. `afterMs` = silence after our own
      *  (estimated) playout. */
     | { type: "no_input"; stage: "reprompt" | "close"; after: "greeting" | "question" | "farewell"; afterMs: number }
+    /** A11: an IVR / robocall was recognised from what it said; the call was
+     *  classified spam and ended. */
+    | { type: "robocall_detected"; text: string; weakHits: number }
     | { type: "interrupt"; heard: string | null; stale: boolean; duringProtected: boolean }
     | { type: "protected_respoken"; text: string }
     | { type: "narration_dropped"; text: string }

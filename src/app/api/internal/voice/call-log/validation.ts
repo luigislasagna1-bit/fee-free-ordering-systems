@@ -159,6 +159,8 @@ export const EVENT_TYPES = new Set([
   // A2/A4 (2026-08-22): hop first-token watchdog retry; no-input re-prompt/close.
   "model_retry",
   "no_input",
+  // A11 (2026-08-22): IVR/robocall recognised and ended.
+  "robocall_detected",
   // Added 2026-08-22 (A8b): a transcript the media session classified as
   // background speech (radio/TV) and kept away from the model.
   "asr_dropped",
