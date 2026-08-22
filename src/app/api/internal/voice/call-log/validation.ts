@@ -16,6 +16,9 @@ const OUTCOMES = new Set([
   "reservation_booked",
   "faq_answered",
   "transferred",
+  // A1b (2026-08-22): the caller left a message for the store (transfer
+  // refused by policy, or something only staff can do).
+  "message_taken",
   "abandoned",
   "spam",
   "error",

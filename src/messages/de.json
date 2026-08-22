@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Standardmäßig aus. Wenn aktiviert und ein Anrufer etwas bestellt, für das es heute ein günstigeres Angebot in derselben Größe gibt, weist Nabil unaufgefordert darauf hin. Das schafft Sympathie und kostet Marge — Ihre Entscheidung.",
         "agentIdentity": "Name des Agenten",
         "agentName": "Wie soll sich Ihr Agent nennen?",
-        "agentNameHint": "Wird bei jedem Anruf gesagt, wenn nach dem Namen gefragt wird. Leer lassen, um „Nabil\" zu verwenden. Dies benennt Nabil AI selbst nicht um — nur wie sich die Stimme nennt."
+        "agentNameHint": "Wird bei jedem Anruf gesagt, wenn nach dem Namen gefragt wird. Leer lassen, um „Nabil\" zu verwenden. Dies benennt Nabil AI selbst nicht um — nur wie sich die Stimme nennt.",
+        "transferPolicy": "Wenn ein Anrufer eine Person verlangt",
+        "tpImmediate": "Sofort weiterleiten",
+        "tpReluctant": "Nur wenn er darauf besteht (zweimal fragt)",
+        "tpNever": "Nie weiterleiten — Nabil erledigt es und nimmt Nachrichten auf",
+        "transferPolicyHint": "Nabil setzt das bei jedem Anruf durch. Bei „Nur wenn er darauf besteht“ und „Nie“ sagt Nabil stattdessen den Satz unten und hilft weiter. Fällt die KI selbst aus, klingelt der Anruf trotzdem auf Ihrem Telefon, damit niemand hängen bleibt.",
+        "transferDeflection": "Was Nabil statt einer Weiterleitung sagt",
+        "transferDeflectionHint": "Wird wörtlich gesprochen. Leer lassen für: „Unser Team ist gerade mit der Zubereitung von Bestellungen beschäftigt und kann im Moment keine Anrufe annehmen, aber ich helfe gern bei allem rund um das Restaurant.“",
+        "transferTakeMessage": "Anbieten, eine Nachricht aufzunehmen",
+        "transferTakeMessageHint": "Wenn ein Anrufer nicht durchgestellt werden kann, bietet Nabil an, eine Nachricht aufzunehmen, und schickt sie per SMS an Ihre Weiterleitungsnummer (oder das Alarm-Telefon)."
       },
       "apiErrors": {
         "featureLocked": "Ihr Tarif enthält den Telefon-Bestellagenten noch nicht.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Anrufer hat aufgelegt",
           "spam": "Spam",
           "error": "Erfordert Aufmerksamkeit",
-          "unknown": "In Bearbeitung"
+          "unknown": "In Bearbeitung",
+          "message_taken": "Nachricht aufgenommen"
         },
         "sentiment": {
           "positive": "Positiv",

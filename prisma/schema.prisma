@@ -445,6 +445,7 @@ model Restaurant {
   voiceAgentConfig       VoiceAgentConfig?
   voiceCalls             VoiceCall[]
   voiceCallReports       VoiceCallReport[]
+  voiceCallbackRequests  VoiceCallbackRequest[]
   voiceFaqs              VoiceFaq[]
   voiceTextLinks         VoiceTextLink[]
   voiceUpsells           VoiceUpsell[]
@@ -3093,6 +3094,22 @@ model VoiceAgentConfig {
   /// cook_now = ring/print immediately (AWAITING PAYMENT badge); hold_until_paid
   /// = don't ring/print for prep until PAID or timeout.
   payByLinkPrepMode      String @default("cook_now")
+  /// Per-store TRANSFER POLICY (Luigi 2026-08-22: "some stores don't want ANY
+  /// transfers, some very little, some as soon as the customer asks").
+  ///   never     = no caller-requested transfers; Nabil deflects, keeps helping,
+  ///               offers to take a message (VoiceCallbackRequest)
+  ///   reluctant = deflect the first ask; transfer on the second explicit ask
+  ///               or when the agent is genuinely stuck
+  ///   immediate = transfer as soon as the caller asks (= today's behaviour)
+  /// Enforced in the voice service's ONE transfer chokepoint
+  /// (services/nabil-voice/src/transfer-policy.ts), never by prompt alone.
+  transferPolicy         String  @default("immediate")
+  /// The store's own deflection line (≤300 chars), spoken word for word when a
+  /// transfer is refused; null = the localized default ("Our staff is busy
+  /// preparing orders and can't take calls right now, but I can help…").
+  transferDeflectionMessage String?
+  /// When a transfer is refused, offer to take a message for a callback.
+  transferTakeMessage    Boolean @default(true)
 
   // ── Handoff / limits / notifications ──
   transferToNumber      String? // E.164; falls back to Restaurant.alertPhone/phone
@@ -3342,6 +3359,35 @@ model VoiceCallReportComment {
   createdAt   DateTime        @default(now())
 
   @@index([reportId, createdAt])
+}
+
+/// A message a caller left for the store when Nabil could not (or, by the
+/// store's transfer policy, would not) hand them to a person (A1b,
+/// 2026-08-22). Side table by design: nothing on the hot VoiceCall row; most
+/// calls never leave one. PII note: the caller's number, name and message —
+/// registered in PII_ERASURE_MAP (anonymized via `phoneDigits`, the same key
+/// as VoiceCall.fromDigits).
+model VoiceCallbackRequest {
+  id           String     @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  /// VoiceCall.id (loose ref — the call row may not exist yet when the
+  /// message is left mid-call) + the Twilio CallSid for the join.
+  callId       String?
+  callSid      String
+  /// Bare digits, NANP "1" dropped (src/lib/phone.ts phoneDigitsKey) — the
+  /// erasure key and the callback number.
+  phoneDigits  String?
+  callerName   String?
+  message      String
+  /// new | done
+  status       String     @default("new")
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([restaurantId, status, createdAt])
+  @@index([callSid])
+  @@index([phoneDigits])
 }
 
 /// One entry of the per-call EVENT LOG the voice service emits (directive

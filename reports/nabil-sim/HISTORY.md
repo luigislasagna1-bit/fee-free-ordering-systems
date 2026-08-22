@@ -28,3 +28,5 @@
 | 2026-08-20T22:08:35.000Z | 8c1c766e | GO (manual annotation) | union | typecheck:ok, voice unit tests:ok (931), sims: every CRITICAL+INJECTION scenario passed at this sha today across 5 runs; the three fleet-level NO-GOs were 60s Anthropic stalls under concurrent load (6 occurrences, ALL pass solo at concurrency 1 — T14 x2, T15 x2, T25, I02, I03) plus the pre-existing duplicate-menu-item coin flips T12 (3/3 green on rerun) and T19 (2/2). Deploying on union-coverage evidence; total sim spend ~$42. |
 | 2026-08-22T18:14:03.897Z | 3f8cf6e5 | GO | 3× | typecheck:voice:ok, voice unit tests:ok |
 | 2026-08-22T18:15:04.250Z | 3f8cf6e5 | DEPLOY staging | — | app=nabil-voice-staging image=registry.fly.io/nabil-voice-staging:deployment-01M0NAWHR7KHHJB37C831GZ8Q9 previous=? |
+| 2026-08-22T19:07:19.548Z | 29207692 | GO | 3× | typecheck:voice:ok, voice unit tests:ok |
+| 2026-08-22T19:07:41.218Z | 29207692 | DEPLOY staging | — | app=nabil-voice-staging image=registry.fly.io/nabil-voice-staging:deployment-01M0NDXPNB9MK1EW93JHCFD019 previous=registry.fly.io/nabil-voice-staging:deployment-01M0NAWHR7KHHJB37C831GZ8Q9 |

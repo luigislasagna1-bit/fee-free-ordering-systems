@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Vaikimisi väljas. Kui sisse lülitatud ja helistaja tellib midagi, millel on täna sama suurusega odavam pakkumine, mainib Nabil seda ise. Võidab poolehoidu ja maksab marginaali — otsus on teie.",
         "agentIdentity": "Agendi nimi",
         "agentName": "Kuidas peaks teie agent end nimetama?",
-        "agentNameHint": "Öeldakse igal kõnel, kui helistaja küsib nime. Jätke tühjaks, et kasutada nime \"Nabil\". See ei nimeta ümber Nabil AI-d ennast — ainult seda, kuidas hääl end nimetab."
+        "agentNameHint": "Öeldakse igal kõnel, kui helistaja küsib nime. Jätke tühjaks, et kasutada nime \"Nabil\". See ei nimeta ümber Nabil AI-d ennast — ainult seda, kuidas hääl end nimetab.",
+        "transferPolicy": "Kui helistaja küsib inimest",
+        "tpImmediate": "Suuna kohe edasi",
+        "tpReluctant": "Ainult kui ta nõuab (küsib kaks korda)",
+        "tpNever": "Ära kunagi suuna edasi — Nabil tegeleb ise ja võtab sõnumeid vastu",
+        "transferPolicyHint": "Nabil rakendab seda igal kõnel. Valikutega „Ainult kui ta nõuab“ ja „Mitte kunagi“ ütleb ta selle asemel alloleva lause ja aitab edasi. Kui tehisintellekt ise tõrgub, heliseb kõne ikkagi teie telefonil, et keegi ei jääks vastuseta.",
+        "transferDeflection": "Mida Nabil ütleb edasisuunamise asemel",
+        "transferDeflectionHint": "Öeldakse sõna-sõnalt. Jätke tühjaks, et kasutada: „Meie personal valmistab praegu tellimusi ega saa hetkel kõnesid vastu võtta, kuid saan aidata kõiges, mis puudutab restorani.“",
+        "transferTakeMessage": "Paku sõnumi vastuvõtmist",
+        "transferTakeMessageHint": "Kui helistajat ei saa edasi suunata, pakub Nabil sõnumi vastuvõtmist ja saadab selle SMS-iga teie edasisuunamise numbrile (või hoiatustelefonile)."
       },
       "apiErrors": {
         "featureLocked": "Sinu pakett ei sisalda veel telefonitellimuste agenti.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Helistaja katkestas kõne",
           "spam": "Rämpskõne",
           "error": "Vajab tähelepanu",
-          "unknown": "Pooleli"
+          "unknown": "Pooleli",
+          "message_taken": "Sõnum vastu võetud"
         },
         "sentiment": {
           "positive": "Positiivne",

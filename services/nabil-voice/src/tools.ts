@@ -7,6 +7,8 @@ import { CartEngine, type MutationResult, type OrderState } from "./cart-engine"
 import type { MenuIndex } from "./menu-index";
 import { spokenMoney } from "./spoken-money";
 import { norm, stem } from "./fuzzy";
+import { applyTransferPolicy } from "./transfer-policy";
+import { voicePhrase } from "./voice-i18n";
 
 /**
  * The tools the model may call, and what they do.
@@ -36,6 +38,10 @@ export type ToolContext = {
   } | null;
   /** Set by transfer_to_human — the session ends + hands off after the turn. */
   pendingTransfer: string | null;
+  /** A1b: the caller's language (for sentences the tools speak verbatim) and
+   *  how many times they have explicitly asked for a person this call. */
+  language?: string | null;
+  transferAsks?: number;
   /** get_item_options payloads by id — the menu cannot change mid-call. */
   itemOptionsCache: Map<string, unknown>;
   /** Raw combo slots (label/min/max/choices) by combo id — for slot auto-fill. Lazily created. */
@@ -402,8 +408,20 @@ export const TOOLS = [
   },
   {
     name: "transfer_to_human",
-    description: "Hand the call to a member of staff. Use ONLY when the caller explicitly asks for a person, a human, or a manager — never offer or suggest this yourself.",
+    description:
+      "Hand the call to a member of staff. Use ONLY when the caller explicitly asks for a person, a human, or a manager — never offer or suggest this yourself. The store's transfer policy decides: the result either connects them, or hands you the exact sentence to say instead (speakExactly) — say it word for word and keep helping.",
     input_schema: { type: "object", additionalProperties: false, properties: { reason: { type: "string" } }, required: ["reason"] },
+  },
+  {
+    name: "leave_message",
+    description:
+      "Take a message for the restaurant staff when the caller cannot be put through (the store's transfer policy) or needs something only staff can do. Pass what they want passed on and, if they gave one, who to ask for; the caller's number is attached automatically.",
+    input_schema: {
+      type: "object",
+      additionalProperties: false,
+      properties: { message: { type: "string" }, callbackName: { type: "string" } },
+      required: ["message"],
+    },
   },
   {
     name: "send_sms_link",
@@ -428,6 +446,7 @@ export function toolsForConfig(cfg: AgentConfig) {
     if (ORDER_TOOLS.has(t.name) && !cfg.canTakeOrders) return false;
     if ((t.name === "book_reservation" || t.name === "check_reservation_availability") && !cfg.canBookReservations) return false;
     if (t.name === "send_sms_link" && !cfg.smsConfirmations) return false;
+    if (t.name === "leave_message" && !cfg.transferTakeMessage) return false;
     return true;
   });
 }
@@ -1395,9 +1414,39 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       };
     }
 
-    case "transfer_to_human":
-      ctx.pendingTransfer = String(input?.reason || "caller request");
-      return { ok: true, message: "Connecting you to a team member now." };
+    case "transfer_to_human": {
+      // A1b: the store's policy decides; the model only gets a sentence.
+      const reason = String(input?.reason || "caller request");
+      const decision = applyTransferPolicy(ctx, "caller_request", reason);
+      if (!decision.allowed) {
+        // ok:true — a policy deflection is the DESIGNED outcome, not a tool
+        // failure (ok:false would count it as one in every metric).
+        if (decision.speakExactly) ctx.speakExactlyThisTurn.push(decision.speakExactly);
+        return { ok: true, transferred: false, code: "transfer_refused", refused: "policy", speakExactly: decision.speakExactly, instruction: decision.instruction };
+      }
+      ctx.pendingTransfer = reason;
+      return { ok: true, transferred: true, message: "Connecting you to a team member now." };
+    }
+
+    case "leave_message": {
+      const message = String(input?.message || "").trim().slice(0, 500);
+      if (!message) return { error: true, code: "message_empty", instruction: "Ask what they'd like passed on, then call leave_message with it." };
+      const name = String(input?.callbackName || cart.customer().name || "").trim().slice(0, 80) || null;
+      const res = await api.leaveMessage({
+        restaurantId: ctx.token.restaurantId,
+        slug: ctx.token.slug,
+        callSid: ctx.token.callSid,
+        phone: cart.customer().phone || ctx.token.from,
+        name,
+        message,
+      });
+      if (!res.ok) {
+        return { error: true, code: "message_failed", instruction: "Say plainly that the message couldn't be saved right now, and suggest the restaurant's website or calling back when staff are free." };
+      }
+      const spoken = voicePhrase(ctx.language, "transferMessageTaken");
+      ctx.speakExactlyThisTurn.push(spoken);
+      return { ok: true, speakExactly: spoken, instruction: "Say speakExactly word for word, then ask if there is anything else you can help with." };
+    }
 
     case "send_sms_link": {
       const lastOrder = [...cart.placedOrders()].reverse().find((p) => p.orderId);

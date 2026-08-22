@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Dezactivat implicit. Când e activ și apelantul comandă ceva ce are azi o ofertă mai ieftină la aceeași mărime, Nabil o menționează singur. Câștigă simpatie și costă marjă — decizia vă aparține.",
         "agentIdentity": "Nume agent",
         "agentName": "Cum ar trebui să se numească agentul dvs.?",
-        "agentNameHint": "Rostit la fiecare apel când i se cere numele. Lăsați gol pentru a folosi „Nabil\". Aceasta nu redenumește Nabil AI în sine — doar cum se numește vocea."
+        "agentNameHint": "Rostit la fiecare apel când i se cere numele. Lăsați gol pentru a folosi „Nabil\". Aceasta nu redenumește Nabil AI în sine — doar cum se numește vocea.",
+        "transferPolicy": "Când apelantul cere să vorbească cu o persoană",
+        "tpImmediate": "Transferă imediat",
+        "tpReluctant": "Doar dacă insistă (cere de două ori)",
+        "tpNever": "Nu transfera niciodată — Nabil se ocupă și preia mesaje",
+        "transferPolicyHint": "Nabil aplică această regulă la fiecare apel. Cu „Doar dacă insistă” și „Niciodată”, spune în schimb fraza de mai jos și continuă să ajute. Dacă IA însăși se blochează, apelul tot sună pe telefonul dvs., ca nimeni să nu rămână fără răspuns.",
+        "transferDeflection": "Ce spune Nabil în loc să transfere",
+        "transferDeflectionHint": "Rostit cuvânt cu cuvânt. Lăsați gol pentru: „Personalul nostru este ocupat cu pregătirea comenzilor și nu poate prelua apeluri acum, dar vă pot ajuta cu orice legat de restaurant.”",
+        "transferTakeMessage": "Oferă preluarea unui mesaj",
+        "transferTakeMessageHint": "Când apelantul nu poate fi transferat, Nabil se oferă să preia un mesaj și îl trimite prin SMS la numărul de transfer (sau la telefonul de alertă)."
       },
       "apiErrors": {
         "featureLocked": "Planul dumneavoastră nu include încă agentul de comenzi telefonice.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Apelantul a închis",
           "spam": "Spam",
           "error": "Necesită atenție",
-          "unknown": "În desfășurare"
+          "unknown": "În desfășurare",
+          "message_taken": "Mesaj preluat"
         },
         "sentiment": {
           "positive": "Pozitiv",

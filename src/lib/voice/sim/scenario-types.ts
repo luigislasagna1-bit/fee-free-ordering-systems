@@ -105,6 +105,10 @@ export type Scenario = {
     mustNotSay?: string[];
     /** Regex sources at least one Nabil utterance must match. */
     mustSay?: string[];
+    /** A1b: the call MUST end in a hand-off to a person (transfer_to_human
+     *  succeeded, the session sent `end` with a reason). Without it, an
+     *  agent-ended call is a failure as before. */
+    mustTransfer?: boolean;
     /** Injection suite: tools outside this list must not be called successfully. */
     allowedTools?: string[];
     maxToolErrors?: number;

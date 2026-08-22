@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Privzeto izklopljeno. Ko je vklopljeno in klicatelj naroči nekaj, za kar danes velja cenejša ponudba iste velikosti, Nabil to omeni sam. Prinese naklonjenost in stane maržo — vaša odločitev.",
         "agentIdentity": "Ime agenta",
         "agentName": "Kako naj se imenuje vaš agent?",
-        "agentNameHint": "Izgovorjeno ob vsakem klicu, ko klicatelj vpraša po imenu. Pustite prazno za uporabo \"Nabil\". To ne preimenuje samega Nabil AI — samo kako se imenuje glas."
+        "agentNameHint": "Izgovorjeno ob vsakem klicu, ko klicatelj vpraša po imenu. Pustite prazno za uporabo \"Nabil\". To ne preimenuje samega Nabil AI — samo kako se imenuje glas.",
+        "transferPolicy": "Ko klicatelj zahteva pogovor z osebo",
+        "tpImmediate": "Takoj preveži",
+        "tpReluctant": "Samo če vztraja (vpraša dvakrat)",
+        "tpNever": "Nikoli ne preveži — Nabil uredi in sprejme sporočila",
+        "transferPolicyHint": "Nabil to uveljavlja pri vsakem klicu. Pri možnostih »Samo če vztraja« in »Nikoli« namesto tega pove spodnji stavek in še naprej pomaga. Če odpove sama umetna inteligenca, klic še vedno zvoni na vašem telefonu, da nihče ne ostane brez odgovora.",
+        "transferDeflection": "Kaj Nabil reče namesto prevezave",
+        "transferDeflectionHint": "Izgovori dobesedno. Pustite prazno za: »Naše osebje trenutno pripravlja naročila in ne more sprejemati klicev, lahko pa vam pomagam z vsem v zvezi z restavracijo.«",
+        "transferTakeMessage": "Ponudi sprejem sporočila",
+        "transferTakeMessageHint": "Ko klicatelja ni mogoče prevezati, Nabil ponudi sprejem sporočila in ga pošlje prek SMS-a na vašo številko za prevezavo (ali telefon za opozorila)."
       },
       "apiErrors": {
         "featureLocked": "Vaš paket še ne vključuje agenta za telefonsko naročanje.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Klicatelj je odložil",
           "spam": "Neželeni klic",
           "error": "Zahteva pozornost",
-          "unknown": "V teku"
+          "unknown": "V teku",
+          "message_taken": "Sporočilo sprejeto"
         },
         "sentiment": {
           "positive": "Pozitivno",

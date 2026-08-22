@@ -376,6 +376,13 @@ export function createFakeBackend(snapshot: MenuSnapshot, opts: FakeBackendOpts 
         logs.push(clone(body));
         return { ok: true, status: 200, json: { ok: true, id: `vc_sim_${logs.length}` } };
       }),
+
+    /** A1b: a message for the store (transfer refused by policy). */
+    leaveMessage: (body: unknown) =>
+      run("leaveMessage", body, "post", (): PostResult => {
+        logs.push({ event: "callback-request", ...(clone(body) as object) });
+        return { ok: true, status: 200, json: { ok: true, id: `cb_sim_${logs.length}` } };
+      }),
   };
   return backend;
 }

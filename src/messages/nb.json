@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Av som standard. Når det er på og en kunde bestiller noe som har et billigere tilbud i samme størrelse i dag, nevner Nabil det uoppfordret. Det gir goodwill og koster margin — ditt valg.",
         "agentIdentity": "Agentnavn",
         "agentName": "Hva skal agenten din kalle seg selv?",
-        "agentNameHint": "Sies i hver samtale når noen spør om navnet. La stå tomt for å bruke \"Nabil\". Dette gir ikke Nabil AI selv nytt navn — bare hva stemmen kaller seg."
+        "agentNameHint": "Sies i hver samtale når noen spør om navnet. La stå tomt for å bruke \"Nabil\". Dette gir ikke Nabil AI selv nytt navn — bare hva stemmen kaller seg.",
+        "transferPolicy": "Når en innringer ber om en person",
+        "tpImmediate": "Sett over med en gang",
+        "tpReluctant": "Bare hvis innringeren insisterer (spør to ganger)",
+        "tpNever": "Sett aldri over — Nabil håndterer det og tar imot beskjeder",
+        "transferPolicyHint": "Nabil håndhever dette på hver samtale. Med «Bare hvis innringeren insisterer» og «Aldri» sier Nabil linjen nedenfor i stedet og fortsetter å hjelpe. Hvis selve AI-en svikter, ringer samtalen fortsatt telefonen din, så ingen blir hengende.",
+        "transferDeflection": "Hva Nabil sier i stedet for å sette over",
+        "transferDeflectionHint": "Sies ord for ord. La stå tomt for: «Personalet vårt er opptatt med å forberede bestillinger og kan ikke ta telefonen akkurat nå, men jeg kan hjelpe med alt som gjelder restauranten.»",
+        "transferTakeMessage": "Tilby å ta imot en beskjed",
+        "transferTakeMessageHint": "Når en innringer ikke kan settes over, tilbyr Nabil å ta imot en beskjed og sender den på SMS til overføringsnummeret ditt (eller varslingstelefonen)."
       },
       "apiErrors": {
         "featureLocked": "Planen din inkluderer ikke telefonbestillingsagenten ennå.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Innringeren la på",
           "spam": "Spam",
           "error": "Krever oppmerksomhet",
-          "unknown": "Pågår"
+          "unknown": "Pågår",
+          "message_taken": "Beskjed mottatt"
         },
         "sentiment": {
           "positive": "Positiv",

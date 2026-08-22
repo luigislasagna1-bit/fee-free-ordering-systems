@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Oletuksena pois. Kun päällä ja soittaja tilaa jotain, josta on tänään halvempi samankokoinen tarjous, Nabil mainitsee sen pyytämättä. Tuo hyvää tahtoa ja maksaa katetta — sinun päätöksesi.",
         "agentIdentity": "Avustajan nimi",
         "agentName": "Miksi avustajasi tulisi kutsua itseään?",
-        "agentNameHint": "Sanotaan jokaisessa puhelussa, kun nimeä kysytään. Jätä tyhjäksi käyttääksesi nimeä \"Nabil\". Tämä ei nimeä Nabil AI:ta itseään uudelleen — vain sitä, mitä ääni kutsuu itseään."
+        "agentNameHint": "Sanotaan jokaisessa puhelussa, kun nimeä kysytään. Jätä tyhjäksi käyttääksesi nimeä \"Nabil\". Tämä ei nimeä Nabil AI:ta itseään uudelleen — vain sitä, mitä ääni kutsuu itseään.",
+        "transferPolicy": "Kun soittaja pyytää puhua ihmisen kanssa",
+        "tpImmediate": "Yhdistä heti",
+        "tpReluctant": "Vain jos soittaja vaatii (pyytää kahdesti)",
+        "tpNever": "Älä koskaan yhdistä — Nabil hoitaa asian ja ottaa viestit vastaan",
+        "transferPolicyHint": "Nabil noudattaa tätä jokaisessa puhelussa. Vaihtoehdoilla ”Vain jos soittaja vaatii” ja ”Ei koskaan” Nabil sanoo sen sijaan alla olevan lauseen ja jatkaa auttamista. Jos tekoäly itse lakkaa toimimasta, puhelu soi silti puhelimeesi, jotta kukaan ei jää vaille vastausta.",
+        "transferDeflection": "Mitä Nabil sanoo yhdistämisen sijaan",
+        "transferDeflectionHint": "Sanotaan sanasta sanaan. Jätä tyhjäksi, jolloin käytetään: ”Henkilökuntamme valmistaa parhaillaan tilauksia eikä voi vastata puheluihin juuri nyt, mutta voin auttaa kaikessa ravintolaan liittyvässä.”",
+        "transferTakeMessage": "Tarjoa viestin jättämistä",
+        "transferTakeMessageHint": "Kun soittajaa ei voi yhdistää, Nabil tarjoutuu ottamaan viestin ja lähettää sen tekstiviestinä siirtonumeroosi (tai hälytyspuhelimeen)."
       },
       "apiErrors": {
         "featureLocked": "Tilauspakettisi ei vielä sisällä puhelintilausagenttia.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Soittaja katkaisi puhelun",
           "spam": "Roskapuhelu",
           "error": "Vaatii huomiota",
-          "unknown": "Käynnissä"
+          "unknown": "Käynnissä",
+          "message_taken": "Viesti otettu vastaan"
         },
         "sentiment": {
           "positive": "Positiivinen",

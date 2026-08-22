@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Domyślnie wyłączone. Gdy włączone, a dzwoniący zamawia coś, na co dziś jest tańsza oferta w tym samym rozmiarze, Nabil sam o niej wspomni. Zyskuje przychylność i kosztuje marżę — Twoja decyzja.",
         "agentIdentity": "Imię agenta",
         "agentName": "Jak ma się nazywać Twój agent?",
-        "agentNameHint": "Wypowiadane przy każdym połączeniu, gdy dzwoniący pyta o imię. Zostaw puste, aby użyć \"Nabil\". To nie zmienia nazwy samego Nabil AI — tylko to, jak nazywa się głos."
+        "agentNameHint": "Wypowiadane przy każdym połączeniu, gdy dzwoniący pyta o imię. Zostaw puste, aby użyć \"Nabil\". To nie zmienia nazwy samego Nabil AI — tylko to, jak nazywa się głos.",
+        "transferPolicy": "Gdy dzwoniący prosi o rozmowę z osobą",
+        "tpImmediate": "Przełącz od razu",
+        "tpReluctant": "Tylko jeśli nalega (prosi dwa razy)",
+        "tpNever": "Nigdy nie przełączaj — Nabil zajmie się tym i przyjmie wiadomość",
+        "transferPolicyHint": "Nabil stosuje to przy każdej rozmowie. Przy „Tylko jeśli nalega” i „Nigdy” zamiast tego wypowiada poniższe zdanie i dalej pomaga. Jeśli sama sztuczna inteligencja zawiedzie, połączenie i tak zadzwoni na Twój telefon, by nikt nie został bez odpowiedzi.",
+        "transferDeflection": "Co Nabil mówi zamiast przełączać",
+        "transferDeflectionHint": "Wypowiadane słowo w słowo. Zostaw puste, aby użyć: „Nasz personel jest zajęty przygotowywaniem zamówień i nie może teraz odbierać telefonów, ale mogę pomóc we wszystkim, co dotyczy restauracji.”",
+        "transferTakeMessage": "Zaproponuj przyjęcie wiadomości",
+        "transferTakeMessageHint": "Gdy nie można przełączyć rozmowy, Nabil proponuje przyjęcie wiadomości i wysyła ją SMS-em na Twój numer do przełączania (lub telefon alarmowy)."
       },
       "apiErrors": {
         "featureLocked": "Twój plan nie obejmuje jeszcze agenta zamówień telefonicznych.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Rozmówca się rozłączył",
           "spam": "Spam",
           "error": "Wymaga uwagi",
-          "unknown": "W trakcie"
+          "unknown": "W trakcie",
+          "message_taken": "Wiadomość przyjęta"
         },
         "sentiment": {
           "positive": "Pozytywny",

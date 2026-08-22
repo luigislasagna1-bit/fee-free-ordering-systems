@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Désactivé par défaut. Lorsque c'est activé et qu'un client commande un article ayant aujourd'hui une offre moins chère de même taille, Nabil le signale sans qu'on le lui demande. Cela crée de la sympathie et coûte de la marge — à vous de voir.",
         "agentIdentity": "Nom de l'agent",
         "agentName": "Comment votre agent doit-il s'appeler ?",
-        "agentNameHint": "Prononcé à chaque appel quand on lui demande son nom. Laissez vide pour utiliser « Nabil ». Cela ne renomme pas Nabil AI lui-même — seulement ce que la voix dit s'appeler."
+        "agentNameHint": "Prononcé à chaque appel quand on lui demande son nom. Laissez vide pour utiliser « Nabil ». Cela ne renomme pas Nabil AI lui-même — seulement ce que la voix dit s'appeler.",
+        "transferPolicy": "Quand un client demande une personne",
+        "tpImmediate": "Transférer tout de suite",
+        "tpReluctant": "Seulement s'il insiste (demande deux fois)",
+        "tpNever": "Ne jamais transférer — Nabil s'en occupe et prend les messages",
+        "transferPolicyHint": "Nabil applique ce réglage à chaque appel. Avec « Seulement s'il insiste » et « Ne jamais », il dit la phrase ci-dessous à la place et continue d'aider. Si l'IA elle-même tombe en panne, l'appel sonne quand même sur votre téléphone pour que personne ne reste sans réponse.",
+        "transferDeflection": "Ce que Nabil dit au lieu de transférer",
+        "transferDeflectionHint": "Dit mot pour mot. Laissez vide pour : « Notre équipe est occupée à préparer les commandes et ne peut pas prendre d'appels pour le moment, mais je peux vous aider pour tout ce qui concerne le restaurant. »",
+        "transferTakeMessage": "Proposer de prendre un message",
+        "transferTakeMessageHint": "Quand un client ne peut pas être transféré, Nabil propose de prendre un message et l'envoie par SMS à votre numéro de transfert (ou au téléphone d'alerte)."
       },
       "apiErrors": {
         "featureLocked": "Votre forfait n'inclut pas encore l'agent de commande téléphonique.",
@@ -4432,7 +4441,8 @@
           "abandoned": "L'appelant a raccroché",
           "spam": "Spam",
           "error": "Attention requise",
-          "unknown": "En cours"
+          "unknown": "En cours",
+          "message_taken": "Message pris"
         },
         "sentiment": {
           "positive": "Positif",

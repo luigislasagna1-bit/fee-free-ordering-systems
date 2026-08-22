@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "默认关闭。开启后，若来电者点的商品今天有同规格更便宜的优惠，Nabil 会主动告知。赢得好感但会减少利润——由您决定。",
         "agentIdentity": "助理名称",
         "agentName": "您的助理应该如何称呼自己？",
-        "agentNameHint": "当来电者询问名字时，每次通话都会说出此名称。留空则使用\"Nabil\"。这不会重命名 Nabil AI 本身——只改变语音自称的名字。"
+        "agentNameHint": "当来电者询问名字时，每次通话都会说出此名称。留空则使用\"Nabil\"。这不会重命名 Nabil AI 本身——只改变语音自称的名字。",
+        "transferPolicy": "当来电者要求找人工时",
+        "tpImmediate": "立即转接",
+        "tpReluctant": "仅在坚持时转接（询问两次）",
+        "tpNever": "从不转接——由 Nabil 处理并留言",
+        "transferPolicyHint": "Nabil 会在每次通话中执行此设置。选择“仅在坚持时”和“从不”时，Nabil 会改为说出下面的话并继续提供帮助。如果 AI 本身出现故障，来电仍会转到您的电话，确保没有人被晾着。",
+        "transferDeflection": "Nabil 不转接时说的话",
+        "transferDeflectionHint": "逐字说出。留空则使用：“我们的员工正忙着准备订单，现在无法接听电话，但关于餐厅的任何事情我都可以帮您。”",
+        "transferTakeMessage": "主动提出留言",
+        "transferTakeMessageHint": "无法转接时，Nabil 会主动提出留言，并通过短信发送到您的转接号码（或提醒电话）。"
       },
       "apiErrors": {
         "featureLocked": "您的套餐尚未包含电话点餐助理。",
@@ -4432,7 +4441,8 @@
           "abandoned": "来电者已挂断",
           "spam": "骚扰电话",
           "error": "需要关注",
-          "unknown": "进行中"
+          "unknown": "进行中",
+          "message_taken": "已留言"
         },
         "sentiment": {
           "positive": "正面",

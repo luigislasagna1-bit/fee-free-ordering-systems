@@ -52,6 +52,7 @@ export const CALL_OUTCOMES = [
   "reservation_booked",
   "faq_answered",
   "transferred",
+  "message_taken",
   "abandoned",
   "spam",
   "error",

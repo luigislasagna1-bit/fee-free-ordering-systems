@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Disattivo di default. Quando è attivo e un cliente ordina qualcosa che oggi ha un'offerta più economica della stessa misura, Nabil lo segnala senza che glielo chiedano. Guadagna simpatia e costa margine — decidi tu.",
         "agentIdentity": "Nome agente",
         "agentName": "Come dovrebbe chiamarsi il tuo agente?",
-        "agentNameHint": "Pronunciato a ogni chiamata quando viene chiesto il suo nome. Lascia vuoto per usare \"Nabil\". Questo non rinomina Nabil AI stesso — solo come si chiama la voce."
+        "agentNameHint": "Pronunciato a ogni chiamata quando viene chiesto il suo nome. Lascia vuoto per usare \"Nabil\". Questo non rinomina Nabil AI stesso — solo come si chiama la voce.",
+        "transferPolicy": "Quando chi chiama chiede di parlare con una persona",
+        "tpImmediate": "Trasferisci subito",
+        "tpReluctant": "Solo se insiste (lo chiede due volte)",
+        "tpNever": "Mai trasferire — Nabil se ne occupa e prende i messaggi",
+        "transferPolicyHint": "Nabil lo applica a ogni chiamata. Con «Solo se insiste» e «Mai», dice invece la frase qui sotto e continua ad aiutare. Se è l'IA stessa a bloccarsi, la chiamata squilla comunque sul suo telefono, così nessuno resta senza risposta.",
+        "transferDeflection": "Cosa dice Nabil invece di trasferire",
+        "transferDeflectionHint": "Detto parola per parola. Lasci vuoto per: «Il nostro staff è impegnato a preparare gli ordini e al momento non può rispondere alle chiamate, ma posso aiutarla con qualsiasi cosa riguardi il ristorante.»",
+        "transferTakeMessage": "Offrire di prendere un messaggio",
+        "transferTakeMessageHint": "Quando non è possibile passare la chiamata, Nabil offre di prendere un messaggio e lo invia via SMS al suo numero di trasferimento (o al telefono degli avvisi)."
       },
       "apiErrors": {
         "featureLocked": "Il tuo piano non include ancora l'agente per gli ordini telefonici.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Il chiamante ha riagganciato",
           "spam": "Spam",
           "error": "Richiede attenzione",
-          "unknown": "In corso"
+          "unknown": "In corso",
+          "message_taken": "Messaggio preso"
         },
         "sentiment": {
           "positive": "Positivo",

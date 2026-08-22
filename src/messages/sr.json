@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Подразумевано искључено. Када је укључено и позивалац наручи нешто што данас има јефтинију понуду исте величине, Nabil то сам помене. Доноси наклоност и кошта марже — ваша одлука.",
         "agentIdentity": "Име агента",
         "agentName": "Како треба да се зове ваш агент?",
-        "agentNameHint": "Изговара се при сваком позиву када позивалац пита за име. Оставите празно да користите „Nabil\". Ово не мења име самог Nabil AI-а — само како се глас зове."
+        "agentNameHint": "Изговара се при сваком позиву када позивалац пита за име. Оставите празно да користите „Nabil\". Ово не мења име самог Nabil AI-а — само како се глас зове.",
+        "transferPolicy": "Kada pozivalac traži razgovor sa osobom",
+        "tpImmediate": "Odmah prebaci",
+        "tpReluctant": "Samo ako insistira (pita dvaput)",
+        "tpNever": "Nikad ne prebacuj — Nabil rešava i prima poruke",
+        "transferPolicyHint": "Nabil ovo primenjuje na svaki poziv. Uz „Samo ako insistira” i „Nikad” umesto toga izgovara rečenicu ispod i nastavlja da pomaže. Ako sama veštačka inteligencija zakaže, poziv i dalje zvoni na vašem telefonu da niko ne ostane bez odgovora.",
+        "transferDeflection": "Šta Nabil kaže umesto prebacivanja",
+        "transferDeflectionHint": "Izgovara se od reči do reči. Ostavite prazno za: „Naše osoblje trenutno priprema porudžbine i ne može da preuzima pozive, ali mogu da pomognem sa svime u vezi sa restoranom.”",
+        "transferTakeMessage": "Ponudi primanje poruke",
+        "transferTakeMessageHint": "Kada pozivaoca nije moguće prebaciti, Nabil nudi da primi poruku i šalje je SMS-om na vaš broj za prebacivanje (ili telefon za obaveštenja)."
       },
       "apiErrors": {
         "featureLocked": "Vaš plan još ne uključuje agenta za telefonsko naručivanje.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Pozivalac je prekinuo vezu",
           "spam": "Spam",
           "error": "Zahteva pažnju",
-          "unknown": "U toku"
+          "unknown": "U toku",
+          "message_taken": "Poruka primljena"
         },
         "sentiment": {
           "positive": "Pozitivno",

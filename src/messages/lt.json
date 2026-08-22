@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Pagal numatytuosius išjungta. Įjungus, jei skambinantysis užsisako tai, kam šiandien galioja pigesnis to paties dydžio pasiūlymas, Nabil tai pamini pats. Laimi palankumą ir kainuoja maržos — jūsų sprendimas.",
         "agentIdentity": "Agento vardas",
         "agentName": "Kaip turėtų vadintis jūsų agentas?",
-        "agentNameHint": "Ištariama kiekvieno skambučio metu, kai skambinantysis klausia vardo. Palikite tuščią, kad naudotumėte \"Nabil\". Tai nepervadina paties Nabil AI — tik tai, kaip vadinasi balsas."
+        "agentNameHint": "Ištariama kiekvieno skambučio metu, kai skambinantysis klausia vardo. Palikite tuščią, kad naudotumėte \"Nabil\". Tai nepervadina paties Nabil AI — tik tai, kaip vadinasi balsas.",
+        "transferPolicy": "Kai skambinantysis prašo pakalbėti su žmogumi",
+        "tpImmediate": "Perjungti iš karto",
+        "tpReluctant": "Tik jei primygtinai prašo (paprašo du kartus)",
+        "tpNever": "Niekada neperjungti — Nabil susitvarko ir priima žinutes",
+        "transferPolicyHint": "Nabil tai taiko kiekvienam skambučiui. Pasirinkus „Tik jei primygtinai prašo“ ir „Niekada“, vietoj to pasakomas žemiau esantis sakinys ir toliau padedama. Jei sutrinka pats DI, skambutis vis tiek skamba jūsų telefone, kad niekas neliktų be atsakymo.",
+        "transferDeflection": "Ką Nabil sako vietoj perjungimo",
+        "transferDeflectionHint": "Sakoma žodis į žodį. Palikite tuščią, kad būtų naudojama: „Mūsų personalas šiuo metu ruošia užsakymus ir negali atsiliepti į skambučius, bet galiu padėti viskuo, kas susiję su restoranu.“",
+        "transferTakeMessage": "Pasiūlyti priimti žinutę",
+        "transferTakeMessageHint": "Kai skambinančiojo negalima perjungti, Nabil pasiūlo priimti žinutę ir išsiunčia ją SMS žinute jūsų perjungimo numeriu (arba įspėjimų telefonu)."
       },
       "apiErrors": {
         "featureLocked": "Jūsų planas dar neapima užsakymų telefonu agento.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Skambinantysis padėjo ragelį",
           "spam": "Šlamštas",
           "error": "Reikia dėmesio",
-          "unknown": "Vyksta"
+          "unknown": "Vyksta",
+          "message_taken": "Žinutė priimta"
         },
         "sentiment": {
           "positive": "Teigiama",

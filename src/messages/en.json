@@ -4666,7 +4666,16 @@
         "offerDayDealsHint": "Off by default. When on, if a caller orders something that has a cheaper same-size deal running today, Nabil mentions it without being asked. It wins goodwill and costs margin — your call.",
         "agentIdentity": "Agent name",
         "agentName": "What should your agent call itself?",
-        "agentNameHint": "Spoken on every call when a caller asks its name. Leave blank to use \"Nabil\". This doesn't rename Nabil AI itself — just what the voice calls itself."
+        "agentNameHint": "Spoken on every call when a caller asks its name. Leave blank to use \"Nabil\". This doesn't rename Nabil AI itself — just what the voice calls itself.",
+        "transferPolicy": "When a caller asks for a person",
+        "tpImmediate": "Transfer right away",
+        "tpReluctant": "Only if they insist (asks twice)",
+        "tpNever": "Never transfer — Nabil handles it and takes messages",
+        "transferPolicyHint": "Nabil enforces this on every call. With “Only if they insist” and “Never”, it says the line below instead and keeps helping. If the AI itself breaks down, the call still rings your phone so nobody is left hanging.",
+        "transferDeflection": "What Nabil says instead of transferring",
+        "transferDeflectionHint": "Spoken word for word. Leave empty for: “Our staff are busy preparing orders and can't take calls right now, but I can help with anything about the restaurant.”",
+        "transferTakeMessage": "Offer to take a message",
+        "transferTakeMessageHint": "When a caller can't be put through, Nabil offers to take a message and texts it to your transfer number (or alert phone)."
       },
       "apiErrors": {
         "featureLocked": "Your plan doesn't include the phone ordering agent yet.",
@@ -4760,7 +4769,8 @@
           "abandoned": "Caller hung up",
           "spam": "Spam",
           "error": "Needs attention",
-          "unknown": "In progress"
+          "unknown": "In progress",
+          "message_taken": "Message taken"
         },
         "sentiment": {
           "positive": "Positive",

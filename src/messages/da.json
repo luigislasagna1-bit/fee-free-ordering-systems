@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Slået fra som standard. Når det er slået til, og en kunde bestiller noget, der har et billigere tilbud i samme størrelse i dag, nævner Nabil det uopfordret. Det giver goodwill og koster margin — dit valg.",
         "agentIdentity": "Agentnavn",
         "agentName": "Hvad skal din agent kalde sig selv?",
-        "agentNameHint": "Siges i hvert opkald, når nogen spørger om navnet. Lad stå tomt for at bruge \"Nabil\". Dette omdøber ikke selve Nabil AI — kun hvad stemmen kalder sig."
+        "agentNameHint": "Siges i hvert opkald, når nogen spørger om navnet. Lad stå tomt for at bruge \"Nabil\". Dette omdøber ikke selve Nabil AI — kun hvad stemmen kalder sig.",
+        "transferPolicy": "Når en opkalder beder om en person",
+        "tpImmediate": "Stil om med det samme",
+        "tpReluctant": "Kun hvis opkalderen insisterer (spørger to gange)",
+        "tpNever": "Stil aldrig om — Nabil klarer det og tager imod beskeder",
+        "transferPolicyHint": "Nabil håndhæver dette ved hvert opkald. Med ”Kun hvis opkalderen insisterer” og ”Aldrig” siger Nabil i stedet linjen nedenfor og fortsætter med at hjælpe. Hvis selve AI'en går ned, ringer opkaldet stadig på din telefon, så ingen efterlades uden svar.",
+        "transferDeflection": "Hvad Nabil siger i stedet for at stille om",
+        "transferDeflectionHint": "Siges ord for ord. Lad feltet stå tomt for: ”Vores personale har travlt med at tilberede ordrer og kan ikke tage imod opkald lige nu, men jeg kan hjælpe med alt om restauranten.”",
+        "transferTakeMessage": "Tilbyd at tage imod en besked",
+        "transferTakeMessageHint": "Når et opkald ikke kan stilles om, tilbyder Nabil at tage imod en besked og sender den som sms til dit omstillingsnummer (eller alarmtelefonen)."
       },
       "apiErrors": {
         "featureLocked": "Din plan inkluderer endnu ikke telefonbestillingsagenten.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Opkalder lagde på",
           "spam": "Spam",
           "error": "Kræver opmærksomhed",
-          "unknown": "I gang"
+          "unknown": "I gang",
+          "message_taken": "Besked modtaget"
         },
         "sentiment": {
           "positive": "Positiv",

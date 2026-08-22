@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Varsayılan olarak kapalı. Açıkken, arayan kişi bugün aynı boyutta daha ucuz fırsatı olan bir ürün sipariş ederse Nabil bunu sorulmadan söyler. Müşteri memnuniyeti kazandırır, kârdan götürür — karar sizin.",
         "agentIdentity": "Ajan adı",
         "agentName": "Ajanınız kendini nasıl adlandırmalı?",
-        "agentNameHint": "Arayan biri ismini sorduğunda her aramada söylenir. \"Nabil\" kullanmak için boş bırakın. Bu, Nabil AI'ın kendisini yeniden adlandırmaz — yalnızca sesin kendini nasıl adlandırdığını değiştirir."
+        "agentNameHint": "Arayan biri ismini sorduğunda her aramada söylenir. \"Nabil\" kullanmak için boş bırakın. Bu, Nabil AI'ın kendisini yeniden adlandırmaz — yalnızca sesin kendini nasıl adlandırdığını değiştirir.",
+        "transferPolicy": "Arayan bir kişiyle görüşmek istediğinde",
+        "tpImmediate": "Hemen aktar",
+        "tpReluctant": "Sadece ısrar ederse (iki kez isterse)",
+        "tpNever": "Asla aktarma — Nabil halleder ve mesaj alır",
+        "transferPolicyHint": "Nabil bunu her aramada uygular. “Sadece ısrar ederse” ve “Asla” seçeneklerinde bunun yerine aşağıdaki cümleyi söyler ve yardım etmeye devam eder. Yapay zekânın kendisi arızalanırsa arama yine de telefonunuzu çalar, böylece kimse yanıtsız kalmaz.",
+        "transferDeflection": "Nabil aktarmak yerine ne söyler",
+        "transferDeflectionHint": "Kelimesi kelimesine söylenir. Şunun için boş bırakın: “Ekibimiz şu anda siparişleri hazırlamakla meşgul ve telefonlara bakamıyor, ama restoranla ilgili her konuda yardımcı olabilirim.”",
+        "transferTakeMessage": "Mesaj almayı teklif et",
+        "transferTakeMessageHint": "Arayan aktarılamadığında Nabil mesaj almayı teklif eder ve bunu aktarma numaranıza (veya uyarı telefonuna) SMS ile gönderir."
       },
       "apiErrors": {
         "featureLocked": "Planınız henüz telefonla sipariş asistanını içermiyor.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Arayan telefonu kapattı",
           "spam": "Spam",
           "error": "Dikkat gerektiriyor",
-          "unknown": "Devam ediyor"
+          "unknown": "Devam ediyor",
+          "message_taken": "Mesaj alındı"
         },
         "sentiment": {
           "positive": "Olumlu",

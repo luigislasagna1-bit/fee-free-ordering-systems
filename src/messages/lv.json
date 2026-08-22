@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Pēc noklusējuma izslēgts. Kad ieslēgts un zvanītājs pasūta ko tādu, kam šodien ir lētāks tāda paša izmēra piedāvājums, Nabil to pats piemin. Iegūst labvēlību un maksā maržu — jūsu izvēle.",
         "agentIdentity": "Aģenta vārds",
         "agentName": "Kā jūsu aģentam būtu jāsauc sevi?",
-        "agentNameHint": "Tiek pateikts katrā zvanā, kad zvanītājs jautā vārdu. Atstājiet tukšu, lai izmantotu \"Nabil\". Tas nepārdēvē pašu Nabil AI — tikai to, kā sevi sauc balss."
+        "agentNameHint": "Tiek pateikts katrā zvanā, kad zvanītājs jautā vārdu. Atstājiet tukšu, lai izmantotu \"Nabil\". Tas nepārdēvē pašu Nabil AI — tikai to, kā sevi sauc balss.",
+        "transferPolicy": "Kad zvanītājs lūdz runāt ar cilvēku",
+        "tpImmediate": "Pārsavienot uzreiz",
+        "tpReluctant": "Tikai ja uzstāj (lūdz divreiz)",
+        "tpNever": "Nekad nepārsavienot — Nabil tiek galā un pieņem ziņas",
+        "transferPolicyHint": "Nabil to piemēro katrā zvanā. Ar „Tikai ja uzstāj“ un „Nekad“ tā vietā tiek pateikts zemāk norādītais teikums un palīdzība turpinās. Ja pats MI pārstāj darboties, zvans tik un tā zvana uz jūsu tālruni, lai neviens nepaliktu bez atbildes.",
+        "transferDeflection": "Ko Nabil saka pārsavienošanas vietā",
+        "transferDeflectionHint": "Tiek pateikts vārds vārdā. Atstājiet tukšu, lai izmantotu: „Mūsu personāls pašlaik gatavo pasūtījumus un nevar atbildēt uz zvaniem, bet es varu palīdzēt ar visu, kas saistīts ar restorānu.“",
+        "transferTakeMessage": "Piedāvāt pieņemt ziņu",
+        "transferTakeMessageHint": "Kad zvanītāju nevar pārsavienot, Nabil piedāvā pieņemt ziņu un nosūta to SMS veidā uz jūsu pārsavienošanas numuru (vai brīdinājumu tālruni)."
       },
       "apiErrors": {
         "featureLocked": "Jūsu plānā vēl nav iekļauts tālruņa pasūtījumu aģents.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Zvanītājs pārtrauca zvanu",
           "spam": "Surogātzvans",
           "error": "Nepieciešama uzmanība",
-          "unknown": "Notiek"
+          "unknown": "Notiek",
+          "message_taken": "Ziņa pieņemta"
         },
         "sentiment": {
           "positive": "Pozitīvs",

@@ -52,7 +52,26 @@ export type AgentConfig = {
    *  older server or a store that never set one sends nothing, so this always
    *  falls back to "Nabil" — the product's own default persona. */
   agentName: string;
+  /** Per-store TRANSFER POLICY (Luigi 2026-08-22: "some stores don't want ANY
+   *  transfers, some very little, some as soon as the customer asks").
+   *    never     = no caller-requested transfers; deflect + keep helping, offer
+   *                to take a message
+   *    reluctant = deflect the first ask; transfer on the second explicit ask
+   *                or when the agent is genuinely stuck
+   *    immediate = transfer as soon as the caller asks (today's behaviour)
+   *  Enforced by tools.ts applyTransferPolicy — the ONE place every transfer
+   *  request passes through — never by prompt text alone. Default "immediate"
+   *  so an older server / unset store keeps today's behaviour exactly. */
+  transferPolicy: TransferPolicy;
+  /** The store's own deflection line; null ⇒ the localized default
+   *  ("Our staff is busy preparing orders and can't take calls right now…"). */
+  transferDeflectionMessage: string | null;
+  /** When a transfer is refused, offer to take a message for a callback. */
+  transferTakeMessage: boolean;
 };
+
+export type TransferPolicy = "never" | "reluctant" | "immediate";
+const TRANSFER_POLICIES: TransferPolicy[] = ["never", "reluctant", "immediate"];
 
 const BEHAVIORS: ReadonlyArray<AgentConfig["afterHoursBehavior"]> = [
   "take_orders",
@@ -101,5 +120,11 @@ export function normalizeAgentConfig(raw: unknown): AgentConfig {
       : [],
     offerDayDeals: bool(r.offerDayDeals, false),
     agentName: typeof r.agentName === "string" && r.agentName.trim() ? r.agentName.trim().slice(0, 40) : "Nabil",
+    transferPolicy: TRANSFER_POLICIES.includes(r.transferPolicy as TransferPolicy) ? (r.transferPolicy as TransferPolicy) : "immediate",
+    transferDeflectionMessage:
+      typeof r.transferDeflectionMessage === "string" && r.transferDeflectionMessage.trim()
+        ? r.transferDeflectionMessage.trim().slice(0, 300)
+        : null,
+    transferTakeMessage: bool(r.transferTakeMessage, true),
   };
 }

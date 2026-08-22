@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Predvolene vypnuté. Keď je zapnuté a volajúci si objedná niečo, na čo dnes beží lacnejšia akcia v rovnakej veľkosti, Nabil to sám spomenie. Získa priazeň a stojí to maržu — rozhodnutie je na vás.",
         "agentIdentity": "Meno agenta",
         "agentName": "Ako by sa mal váš agent volať?",
-        "agentNameHint": "Vyslovuje sa pri každom hovore, keď sa volajúci opýta na meno. Nechajte prázdne pre použitie \"Nabil\". Toto nepremenuje samotné Nabil AI — len ako sa hlas nazýva."
+        "agentNameHint": "Vyslovuje sa pri každom hovore, keď sa volajúci opýta na meno. Nechajte prázdne pre použitie \"Nabil\". Toto nepremenuje samotné Nabil AI — len ako sa hlas nazýva.",
+        "transferPolicy": "Keď volajúci žiada o spojenie s človekom",
+        "tpImmediate": "Prepojiť hneď",
+        "tpReluctant": "Len ak trvá na svojom (požiada dvakrát)",
+        "tpNever": "Nikdy neprepájať — Nabil to vybaví a prevezme odkaz",
+        "transferPolicyHint": "Nabil to uplatňuje pri každom hovore. Pri možnostiach „Len ak trvá na svojom“ a „Nikdy“ namiesto toho povie vetu nižšie a ďalej pomáha. Ak zlyhá samotná AI, hovor stále zazvoní na vašom telefóne, aby nikto nezostal bez odpovede.",
+        "transferDeflection": "Čo Nabil povie namiesto prepojenia",
+        "transferDeflectionHint": "Hovorí sa slovo za slovom. Nechajte prázdne pre: „Náš personál práve pripravuje objednávky a momentálne nemôže prijímať hovory, ale môžem vám pomôcť s čímkoľvek ohľadom reštaurácie.“",
+        "transferTakeMessage": "Ponúknuť prevzatie odkazu",
+        "transferTakeMessageHint": "Keď volajúceho nemožno prepojiť, Nabil ponúkne prevzatie odkazu a pošle ho SMS na vaše číslo na prepojenie (alebo na telefón pre upozornenia)."
       },
       "apiErrors": {
         "featureLocked": "Váš plán zatiaľ nezahŕňa agenta pre telefonické objednávky.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Volajúci zložil",
           "spam": "Spam",
           "error": "Vyžaduje pozornosť",
-          "unknown": "Prebieha"
+          "unknown": "Prebieha",
+          "message_taken": "Odkaz prevzatý"
         },
         "sentiment": {
           "positive": "Pozitívny",

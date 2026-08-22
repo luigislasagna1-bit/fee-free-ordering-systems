@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Nonaktif secara bawaan. Saat aktif, jika penelepon memesan sesuatu yang hari ini punya promo lebih murah dengan ukuran sama, Nabil menyebutkannya tanpa diminta. Menambah simpati dan mengurangi margin — keputusan Anda.",
         "agentIdentity": "Nama agen",
         "agentName": "Agen Anda harus menyebut dirinya apa?",
-        "agentNameHint": "Diucapkan di setiap panggilan saat penelepon menanyakan namanya. Biarkan kosong untuk menggunakan \"Nabil\". Ini tidak mengganti nama Nabil AI itu sendiri — hanya nama yang digunakan suara tersebut."
+        "agentNameHint": "Diucapkan di setiap panggilan saat penelepon menanyakan namanya. Biarkan kosong untuk menggunakan \"Nabil\". Ini tidak mengganti nama Nabil AI itu sendiri — hanya nama yang digunakan suara tersebut.",
+        "transferPolicy": "Saat penelepon meminta bicara dengan orang",
+        "tpImmediate": "Alihkan segera",
+        "tpReluctant": "Hanya jika memaksa (meminta dua kali)",
+        "tpNever": "Jangan pernah alihkan — Nabil menangani dan mencatat pesan",
+        "transferPolicyHint": "Nabil menerapkan ini pada setiap panggilan. Dengan “Hanya jika memaksa” dan “Jangan pernah”, Nabil mengucapkan kalimat di bawah ini sebagai gantinya dan terus membantu. Jika AI-nya sendiri bermasalah, panggilan tetap berdering di telepon Anda agar tidak ada yang dibiarkan menunggu.",
+        "transferDeflection": "Apa yang Nabil katakan alih-alih mengalihkan",
+        "transferDeflectionHint": "Diucapkan kata demi kata. Kosongkan untuk: “Staf kami sedang sibuk menyiapkan pesanan dan tidak bisa menerima telepon saat ini, tetapi saya bisa membantu untuk apa pun tentang restoran.”",
+        "transferTakeMessage": "Tawarkan untuk mencatat pesan",
+        "transferTakeMessageHint": "Saat penelepon tidak bisa dialihkan, Nabil menawarkan untuk mencatat pesan dan mengirimkannya lewat SMS ke nomor pengalihan Anda (atau telepon peringatan)."
       },
       "apiErrors": {
         "featureLocked": "Paket Anda belum mencakup agen pemesanan telepon.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Penelepon menutup telepon",
           "spam": "Spam",
           "error": "Perlu perhatian",
-          "unknown": "Sedang berlangsung"
+          "unknown": "Sedang berlangsung",
+          "message_taken": "Pesan dicatat"
         },
         "sentiment": {
           "positive": "Positif",

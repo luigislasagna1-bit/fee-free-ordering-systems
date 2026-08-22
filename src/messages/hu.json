@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Alapból kikapcsolva. Ha be van kapcsolva, és a hívó olyat rendel, amire ma ugyanabban a méretben olcsóbb ajánlat fut, Nabil magától szól. Jóindulatot szerez és árrésbe kerül — az Ön döntése.",
         "agentIdentity": "Ügynök neve",
         "agentName": "Hogyan nevezze magát az ügynöke?",
-        "agentNameHint": "Minden híváskor elhangzik, amikor a hívó a nevét kérdezi. Hagyja üresen a \"Nabil\" használatához. Ez nem nevezi át magát a Nabil AI-t — csak azt, hogy a hang minek nevezi magát."
+        "agentNameHint": "Minden híváskor elhangzik, amikor a hívó a nevét kérdezi. Hagyja üresen a \"Nabil\" használatához. Ez nem nevezi át magát a Nabil AI-t — csak azt, hogy a hang minek nevezi magát.",
+        "transferPolicy": "Amikor a hívó egy személyt kér",
+        "tpImmediate": "Azonnali átkapcsolás",
+        "tpReluctant": "Csak ha ragaszkodik hozzá (kétszer kéri)",
+        "tpNever": "Soha ne kapcsolja át — Nabil intézi, és üzenetet vesz fel",
+        "transferPolicyHint": "Nabil ezt minden hívásnál betartja. A „Csak ha ragaszkodik hozzá” és a „Soha” beállításnál ehelyett az alábbi mondatot mondja, és tovább segít. Ha maga az MI hibásodik meg, a hívás továbbra is kicseng az Ön telefonján, hogy senki ne maradjon válasz nélkül.",
+        "transferDeflection": "Mit mond Nabil átkapcsolás helyett",
+        "transferDeflectionHint": "Szó szerint hangzik el. Hagyja üresen ehhez: „A személyzet éppen a rendeléseket készíti, és most nem tud hívást fogadni, de bármiben segítek, ami az étteremmel kapcsolatos.”",
+        "transferTakeMessage": "Üzenet felvételének felajánlása",
+        "transferTakeMessageHint": "Ha a hívót nem lehet átkapcsolni, Nabil felajánlja, hogy üzenetet vesz fel, és SMS-ben elküldi az átkapcsolási számára (vagy a riasztási telefonra)."
       },
       "apiErrors": {
         "featureLocked": "Az Ön csomagja még nem tartalmazza a telefonos rendelésfelvevő asszisztenst.",
@@ -4432,7 +4441,8 @@
           "abandoned": "A hívó letette",
           "spam": "Spam",
           "error": "Figyelmet igényel",
-          "unknown": "Folyamatban"
+          "unknown": "Folyamatban",
+          "message_taken": "Üzenet felvéve"
         },
         "sentiment": {
           "positive": "Pozitív",

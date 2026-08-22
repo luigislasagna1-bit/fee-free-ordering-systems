@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Av som standard. När det är på och en kund beställer något som i dag har ett billigare erbjudande i samma storlek nämner Nabil det självmant. Ger goodwill och kostar marginal — ditt val.",
         "agentIdentity": "Assistentens namn",
         "agentName": "Vad ska din assistent kalla sig själv?",
-        "agentNameHint": "Sägs i varje samtal när någon frågar efter namnet. Lämna tomt för att använda \"Nabil\". Detta byter inte namn på Nabil AI självt — bara vad rösten kallar sig."
+        "agentNameHint": "Sägs i varje samtal när någon frågar efter namnet. Lämna tomt för att använda \"Nabil\". Detta byter inte namn på Nabil AI självt — bara vad rösten kallar sig.",
+        "transferPolicy": "När den som ringer ber om en person",
+        "tpImmediate": "Koppla vidare direkt",
+        "tpReluctant": "Bara om personen insisterar (frågar två gånger)",
+        "tpNever": "Koppla aldrig vidare — Nabil sköter det och tar meddelanden",
+        "transferPolicyHint": "Nabil tillämpar detta vid varje samtal. Med ”Bara om personen insisterar” och ”Aldrig” säger Nabil i stället raden nedan och fortsätter hjälpa till. Om själva AI:n slutar fungera ringer samtalet ändå din telefon så att ingen blir hängande.",
+        "transferDeflection": "Vad Nabil säger i stället för att koppla vidare",
+        "transferDeflectionHint": "Sägs ord för ord. Lämna tomt för: ”Vår personal är upptagen med att förbereda beställningar och kan inte ta samtal just nu, men jag kan hjälpa till med allt som rör restaurangen.”",
+        "transferTakeMessage": "Erbjud att ta ett meddelande",
+        "transferTakeMessageHint": "När ett samtal inte kan kopplas vidare erbjuder Nabil att ta ett meddelande och skickar det som sms till ditt vidarekopplingsnummer (eller larmtelefonen)."
       },
       "apiErrors": {
         "featureLocked": "Din plan inkluderar ännu inte telefonbeställningsagenten.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Uppringaren lade på",
           "spam": "Spam",
           "error": "Kräver åtgärd",
-          "unknown": "Pågår"
+          "unknown": "Pågår",
+          "message_taken": "Meddelande mottaget"
         },
         "sentiment": {
           "positive": "Positiv",

@@ -17,12 +17,14 @@ export const runtime = "nodejs";
 const BOOL_FIELDS = [
   "enabled", "ambientNoise", "canTakeOrders", "canBookReservations", "canAnswerFaq",
   "allowPizzaCombo", "offerDayDeals", "allowAnonymousCallers", "quoteEta", "allowScheduledOrders",
-  "smsConfirmations", "recordCalls",
+  "smsConfirmations", "recordCalls", "transferTakeMessage",
 ] as const;
 const STR_FIELDS = [
   "openGreeting", "closedGreeting", "pauseGreeting", "primaryLanguage", "ttsProvider", "sttProvider",
   "voice", "transferToNumber", "afterHoursBehavior", "pickupPaymentMode",
   "deliveryPaymentMode", "payByLinkPrepMode", "agentName",
+  // A1b (Luigi 2026-08-22): per-store transfer policy + the store's own line.
+  "transferPolicy", "transferDeflectionMessage",
 ] as const;
 const INT_FIELDS = ["maxCallSeconds", "payByLinkWindowMinutes"] as const;
 const FLOAT_FIELDS = ["voiceSpeed"] as const;
@@ -30,6 +32,7 @@ const FLOAT_FIELDS = ["voiceSpeed"] as const;
 const PAYMENT_MODES = new Set(["unpaid", "paid", "both"]);
 const PREP_MODES = new Set(["cook_now", "hold_until_paid"]);
 const AFTER_HOURS = new Set(["take_orders", "reservations_only", "message_only", "transfer"]);
+const TRANSFER_POLICIES = new Set(["never", "reluctant", "immediate"]);
 
 export async function GET() {
   const user = await getSessionUser();
@@ -69,6 +72,12 @@ export async function PATCH(req: NextRequest) {
         if (PREP_MODES.has(v)) data[k] = v;
       } else if (k === "afterHoursBehavior") {
         if (AFTER_HOURS.has(v)) data[k] = v;
+      } else if (k === "transferPolicy") {
+        if (TRANSFER_POLICIES.has(v)) data[k] = v;
+      } else if (k === "transferDeflectionMessage") {
+        // Spoken word for word by the agent — keep it short; empty ⇒ the
+        // localized default line.
+        data[k] = v ? v.slice(0, 300) : null;
       } else if (k === "openGreeting" || k === "closedGreeting") {
         data[k] = v.slice(0, 200); // ≤200 chars, matches the ConversationRelay greeting
       } else if (k === "pauseGreeting") {

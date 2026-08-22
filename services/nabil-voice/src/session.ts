@@ -20,6 +20,7 @@ import { PLAYBOOK_PROTOCOL, PLAYBOOK_STYLE } from "./playbook";
 import { isNarrationLeak } from "./narration-filter";
 import { verbalizeNumbersEn } from "./spoken-numbers";
 import { voicePhrase, voiceFillers } from "./voice-i18n";
+import { applyTransferPolicy } from "./transfer-policy";
 import { captureError } from "./observability";
 import { noteStoreRequest } from "./warmup";
 
@@ -563,7 +564,25 @@ export class CallSession {
           clearTimeout(this.resumeTimer);
           this.resumeTimer = undefined;
           this.userTurns++;
-          void this.handlePrompt(`(pressed ${msg.digit ?? msg.digits})`);
+          const pressed = String(msg.digit ?? msg.digits);
+          // "0" = the universal "get me a person" (call cmt3n3qfm, 2026-08-21:
+          // a 0-press was answered with the ordering script). Deterministic:
+          // the store's transfer policy decides, no model turn needed when
+          // the answer is yes.
+          if (pressed === "0" && this.ready && !this.turnRunning) {
+            const policy = applyTransferPolicy(this.ctx, "dtmf", "caller pressed 0");
+            this.transcript.push({ role: "user", text: "(pressed 0)", ts: new Date(this.now()).toISOString(), turn: this.turnIndex });
+            this.events.emit({ type: "asr", turn: this.turnIndex, text: "(pressed 0)", lang: this.language, synthetic: false });
+            if (policy.allowed) {
+              this.ctx.pendingTransfer = "caller pressed 0";
+              this.speak(` ${voicePhrase(this.language ?? this.token.lang, "transferHold")}`, true);
+              this.endTransfer(this.ctx.pendingTransfer);
+            } else {
+              void this.handlePrompt(`(pressed 0 — the caller wants a person. ${policy.instruction} Say, word for word: "${policy.speakExactly}")`, true);
+            }
+            break;
+          }
+          void this.handlePrompt(`(pressed ${pressed})`);
         }
         break;
       case "error":
@@ -837,6 +856,8 @@ export class CallSession {
     // The caller's own words, last three turns — what halfRecipes must be
     // justified against (a recipe named two turns ago, added now, is fine).
     if (!synthetic) this.ctx.recentUserTexts = [...(this.ctx.recentUserTexts ?? []), userText].slice(-3);
+    // The caller's language for phrases the TOOLS speak verbatim (A1b deflection).
+    this.ctx.language = this.language ?? this.token.lang ?? null;
     const cartHashBefore = cart.cartHash();
     const turnStarted = this.now();
 
@@ -1330,11 +1351,23 @@ export class CallSession {
     if (out?.code === "recipe_not_named") return;
     this.struggles++;
     if (this.struggles >= STRUGGLE_LIMIT && !this.ctx.pendingTransfer) {
-      console.warn("[nabil-voice] struggling — handing off", { callSid: this.token.callSid, tool, code: out?.code ?? null, struggles: this.struggles });
-      this.ctx.pendingTransfer = `agent struggling (${this.struggles} failed attempts, last: ${tool})`;
-      if (out && typeof out === "object") {
-        out.instruction =
-          "STOP TRYING. This has failed twice and the caller is being put through to a person now. Say one short, warm sentence — that you'll get someone who can sort it out — and nothing else.";
+      // A1b: the struggle hand-off is a transfer like any other — the store's
+      // policy decides whether the caller is put through or kept with Nabil.
+      const policy = applyTransferPolicy(this.ctx, "struggle", `agent struggling (${this.struggles} failed attempts, last: ${tool})`);
+      if (policy.allowed) {
+        console.warn("[nabil-voice] struggling — handing off", { callSid: this.token.callSid, tool, code: out?.code ?? null, struggles: this.struggles });
+        if (out && typeof out === "object") {
+          out.instruction =
+            "STOP TRYING. This has failed twice and the caller is being put through to a person now. Say one short, warm sentence — that you'll get someone who can sort it out — and nothing else.";
+        }
+      } else {
+        console.warn("[nabil-voice] struggling — transfer refused by policy, staying with the caller", { callSid: this.token.callSid, tool, code: out?.code ?? null, struggles: this.struggles });
+        this.struggles = 0; // one deflection per struggle episode, not one per failed hop
+        if (out && typeof out === "object") {
+          out.speakExactly = policy.speakExactly;
+          out.instruction = `STOP TRYING this approach. ${policy.instruction}`;
+          if (policy.speakExactly) this.ctx.speakExactlyThisTurn.push(policy.speakExactly);
+        }
       }
     }
   }
@@ -1357,7 +1390,11 @@ export class CallSession {
       this.outcome = out?.ok ? "reservation_booked" : "error";
       if (out?.ok && out.confirmationCode != null) this.reservationCode = String(out.confirmationCode);
     } else if (tool === "transfer_to_human") {
-      if (this.outcome !== "order_placed" && this.outcome !== "reservation_booked") this.outcome = "transferred";
+      if (out?.ok && out?.transferred !== false && this.outcome !== "order_placed" && this.outcome !== "reservation_booked") this.outcome = "transferred";
+    } else if (tool === "leave_message") {
+      // A1b: a message for the store is an outcome in its own right — not
+      // "faq_answered" and not "abandoned".
+      if (out?.ok && this.outcome !== "order_placed" && this.outcome !== "reservation_booked" && this.outcome !== "transferred") this.outcome = "message_taken";
     }
   }
 

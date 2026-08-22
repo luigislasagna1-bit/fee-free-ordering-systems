@@ -38,6 +38,9 @@ type Cfg = {
   smsConfirmations: boolean;
   afterHoursBehavior: string;
   transferToNumber: string;
+  transferPolicy: string;
+  transferDeflectionMessage: string;
+  transferTakeMessage: boolean;
   recordCalls: boolean;
   maxCallSeconds: number;
 } & Record<string, unknown>;
@@ -65,6 +68,9 @@ const DEFAULTS: Cfg = {
   smsConfirmations: true,
   afterHoursBehavior: "take_orders",
   transferToNumber: "",
+  transferPolicy: "immediate",
+  transferDeflectionMessage: "",
+  transferTakeMessage: true,
   recordCalls: true,
   maxCallSeconds: 600,
 };
@@ -219,6 +225,32 @@ export default function NabilConfigClient({
             <Toggle label={t("allowAnonymous")} checked={!!cfg.allowAnonymousCallers} onChange={(v) => set("allowAnonymousCallers", v)} />
             <Text label={t("transferNumber")} value={cfg.transferToNumber} placeholder="+1..." onChange={(v) => set("transferToNumber", v)} />
             <p className="text-xs text-gray-500">{t("transferHint")}</p>
+            {/* A1b (Luigi 2026-08-22): how easily a caller reaches a person —
+                enforced by the voice service on every call, never prompt-only. */}
+            <Select
+              label={t("transferPolicy")}
+              value={cfg.transferPolicy || "immediate"}
+              options={[
+                { value: "immediate", label: t("tpImmediate") },
+                { value: "reluctant", label: t("tpReluctant") },
+                { value: "never", label: t("tpNever") },
+              ]}
+              onChange={(v) => set("transferPolicy", v)}
+            />
+            <p className="text-xs text-gray-500">{t("transferPolicyHint")}</p>
+            {(cfg.transferPolicy || "immediate") !== "immediate" && (
+              <>
+                <TextArea
+                  label={t("transferDeflection")}
+                  value={typeof cfg.transferDeflectionMessage === "string" ? cfg.transferDeflectionMessage : ""}
+                  maxLength={300}
+                  onChange={(v) => set("transferDeflectionMessage", v)}
+                />
+                <p className="text-xs text-gray-500">{t("transferDeflectionHint")}</p>
+                <Toggle label={t("transferTakeMessage")} checked={cfg.transferTakeMessage !== false} onChange={(v) => set("transferTakeMessage", v)} />
+                <p className="text-xs text-gray-500">{t("transferTakeMessageHint")}</p>
+              </>
+            )}
             <Toggle label={t("recordCalls")} checked={!!cfg.recordCalls} onChange={(v) => set("recordCalls", v)} />
             <p className="text-xs text-gray-500">{t("recordHint")}</p>
           </Section>

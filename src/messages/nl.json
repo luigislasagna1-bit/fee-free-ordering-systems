@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Standaard uit. Als dit aanstaat en een beller iets bestelt waarvoor vandaag een goedkopere aanbieding in hetzelfde formaat loopt, noemt Nabil die ongevraagd. Levert goodwill op en kost marge — jouw keuze.",
         "agentIdentity": "Naam assistent",
         "agentName": "Hoe moet uw assistent zichzelf noemen?",
-        "agentNameHint": "Wordt bij elk gesprek gezegd als er naar de naam wordt gevraagd. Laat leeg om \"Nabil\" te gebruiken. Dit hernoemt Nabil AI zelf niet — alleen hoe de stem zichzelf noemt."
+        "agentNameHint": "Wordt bij elk gesprek gezegd als er naar de naam wordt gevraagd. Laat leeg om \"Nabil\" te gebruiken. Dit hernoemt Nabil AI zelf niet — alleen hoe de stem zichzelf noemt.",
+        "transferPolicy": "Wanneer een beller om een persoon vraagt",
+        "tpImmediate": "Meteen doorverbinden",
+        "tpReluctant": "Alleen als de beller aandringt (twee keer vraagt)",
+        "tpNever": "Nooit doorverbinden — Nabil handelt het af en neemt berichten aan",
+        "transferPolicyHint": "Nabil past dit bij elk gesprek toe. Bij „Alleen als de beller aandringt” en „Nooit” zegt Nabil in plaats daarvan de zin hieronder en blijft helpen. Als de AI zelf uitvalt, gaat de oproep alsnog over op uw telefoon, zodat niemand in de wacht blijft hangen.",
+        "transferDeflection": "Wat Nabil zegt in plaats van doorverbinden",
+        "transferDeflectionHint": "Wordt woordelijk uitgesproken. Laat leeg voor: „Ons team is druk met het bereiden van bestellingen en kan op dit moment geen telefoontjes aannemen, maar ik kan u helpen met alles over het restaurant.”",
+        "transferTakeMessage": "Aanbieden een bericht aan te nemen",
+        "transferTakeMessageHint": "Als een beller niet kan worden doorverbonden, biedt Nabil aan een bericht aan te nemen en stuurt dit per sms naar uw doorverbindnummer (of alarmtelefoon)."
       },
       "apiErrors": {
         "featureLocked": "Je abonnement bevat de telefonische bestelassistent nog niet.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Beller heeft opgehangen",
           "spam": "Spam",
           "error": "Aandacht vereist",
-          "unknown": "In behandeling"
+          "unknown": "In behandeling",
+          "message_taken": "Bericht aangenomen"
         },
         "sentiment": {
           "positive": "Positief",

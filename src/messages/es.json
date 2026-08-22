@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Desactivado por defecto. Cuando está activo, si alguien pide algo que hoy tiene una oferta más barata del mismo tamaño, Nabil lo menciona sin que se lo pregunten. Gana simpatía y cuesta margen — tú decides.",
         "agentIdentity": "Nombre del agente",
         "agentName": "¿Cómo debería llamarse su agente?",
-        "agentNameHint": "Se dice en cada llamada cuando preguntan su nombre. Déjelo en blanco para usar «Nabil». Esto no renombra Nabil AI en sí — solo cómo se llama la voz."
+        "agentNameHint": "Se dice en cada llamada cuando preguntan su nombre. Déjelo en blanco para usar «Nabil». Esto no renombra Nabil AI en sí — solo cómo se llama la voz.",
+        "transferPolicy": "Cuando quien llama pide hablar con una persona",
+        "tpImmediate": "Transferir de inmediato",
+        "tpReluctant": "Solo si insiste (lo pide dos veces)",
+        "tpNever": "Nunca transferir — Nabil se encarga y toma mensajes",
+        "transferPolicyHint": "Nabil aplica esto en cada llamada. Con «Solo si insiste» y «Nunca», dice la frase de abajo en su lugar y sigue ayudando. Si la propia IA falla, la llamada sigue sonando en su teléfono para que nadie quede sin atender.",
+        "transferDeflection": "Lo que Nabil dice en lugar de transferir",
+        "transferDeflectionHint": "Se dice palabra por palabra. Déjelo vacío para: «Nuestro personal está ocupado preparando pedidos y no puede atender llamadas ahora mismo, pero puedo ayudarle con cualquier cosa sobre el restaurante.»",
+        "transferTakeMessage": "Ofrecer tomar un mensaje",
+        "transferTakeMessageHint": "Cuando no se puede pasar la llamada, Nabil ofrece tomar un mensaje y lo envía por SMS a su número de transferencia (o al teléfono de alertas)."
       },
       "apiErrors": {
         "featureLocked": "Tu plan aún no incluye el agente de pedidos por teléfono.",
@@ -4432,7 +4441,8 @@
           "abandoned": "El llamante colgó",
           "spam": "Spam",
           "error": "Requiere atención",
-          "unknown": "En curso"
+          "unknown": "En curso",
+          "message_taken": "Mensaje tomado"
         },
         "sentiment": {
           "positive": "Positivo",

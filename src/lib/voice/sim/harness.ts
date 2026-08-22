@@ -474,7 +474,12 @@ export async function runScenario(scn: Scenario, opts: RunScenarioOpts): Promise
     if (typeof got !== "number") reasons.push(`no total was quoted (expected ${scn.expected.totalCents}¢)`);
     else if (Math.abs(Math.round(got * 100) - scn.expected.totalCents) > 0) reasons.push(`total ${Math.round(got * 100)}¢, expected ${scn.expected.totalCents}¢`);
   }
-  if (ws.ended && ws.endReason && ws.endReason !== "end") reasons.push(`call ended by agent: ${ws.endReason}`);
+  const transferred = ws.ended && !!ws.endReason && ws.endReason !== "end";
+  if (scn.expected.mustTransfer) {
+    if (!transferred) reasons.push("expected a hand-off to a person, the call was never transferred");
+  } else if (transferred) {
+    reasons.push(`call ended by agent: ${ws.endReason}`);
+  }
 
   // Hallucination flags, latency, usage.
   const hallucinationFlags = events

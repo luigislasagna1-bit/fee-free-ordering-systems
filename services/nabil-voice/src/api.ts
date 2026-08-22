@@ -106,6 +106,9 @@ export const api = {
    *  2026-08-22: two callers sat for minutes while "still connecting"). Tight
    *  timeout: it overlaps the goodbye sentence already playing. */
   logHandoff: (body: unknown) => post(`/api/internal/voice/call-log`, body, true, HANDOFF_TIMEOUT_MS),
+  /** A1b — a message for the store when a transfer is refused by its policy
+   *  (VoiceCallbackRequest + an alert to the store's transfer/alert number). */
+  leaveMessage: (body: unknown) => post(`/api/internal/voice/callback-request`, body, true),
 };
 
 /** The service's whole view of the app. `CallSession` takes one of these so

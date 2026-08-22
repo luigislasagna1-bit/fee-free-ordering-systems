@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Desativado por predefinição. Quando ativo, se alguém pedir algo que hoje tem uma promoção mais barata do mesmo tamanho, o Nabil menciona sem lhe perguntarem. Gera simpatia e custa margem — a decisão é sua.",
         "agentIdentity": "Nome do agente",
         "agentName": "Como se deve chamar o seu agente?",
-        "agentNameHint": "Dito em cada chamada quando perguntam o seu nome. Deixe em branco para usar \"Nabil\". Isto não renomeia o Nabil AI em si — apenas o nome que a voz usa."
+        "agentNameHint": "Dito em cada chamada quando perguntam o seu nome. Deixe em branco para usar \"Nabil\". Isto não renomeia o Nabil AI em si — apenas o nome que a voz usa.",
+        "transferPolicy": "Quando quem liga pede para falar com uma pessoa",
+        "tpImmediate": "Transferir de imediato",
+        "tpReluctant": "Só se insistir (pede duas vezes)",
+        "tpNever": "Nunca transferir — o Nabil trata de tudo e anota mensagens",
+        "transferPolicyHint": "O Nabil aplica isto em todas as chamadas. Com «Só se insistir» e «Nunca», diz a frase abaixo em vez disso e continua a ajudar. Se a própria IA falhar, a chamada continua a tocar no seu telefone para que ninguém fique sem resposta.",
+        "transferDeflection": "O que o Nabil diz em vez de transferir",
+        "transferDeflectionHint": "Dito palavra por palavra. Deixe vazio para: «A nossa equipa está ocupada a preparar pedidos e não pode atender chamadas neste momento, mas posso ajudar com qualquer assunto sobre o restaurante.»",
+        "transferTakeMessage": "Oferecer anotar uma mensagem",
+        "transferTakeMessageHint": "Quando não é possível passar a chamada, o Nabil oferece-se para anotar uma mensagem e envia-a por SMS para o seu número de transferência (ou telefone de alertas)."
       },
       "apiErrors": {
         "featureLocked": "O seu plano ainda não inclui o agente de pedidos por telefone.",
@@ -4432,7 +4441,8 @@
           "abandoned": "O cliente desligou",
           "spam": "Spam",
           "error": "Requer atenção",
-          "unknown": "Em curso"
+          "unknown": "Em curso",
+          "message_taken": "Mensagem anotada"
         },
         "sentiment": {
           "positive": "Positivo",

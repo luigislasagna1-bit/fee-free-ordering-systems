@@ -111,6 +111,12 @@ export type VoiceContextPayload = {
     offerDayDeals: boolean;
     pickupPaymentMode: string;
     deliveryPaymentMode: string;
+    /** never | reluctant | immediate — enforced in the voice service's
+     *  transfer chokepoint (tools.ts applyTransferPolicy). Optional so older
+     *  fixtures stay valid; absent ⇒ "immediate". */
+    transferPolicy?: string;
+    transferDeflectionMessage?: string | null;
+    transferTakeMessage?: boolean;
     pizzaAskGroups: string[];
     languages: string[];
     agentName: string;
@@ -195,6 +201,11 @@ export async function buildVoiceContextPayload(rawSlug: string): Promise<VoiceCo
         // that switched phone orders to prepaid saw nothing change.
         pickupPaymentMode: true,
         deliveryPaymentMode: true,
+        // Per-store TRANSFER POLICY (Luigi 2026-08-22): never / reluctant /
+        // immediate + the store's own deflection line + take-a-message.
+        transferPolicy: true,
+        transferDeflectionMessage: true,
+        transferTakeMessage: true,
         pauseGreeting: true,
         // Phone-only pause timestamps — separate from the shared
         // Restaurant.*PausedUntil so a Nabil pause never affects the website.
@@ -330,6 +341,11 @@ export async function buildVoiceContextPayload(rawSlug: string): Promise<VoiceCo
         // changes for anyone until an owner deliberately picks otherwise.
         pickupPaymentMode: cfg?.pickupPaymentMode ?? "unpaid",
         deliveryPaymentMode: cfg?.deliveryPaymentMode ?? "unpaid",
+        // Transfer policy. "immediate" = today's behaviour, so nothing changes
+        // for any store until its owner picks a level (Luigi 2026-08-22).
+        transferPolicy: cfg?.transferPolicy ?? "immediate",
+        transferDeflectionMessage: cfg?.transferDeflectionMessage?.trim() || null,
+        transferTakeMessage: cfg?.transferTakeMessage ?? true,
         pizzaAskGroups: Array.isArray(cfg?.pizzaAskGroups)
           ? (cfg.pizzaAskGroups as unknown[]).filter((x): x is string => typeof x === "string").slice(0, 20)
           : [],

@@ -177,7 +177,9 @@ function makeCtx(o: { cfg?: Partial<AgentConfig>; from?: string; currency?: stri
     logCallStart: vi.fn(),
     logCall: vi.fn(),
     logEvents: vi.fn(),
+    leaveMessage: vi.fn(),
   };
+  api.leaveMessage.mockResolvedValue({ ok: true, status: 200, json: { ok: true, id: "msg_1" } });
   api.placeOrder.mockResolvedValue({ ok: true, status: 200, json: { id: "ord_1", orderNumber: "ORD-1", total: 24.5 } });
   api.dryRunOrder.mockResolvedValue({ ok: true, status: 200, json: { total: 24.5, subtotal: 20, tax: 4.5 } });
   api.sendSms.mockResolvedValue({ ok: true, status: 200, json: {} });
@@ -1180,18 +1182,21 @@ describe("toolsForConfig", () => {
 
   it("everything on ⇒ the full surface, in TOOLS order", () => {
     expect(names({ canTakeOrders: true, canBookReservations: true, smsConfirmations: true })).toEqual(TOOLS.map((t) => t.name));
-    expect(TOOLS.map((t) => t.name)).toEqual([...ORDER, "check_reservation_availability", "book_reservation", "transfer_to_human", "send_sms_link"]);
+    expect(TOOLS.map((t) => t.name)).toEqual([...ORDER, "check_reservation_availability", "book_reservation", "transfer_to_human", "leave_message", "send_sms_link"]);
   });
 
   it("ordering tools are gated on canTakeOrders, reservations on canBookReservations, texting on smsConfirmations — transfer always survives", () => {
     const noOrders = names({ canTakeOrders: false });
     for (const n of ORDER) expect(noOrders).not.toContain(n);
-    expect(noOrders).toEqual(["check_reservation_availability", "book_reservation", "transfer_to_human", "send_sms_link"]);
+    expect(noOrders).toEqual(["check_reservation_availability", "book_reservation", "transfer_to_human", "leave_message", "send_sms_link"]);
     const noRes = names({ canBookReservations: false });
     expect(noRes).not.toContain("book_reservation");
     expect(noRes).not.toContain("check_reservation_availability");
     expect(names({ smsConfirmations: false })).not.toContain("send_sms_link");
-    expect(names({ canTakeOrders: false, canBookReservations: false, smsConfirmations: false })).toEqual(["transfer_to_human"]);
+    expect(names({ canTakeOrders: false, canBookReservations: false, smsConfirmations: false })).toEqual(["transfer_to_human", "leave_message"]);
+    // A1b: take-a-message is its own gate; transfer itself always survives.
+    expect(names({ transferTakeMessage: false })).not.toContain("leave_message");
+    expect(names({ canTakeOrders: false, canBookReservations: false, smsConfirmations: false, transferTakeMessage: false })).toEqual(["transfer_to_human"]);
   });
 
   it("pizza/combo building is NOT a tool gate — the engine refuses inside add_to_order", async () => {
@@ -1449,5 +1454,62 @@ describe("temporary closure (owner pause) gates", () => {
     expect(r.resumesAtIso).toBe(FUTURE);
     expect(r.alternatives).toEqual(["delivery"]);
     expect(String(r.message)).toContain("Offer delivery instead");
+  });
+});
+
+/* ═══════════════════ transfer_to_human under the store policy (A1b) ═══════════════════ */
+
+describe("transfer_to_human under the store transfer policy (A1b)", () => {
+  it("immediate (the default): connects on the first ask", async () => {
+    const { ctx } = makeCtx();
+    const r = await run(ctx, "transfer_to_human", { reason: "wants a person" });
+    expect(r.ok).toBe(true);
+    expect(r.transferred).toBe(true);
+    expect(ctx.pendingTransfer).toBe("wants a person");
+  });
+
+  it("never: hands back the store line, never sets pendingTransfer, and is NOT a tool error", async () => {
+    const { ctx } = makeCtx({ cfg: { transferPolicy: "never", transferDeflectionMessage: "We're slammed, but I can help." } });
+    const r = await run(ctx, "transfer_to_human", { reason: "wants a person" });
+    expect(r.ok).toBe(true);
+    expect(r.transferred).toBe(false);
+    expect(r.code).toBe("transfer_refused");
+    expect(r.speakExactly).toBe("We're slammed, but I can help.");
+    expect(String(r.instruction)).toMatch(/never say you are connecting/i);
+    expect(ctx.pendingTransfer).toBeNull();
+    expect(ctx.speakExactlyThisTurn).toContain("We're slammed, but I can help.");
+    await run(ctx, "transfer_to_human", { reason: "again" });
+    await run(ctx, "transfer_to_human", { reason: "and again" });
+    expect(ctx.pendingTransfer).toBeNull();
+  });
+
+  it("reluctant: the first ask deflects (localized default line), the second ask connects", async () => {
+    const { ctx } = makeCtx({ cfg: { transferPolicy: "reluctant" } });
+    const first = await run(ctx, "transfer_to_human", { reason: "person" });
+    expect(first.transferred).toBe(false);
+    expect(String(first.speakExactly)).toMatch(/busy preparing orders/);
+    expect(ctx.pendingTransfer).toBeNull();
+    const second = await run(ctx, "transfer_to_human", { reason: "person again" });
+    expect(second.transferred).toBe(true);
+    expect(ctx.pendingTransfer).toBe("person again");
+  });
+
+  it("leave_message stores the message with the caller's number and speaks the confirmation", async () => {
+    const { ctx, api } = makeCtx({ cfg: { transferPolicy: "never" } });
+    const r = await run(ctx, "leave_message", { message: "Call me about the catering order", callbackName: "Dana" });
+    expect(r.ok).toBe(true);
+    expect(api.leaveMessage).toHaveBeenCalledWith(
+      expect.objectContaining({ message: "Call me about the catering order", name: "Dana", callSid: ctx.token.callSid, restaurantId: ctx.token.restaurantId }),
+    );
+    expect(ctx.speakExactlyThisTurn[ctx.speakExactlyThisTurn.length - 1]).toBe(r.speakExactly);
+    expect(String(r.speakExactly)).toMatch(/passed that on/);
+  });
+
+  it("leave_message with nothing to pass on asks instead of saving an empty row", async () => {
+    const { ctx, api } = makeCtx({ cfg: { transferPolicy: "never" } });
+    const r = await run(ctx, "leave_message", { message: "   " });
+    expect(r.error).toBe(true);
+    expect(r.code).toBe("message_empty");
+    expect(api.leaveMessage).not.toHaveBeenCalled();
   });
 });

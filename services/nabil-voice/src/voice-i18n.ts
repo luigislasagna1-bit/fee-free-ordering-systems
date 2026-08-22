@@ -18,7 +18,10 @@ type PhraseKey =
   | "transferHold"
   | "fallbackConnecting"
   | "fallbackUnreachable"
-  | "fallbackError";
+  | "fallbackError"
+  | "transferDeflect"
+  | "transferMessageOffer"
+  | "transferMessageTaken";
 
 type VoicePhrases = { fillers: string[]; thinkingFillers: string[] } & Record<PhraseKey, string>;
 
@@ -39,6 +42,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "One moment — connecting you to the restaurant.",
     fallbackUnreachable: "Sorry, we couldn't reach anyone. Please try again shortly.",
     fallbackError: "Sorry, we're having trouble taking your call right now. Please try again in a few minutes.",
+    transferDeflect: "Our staff are busy preparing orders and can't take calls right now, but I can help with anything about the restaurant.",
+    transferMessageOffer: "I can take a message and have someone call you back — what would you like me to pass on?",
+    transferMessageTaken: "I've passed that on to the team, and they'll call you back.",
   },
   fr: {
     fillers: ["Un instant.", "Un moment.", "Attendez.", "Une seconde."],
@@ -51,6 +57,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Un moment — je vous mets en relation avec le restaurant.",
     fallbackUnreachable: "Désolé, nous n'avons pas pu joindre quelqu'un. Veuillez réessayer dans quelques instants.",
     fallbackError: "Désolé, nous avons un problème technique en ce moment. Veuillez réessayer dans quelques minutes.",
+    transferDeflect: "Notre équipe est occupée à préparer les commandes et ne peut pas prendre d'appels pour le moment, mais je peux vous aider pour tout ce qui concerne le restaurant.",
+    transferMessageOffer: "Je peux prendre un message et faire en sorte que quelqu'un vous rappelle — que souhaitez-vous que je transmette ?",
+    transferMessageTaken: "J'ai transmis votre message à l'équipe, et on vous rappellera.",
   },
   es: {
     fillers: ["Un momento.", "Un instante.", "Espere.", "Un segundo."],
@@ -63,6 +72,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Un momento — le estamos conectando con el restaurante.",
     fallbackUnreachable: "Disculpe, no pudimos contactar a nadie. Por favor intente de nuevo en breve.",
     fallbackError: "Disculpe, estamos teniendo dificultades técnicas en este momento. Por favor intente de nuevo en unos minutos.",
+    transferDeflect: "Nuestro personal está ocupado preparando pedidos y no puede atender llamadas ahora mismo, pero puedo ayudarle con cualquier cosa sobre el restaurante.",
+    transferMessageOffer: "Puedo tomar un mensaje y hacer que alguien le devuelva la llamada — ¿qué quiere que les transmita?",
+    transferMessageTaken: "Ya se lo he pasado al equipo, y le devolverán la llamada.",
   },
   it: {
     fillers: ["Un momento.", "Un attimo.", "Attenda.", "Un secondo."],
@@ -75,6 +87,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Un momento — la mettiamo in contatto con il ristorante.",
     fallbackUnreachable: "Ci scusi, non siamo riusciti a contattare nessuno. Per favore riprovi tra poco.",
     fallbackError: "Ci scusi, stiamo avendo delle difficoltà tecniche al momento. Per favore riprovi tra qualche minuto.",
+    transferDeflect: "Il nostro staff è impegnato a preparare gli ordini e al momento non può rispondere alle chiamate, ma posso aiutarla con qualsiasi cosa riguardi il ristorante.",
+    transferMessageOffer: "Posso prendere un messaggio e farla richiamare da qualcuno — cosa vuole che riferisca?",
+    transferMessageTaken: "Ho riferito il messaggio al team, e la richiameranno.",
   },
   pt: {
     fillers: ["Um momento.", "Um instante.", "Aguarde.", "Um segundo."],
@@ -87,6 +102,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Um momento — estamos a ligá-lo ao restaurante.",
     fallbackUnreachable: "Desculpe, não conseguimos contactar ninguém. Por favor tente novamente em breve.",
     fallbackError: "Desculpe, estamos com dificuldades técnicas de momento. Por favor tente novamente em alguns minutos.",
+    transferDeflect: "A nossa equipa está ocupada a preparar pedidos e não pode atender chamadas neste momento, mas posso ajudar com qualquer assunto sobre o restaurante.",
+    transferMessageOffer: "Posso anotar uma mensagem e pedir que alguém lhe ligue de volta — o que quer que eu transmita?",
+    transferMessageTaken: "Já transmiti a mensagem à equipa, e vão ligar-lhe de volta.",
   },
   "pt-BR": {
     fillers: ["Um momento.", "Um instante.", "Aguarde.", "Um segundo."],
@@ -99,6 +117,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Um momento — estamos conectando você ao restaurante.",
     fallbackUnreachable: "Desculpe, não conseguimos contatar ninguém. Por favor tente novamente em breve.",
     fallbackError: "Desculpe, estamos com dificuldades técnicas no momento. Por favor tente novamente em alguns minutos.",
+    transferDeflect: "Nossa equipe está ocupada preparando pedidos e não pode atender ligações agora, mas posso ajudar com qualquer coisa sobre o restaurante.",
+    transferMessageOffer: "Posso anotar um recado e pedir para alguém te ligar de volta — o que você quer que eu passe?",
+    transferMessageTaken: "Já passei o recado para a equipe, e eles vão te ligar de volta.",
   },
   de: {
     fillers: ["Einen Moment.", "Einen Augenblick.", "Moment bitte.", "Eine Sekunde."],
@@ -111,6 +132,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Einen Moment — wir verbinden Sie mit dem Restaurant.",
     fallbackUnreachable: "Entschuldigung, wir konnten niemanden erreichen. Bitte versuchen Sie es in Kürze erneut.",
     fallbackError: "Entschuldigung, wir haben im Moment technische Schwierigkeiten. Bitte versuchen Sie es in ein paar Minuten erneut.",
+    transferDeflect: "Unser Team ist gerade mit der Zubereitung von Bestellungen beschäftigt und kann im Moment keine Anrufe annehmen, aber ich helfe gern bei allem rund um das Restaurant.",
+    transferMessageOffer: "Ich kann eine Nachricht aufnehmen und Sie zurückrufen lassen — was soll ich ausrichten?",
+    transferMessageTaken: "Ich habe das an das Team weitergegeben, und Sie werden zurückgerufen.",
   },
   nl: {
     fillers: ["Een moment.", "Een ogenblik.", "Even wachten.", "Een seconde."],
@@ -123,6 +147,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Een moment — we verbinden u door met het restaurant.",
     fallbackUnreachable: "Sorry, we konden niemand bereiken. Probeer het zo opnieuw.",
     fallbackError: "Sorry, we hebben op dit moment technische problemen. Probeer het over een paar minuten opnieuw.",
+    transferDeflect: "Ons team is druk met het bereiden van bestellingen en kan op dit moment geen telefoontjes aannemen, maar ik kan u helpen met alles over het restaurant.",
+    transferMessageOffer: "Ik kan een bericht aannemen en u laten terugbellen — wat wilt u dat ik doorgeef?",
+    transferMessageTaken: "Ik heb het doorgegeven aan het team, en ze bellen u terug.",
   },
   ro: {
     fillers: ["Un moment.", "O clipă.", "Așteptați.", "O secundă."],
@@ -135,6 +162,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Un moment — vă conectăm la restaurant.",
     fallbackUnreachable: "Ne scuzați, nu am putut contacta pe nimeni. Vă rugăm încercați din nou în curând.",
     fallbackError: "Ne scuzați, avem dificultăți tehnice în acest moment. Vă rugăm încercați din nou în câteva minute.",
+    transferDeflect: "Personalul nostru este ocupat cu pregătirea comenzilor și nu poate prelua apeluri acum, dar vă pot ajuta cu orice legat de restaurant.",
+    transferMessageOffer: "Pot prelua un mesaj și să vă sune cineva înapoi — ce doriți să transmit?",
+    transferMessageTaken: "Am transmis mesajul echipei, și vă vor suna înapoi.",
   },
   sv: {
     fillers: ["Ett ögonblick.", "En stund.", "Vänta lite.", "En sekund."],
@@ -147,6 +177,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Ett ögonblick — vi kopplar dig till restaurangen.",
     fallbackUnreachable: "Tyvärr kunde vi inte nå någon. Vänligen försök igen om en stund.",
     fallbackError: "Tyvärr har vi tekniska problem just nu. Vänligen försök igen om några minuter.",
+    transferDeflect: "Vår personal är upptagen med att förbereda beställningar och kan inte ta samtal just nu, men jag kan hjälpa till med allt som rör restaurangen.",
+    transferMessageOffer: "Jag kan ta ett meddelande och se till att någon ringer upp dig — vad vill du att jag ska framföra?",
+    transferMessageTaken: "Jag har framfört det till teamet, och de ringer upp dig.",
   },
   da: {
     fillers: ["Et øjeblik.", "Et moment.", "Vent lige.", "Et sekund."],
@@ -159,6 +192,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Et øjeblik — vi forbinder dig til restauranten.",
     fallbackUnreachable: "Beklager, vi kunne ikke få fat i nogen. Prøv venligst igen om lidt.",
     fallbackError: "Beklager, vi har tekniske problemer lige nu. Prøv venligst igen om et par minutter.",
+    transferDeflect: "Vores personale har travlt med at tilberede ordrer og kan ikke tage imod opkald lige nu, men jeg kan hjælpe med alt om restauranten.",
+    transferMessageOffer: "Jeg kan tage imod en besked og få nogen til at ringe tilbage — hvad vil du have, jeg giver videre?",
+    transferMessageTaken: "Jeg har givet det videre til teamet, og de ringer tilbage til dig.",
   },
   nb: {
     fillers: ["Et øyeblikk.", "Et lite øyeblikk.", "Vent litt.", "Et sekund."],
@@ -171,6 +207,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Et øyeblikk — vi kobler deg til restauranten.",
     fallbackUnreachable: "Beklager, vi fikk ikke tak i noen. Vennligst prøv igjen om litt.",
     fallbackError: "Beklager, vi har tekniske problemer akkurat nå. Vennligst prøv igjen om noen minutter.",
+    transferDeflect: "Personalet vårt er opptatt med å forberede bestillinger og kan ikke ta telefonen akkurat nå, men jeg kan hjelpe med alt som gjelder restauranten.",
+    transferMessageOffer: "Jeg kan ta imot en beskjed og få noen til å ringe deg tilbake — hva vil du at jeg skal videreformidle?",
+    transferMessageTaken: "Jeg har gitt beskjeden videre til teamet, og de ringer deg tilbake.",
   },
   fi: {
     fillers: ["Hetkinen.", "Pieni hetki.", "Odottakaa.", "Sekunti."],
@@ -183,6 +222,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Hetkinen — yhdistämme teidät ravintolaan.",
     fallbackUnreachable: "Valitettavasti emme tavoittaneet ketään. Yritä uudelleen hetken kuluttua.",
     fallbackError: "Valitettavasti meillä on juuri nyt teknisiä ongelmia. Yritä uudelleen muutaman minuutin kuluttua.",
+    transferDeflect: "Henkilökuntamme valmistaa parhaillaan tilauksia eikä voi vastata puheluihin juuri nyt, mutta voin auttaa kaikessa ravintolaan liittyvässä.",
+    transferMessageOffer: "Voin ottaa viestin ja pyytää jotakuta soittamaan sinulle takaisin — mitä haluat minun välittävän?",
+    transferMessageTaken: "Välitin viestin tiimille, ja he soittavat sinulle takaisin.",
   },
   pl: {
     fillers: ["Chwileczkę.", "Moment.", "Proszę czekać.", "Sekundkę."],
@@ -195,6 +237,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Chwileczkę — łączymy z restauracją.",
     fallbackUnreachable: "Przepraszamy, nie udało się połączyć z nikim. Proszę spróbować ponownie za chwilę.",
     fallbackError: "Przepraszamy, mamy obecnie problemy techniczne. Proszę spróbować ponownie za kilka minut.",
+    transferDeflect: "Nasz personel jest zajęty przygotowywaniem zamówień i nie może teraz odbierać telefonów, ale mogę pomóc we wszystkim, co dotyczy restauracji.",
+    transferMessageOffer: "Mogę przyjąć wiadomość i poprosić, żeby ktoś oddzwonił — co mam przekazać?",
+    transferMessageTaken: "Przekazałem wiadomość zespołowi, oddzwonią do Pana/Pani.",
   },
   cs: {
     fillers: ["Moment.", "Okamžik.", "Počkejte prosím.", "Vteřinku."],
@@ -207,6 +252,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Moment — propojujeme vás s restaurací.",
     fallbackUnreachable: "Omlouváme se, nikoho jsme nezastihli. Zkuste to prosím znovu za chvíli.",
     fallbackError: "Omlouváme se, máme právě technické potíže. Zkuste to prosím znovu za pár minut.",
+    transferDeflect: "Náš personál právě připravuje objednávky a nemůže teď přijímat hovory, ale mohu vám pomoci s čímkoli ohledně restaurace.",
+    transferMessageOffer: "Mohu vzít vzkaz a zařídit, aby vám někdo zavolal zpět — co mám vyřídit?",
+    transferMessageTaken: "Vzkaz jsem předal týmu, zavolají vám zpět.",
   },
   sk: {
     fillers: ["Momentík.", "Chvíľočku.", "Počkajte prosím.", "Sekundku."],
@@ -219,6 +267,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Momentík — prepájame vás s reštauráciou.",
     fallbackUnreachable: "Prepáčte, nepodarilo sa nám nikoho zastihnúť. Skúste to prosím znova o chvíľu.",
     fallbackError: "Prepáčte, momentálne máme technické problémy. Skúste to prosím znova o pár minút.",
+    transferDeflect: "Náš personál práve pripravuje objednávky a momentálne nemôže prijímať hovory, ale môžem vám pomôcť s čímkoľvek ohľadom reštaurácie.",
+    transferMessageOffer: "Môžem prevziať odkaz a zariadiť, aby vám niekto zavolal späť — čo mám odovzdať?",
+    transferMessageTaken: "Odkaz som odovzdal tímu, zavolajú vám späť.",
   },
   hu: {
     fillers: ["Egy pillanat.", "Egy másodperc.", "Várjon kérem.", "Egy perc."],
@@ -231,6 +282,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Egy pillanat — összekötjük az étteremmel.",
     fallbackUnreachable: "Sajnáljuk, nem értünk el senkit. Kérjük, próbálja újra hamarosan.",
     fallbackError: "Sajnáljuk, jelenleg technikai problémáink vannak. Kérjük, próbálja újra néhány perc múlva.",
+    transferDeflect: "A személyzet éppen a rendeléseket készíti, és most nem tud hívást fogadni, de bármiben segítek, ami az étteremmel kapcsolatos.",
+    transferMessageOffer: "Felvehetek egy üzenetet, és visszahívatom valakivel — mit adjak át?",
+    transferMessageTaken: "Átadtam az üzenetet a csapatnak, vissza fogják hívni.",
   },
   el: {
     fillers: ["Μια στιγμή.", "Ένα λεπτό.", "Περιμένετε.", "Ένα δευτερόλεπτο."],
@@ -243,6 +297,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Μια στιγμή — σας συνδέουμε με το εστιατόριο.",
     fallbackUnreachable: "Λυπούμαστε, δεν μπορέσαμε να βρούμε κάποιον. Παρακαλώ δοκιμάστε ξανά σύντομα.",
     fallbackError: "Λυπούμαστε, αντιμετωπίζουμε τεχνικά προβλήματα αυτή τη στιγμή. Παρακαλώ δοκιμάστε ξανά σε λίγα λεπτά.",
+    transferDeflect: "Το προσωπικό μας ετοιμάζει παραγγελίες και δεν μπορεί να απαντήσει σε κλήσεις αυτή τη στιγμή, αλλά μπορώ να βοηθήσω με οτιδήποτε αφορά το εστιατόριο.",
+    transferMessageOffer: "Μπορώ να κρατήσω ένα μήνυμα και να σας καλέσει κάποιος πίσω — τι θέλετε να μεταφέρω;",
+    transferMessageTaken: "Το μετέφερα στην ομάδα, και θα σας καλέσουν πίσω.",
   },
   bg: {
     fillers: ["Един момент.", "Една секунда.", "Изчакайте.", "Моля, изчакайте."],
@@ -255,6 +312,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Един момент — свързваме ви с ресторанта.",
     fallbackUnreachable: "Съжаляваме, не успяхме да се свържем с никого. Моля, опитайте отново след малко.",
     fallbackError: "Съжаляваме, в момента имаме технически затруднения. Моля, опитайте отново след няколко минути.",
+    transferDeflect: "Персоналът ни е зает с приготвянето на поръчки и в момента не може да приема обаждания, но мога да помогна с всичко, свързано с ресторанта.",
+    transferMessageOffer: "Мога да приема съобщение и някой да ви се обади обратно — какво да предам?",
+    transferMessageTaken: "Предадох съобщението на екипа, ще ви се обадят обратно.",
   },
   hr: {
     fillers: ["Jedan trenutak.", "Malo strpljenja.", "Pričekajte.", "Sekundu."],
@@ -267,6 +327,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Jedan trenutak — povezujemo vas s restoranom.",
     fallbackUnreachable: "Ispričavamo se, nismo uspjeli dobiti nikoga. Molimo pokušajte ponovno uskoro.",
     fallbackError: "Ispričavamo se, trenutno imamo tehničke poteškoće. Molimo pokušajte ponovno za nekoliko minuta.",
+    transferDeflect: "Naše osoblje trenutno priprema narudžbe i ne može preuzimati pozive, ali mogu pomoći sa svime što se tiče restorana.",
+    transferMessageOffer: "Mogu uzeti poruku i netko će vas nazvati — što želite da prenesem?",
+    transferMessageTaken: "Prenio sam poruku timu i nazvat će vas.",
   },
   sr: {
     fillers: ["Један тренутак.", "Мало стрпљења.", "Сачекајте.", "Секунду."],
@@ -279,6 +342,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Један тренутак — повезујемо вас са рестораном.",
     fallbackUnreachable: "Извините, нисмо успели да добијемо никога. Молимо покушајте поново ускоро.",
     fallbackError: "Извините, тренутно имамо техничке потешкоће. Молимо покушајте поново за неколико минута.",
+    transferDeflect: "Naše osoblje trenutno priprema porudžbine i ne može da preuzima pozive, ali mogu da pomognem sa svime u vezi sa restoranom.",
+    transferMessageOffer: "Mogu da primim poruku i neko će vas pozvati — šta želite da prenesem?",
+    transferMessageTaken: "Preneo sam poruku timu i pozvaće vas.",
   },
   sl: {
     fillers: ["Trenutek.", "En trenutek.", "Počakajte.", "Sekundo."],
@@ -291,6 +357,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Trenutek — vas povezujemo z restavracijo.",
     fallbackUnreachable: "Oprostite, nismo uspeli doseči nikogar. Prosimo, poskusite znova čez nekaj časa.",
     fallbackError: "Oprostite, trenutno imamo tehnične težave. Prosimo, poskusite znova čez nekaj minut.",
+    transferDeflect: "Naše osebje trenutno pripravlja naročila in ne more sprejemati klicev, lahko pa vam pomagam z vsem v zvezi z restavracijo.",
+    transferMessageOffer: "Lahko sprejmem sporočilo in vas bo nekdo poklical nazaj — kaj naj sporočim?",
+    transferMessageTaken: "Sporočilo sem predal ekipi in poklicali vas bodo nazaj.",
   },
   et: {
     fillers: ["Üks hetk.", "Moment.", "Oodake palun.", "Üks sekund."],
@@ -303,6 +372,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Üks hetk — ühendame teid restoraniga.",
     fallbackUnreachable: "Vabandame, me ei saanud kedagi kätte. Palun proovige varsti uuesti.",
     fallbackError: "Vabandame, meil on praegu tehnilisi probleeme. Palun proovige mõne minuti pärast uuesti.",
+    transferDeflect: "Meie personal valmistab praegu tellimusi ega saa hetkel kõnesid vastu võtta, kuid saan aidata kõiges, mis puudutab restorani.",
+    transferMessageOffer: "Võin võtta sõnumi ja lasta kellelgi teile tagasi helistada — mida soovite, et edastaksin?",
+    transferMessageTaken: "Edastasin sõnumi meeskonnale ja teile helistatakse tagasi.",
   },
   lv: {
     fillers: ["Vienu mirkli.", "Brītiņu.", "Lūdzu, uzgaidiet.", "Vienu sekundi."],
@@ -315,6 +387,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Vienu mirkli — savienojam jūs ar restorānu.",
     fallbackUnreachable: "Atvainojiet, mēs nevarējām sazināties ne ar vienu. Lūdzu, mēģiniet vēlreiz drīzumā.",
     fallbackError: "Atvainojiet, šobrīd mums ir tehniskas problēmas. Lūdzu, mēģiniet vēlreiz pēc dažām minūtēm.",
+    transferDeflect: "Mūsu personāls pašlaik gatavo pasūtījumus un nevar atbildēt uz zvaniem, bet es varu palīdzēt ar visu, kas saistīts ar restorānu.",
+    transferMessageOffer: "Varu pieņemt ziņu un kāds jums atzvanīs — ko vēlaties, lai nododu?",
+    transferMessageTaken: "Esmu nodevis ziņu komandai, un jums atzvanīs.",
   },
   lt: {
     fillers: ["Vieną minutėlę.", "Momentėlį.", "Palaukite.", "Sekundėlę."],
@@ -327,6 +402,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Momentėlį — jungiame jus su restoranu.",
     fallbackUnreachable: "Atsiprašome, nepavyko susisiekti su niekuo. Prašome pabandyti vėliau.",
     fallbackError: "Atsiprašome, šiuo metu turime techninių problemų. Prašome pabandyti po kelių minučių.",
+    transferDeflect: "Mūsų personalas šiuo metu ruošia užsakymus ir negali atsiliepti į skambučius, bet galiu padėti viskuo, kas susiję su restoranu.",
+    transferMessageOffer: "Galiu priimti žinutę ir kas nors jums perskambins — ką norėtumėte perduoti?",
+    transferMessageTaken: "Perdaviau žinutę komandai, jums perskambins.",
   },
   tr: {
     fillers: ["Bir saniye.", "Bir dakika.", "Lütfen bekleyin.", "Hemen."],
@@ -339,6 +417,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Bir saniye — sizi restoranla bağlıyoruz.",
     fallbackUnreachable: "Üzgünüz, kimseye ulaşamadık. Lütfen birazdan tekrar deneyin.",
     fallbackError: "Üzgünüz, şu anda teknik sorunlar yaşıyoruz. Lütfen birkaç dakika sonra tekrar deneyin.",
+    transferDeflect: "Ekibimiz şu anda siparişleri hazırlamakla meşgul ve telefonlara bakamıyor, ama restoranla ilgili her konuda yardımcı olabilirim.",
+    transferMessageOffer: "Bir mesaj alıp sizi geri aratabilirim — ne iletmemi istersiniz?",
+    transferMessageTaken: "Mesajınızı ekibe ilettim, sizi geri arayacaklar.",
   },
   ru: {
     fillers: ["Одну секунду.", "Минуточку.", "Подождите.", "Один момент."],
@@ -351,6 +432,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Одну секунду — соединяем вас с рестораном.",
     fallbackUnreachable: "Извините, мы не смогли дозвониться. Пожалуйста, перезвоните через некоторое время.",
     fallbackError: "Извините, у нас сейчас технические неполадки. Пожалуйста, перезвоните через несколько минут.",
+    transferDeflect: "Наши сотрудники сейчас заняты приготовлением заказов и не могут ответить на звонок, но я могу помочь со всем, что касается ресторана.",
+    transferMessageOffer: "Я могу принять сообщение, и вам перезвонят — что передать?",
+    transferMessageTaken: "Я передал сообщение команде, вам перезвонят.",
   },
   uk: {
     fillers: ["Одну хвилинку.", "Мить.", "Зачекайте.", "Одну секунду."],
@@ -363,6 +447,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Одну хвилинку — з'єднуємо вас з рестораном.",
     fallbackUnreachable: "Вибачте, ми не змогли додзвонитися. Будь ласка, спробуйте пізніше.",
     fallbackError: "Вибачте, зараз у нас технічні проблеми. Будь ласка, спробуйте через кілька хвилин.",
+    transferDeflect: "Наші працівники зараз зайняті приготуванням замовлень і не можуть відповісти на дзвінок, але я можу допомогти з усім, що стосується ресторану.",
+    transferMessageOffer: "Я можу прийняти повідомлення, і вам передзвонять — що передати?",
+    transferMessageTaken: "Я передав повідомлення команді, вам передзвонять.",
   },
   ca: {
     fillers: ["Un moment.", "Un instant.", "Espereu.", "Un segon."],
@@ -375,6 +462,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Un moment — us connectem amb el restaurant.",
     fallbackUnreachable: "Disculpeu, no hem pogut contactar amb ningú. Si us plau, torneu a provar d'aquí a poc.",
     fallbackError: "Disculpeu, tenim dificultats tècniques en aquest moment. Si us plau, torneu a provar d'aquí a uns minuts.",
+    transferDeflect: "El nostre personal està ocupat preparant comandes i ara mateix no pot atendre trucades, però puc ajudar-lo amb qualsevol cosa sobre el restaurant.",
+    transferMessageOffer: "Puc prendre nota d'un missatge i fer que algú el truqui — què vol que transmeti?",
+    transferMessageTaken: "Ja ho he passat a l'equip, i el trucaran.",
   },
   id: {
     fillers: ["Sebentar.", "Satu momen.", "Tunggu sebentar.", "Satu detik."],
@@ -387,6 +477,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Sebentar — kami menghubungkan Anda ke restoran.",
     fallbackUnreachable: "Maaf, kami tidak bisa menghubungi siapa pun. Silakan coba lagi sebentar lagi.",
     fallbackError: "Maaf, kami sedang mengalami masalah teknis saat ini. Silakan coba lagi dalam beberapa menit.",
+    transferDeflect: "Staf kami sedang sibuk menyiapkan pesanan dan tidak bisa menerima telepon saat ini, tetapi saya bisa membantu untuk apa pun tentang restoran.",
+    transferMessageOffer: "Saya bisa mencatat pesan dan meminta seseorang menelepon Anda kembali — apa yang ingin Anda sampaikan?",
+    transferMessageTaken: "Pesan Anda sudah saya sampaikan ke tim, dan mereka akan menelepon Anda kembali.",
   },
   vi: {
     fillers: ["Một chút.", "Một lát.", "Xin đợi.", "Một giây."],
@@ -399,6 +492,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Một chút — chúng tôi đang kết nối bạn với nhà hàng.",
     fallbackUnreachable: "Xin lỗi, chúng tôi không liên lạc được với ai. Xin vui lòng thử lại sau.",
     fallbackError: "Xin lỗi, chúng tôi đang gặp trục trặc kỹ thuật. Xin vui lòng thử lại sau vài phút.",
+    transferDeflect: "Nhân viên của chúng tôi đang bận chuẩn bị đơn hàng và hiện không thể nhận cuộc gọi, nhưng tôi có thể giúp mọi việc liên quan đến nhà hàng.",
+    transferMessageOffer: "Tôi có thể ghi lại lời nhắn và nhờ ai đó gọi lại cho bạn — bạn muốn tôi chuyển lời gì?",
+    transferMessageTaken: "Tôi đã chuyển lời nhắn cho nhân viên, họ sẽ gọi lại cho bạn.",
   },
   th: {
     fillers: ["สักครู่ค่ะ", "รอสักครู่นะคะ", "กรุณารอสักครู่", "แป๊บนึงค่ะ"],
@@ -411,6 +507,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "สักครู่ค่ะ กำลังเชื่อมต่อกับร้านอาหาร",
     fallbackUnreachable: "ขออภัยค่ะ ไม่สามารถติดต่อได้ กรุณาลองใหม่อีกครั้ง",
     fallbackError: "ขออภัยค่ะ ขณะนี้ระบบมีปัญหา กรุณาลองใหม่ในอีกสักครู่",
+    transferDeflect: "ตอนนี้พนักงานของเรากำลังเตรียมออเดอร์อยู่จึงรับสายไม่ได้ แต่ฉันช่วยเรื่องเกี่ยวกับร้านได้ทุกอย่างค่ะ",
+    transferMessageOffer: "ฉันรับฝากข้อความไว้และให้พนักงานโทรกลับได้ค่ะ — ต้องการฝากข้อความว่าอย่างไรคะ",
+    transferMessageTaken: "ฉันส่งข้อความให้ทีมงานแล้ว เดี๋ยวจะมีคนโทรกลับนะคะ",
   },
   zh: {
     fillers: ["请稍等。", "等一下。", "稍等。", "一秒钟。"],
@@ -423,6 +522,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "请稍等，正在为您连接餐厅。",
     fallbackUnreachable: "抱歉，我们暂时无法联系到工作人员。请稍后再试。",
     fallbackError: "抱歉，我们目前遇到了技术问题。请几分钟后再试。",
+    transferDeflect: "我们的员工正忙着准备订单，现在无法接听电话，但关于餐厅的任何事情我都可以帮您。",
+    transferMessageOffer: "我可以帮您留言并请人回电——您想让我转达什么？",
+    transferMessageTaken: "我已经把留言转给团队了，他们会给您回电。",
   },
   ja: {
     fillers: ["少々お待ちください。", "お待ちください。", "しばらくお待ちを。", "一瞬お待ちを。"],
@@ -435,6 +537,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "少々お待ちください。レストランにおつなぎしております。",
     fallbackUnreachable: "申し訳ございませんが、つながりませんでした。しばらくしてからおかけ直しください。",
     fallbackError: "申し訳ございませんが、ただいま技術的な問題が発生しております。数分後にもう一度おかけ直しください。",
+    transferDeflect: "スタッフはただいま注文の準備で手が離せず、お電話に出ることができませんが、お店に関することでしたら私が対応いたします。",
+    transferMessageOffer: "伝言をお預かりして折り返しご連絡いたします — どのようにお伝えしましょうか？",
+    transferMessageTaken: "スタッフに伝言をお伝えしました。折り返しご連絡いたします。",
   },
   ko: {
     fillers: ["잠시만요.", "잠깐만요.", "기다려 주세요.", "잠시요."],
@@ -447,6 +552,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "잠시만요, 레스토랑으로 연결 중입니다.",
     fallbackUnreachable: "죄송합니다, 연결되지 않았습니다. 잠시 후 다시 시도해 주세요.",
     fallbackError: "죄송합니다, 현재 기술적 문제가 발생했습니다. 몇 분 후 다시 시도해 주세요.",
+    transferDeflect: "직원들이 지금 주문 준비로 바빠서 전화를 받을 수 없지만, 매장에 관한 일은 제가 도와드릴 수 있어요.",
+    transferMessageOffer: "메시지를 남겨 주시면 직원이 다시 전화드리도록 할게요 — 어떤 내용을 전달해 드릴까요?",
+    transferMessageTaken: "팀에 전달했어요. 다시 전화드릴 거예요.",
   },
   ar: {
     fillers: ["لحظة.", "لحظة من فضلك.", "انتظر قليلاً.", "ثانية."],
@@ -459,6 +567,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "لحظة — نقوم بتوصيلك بالمطعم.",
     fallbackUnreachable: "عذراً، لم نتمكن من الوصول لأحد. يرجى المحاولة مرة أخرى قريباً.",
     fallbackError: "عذراً، نواجه مشاكل تقنية حالياً. يرجى المحاولة مرة أخرى بعد بضع دقائق.",
+    transferDeflect: "موظفونا مشغولون حاليًا بتحضير الطلبات ولا يمكنهم الرد على المكالمات الآن، لكن يمكنني مساعدتك في أي شيء يخص المطعم.",
+    transferMessageOffer: "يمكنني أخذ رسالة وسيعاود أحدهم الاتصال بك — ما الذي تريد أن أنقله؟",
+    transferMessageTaken: "لقد نقلت رسالتك إلى الفريق، وسيعاودون الاتصال بك.",
   },
   he: {
     fillers: ["רגע.", "רק רגע.", "המתן בבקשה.", "שנייה."],
@@ -471,6 +582,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "רגע — מחברים אותך למסעדה.",
     fallbackUnreachable: "מצטערים, לא הצלחנו להגיע למישהו. אנא נסו שוב בקרוב.",
     fallbackError: "מצטערים, אנחנו חווים תקלה טכנית כרגע. אנא נסו שוב בעוד מספר דקות.",
+    transferDeflect: "הצוות שלנו עסוק כרגע בהכנת הזמנות ולא יכול לענות לשיחות, אבל אני יכול לעזור בכל דבר שקשור למסעדה.",
+    transferMessageOffer: "אני יכול לקחת הודעה ולדאוג שמישהו יחזור אליך — מה תרצה שאעביר?",
+    transferMessageTaken: "העברתי את ההודעה לצוות, והם יחזרו אליך.",
   },
   hi: {
     fillers: ["एक पल.", "बस एक मिनट.", "रुकिए.", "एक सेकंड."],
@@ -483,6 +597,9 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "एक पल — हम आपको रेस्तरां से जोड़ रहे हैं।",
     fallbackUnreachable: "माफ़ कीजिए, हम किसी से संपर्क नहीं कर पाए। कृपया थोड़ी देर बाद फिर से कोशिश करें।",
     fallbackError: "माफ़ कीजिए, अभी हमें तकनीकी समस्या आ रही है। कृपया कुछ मिनट बाद फिर से कोशिश करें।",
+    transferDeflect: "हमारा स्टाफ़ अभी ऑर्डर तैयार करने में व्यस्त है और कॉल नहीं ले सकता, लेकिन रेस्तरां से जुड़ी किसी भी बात में मैं आपकी मदद कर सकता हूँ।",
+    transferMessageOffer: "मैं आपका संदेश ले सकता हूँ और किसी से आपको वापस कॉल करवा सकता हूँ — आप क्या कहलवाना चाहेंगे?",
+    transferMessageTaken: "मैंने आपका संदेश टीम तक पहुँचा दिया है, वे आपको वापस कॉल करेंगे।",
   },
 };
 

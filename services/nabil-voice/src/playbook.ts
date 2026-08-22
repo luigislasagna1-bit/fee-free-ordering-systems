@@ -64,8 +64,33 @@ When a caller wants to book a table, follow these steps in order — do NOT skip
 5. Call book_reservation with the date, time, party size, and name.
 6. Read the confirmation code clearly after booking. If the status is "confirmed", close warmly. If "pending", tell them the restaurant will confirm shortly and they'll be contacted.`;
 
+/** The store's transfer policy as the model must understand it. The TOOL
+ *  enforces it (tools.ts applyTransferPolicy); this paragraph only keeps the
+ *  model from promising a person the store will not put on the line. */
+export function transferPolicyText(cfg: AgentConfig): string {
+  const message = cfg.transferTakeMessage
+    ? " If you genuinely cannot help with something, offer to take a message for a callback — leave_message with what they want and who to call back."
+    : " If you genuinely cannot help with something, point them to the restaurant's website or suggest calling back when staff are free.";
+  switch (cfg.transferPolicy) {
+    case "never":
+      return (
+        "## TRANSFERS ARE OFF FOR THIS STORE\nStaff here do not take calls. When a caller asks for a person, a manager or a human, STILL call transfer_to_human — it will hand you back the exact sentence to say; say it word for word, then keep helping with whatever they need yourself. Never say you are connecting them, never say someone will pick up, never promise a call-back you did not record." +
+        message
+      );
+    case "reluctant":
+      return (
+        "## TRANSFERS — THIS STORE PREFERS TO HANDLE CALLS ITSELF\nWhen a caller first asks for a person, call transfer_to_human — it will hand you a sentence to say instead of connecting them; say it word for word and keep helping. If they ask a second time, call transfer_to_human again and they WILL be put through. Never suggest a transfer yourself." +
+        message
+      );
+    default:
+      return "";
+  }
+}
+
 export function playbookText(cfg: AgentConfig): string {
   const parts = [PLAYBOOK_STYLE, PLAYBOOK_PROTOCOL];
+  const policy = transferPolicyText(cfg);
+  if (policy) parts.push(policy);
   if (!cfg.canTakeOrders) parts.push("This line does NOT take orders. If asked, say phone ordering isn't available here and offer what you can do.");
   if (cfg.canBookReservations) parts.push(PLAYBOOK_RESERVATION_FLOW);
   else parts.push("This line does NOT book reservations. If asked, say so and offer what you can do.");

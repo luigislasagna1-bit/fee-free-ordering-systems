@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Desactivat per defecte. Quan està actiu, si algú demana un producte que avui té una oferta més barata de la mateixa mida, en Nabil ho diu sense que li ho preguntin. Guanya simpatia i costa marge — tu decideixes.",
         "agentIdentity": "Nom de l'agent",
         "agentName": "Com s'hauria de dir el vostre agent?",
-        "agentNameHint": "Es diu a cada trucada quan es pregunta el nom. Deixeu-ho en blanc per fer servir «Nabil». Això no canvia el nom del propi Nabil AI — només com es diu la veu."
+        "agentNameHint": "Es diu a cada trucada quan es pregunta el nom. Deixeu-ho en blanc per fer servir «Nabil». Això no canvia el nom del propi Nabil AI — només com es diu la veu.",
+        "transferPolicy": "Quan qui truca demana parlar amb una persona",
+        "tpImmediate": "Transferir de seguida",
+        "tpReluctant": "Només si insisteix (ho demana dues vegades)",
+        "tpNever": "No transferir mai — el Nabil se n'encarrega i pren missatges",
+        "transferPolicyHint": "El Nabil ho aplica a cada trucada. Amb «Només si insisteix» i «Mai», diu la frase de sota en comptes de transferir i continua ajudant. Si la mateixa IA falla, la trucada continua sonant al vostre telèfon perquè ningú es quedi sense resposta.",
+        "transferDeflection": "Què diu el Nabil en comptes de transferir",
+        "transferDeflectionHint": "Es diu paraula per paraula. Deixeu-ho buit per a: «El nostre personal està ocupat preparant comandes i ara mateix no pot atendre trucades, però puc ajudar-lo amb qualsevol cosa sobre el restaurant.»",
+        "transferTakeMessage": "Oferir prendre un missatge",
+        "transferTakeMessageHint": "Quan no es pot passar la trucada, el Nabil ofereix prendre un missatge i l'envia per SMS al vostre número de transferència (o al telèfon d'alertes)."
       },
       "apiErrors": {
         "featureLocked": "El teu pla encara no inclou l'agent de comandes telefòniques.",
@@ -4432,7 +4441,8 @@
           "abandoned": "El trucador ha penjat",
           "spam": "Spam",
           "error": "Requereix atenció",
-          "unknown": "En curs"
+          "unknown": "En curs",
+          "message_taken": "Missatge pres"
         },
         "sentiment": {
           "positive": "Positiu",

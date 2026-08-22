@@ -4338,7 +4338,16 @@
         "offerDayDealsHint": "Mặc định tắt. Khi bật, nếu khách gọi đặt món mà hôm nay có ưu đãi rẻ hơn cùng kích cỡ, Nabil sẽ chủ động nhắc. Được lòng khách nhưng giảm lợi nhuận — bạn quyết định.",
         "agentIdentity": "Tên trợ lý",
         "agentName": "Trợ lý của bạn nên tự xưng là gì?",
-        "agentNameHint": "Được nói ra trong mỗi cuộc gọi khi người gọi hỏi tên. Để trống để dùng \"Nabil\". Điều này không đổi tên chính Nabil AI — chỉ đổi tên mà giọng nói tự xưng."
+        "agentNameHint": "Được nói ra trong mỗi cuộc gọi khi người gọi hỏi tên. Để trống để dùng \"Nabil\". Điều này không đổi tên chính Nabil AI — chỉ đổi tên mà giọng nói tự xưng.",
+        "transferPolicy": "Khi người gọi yêu cầu nói chuyện với người thật",
+        "tpImmediate": "Chuyển máy ngay",
+        "tpReluctant": "Chỉ khi họ nài nỉ (hỏi hai lần)",
+        "tpNever": "Không bao giờ chuyển máy — Nabil tự xử lý và ghi lại lời nhắn",
+        "transferPolicyHint": "Nabil áp dụng điều này cho mọi cuộc gọi. Với “Chỉ khi họ nài nỉ” và “Không bao giờ”, Nabil sẽ nói câu bên dưới thay vì chuyển máy và tiếp tục hỗ trợ. Nếu chính AI gặp sự cố, cuộc gọi vẫn đổ chuông trên điện thoại của bạn để không ai bị bỏ lỡ.",
+        "transferDeflection": "Nabil nói gì thay vì chuyển máy",
+        "transferDeflectionHint": "Được nói nguyên văn. Để trống để dùng: “Nhân viên của chúng tôi đang bận chuẩn bị đơn hàng và hiện không thể nhận cuộc gọi, nhưng tôi có thể giúp mọi việc liên quan đến nhà hàng.”",
+        "transferTakeMessage": "Đề nghị ghi lại lời nhắn",
+        "transferTakeMessageHint": "Khi không thể chuyển máy, Nabil đề nghị ghi lại lời nhắn và nhắn tin đến số chuyển máy của bạn (hoặc điện thoại cảnh báo)."
       },
       "apiErrors": {
         "featureLocked": "Gói của bạn chưa bao gồm trợ lý nhận đơn qua điện thoại.",
@@ -4432,7 +4441,8 @@
           "abandoned": "Người gọi đã cúp máy",
           "spam": "Cuộc gọi rác",
           "error": "Cần chú ý",
-          "unknown": "Đang diễn ra"
+          "unknown": "Đang diễn ra",
+          "message_taken": "Đã ghi lời nhắn"
         },
         "sentiment": {
           "positive": "Tích cực",
