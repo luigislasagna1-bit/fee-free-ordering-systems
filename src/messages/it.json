@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} min inclusi nel minimo di {minimum}/mese ({rate}/min)",
         "meterAiNote": "Solo tempo di gestione AI — tempo di trasferimento escluso",
         "meterProgress": "{pct}% della quota inclusa",
-        "meterUsedOf": "{used} di {total} secondi"
+        "meterUsedOf": "{used} di {total} secondi",
+        "greetingMorning": "Buongiorno, {name}",
+        "greetingAfternoon": "Buon pomeriggio, {name}",
+        "greetingEvening": "Buonasera, {name}",
+        "greetingNight": "Buonanotte, {name}",
+        "nowLine": "Oggi è {when}",
+        "monthHeadlineRich": "Questo mese hai incassato <amt>{amount}</amt> con Nabil AI",
+        "chartTopCallers": "Clienti che chiamano di più",
+        "topCallersEmpty": "Nessun cliente abituale in questo periodo, per ora.",
+        "topCallersCalls": "{count, plural, one {# chiamata} other {# chiamate}}",
+        "topCallersOrders": "{count, plural, one {# ordine} other {# ordini}}",
+        "activityCall": "Chiamata",
+        "activityOrder": "Ordine",
+        "activityReservation": "Prenotazione"
       },
       "callLog": {
         "searchPlaceholder": "Cerca telefono, nome o riepilogo…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Pagina {current} di {total}",
         "paginationPrevious": "Precedente",
-        "paginationNext": "Successiva"
+        "paginationNext": "Successiva",
+        "callerHistoryHint": "Vedi lo storico del cliente",
+        "clearFilters": "Azzera filtri",
+        "filterSearchChip": "Ricerca: {q}"
       },
       "callDetail": {
         "backToCalls": "Torna alle chiamate",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Team Fee Free",
           "fromYou": "Tu",
           "justNow": "proprio ora"
-        }
+        },
+        "viewCallerHistory": "Storico del cliente",
+        "historySeeAll": "Vedi tutte le chiamate e gli ordini da questo numero"
       },
       "upsells": {
         "title": "Upsell in evidenza",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Impossibile salvare il messaggio.",
         "chipOne": "{service} in pausa fino alle {time}",
         "chipMany": "{count} servizi in pausa"
+      },
+      "caller": {
+        "title": "Storico del cliente",
+        "unknownName": "Cliente sconosciuto",
+        "firstCall": "Prima chiamata il {date}",
+        "notFound": "Nessuna chiamata da questo numero, per ora.",
+        "kpiCalls": "Chiamate",
+        "reservationsSub": "{count, plural, one {# prenotazione} other {# prenotazioni}}",
+        "kpiOrders": "Ordini telefonici",
+        "avgOrderSub": "{amount} in media",
+        "kpiSpend": "Spesa totale",
+        "spendSub": "Incassato sugli ordini telefonici",
+        "kpiLastCall": "Ultima chiamata",
+        "kpiMood": "Umore nelle chiamate",
+        "moodValue": "{pct}% positivo",
+        "moodSub": "{count, plural, one {su # chiamata valutata} other {su # chiamate valutate}}",
+        "moodEmpty": "Nessuna chiamata valutata, per ora",
+        "callsTitle": "Tutte le chiamate",
+        "callsCount": "{count, plural, one {# chiamata} other {# chiamate}}",
+        "moreCalls": "Mostrate le {shown} chiamate più recenti su {total}",
+        "favoritesTitle": "Ordina di solito",
+        "favoritesEmpty": "I preferiti compaiono dopo il primo ordine telefonico completato.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Esito delle chiamate",
+        "ordersTitle": "Ordini telefonici",
+        "ordersEmpty": "Nessun ordine telefonico, per ora.",
+        "itemCount": "{count, plural, one {# articolo} other {# articoli}}"
       }
     },
     "customerDetailPage": {

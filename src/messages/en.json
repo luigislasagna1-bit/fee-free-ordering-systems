@@ -4721,7 +4721,20 @@
         "meterIncluded": "{included} min included in the {minimum}/month minimum ({rate}/min, billed by the second)",
         "meterAiNote": "AI handling time only — transfer time excluded",
         "meterProgress": "{pct}% of included allowance",
-        "meterUsedOf": "{used} of {total} seconds"
+        "meterUsedOf": "{used} of {total} seconds",
+        "greetingMorning": "Good morning, {name}",
+        "greetingAfternoon": "Good afternoon, {name}",
+        "greetingEvening": "Good evening, {name}",
+        "greetingNight": "Good night, {name}",
+        "nowLine": "It's {when}",
+        "monthHeadlineRich": "You've made <amt>{amount}</amt> this month with Nabil AI",
+        "chartTopCallers": "Top callers",
+        "topCallersEmpty": "No repeat callers in this range yet.",
+        "topCallersCalls": "{count, plural, one {# call} other {# calls}}",
+        "topCallersOrders": "{count, plural, one {# order} other {# orders}}",
+        "activityCall": "Call",
+        "activityOrder": "Order",
+        "activityReservation": "Reservation"
       },
       "callLog": {
         "searchPlaceholder": "Search phone, name, or summary…",
@@ -4756,7 +4769,10 @@
         },
         "paginationPage": "Page {current} of {total}",
         "paginationPrevious": "Previous",
-        "paginationNext": "Next"
+        "paginationNext": "Next",
+        "callerHistoryHint": "View caller history",
+        "clearFilters": "Clear filters",
+        "filterSearchChip": "Search: {q}"
       },
       "callDetail": {
         "backToCalls": "Back to calls",
@@ -4906,7 +4922,9 @@
           "fromPlatform": "Fee Free team",
           "fromYou": "You",
           "justNow": "just now"
-        }
+        },
+        "viewCallerHistory": "Caller history",
+        "historySeeAll": "See every call and order from this number"
       },
       "upsells": {
         "title": "Featured Upsells",
@@ -5147,6 +5165,33 @@
         "greetingSaveError": "Couldn't save the message.",
         "chipOne": "{service} paused until {time}",
         "chipMany": "{count} services paused"
+      },
+      "caller": {
+        "title": "Caller history",
+        "unknownName": "Unknown caller",
+        "firstCall": "First call {date}",
+        "notFound": "No calls from this number yet.",
+        "kpiCalls": "Calls",
+        "reservationsSub": "{count, plural, one {# reservation} other {# reservations}}",
+        "kpiOrders": "Phone orders",
+        "avgOrderSub": "{amount} average",
+        "kpiSpend": "Lifetime spend",
+        "spendSub": "Collected on phone orders",
+        "kpiLastCall": "Last call",
+        "kpiMood": "Mood on calls",
+        "moodValue": "{pct}% positive",
+        "moodSub": "{count, plural, one {across # rated call} other {across # rated calls}}",
+        "moodEmpty": "No rated calls yet",
+        "callsTitle": "Every call",
+        "callsCount": "{count, plural, one {# call} other {# calls}}",
+        "moreCalls": "Showing the {shown} most recent of {total} calls",
+        "favoritesTitle": "Usually orders",
+        "favoritesEmpty": "Favorites appear after the first completed phone order.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Call outcomes",
+        "ordersTitle": "Phone orders",
+        "ordersEmpty": "No phone orders yet.",
+        "itemCount": "{count, plural, one {# item} other {# items}}"
       }
     },
     "reportOrdersList": {

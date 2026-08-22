@@ -14,9 +14,57 @@ import {
   localDayKey,
   rankPopularItems,
   staffHoursReclaimed,
+  topCallersFrom,
   type AnalyticsCall,
 } from "./analytics";
 import type { OpeningHoursRow } from "@/lib/restaurant-hours";
+
+// ── Top callers (phone-keyed) ─────────────────────────────────────────
+
+describe("topCallersFrom", () => {
+  const call = (fromNumber: string, orderNumber: string | null, startedAt: string, customerId: string | null = null) => ({
+    fromNumber,
+    orderNumber,
+    startedAt: new Date(startedAt),
+    customerId,
+  });
+
+  it("groups every formatting of one number under one phoneDigits key and ranks by collected spend", () => {
+    const calls = [
+      call("+14168338405", "A1", "2026-08-10T10:00:00Z"),
+      call("(416) 833-8405", "A2", "2026-08-12T10:00:00Z", "cust_1"),
+      call("4168338405", null, "2026-08-14T10:00:00Z"),
+      call("+16476690808", "B1", "2026-08-11T10:00:00Z"),
+      call("+16476690808", "B2", "2026-08-13T10:00:00Z"),
+    ];
+    // B2 is missing from the map → rejected/cancelled → contributes nothing.
+    const collected = new Map([
+      ["A1", 20],
+      ["A2", 15.5],
+      ["B1", 40],
+    ]);
+    const rows = topCallersFrom(calls, collected);
+    expect(rows.map((r) => r.digits)).toEqual(["6476690808", "4168338405"]);
+    expect(rows[0]).toMatchObject({ calls: 2, orders: 1, spend: 40, customerId: null });
+    expect(rows[1]).toMatchObject({ calls: 3, orders: 2, spend: 35.5, customerId: "cust_1" });
+    expect(rows[1].lastCallAt.toISOString()).toBe("2026-08-14T10:00:00.000Z");
+  });
+
+  it("skips anonymous / unparseable numbers and honours the limit", () => {
+    const calls = [
+      call("", "X1", "2026-08-10T10:00:00Z"),
+      call("anonymous", null, "2026-08-10T10:00:00Z"),
+      call("+15550000001", null, "2026-08-10T10:00:00Z"),
+      call("+15550000002", null, "2026-08-11T10:00:00Z"),
+      call("+15550000003", null, "2026-08-12T10:00:00Z"),
+    ];
+    const rows = topCallersFrom(calls, new Map([["X1", 99]]), 2);
+    expect(rows).toHaveLength(2);
+    // Equal spend + equal calls → most recent caller first.
+    expect(rows[0].digits).toBe("5550000003");
+    expect(rows.every((r) => r.spend === 0)).toBe(true);
+  });
+});
 
 // ── After-hours logic ─────────────────────────────────────────────────
 

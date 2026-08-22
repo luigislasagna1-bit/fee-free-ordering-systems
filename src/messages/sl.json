@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} min vključenih v minimum {minimum}/mesec ({rate}/min)",
         "meterAiNote": "Samo čas obdelave AI — čas preusmeritve ni vključen",
         "meterProgress": "{pct} % vključene kvote",
-        "meterUsedOf": "{used} od {total} sekund"
+        "meterUsedOf": "{used} od {total} sekund",
+        "greetingMorning": "Dobro jutro, {name}",
+        "greetingAfternoon": "Dober dan, {name}",
+        "greetingEvening": "Dober večer, {name}",
+        "greetingNight": "Lahko noč, {name}",
+        "nowLine": "Zdaj je {when}",
+        "monthHeadlineRich": "Ta mesec ste z Nabil AI zaslužili <amt>{amount}</amt>",
+        "chartTopCallers": "Najpogostejši klicatelji",
+        "topCallersEmpty": "V tem obdobju še ni ponovnih klicateljev.",
+        "topCallersCalls": "{count, plural, one {# klic} two {# klica} few {# klici} other {# klicev}}",
+        "topCallersOrders": "{count, plural, one {# naročilo} two {# naročili} few {# naročila} other {# naročil}}",
+        "activityCall": "Klic",
+        "activityOrder": "Naročilo",
+        "activityReservation": "Rezervacija"
       },
       "callLog": {
         "searchPlaceholder": "Išči po telefonu, imenu ali povzetku…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Stran {current} od {total}",
         "paginationPrevious": "Prejšnja",
-        "paginationNext": "Naslednja"
+        "paginationNext": "Naslednja",
+        "callerHistoryHint": "Prikaži zgodovino klicatelja",
+        "clearFilters": "Počisti filtre",
+        "filterSearchChip": "Iskanje: {q}"
       },
       "callDetail": {
         "backToCalls": "Nazaj na klice",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Ekipa Fee Free",
           "fromYou": "Vi",
           "justNow": "pravkar"
-        }
+        },
+        "viewCallerHistory": "Zgodovina klicatelja",
+        "historySeeAll": "Oglejte si vse klice in naročila s te številke"
       },
       "upsells": {
         "title": "Izpostavljene dodatne ponudbe",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Sporočila ni bilo mogoče shraniti.",
         "chipOne": "{service} zaustavljeno do {time}",
         "chipMany": "Zaustavljene storitve: {count}"
+      },
+      "caller": {
+        "title": "Zgodovina klicatelja",
+        "unknownName": "Neznan klicatelj",
+        "firstCall": "Prvi klic {date}",
+        "notFound": "S te številke še ni bilo klicev.",
+        "kpiCalls": "Klici",
+        "reservationsSub": "{count, plural, one {# rezervacija} two {# rezervaciji} few {# rezervacije} other {# rezervacij}}",
+        "kpiOrders": "Telefonska naročila",
+        "avgOrderSub": "{amount} v povprečju",
+        "kpiSpend": "Skupna poraba",
+        "spendSub": "Prejeto s telefonskimi naročili",
+        "kpiLastCall": "Zadnji klic",
+        "kpiMood": "Razpoloženje na klicih",
+        "moodValue": "{pct}% pozitivno",
+        "moodSub": "{count, plural, one {na podlagi # ocenjenega klica} two {na podlagi # ocenjenih klicev} few {na podlagi # ocenjenih klicev} other {na podlagi # ocenjenih klicev}}",
+        "moodEmpty": "Še ni ocenjenih klicev",
+        "callsTitle": "Vsi klici",
+        "callsCount": "{count, plural, one {# klic} two {# klica} few {# klici} other {# klicev}}",
+        "moreCalls": "Prikazanih {shown} najnovejših od skupno {total} klicev",
+        "favoritesTitle": "Običajno naroča",
+        "favoritesEmpty": "Priljubljene jedi se prikažejo po prvem zaključenem telefonskem naročilu.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Izidi klicev",
+        "ordersTitle": "Telefonska naročila",
+        "ordersEmpty": "Še ni telefonskih naročil.",
+        "itemCount": "{count, plural, one {# artikel} two {# artikla} few {# artikli} other {# artiklov}}"
       }
     },
     "customerDetailPage": {

@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} min sisältyy {minimum}/kk minimiin ({rate}/min)",
         "meterAiNote": "Vain AI-käsittelyaika — yhdistämisaika ei mukana",
         "meterProgress": "{pct} % sisällytetystä kiintiöstä",
-        "meterUsedOf": "{used} / {total} sekuntia"
+        "meterUsedOf": "{used} / {total} sekuntia",
+        "greetingMorning": "Hyvää huomenta, {name}",
+        "greetingAfternoon": "Hyvää iltapäivää, {name}",
+        "greetingEvening": "Hyvää iltaa, {name}",
+        "greetingNight": "Hyvää yötä, {name}",
+        "nowLine": "Nyt on {when}",
+        "monthHeadlineRich": "Olet tienannut <amt>{amount}</amt> tässä kuussa Nabil AI:n avulla",
+        "chartTopCallers": "Useimmin soittaneet",
+        "topCallersEmpty": "Ei vielä toistuvia soittajia tällä aikavälillä.",
+        "topCallersCalls": "{count, plural, one {# puhelu} other {# puhelua}}",
+        "topCallersOrders": "{count, plural, one {# tilaus} other {# tilausta}}",
+        "activityCall": "Puhelu",
+        "activityOrder": "Tilaus",
+        "activityReservation": "Varaus"
       },
       "callLog": {
         "searchPlaceholder": "Hae puhelinnumerolla, nimellä tai yhteenvedolla…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Sivu {current} / {total}",
         "paginationPrevious": "Edellinen",
-        "paginationNext": "Seuraava"
+        "paginationNext": "Seuraava",
+        "callerHistoryHint": "Näytä soittajan historia",
+        "clearFilters": "Tyhjennä suodattimet",
+        "filterSearchChip": "Haku: {q}"
       },
       "callDetail": {
         "backToCalls": "Takaisin puheluihin",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Fee Free -tiimi",
           "fromYou": "Sinä",
           "justNow": "juuri nyt"
-        }
+        },
+        "viewCallerHistory": "Soittajan historia",
+        "historySeeAll": "Näytä kaikki puhelut ja tilaukset tästä numerosta"
       },
       "upsells": {
         "title": "Esille nostetut lisämyynnit",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Viestiä ei voitu tallentaa.",
         "chipOne": "{service} tauolla {time} asti",
         "chipMany": "{count} palvelua tauolla"
+      },
+      "caller": {
+        "title": "Soittajan historia",
+        "unknownName": "Tuntematon soittaja",
+        "firstCall": "Ensimmäinen puhelu {date}",
+        "notFound": "Ei vielä puheluita tästä numerosta.",
+        "kpiCalls": "Puhelut",
+        "reservationsSub": "{count, plural, one {# varaus} other {# varausta}}",
+        "kpiOrders": "Puhelintilaukset",
+        "avgOrderSub": "{amount} keskimäärin",
+        "kpiSpend": "Ostot yhteensä",
+        "spendSub": "Kertynyt puhelintilauksista",
+        "kpiLastCall": "Viimeisin puhelu",
+        "kpiMood": "Puheluiden tunnelma",
+        "moodValue": "{pct} % myönteisiä",
+        "moodSub": "{count, plural, one {# arvioidun puhelun perusteella} other {# arvioidun puhelun perusteella}}",
+        "moodEmpty": "Ei vielä arvioituja puheluita",
+        "callsTitle": "Kaikki puhelut",
+        "callsCount": "{count, plural, one {# puhelu} other {# puhelua}}",
+        "moreCalls": "Näytetään {shown} viimeisintä puhelua {total} puhelusta",
+        "favoritesTitle": "Tilaa yleensä",
+        "favoritesEmpty": "Suosikit näkyvät ensimmäisen valmistuneen puhelintilauksen jälkeen.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Puheluiden lopputulokset",
+        "ordersTitle": "Puhelintilaukset",
+        "ordersEmpty": "Ei vielä puhelintilauksia.",
+        "itemCount": "{count, plural, one {# tuote} other {# tuotetta}}"
       }
     },
     "customerDetailPage": {

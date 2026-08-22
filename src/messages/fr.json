@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} min incluses dans le minimum de {minimum}/mois ({rate}/min)",
         "meterAiNote": "Temps de traitement AI uniquement — temps de transfert exclu",
         "meterProgress": "{pct} % du forfait inclus",
-        "meterUsedOf": "{used} sur {total} secondes"
+        "meterUsedOf": "{used} sur {total} secondes",
+        "greetingMorning": "Bonjour, {name}",
+        "greetingAfternoon": "Bon après-midi, {name}",
+        "greetingEvening": "Bonsoir, {name}",
+        "greetingNight": "Bonne nuit, {name}",
+        "nowLine": "Nous sommes {when}",
+        "monthHeadlineRich": "Vous avez gagné <amt>{amount}</amt> ce mois-ci avec Nabil AI",
+        "chartTopCallers": "Meilleurs appelants",
+        "topCallersEmpty": "Aucun appelant récurrent sur cette période pour l'instant.",
+        "topCallersCalls": "{count, plural, one {# appel} other {# appels}}",
+        "topCallersOrders": "{count, plural, one {# commande} other {# commandes}}",
+        "activityCall": "Appel",
+        "activityOrder": "Commande",
+        "activityReservation": "Réservation"
       },
       "callLog": {
         "searchPlaceholder": "Rechercher un téléphone, un nom ou un résumé…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Page {current} sur {total}",
         "paginationPrevious": "Précédent",
-        "paginationNext": "Suivant"
+        "paginationNext": "Suivant",
+        "callerHistoryHint": "Voir l'historique de l'appelant",
+        "clearFilters": "Effacer les filtres",
+        "filterSearchChip": "Recherche : {q}"
       },
       "callDetail": {
         "backToCalls": "Retour aux appels",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Équipe Fee Free",
           "fromYou": "Vous",
           "justNow": "à l'instant"
-        }
+        },
+        "viewCallerHistory": "Historique de l'appelant",
+        "historySeeAll": "Voir tous les appels et commandes de ce numéro"
       },
       "upsells": {
         "title": "Ventes additionnelles mises en avant",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Impossible d'enregistrer le message.",
         "chipOne": "{service} en pause jusqu'à {time}",
         "chipMany": "{count} services en pause"
+      },
+      "caller": {
+        "title": "Historique de l'appelant",
+        "unknownName": "Appelant inconnu",
+        "firstCall": "Premier appel le {date}",
+        "notFound": "Aucun appel de ce numéro pour l'instant.",
+        "kpiCalls": "Appels",
+        "reservationsSub": "{count, plural, one {# réservation} other {# réservations}}",
+        "kpiOrders": "Commandes par téléphone",
+        "avgOrderSub": "{amount} en moyenne",
+        "kpiSpend": "Dépenses totales",
+        "spendSub": "Encaissé sur les commandes par téléphone",
+        "kpiLastCall": "Dernier appel",
+        "kpiMood": "Humeur des appels",
+        "moodValue": "{pct} % positif",
+        "moodSub": "{count, plural, one {sur # appel évalué} other {sur # appels évalués}}",
+        "moodEmpty": "Aucun appel évalué pour l'instant",
+        "callsTitle": "Tous les appels",
+        "callsCount": "{count, plural, one {# appel} other {# appels}}",
+        "moreCalls": "Affichage des {shown} appels les plus récents sur {total}",
+        "favoritesTitle": "Commande habituellement",
+        "favoritesEmpty": "Les favoris apparaissent après la première commande par téléphone terminée.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Résultats des appels",
+        "ordersTitle": "Commandes par téléphone",
+        "ordersEmpty": "Aucune commande par téléphone pour l'instant.",
+        "itemCount": "{count, plural, one {# article} other {# articles}}"
       }
     },
     "customerDetailPage": {

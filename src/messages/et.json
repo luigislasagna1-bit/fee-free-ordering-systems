@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} min kaasas {minimum}/kuu miinimumis ({rate}/min)",
         "meterAiNote": "Ainult AI töötlemisaeg — suunamise aeg ei kuulu",
         "meterProgress": "{pct}% kaasasolevast mahust",
-        "meterUsedOf": "{used} / {total} sekundit"
+        "meterUsedOf": "{used} / {total} sekundit",
+        "greetingMorning": "Tere hommikust, {name}",
+        "greetingAfternoon": "Tere päevast, {name}",
+        "greetingEvening": "Tere õhtust, {name}",
+        "greetingNight": "Head ööd, {name}",
+        "nowLine": "Praegu on {when}",
+        "monthHeadlineRich": "Sel kuul olete Nabil AI abil teeninud <amt>{amount}</amt>",
+        "chartTopCallers": "Sagedasimad helistajad",
+        "topCallersEmpty": "Selles vahemikus pole veel korduvaid helistajaid.",
+        "topCallersCalls": "{count, plural, one {# kõne} other {# kõnet}}",
+        "topCallersOrders": "{count, plural, one {# tellimus} other {# tellimust}}",
+        "activityCall": "Kõne",
+        "activityOrder": "Tellimus",
+        "activityReservation": "Broneering"
       },
       "callLog": {
         "searchPlaceholder": "Otsi telefoni, nime või kokkuvõtte järgi…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Leht {current} / {total}",
         "paginationPrevious": "Eelmine",
-        "paginationNext": "Järgmine"
+        "paginationNext": "Järgmine",
+        "callerHistoryHint": "Vaata helistaja ajalugu",
+        "clearFilters": "Tühjenda filtrid",
+        "filterSearchChip": "Otsing: {q}"
       },
       "callDetail": {
         "backToCalls": "Tagasi kõnede juurde",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Fee Free meeskond",
           "fromYou": "Teie",
           "justNow": "just nüüd"
-        }
+        },
+        "viewCallerHistory": "Helistaja ajalugu",
+        "historySeeAll": "Vaata kõiki selle numbri kõnesid ja tellimusi"
       },
       "upsells": {
         "title": "Esiletõstetud lisamüügid",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Teadet ei õnnestunud salvestada.",
         "chipOne": "{service} peatatud kuni {time}",
         "chipMany": "{count} teenust peatatud"
+      },
+      "caller": {
+        "title": "Helistaja ajalugu",
+        "unknownName": "Tundmatu helistaja",
+        "firstCall": "Esimene kõne {date}",
+        "notFound": "Sellelt numbrilt pole veel kõnesid.",
+        "kpiCalls": "Kõned",
+        "reservationsSub": "{count, plural, one {# broneering} other {# broneeringut}}",
+        "kpiOrders": "Telefonitellimused",
+        "avgOrderSub": "{amount} keskmiselt",
+        "kpiSpend": "Kogukulu",
+        "spendSub": "Telefonitellimustelt laekunud",
+        "kpiLastCall": "Viimane kõne",
+        "kpiMood": "Meeleolu kõnedes",
+        "moodValue": "{pct}% positiivne",
+        "moodSub": "{count, plural, one {# hinnatud kõne põhjal} other {# hinnatud kõne põhjal}}",
+        "moodEmpty": "Hinnatud kõnesid pole veel",
+        "callsTitle": "Kõik kõned",
+        "callsCount": "{count, plural, one {# kõne} other {# kõnet}}",
+        "moreCalls": "Kuvatakse {shown} viimast {total} kõnest",
+        "favoritesTitle": "Tellib tavaliselt",
+        "favoritesEmpty": "Lemmikud ilmuvad pärast esimest lõpetatud telefonitellimust.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Kõnede tulemused",
+        "ordersTitle": "Telefonitellimused",
+        "ordersEmpty": "Telefonitellimusi pole veel.",
+        "itemCount": "{count, plural, one {# toode} other {# toodet}}"
       }
     },
     "customerDetailPage": {

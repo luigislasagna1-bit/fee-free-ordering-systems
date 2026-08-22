@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} perc benne a {minimum}/hó minimumban ({rate}/perc)",
         "meterAiNote": "Csak AI-kezelési idő — átirányítási idő nem számít",
         "meterProgress": "{pct}% a foglalt keretből",
-        "meterUsedOf": "{used} / {total} másodperc"
+        "meterUsedOf": "{used} / {total} másodperc",
+        "greetingMorning": "Jó reggelt, {name}",
+        "greetingAfternoon": "Jó napot, {name}",
+        "greetingEvening": "Jó estét, {name}",
+        "greetingNight": "Jó éjszakát, {name}",
+        "nowLine": "Most {when} van",
+        "monthHeadlineRich": "Ebben a hónapban a Nabil AI <amt>{amount}</amt> bevételt hozott neked",
+        "chartTopCallers": "Leggyakoribb hívók",
+        "topCallersEmpty": "Még nincs visszatérő hívó ebben az időszakban.",
+        "topCallersCalls": "{count, plural, one {# hívás} other {# hívás}}",
+        "topCallersOrders": "{count, plural, one {# rendelés} other {# rendelés}}",
+        "activityCall": "Hívás",
+        "activityOrder": "Rendelés",
+        "activityReservation": "Foglalás"
       },
       "callLog": {
         "searchPlaceholder": "Keresés telefonszám, név vagy összefoglaló alapján…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "{current}. oldal / {total}",
         "paginationPrevious": "Előző",
-        "paginationNext": "Következő"
+        "paginationNext": "Következő",
+        "callerHistoryHint": "Hívó előzményeinek megtekintése",
+        "clearFilters": "Szűrők törlése",
+        "filterSearchChip": "Keresés: {q}"
       },
       "callDetail": {
         "backToCalls": "Vissza a hívásokhoz",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Fee Free csapat",
           "fromYou": "Ön",
           "justNow": "épp most"
-        }
+        },
+        "viewCallerHistory": "Hívó előzményei",
+        "historySeeAll": "Minden hívás és rendelés erről a számról"
       },
       "upsells": {
         "title": "Kiemelt ajánlatok",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Az üzenetet nem sikerült menteni.",
         "chipOne": "{service} szünetel eddig: {time}",
         "chipMany": "{count} szolgáltatás szünetel"
+      },
+      "caller": {
+        "title": "Hívó előzményei",
+        "unknownName": "Ismeretlen hívó",
+        "firstCall": "Első hívás: {date}",
+        "notFound": "Még nincs hívás erről a számról.",
+        "kpiCalls": "Hívások",
+        "reservationsSub": "{count, plural, one {# foglalás} other {# foglalás}}",
+        "kpiOrders": "Telefonos rendelések",
+        "avgOrderSub": "Átlagosan {amount}",
+        "kpiSpend": "Összes költés",
+        "spendSub": "Telefonos rendelésekből befolyt",
+        "kpiLastCall": "Utolsó hívás",
+        "kpiMood": "Hangulat a hívásokon",
+        "moodValue": "{pct}% pozitív",
+        "moodSub": "{count, plural, one {# értékelt hívás alapján} other {# értékelt hívás alapján}}",
+        "moodEmpty": "Még nincs értékelt hívás",
+        "callsTitle": "Minden hívás",
+        "callsCount": "{count, plural, one {# hívás} other {# hívás}}",
+        "moreCalls": "A(z) {total} hívásból a {shown} legutóbbi látható",
+        "favoritesTitle": "Általában ezt rendeli",
+        "favoritesEmpty": "A kedvencek az első teljesített telefonos rendelés után jelennek meg.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Hívások kimenetele",
+        "ordersTitle": "Telefonos rendelések",
+        "ordersEmpty": "Még nincs telefonos rendelés.",
+        "itemCount": "{count, plural, one {# tétel} other {# tétel}}"
       }
     },
     "customerDetailPage": {

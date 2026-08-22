@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} min wliczonych w minimum {minimum}/mies. ({rate}/min)",
         "meterAiNote": "Tylko czas obsługi AI — czas przekierowania nie jest wliczany",
         "meterProgress": "{pct}% wliczonego limitu",
-        "meterUsedOf": "{used} z {total} sekund"
+        "meterUsedOf": "{used} z {total} sekund",
+        "greetingMorning": "Dzień dobry, {name}",
+        "greetingAfternoon": "Dzień dobry, {name}",
+        "greetingEvening": "Dobry wieczór, {name}",
+        "greetingNight": "Dobranoc, {name}",
+        "nowLine": "Jest {when}",
+        "monthHeadlineRich": "W tym miesiącu Nabil AI przyniósł Ci <amt>{amount}</amt>",
+        "chartTopCallers": "Najczęściej dzwoniący",
+        "topCallersEmpty": "Brak powracających dzwoniących w tym okresie.",
+        "topCallersCalls": "{count, plural, one {# połączenie} few {# połączenia} many {# połączeń} other {# połączenia}}",
+        "topCallersOrders": "{count, plural, one {# zamówienie} few {# zamówienia} many {# zamówień} other {# zamówienia}}",
+        "activityCall": "Połączenie",
+        "activityOrder": "Zamówienie",
+        "activityReservation": "Rezerwacja"
       },
       "callLog": {
         "searchPlaceholder": "Szukaj numeru telefonu, imienia lub podsumowania…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Strona {current} z {total}",
         "paginationPrevious": "Poprzednia",
-        "paginationNext": "Następna"
+        "paginationNext": "Następna",
+        "callerHistoryHint": "Zobacz historię dzwoniącego",
+        "clearFilters": "Wyczyść filtry",
+        "filterSearchChip": "Szukaj: {q}"
       },
       "callDetail": {
         "backToCalls": "Powrót do połączeń",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Zespół Fee Free",
           "fromYou": "Ty",
           "justNow": "przed chwilą"
-        }
+        },
+        "viewCallerHistory": "Historia dzwoniącego",
+        "historySeeAll": "Zobacz wszystkie połączenia i zamówienia z tego numeru"
       },
       "upsells": {
         "title": "Wyróżnione dosprzedaże",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Nie udało się zapisać komunikatu.",
         "chipOne": "{service} wstrzymane do {time}",
         "chipMany": "Wstrzymane usługi: {count}"
+      },
+      "caller": {
+        "title": "Historia dzwoniącego",
+        "unknownName": "Nieznany dzwoniący",
+        "firstCall": "Pierwsze połączenie {date}",
+        "notFound": "Brak połączeń z tego numeru.",
+        "kpiCalls": "Połączenia",
+        "reservationsSub": "{count, plural, one {# rezerwacja} few {# rezerwacje} many {# rezerwacji} other {# rezerwacji}}",
+        "kpiOrders": "Zamówienia telefoniczne",
+        "avgOrderSub": "Średnio {amount}",
+        "kpiSpend": "Łączne wydatki",
+        "spendSub": "Pobrane z zamówień telefonicznych",
+        "kpiLastCall": "Ostatnie połączenie",
+        "kpiMood": "Nastrój rozmów",
+        "moodValue": "{pct}% pozytywnych",
+        "moodSub": "{count, plural, one {na podstawie # ocenionej rozmowy} few {na podstawie # ocenionych rozmów} many {na podstawie # ocenionych rozmów} other {na podstawie # ocenionej rozmowy}}",
+        "moodEmpty": "Brak ocenionych rozmów",
+        "callsTitle": "Wszystkie połączenia",
+        "callsCount": "{count, plural, one {# połączenie} few {# połączenia} many {# połączeń} other {# połączenia}}",
+        "moreCalls": "Wyświetlono {shown} najnowszych z {total} połączeń",
+        "favoritesTitle": "Zwykle zamawia",
+        "favoritesEmpty": "Ulubione pojawią się po pierwszym zrealizowanym zamówieniu telefonicznym.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Wyniki połączeń",
+        "ordersTitle": "Zamówienia telefoniczne",
+        "ordersEmpty": "Brak zamówień telefonicznych.",
+        "itemCount": "{count, plural, one {# pozycja} few {# pozycje} many {# pozycji} other {# pozycji}}"
       }
     },
     "customerDetailPage": {

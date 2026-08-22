@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} min inkluderet i {minimum}/måned minimum ({rate}/min)",
         "meterAiNote": "Kun AI-håndteringstid — omstillingstid ikke medregnet",
         "meterProgress": "{pct} % af inkluderet kvote",
-        "meterUsedOf": "{used} af {total} sekunder"
+        "meterUsedOf": "{used} af {total} sekunder",
+        "greetingMorning": "Godmorgen, {name}",
+        "greetingAfternoon": "God eftermiddag, {name}",
+        "greetingEvening": "Godaften, {name}",
+        "greetingNight": "Godnat, {name}",
+        "nowLine": "Det er {when}",
+        "monthHeadlineRich": "Du har tjent <amt>{amount}</amt> denne måned med Nabil AI",
+        "chartTopCallers": "Hyppigste opkaldere",
+        "topCallersEmpty": "Ingen tilbagevendende opkaldere i denne periode endnu.",
+        "topCallersCalls": "{count, plural, one {# opkald} other {# opkald}}",
+        "topCallersOrders": "{count, plural, one {# bestilling} other {# bestillinger}}",
+        "activityCall": "Opkald",
+        "activityOrder": "Bestilling",
+        "activityReservation": "Reservation"
       },
       "callLog": {
         "searchPlaceholder": "Søg efter telefon, navn eller resumé…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Side {current} af {total}",
         "paginationPrevious": "Forrige",
-        "paginationNext": "Næste"
+        "paginationNext": "Næste",
+        "callerHistoryHint": "Vis opkalderens historik",
+        "clearFilters": "Ryd filtre",
+        "filterSearchChip": "Søgning: {q}"
       },
       "callDetail": {
         "backToCalls": "Tilbage til opkald",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Fee Free-teamet",
           "fromYou": "Dig",
           "justNow": "lige nu"
-        }
+        },
+        "viewCallerHistory": "Opkalderens historik",
+        "historySeeAll": "Se alle opkald og bestillinger fra dette nummer"
       },
       "upsells": {
         "title": "Fremhævede mersalg",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Kunne ikke gemme beskeden.",
         "chipOne": "{service} på pause indtil {time}",
         "chipMany": "{count} tjenester på pause"
+      },
+      "caller": {
+        "title": "Opkalderens historik",
+        "unknownName": "Ukendt opkalder",
+        "firstCall": "Første opkald {date}",
+        "notFound": "Ingen opkald fra dette nummer endnu.",
+        "kpiCalls": "Opkald",
+        "reservationsSub": "{count, plural, one {# reservation} other {# reservationer}}",
+        "kpiOrders": "Telefonbestillinger",
+        "avgOrderSub": "{amount} i gennemsnit",
+        "kpiSpend": "Samlet forbrug",
+        "spendSub": "Indbetalt på telefonbestillinger",
+        "kpiLastCall": "Seneste opkald",
+        "kpiMood": "Stemning i opkald",
+        "moodValue": "{pct} % positiv",
+        "moodSub": "{count, plural, one {på tværs af # vurderet opkald} other {på tværs af # vurderede opkald}}",
+        "moodEmpty": "Ingen vurderede opkald endnu",
+        "callsTitle": "Alle opkald",
+        "callsCount": "{count, plural, one {# opkald} other {# opkald}}",
+        "moreCalls": "Viser de {shown} seneste af {total} opkald",
+        "favoritesTitle": "Bestiller som regel",
+        "favoritesEmpty": "Favoritter vises efter den første gennemførte telefonbestilling.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Opkaldsresultater",
+        "ordersTitle": "Telefonbestillinger",
+        "ordersEmpty": "Ingen telefonbestillinger endnu.",
+        "itemCount": "{count, plural, one {# vare} other {# varer}}"
       }
     },
     "customerDetailPage": {

@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} min įtrauktos į {minimum}/mėn. minimumą ({rate}/min)",
         "meterAiNote": "Tik AI apdorojimo laikas — peradresavimo laikas neįskaičiuotas",
         "meterProgress": "{pct}% įskaičiuotos normos",
-        "meterUsedOf": "{used} iš {total} sekundžių"
+        "meterUsedOf": "{used} iš {total} sekundžių",
+        "greetingMorning": "Labas rytas, {name}",
+        "greetingAfternoon": "Laba diena, {name}",
+        "greetingEvening": "Labas vakaras, {name}",
+        "greetingNight": "Labos nakties, {name}",
+        "nowLine": "Dabar {when}",
+        "monthHeadlineRich": "Šį mėnesį su Nabil AI uždirbote <amt>{amount}</amt>",
+        "chartTopCallers": "Dažniausi skambintojai",
+        "topCallersEmpty": "Šiuo laikotarpiu pakartotinių skambintojų dar nėra.",
+        "topCallersCalls": "{count, plural, one {# skambutis} few {# skambučiai} many {# skambučio} other {# skambučių}}",
+        "topCallersOrders": "{count, plural, one {# užsakymas} few {# užsakymai} many {# užsakymo} other {# užsakymų}}",
+        "activityCall": "Skambutis",
+        "activityOrder": "Užsakymas",
+        "activityReservation": "Rezervacija"
       },
       "callLog": {
         "searchPlaceholder": "Ieškoti pagal telefoną, vardą ar santrauką…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Puslapis {current} iš {total}",
         "paginationPrevious": "Ankstesnis",
-        "paginationNext": "Kitas"
+        "paginationNext": "Kitas",
+        "callerHistoryHint": "Peržiūrėti skambintojo istoriją",
+        "clearFilters": "Išvalyti filtrus",
+        "filterSearchChip": "Paieška: {q}"
       },
       "callDetail": {
         "backToCalls": "Grįžti į skambučius",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "„Fee Free“ komanda",
           "fromYou": "Jūs",
           "justNow": "ką tik"
-        }
+        },
+        "viewCallerHistory": "Skambintojo istorija",
+        "historySeeAll": "Peržiūrėkite visus šio numerio skambučius ir užsakymus"
       },
       "upsells": {
         "title": "Rekomenduojami papildomi pasiūlymai",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Nepavyko išsaugoti žinutės.",
         "chipOne": "{service} pristabdyta iki {time}",
         "chipMany": "Pristabdytos paslaugos: {count}"
+      },
+      "caller": {
+        "title": "Skambintojo istorija",
+        "unknownName": "Nežinomas skambintojas",
+        "firstCall": "Pirmas skambutis {date}",
+        "notFound": "Iš šio numerio skambučių dar nėra.",
+        "kpiCalls": "Skambučiai",
+        "reservationsSub": "{count, plural, one {# rezervacija} few {# rezervacijos} many {# rezervacijos} other {# rezervacijų}}",
+        "kpiOrders": "Telefoniniai užsakymai",
+        "avgOrderSub": "Vidutiniškai {amount}",
+        "kpiSpend": "Iš viso išleista",
+        "spendSub": "Surinkta iš telefoninių užsakymų",
+        "kpiLastCall": "Paskutinis skambutis",
+        "kpiMood": "Nuotaika skambučiuose",
+        "moodValue": "{pct}% teigiama",
+        "moodSub": "{count, plural, one {pagal # įvertintą skambutį} few {pagal # įvertintus skambučius} many {pagal # įvertinto skambučio} other {pagal # įvertintų skambučių}}",
+        "moodEmpty": "Įvertintų skambučių dar nėra",
+        "callsTitle": "Visi skambučiai",
+        "callsCount": "{count, plural, one {# skambutis} few {# skambučiai} many {# skambučio} other {# skambučių}}",
+        "moreCalls": "Rodomi {shown} naujausi iš {total} skambučių",
+        "favoritesTitle": "Dažniausiai užsako",
+        "favoritesEmpty": "Mėgstamiausi patiekalai atsiranda po pirmo įvykdyto telefoninio užsakymo.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Skambučių rezultatai",
+        "ordersTitle": "Telefoniniai užsakymai",
+        "ordersEmpty": "Telefoninių užsakymų dar nėra.",
+        "itemCount": "{count, plural, one {# prekė} few {# prekės} many {# prekės} other {# prekių}}"
       }
     },
     "customerDetailPage": {

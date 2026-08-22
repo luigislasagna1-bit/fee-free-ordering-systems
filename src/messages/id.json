@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} mnt termasuk dalam minimum {minimum}/bulan ({rate}/mnt)",
         "meterAiNote": "Hanya waktu penanganan AI — waktu transfer tidak dihitung",
         "meterProgress": "{pct}% dari kuota termasuk",
-        "meterUsedOf": "{used} dari {total} detik"
+        "meterUsedOf": "{used} dari {total} detik",
+        "greetingMorning": "Selamat pagi, {name}",
+        "greetingAfternoon": "Selamat siang, {name}",
+        "greetingEvening": "Selamat sore, {name}",
+        "greetingNight": "Selamat malam, {name}",
+        "nowLine": "Sekarang {when}",
+        "monthHeadlineRich": "Anda telah menghasilkan <amt>{amount}</amt> bulan ini bersama Nabil AI",
+        "chartTopCallers": "Penelepon teratas",
+        "topCallersEmpty": "Belum ada penelepon berulang dalam rentang ini.",
+        "topCallersCalls": "{count, plural, other {# panggilan}}",
+        "topCallersOrders": "{count, plural, other {# pesanan}}",
+        "activityCall": "Panggilan",
+        "activityOrder": "Pesanan",
+        "activityReservation": "Reservasi"
       },
       "callLog": {
         "searchPlaceholder": "Cari telepon, nama, atau ringkasan…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Halaman {current} dari {total}",
         "paginationPrevious": "Sebelumnya",
-        "paginationNext": "Berikutnya"
+        "paginationNext": "Berikutnya",
+        "callerHistoryHint": "Lihat riwayat penelepon",
+        "clearFilters": "Hapus filter",
+        "filterSearchChip": "Cari: {q}"
       },
       "callDetail": {
         "backToCalls": "Kembali ke daftar panggilan",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Tim Fee Free",
           "fromYou": "Anda",
           "justNow": "baru saja"
-        }
+        },
+        "viewCallerHistory": "Riwayat penelepon",
+        "historySeeAll": "Lihat semua panggilan dan pesanan dari nomor ini"
       },
       "upsells": {
         "title": "Upsell Unggulan",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Pesan tidak dapat disimpan.",
         "chipOne": "{service} dijeda sampai {time}",
         "chipMany": "{count} layanan dijeda"
+      },
+      "caller": {
+        "title": "Riwayat penelepon",
+        "unknownName": "Penelepon tak dikenal",
+        "firstCall": "Panggilan pertama {date}",
+        "notFound": "Belum ada panggilan dari nomor ini.",
+        "kpiCalls": "Panggilan",
+        "reservationsSub": "{count, plural, other {# reservasi}}",
+        "kpiOrders": "Pesanan telepon",
+        "avgOrderSub": "Rata-rata {amount}",
+        "kpiSpend": "Total belanja",
+        "spendSub": "Terkumpul dari pesanan telepon",
+        "kpiLastCall": "Panggilan terakhir",
+        "kpiMood": "Suasana panggilan",
+        "moodValue": "{pct}% positif",
+        "moodSub": "{count, plural, other {dari # panggilan yang dinilai}}",
+        "moodEmpty": "Belum ada panggilan yang dinilai",
+        "callsTitle": "Semua panggilan",
+        "callsCount": "{count, plural, other {# panggilan}}",
+        "moreCalls": "Menampilkan {shown} panggilan terbaru dari {total}",
+        "favoritesTitle": "Biasanya memesan",
+        "favoritesEmpty": "Favorit akan muncul setelah pesanan telepon pertama selesai.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Hasil panggilan",
+        "ordersTitle": "Pesanan telepon",
+        "ordersEmpty": "Belum ada pesanan telepon.",
+        "itemCount": "{count, plural, other {# item}}"
       }
     },
     "customerDetailPage": {

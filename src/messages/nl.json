@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} min inbegrepen in het {minimum}/maand minimum ({rate}/min)",
         "meterAiNote": "Alleen AI-afhandeltijd — doorverbindtijd niet inbegrepen",
         "meterProgress": "{pct}% van de inbegrepen bundel",
-        "meterUsedOf": "{used} van {total} seconden"
+        "meterUsedOf": "{used} van {total} seconden",
+        "greetingMorning": "Goedemorgen, {name}",
+        "greetingAfternoon": "Goedemiddag, {name}",
+        "greetingEvening": "Goedenavond, {name}",
+        "greetingNight": "Goedenacht, {name}",
+        "nowLine": "Het is {when}",
+        "monthHeadlineRich": "Je hebt deze maand <amt>{amount}</amt> verdiend met Nabil AI",
+        "chartTopCallers": "Meest bellende klanten",
+        "topCallersEmpty": "Nog geen terugkerende bellers in deze periode.",
+        "topCallersCalls": "{count, plural, one {# gesprek} other {# gesprekken}}",
+        "topCallersOrders": "{count, plural, one {# bestelling} other {# bestellingen}}",
+        "activityCall": "Gesprek",
+        "activityOrder": "Bestelling",
+        "activityReservation": "Reservering"
       },
       "callLog": {
         "searchPlaceholder": "Zoek op telefoon, naam of samenvatting…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Pagina {current} van {total}",
         "paginationPrevious": "Vorige",
-        "paginationNext": "Volgende"
+        "paginationNext": "Volgende",
+        "callerHistoryHint": "Bellergeschiedenis bekijken",
+        "clearFilters": "Filters wissen",
+        "filterSearchChip": "Zoeken: {q}"
       },
       "callDetail": {
         "backToCalls": "Terug naar gesprekken",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Fee Free-team",
           "fromYou": "U",
           "justNow": "zojuist"
-        }
+        },
+        "viewCallerHistory": "Bellergeschiedenis",
+        "historySeeAll": "Bekijk alle gesprekken en bestellingen van dit nummer"
       },
       "upsells": {
         "title": "Uitgelichte upsells",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Kon het bericht niet opslaan.",
         "chipOne": "{service} gepauzeerd tot {time}",
         "chipMany": "{count} diensten gepauzeerd"
+      },
+      "caller": {
+        "title": "Bellergeschiedenis",
+        "unknownName": "Onbekende beller",
+        "firstCall": "Eerste gesprek op {date}",
+        "notFound": "Nog geen gesprekken van dit nummer.",
+        "kpiCalls": "Gesprekken",
+        "reservationsSub": "{count, plural, one {# reservering} other {# reserveringen}}",
+        "kpiOrders": "Telefonische bestellingen",
+        "avgOrderSub": "{amount} gemiddeld",
+        "kpiSpend": "Totaal besteed",
+        "spendSub": "Ontvangen via telefonische bestellingen",
+        "kpiLastCall": "Laatste gesprek",
+        "kpiMood": "Stemming in gesprekken",
+        "moodValue": "{pct}% positief",
+        "moodSub": "{count, plural, one {over # beoordeeld gesprek} other {over # beoordeelde gesprekken}}",
+        "moodEmpty": "Nog geen beoordeelde gesprekken",
+        "callsTitle": "Alle gesprekken",
+        "callsCount": "{count, plural, one {# gesprek} other {# gesprekken}}",
+        "moreCalls": "De {shown} meest recente van {total} gesprekken worden getoond",
+        "favoritesTitle": "Bestelt meestal",
+        "favoritesEmpty": "Favorieten verschijnen na de eerste afgeronde telefonische bestelling.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Gespreksresultaten",
+        "ordersTitle": "Telefonische bestellingen",
+        "ordersEmpty": "Nog geen telefonische bestellingen.",
+        "itemCount": "{count, plural, one {# artikel} other {# artikelen}}"
       }
     },
     "customerDetailPage": {

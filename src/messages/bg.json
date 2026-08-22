@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} мин включени в минимума {minimum}/месец ({rate}/мин)",
         "meterAiNote": "Само време за обработка от AI — време за прехвърляне не е включено",
         "meterProgress": "{pct}% от включения лимит",
-        "meterUsedOf": "{used} от {total} секунди"
+        "meterUsedOf": "{used} от {total} секунди",
+        "greetingMorning": "Добро утро, {name}",
+        "greetingAfternoon": "Добър ден, {name}",
+        "greetingEvening": "Добър вечер, {name}",
+        "greetingNight": "Лека нощ, {name}",
+        "nowLine": "Сега е {when}",
+        "monthHeadlineRich": "Този месец спечелихте <amt>{amount}</amt> с Nabil AI",
+        "chartTopCallers": "Най-чести обаждащи се",
+        "topCallersEmpty": "Все още няма повтарящи се обаждащи се за този период.",
+        "topCallersCalls": "{count, plural, one {# обаждане} other {# обаждания}}",
+        "topCallersOrders": "{count, plural, one {# поръчка} other {# поръчки}}",
+        "activityCall": "Обаждане",
+        "activityOrder": "Поръчка",
+        "activityReservation": "Резервация"
       },
       "callLog": {
         "searchPlaceholder": "Търсене по телефон, име или резюме…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Страница {current} от {total}",
         "paginationPrevious": "Предишна",
-        "paginationNext": "Следваща"
+        "paginationNext": "Следваща",
+        "callerHistoryHint": "Преглед на историята на обаждащия се",
+        "clearFilters": "Изчисти филтрите",
+        "filterSearchChip": "Търсене: {q}"
       },
       "callDetail": {
         "backToCalls": "Назад към обажданията",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Екипът на Fee Free",
           "fromYou": "Вие",
           "justNow": "току-що"
-        }
+        },
+        "viewCallerHistory": "История на обаждащия се",
+        "historySeeAll": "Вижте всички обаждания и поръчки от този номер"
       },
       "upsells": {
         "title": "Избрани допълнителни продажби",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Съобщението не можа да бъде запазено.",
         "chipOne": "{service} на пауза до {time}",
         "chipMany": "{count} услуги на пауза"
+      },
+      "caller": {
+        "title": "История на обаждащия се",
+        "unknownName": "Неизвестен обаждащ се",
+        "firstCall": "Първо обаждане {date}",
+        "notFound": "Все още няма обаждания от този номер.",
+        "kpiCalls": "Обаждания",
+        "reservationsSub": "{count, plural, one {# резервация} other {# резервации}}",
+        "kpiOrders": "Телефонни поръчки",
+        "avgOrderSub": "{amount} средно",
+        "kpiSpend": "Общо похарчено",
+        "spendSub": "Събрано от телефонни поръчки",
+        "kpiLastCall": "Последно обаждане",
+        "kpiMood": "Настроение при обажданията",
+        "moodValue": "{pct}% положително",
+        "moodSub": "{count, plural, one {от # оценено обаждане} other {от # оценени обаждания}}",
+        "moodEmpty": "Все още няма оценени обаждания",
+        "callsTitle": "Всички обаждания",
+        "callsCount": "{count, plural, one {# обаждане} other {# обаждания}}",
+        "moreCalls": "Показани са {shown} най-нови от {total} обаждания",
+        "favoritesTitle": "Обикновено поръчва",
+        "favoritesEmpty": "Любимите се появяват след първата завършена телефонна поръчка.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Резултати от обажданията",
+        "ordersTitle": "Телефонни поръчки",
+        "ordersEmpty": "Все още няма телефонни поръчки.",
+        "itemCount": "{count, plural, one {# артикул} other {# артикула}}"
       }
     },
     "customerDetailPage": {

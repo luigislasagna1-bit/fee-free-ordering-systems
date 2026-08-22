@@ -1,16 +1,19 @@
 import { getTranslations } from "next-intl/server";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import prisma from "@/lib/db";
 import type { Prisma } from "@/generated/prisma/client";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
-import { Pagination, one, type SearchParams } from "@/components/admin/reports/table-nav";
+import { Pagination, buildQuery, one, type SearchParams } from "@/components/admin/reports/table-nav";
+import Link from "next/link";
 import { collectedOf } from "@/lib/reports/collected";
 import { REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
 import { CALL_OUTCOMES } from "@/lib/voice/analytics";
+import { phoneDigitsKey } from "@/lib/phone";
 import { CallRowLink } from "./CallRowLink";
+import { CallerLink } from "./CallerLink";
 import { formatTzDateTime, formatDuration, OutcomeChip, SentimentDot } from "./shared";
 
 const PAGE_SIZE = 20;
@@ -106,6 +109,19 @@ export default async function CallsTab({
   const outcomeLabel = (o: string | null) =>
     o && (CALL_OUTCOMES as readonly string[]).includes(o) ? t(`outcome.${o}`) : t("outcome.unknown");
 
+  // Landing here from the Overview "needs attention" banner pre-fills
+  // ?outcome=error with nothing on screen saying so — the chips make an
+  // active filter visible and give it a one-click way out.
+  const filtersActive = !!q || !!outcome;
+  const clearHref = (() => {
+    const u = new URLSearchParams(buildQuery(sp));
+    u.set("tab", "calls");
+    u.delete("q");
+    u.delete("outcome");
+    u.delete("page");
+    return `?${u.toString()}`;
+  })();
+
   return (
     <div className="space-y-4">
       {/* Filter bar — plain GET form so the whole tab stays a server page.
@@ -151,8 +167,27 @@ export default async function CallsTab({
         <DateRangePicker defaultPreset="last_28" />
       </div>
 
-      <div className="text-xs text-gray-500">
-        {t("callCountLabel", { count: totalCount, range: formatRangeLabelInTz(range, scope.timezone ?? undefined) })}
+      <div className="flex items-center gap-2 flex-wrap text-xs text-gray-500">
+        <span>{t("callCountLabel", { count: totalCount, range: formatRangeLabelInTz(range, scope.timezone ?? undefined) })}</span>
+        {filtersActive && (
+          <>
+            <span className="text-gray-300">·</span>
+            {q && (
+              <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 font-medium text-amber-800">
+                {t("filterSearchChip", { q })}
+              </span>
+            )}
+            {outcome && (
+              <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 font-medium text-amber-800">
+                {t(`outcome.${outcome}`)}
+              </span>
+            )}
+            <Link href={clearHref} className="inline-flex items-center gap-1 font-medium text-gray-600 hover:text-gray-900">
+              <X className="w-3 h-3" />
+              {t("clearFilters")}
+            </Link>
+          </>
+        )}
       </div>
 
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
@@ -191,20 +226,29 @@ export default async function CallsTab({
                     order.orderNumber.startsWith(REPORT_ORDER_STATUS_WHERE.orderNumber.not.startsWith));
                 const collected = order && !voided ? collectedOf(order) : null;
                 const name = c.customerId ? nameById.get(c.customerId) : undefined;
+                const digits = phoneDigitsKey(c.fromNumber);
                 return (
                   <CallRowLink key={c.id} href={`/admin/phone-ordering/calls/${c.id}`}>
                     <td className="py-2.5 px-4 whitespace-nowrap text-gray-600">
                       {formatTzDateTime(c.startedAt, scope.timezone)}
                     </td>
                     <td className="py-2.5 px-4 whitespace-nowrap">
-                      {c.fromNumber ? (
+                      {c.fromNumber && digits ? (
+                        <CallerLink digits={digits} title={t("callerHistoryHint")} className="font-mono text-gray-700">
+                          {c.fromNumber}
+                        </CallerLink>
+                      ) : c.fromNumber ? (
                         <span className="font-mono text-gray-700">{c.fromNumber}</span>
                       ) : (
                         <span className="text-gray-400">{t("anonymousCaller")}</span>
                       )}
                     </td>
                     <td className="py-2.5 px-4 whitespace-nowrap">
-                      {name ? (
+                      {name && digits ? (
+                        <CallerLink digits={digits} title={t("callerHistoryHint")} className="font-medium text-gray-900" showIcon>
+                          {name}
+                        </CallerLink>
+                      ) : name ? (
                         <span className="font-medium text-gray-900">{name}</span>
                       ) : (
                         <span className="text-gray-400">—</span>

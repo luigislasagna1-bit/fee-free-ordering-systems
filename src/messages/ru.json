@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} мин включено в минимум {minimum}/мес. ({rate}/мин)",
         "meterAiNote": "Только время обработки AI — время переадресации не учитывается",
         "meterProgress": "{pct}% включённого лимита",
-        "meterUsedOf": "{used} из {total} секунд"
+        "meterUsedOf": "{used} из {total} секунд",
+        "greetingMorning": "Доброе утро, {name}",
+        "greetingAfternoon": "Добрый день, {name}",
+        "greetingEvening": "Добрый вечер, {name}",
+        "greetingNight": "Доброй ночи, {name}",
+        "nowLine": "Сейчас {when}",
+        "monthHeadlineRich": "В этом месяце вы заработали <amt>{amount}</amt> с Nabil AI",
+        "chartTopCallers": "Частые звонящие",
+        "topCallersEmpty": "За этот период повторных звонящих пока нет.",
+        "topCallersCalls": "{count, plural, one {# звонок} few {# звонка} many {# звонков} other {# звонка}}",
+        "topCallersOrders": "{count, plural, one {# заказ} few {# заказа} many {# заказов} other {# заказа}}",
+        "activityCall": "Звонок",
+        "activityOrder": "Заказ",
+        "activityReservation": "Бронирование"
       },
       "callLog": {
         "searchPlaceholder": "Поиск по телефону, имени или сводке…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Страница {current} из {total}",
         "paginationPrevious": "Назад",
-        "paginationNext": "Далее"
+        "paginationNext": "Далее",
+        "callerHistoryHint": "Посмотреть историю звонящего",
+        "clearFilters": "Сбросить фильтры",
+        "filterSearchChip": "Поиск: {q}"
       },
       "callDetail": {
         "backToCalls": "Назад к звонкам",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Команда Fee Free",
           "fromYou": "Вы",
           "justNow": "только что"
-        }
+        },
+        "viewCallerHistory": "История звонящего",
+        "historySeeAll": "Все звонки и заказы с этого номера"
       },
       "upsells": {
         "title": "Рекомендуемые допродажи",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Не удалось сохранить сообщение.",
         "chipOne": "{service} приостановлено до {time}",
         "chipMany": "Приостановлено услуг: {count}"
+      },
+      "caller": {
+        "title": "История звонящего",
+        "unknownName": "Неизвестный звонящий",
+        "firstCall": "Первый звонок {date}",
+        "notFound": "С этого номера пока не звонили.",
+        "kpiCalls": "Звонки",
+        "reservationsSub": "{count, plural, one {# бронирование} few {# бронирования} many {# бронирований} other {# бронирования}}",
+        "kpiOrders": "Заказы по телефону",
+        "avgOrderSub": "{amount} в среднем",
+        "kpiSpend": "Потрачено за всё время",
+        "spendSub": "Получено по телефонным заказам",
+        "kpiLastCall": "Последний звонок",
+        "kpiMood": "Настроение в звонках",
+        "moodValue": "{pct}% позитивных",
+        "moodSub": "{count, plural, one {по # оценённому звонку} few {по # оценённым звонкам} many {по # оценённым звонкам} other {по # оценённого звонка}}",
+        "moodEmpty": "Оценённых звонков пока нет",
+        "callsTitle": "Все звонки",
+        "callsCount": "{count, plural, one {# звонок} few {# звонка} many {# звонков} other {# звонка}}",
+        "moreCalls": "Показаны {shown} последних из {total} звонков",
+        "favoritesTitle": "Обычно заказывает",
+        "favoritesEmpty": "Любимые блюда появятся после первого выполненного заказа по телефону.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Итоги звонков",
+        "ordersTitle": "Заказы по телефону",
+        "ordersEmpty": "Заказов по телефону пока нет.",
+        "itemCount": "{count, plural, one {# позиция} few {# позиции} many {# позиций} other {# позиции}}"
       }
     },
     "customerDetailPage": {

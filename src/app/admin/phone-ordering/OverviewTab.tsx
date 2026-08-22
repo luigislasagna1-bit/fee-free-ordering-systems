@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { AlertTriangle, ArrowRight, Clock, Moon, PhoneCall, ShoppingBag, TrendingUp } from "lucide-react";
+import { AlertTriangle, ArrowRight, CalendarDays, Clock, Moon, PhoneCall, ShoppingBag, TrendingUp, Users } from "lucide-react";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
@@ -13,17 +13,40 @@ import {
   conversionPct,
   CALL_OUTCOMES,
 } from "@/lib/voice/analytics";
+import { phoneDigitsKey } from "@/lib/phone";
 import { PollRefresh } from "@/components/admin/PollRefresh";
 import { fetchNabilUsage } from "@/lib/voice/nabil-usage";
 import { meterSummary, monthWindowUtc, formatUsdCents, formatSecondsAsMinSec } from "@/lib/voice/nabil-billing";
 import { formatTzDateTime, formatDuration, OutcomeChip } from "./shared";
+import { CallerLink } from "./CallerLink";
+
+/** Local hour → greeting key. Loman says "Good night" after 22:00; we do too. */
+function greetingKey(hour: number): "greetingMorning" | "greetingAfternoon" | "greetingEvening" | "greetingNight" {
+  if (hour >= 5 && hour < 12) return "greetingMorning";
+  if (hour >= 12 && hour < 17) return "greetingAfternoon";
+  if (hour >= 17 && hour < 22) return "greetingEvening";
+  return "greetingNight";
+}
+
+function localHour(d: Date, tz: string | null): number {
+  try {
+    const h = new Intl.DateTimeFormat("en-US", { hour: "numeric", hour12: false, timeZone: tz ?? undefined }).format(d);
+    const n = parseInt(h, 10);
+    return Number.isFinite(n) ? n % 24 : d.getHours();
+  } catch {
+    return d.getHours();
+  }
+}
 
 export default async function OverviewTab({
   restaurantId,
   sp,
+  greetingName,
 }: {
   restaurantId: string;
   sp: SearchParams;
+  /** The signed-in user's name — first token is used ("Good evening, Luigi"). */
+  greetingName?: string | null;
 }) {
   const t = await getTranslations("admin.phoneOrderingPage.overview");
   const tCalls = await getTranslations("admin.phoneOrderingPage.callLog");
@@ -49,22 +72,15 @@ export default async function OverviewTab({
   const outcomeLabel = (o: string | null) =>
     o && (CALL_OUTCOMES as readonly string[]).includes(o) ? tCalls(`outcome.${o}`) : tCalls("outcome.unknown");
 
-  const errorsQuery = (() => {
+  const tabQuery = (tab: string, extra?: Record<string, string>) => {
     const u = new URLSearchParams(buildQuery(sp));
-    u.set("tab", "calls");
-    u.set("outcome", "error");
+    u.set("tab", tab);
+    for (const [k, v] of Object.entries(extra ?? {})) u.set(k, v);
     return `?${u.toString()}`;
-  })();
-  const callsTabQuery = (() => {
-    const u = new URLSearchParams(buildQuery(sp));
-    u.set("tab", "calls");
-    return `?${u.toString()}`;
-  })();
-  const upsellsTabQuery = (() => {
-    const u = new URLSearchParams(buildQuery(sp));
-    u.set("tab", "menu");
-    return `?${u.toString()}`;
-  })();
+  };
+  const errorsQuery = tabQuery("calls", { outcome: "error" });
+  const callsTabQuery = tabQuery("calls");
+  const upsellsTabQuery = tabQuery("menu");
   const maxPopular = Math.max(...popularItems.map((i) => i.quantity), 1);
 
   const maxPerDay = Math.max(...a.perDay.map((d) => d.count), 1);
@@ -77,15 +93,31 @@ export default async function OverviewTab({
 
   const usagePct = Math.min(100, Math.round((meter.seconds / meter.includedSeconds) * 100));
 
+  // Greeting in the RESTAURANT's clock, never the server's (Vercel is UTC).
+  const firstName = (greetingName ?? "").trim().split(/\s+/)[0] || "";
+  const greeting = t(greetingKey(localHour(now, scope.timezone)), { name: firstName });
+  const whenLabel = formatTzDateTime(now, scope.timezone, { weekday: "long", hour: "numeric", minute: "2-digit" });
+
   return (
     <div className="space-y-5">
       <PollRefresh intervalMs={30_000} />
 
-      {/* Top bar: revenue + date picker */}
-      <div className="flex items-center justify-between gap-4 flex-wrap">
+      {/* Greeting + the month headline. The amount is the one number the
+          owner came for, so it gets the accent colour and the big type. */}
+      <div className="flex items-end justify-between gap-4 flex-wrap">
         <div>
-          <div className="text-sm text-gray-500">{t("monthHeadlineSub")}</div>
-          <div className="text-3xl font-bold text-gray-900 tabular-nums">{fmt(monthRevenue)}</div>
+          <div className="text-lg font-semibold text-gray-900">{greeting}</div>
+          <div className="mt-0.5 text-xs text-gray-400 inline-flex items-center gap-1.5">
+            <Clock className="w-3.5 h-3.5" />
+            {t("nowLine", { when: whenLabel })}
+          </div>
+          <div className="mt-3 text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight tabular-nums">
+            {t.rich("monthHeadlineRich", {
+              amount: fmt(monthRevenue),
+              amt: (chunks) => <span className="text-amber-600">{chunks}</span>,
+            })}
+          </div>
+          <div className="mt-1 text-xs text-gray-500">{t("monthHeadlineSub")}</div>
         </div>
         <DateRangePicker defaultPreset="last_28" />
       </div>
@@ -97,7 +129,6 @@ export default async function OverviewTab({
           <div className="text-xs text-gray-400">{t("meterAiNote")}</div>
         </div>
 
-        {/* Progress bar */}
         <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-2">
           <div
             className={`h-full rounded-full transition-all ${usagePct >= 100 ? "bg-amber-500" : "bg-emerald-500"}`}
@@ -109,7 +140,6 @@ export default async function OverviewTab({
           <span>{t("meterProgress", { pct: usagePct.toString() })}</span>
         </div>
 
-        {/* Stats row */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-3 border-t border-gray-100">
           <MeterStat label={t("meterSecondsLabel")} value={meter.seconds.toLocaleString()} sub={formatSecondsAsMinSec(meter.seconds)} />
           <MeterStat label={t("meterCurrentLabel")} value={formatUsdCents(meter.chargeSoFarCents)} />
@@ -168,7 +198,7 @@ export default async function OverviewTab({
         </div>
       ) : (
         <>
-          {/* Charts */}
+          {/* Charts — six cards in a 2-col grid, so nothing is orphaned. */}
           <div className="grid lg:grid-cols-2 gap-4">
             {/* Calls per day */}
             <div className="bg-white rounded-xl border border-gray-100 p-5">
@@ -193,15 +223,15 @@ export default async function OverviewTab({
               <h3 className="text-sm font-semibold text-gray-900 mb-4">{t("chartOutcomes")}</h3>
               <div className="space-y-2">
                 {outcomesSorted.map(([o, n]) => (
-                  <div key={o} className="flex items-center gap-3">
+                  <Link key={o} href={tabQuery("calls", { outcome: o })} className="flex items-center gap-3 group">
                     <div className="w-32 flex-shrink-0">
                       <OutcomeChip outcome={o} label={outcomeLabel(o)} />
                     </div>
                     <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                      <div className="h-full bg-sky-400 rounded-full" style={{ width: `${(n / Math.max(totalOutcomes, 1)) * 100}%` }} />
+                      <div className="h-full bg-sky-400 group-hover:bg-sky-500 rounded-full transition" style={{ width: `${(n / Math.max(totalOutcomes, 1)) * 100}%` }} />
                     </div>
                     <span className="text-xs font-medium text-gray-700 w-6 text-right tabular-nums">{n}</span>
-                  </div>
+                  </Link>
                 ))}
               </div>
               {(Object.keys(a.languages).length > 0 || Object.keys(a.sentiments).length > 0) && (
@@ -250,6 +280,23 @@ export default async function OverviewTab({
               </div>
             </div>
 
+            {/* Day of week */}
+            <div className="bg-white rounded-xl border border-gray-100 p-5">
+              <h3 className="text-sm font-semibold text-gray-900 mb-4">{t("chartDayOfWeek")}</h3>
+              <div className="flex items-end gap-2 h-28">
+                {dowOrder.map((dow) => (
+                  <div key={dow} className="flex-1 flex flex-col items-center justify-end h-full">
+                    <span className="text-xs font-medium text-gray-700 mb-1 tabular-nums">{a.perDow[dow]}</span>
+                    <div
+                      className={`w-full rounded-t ${a.perDow[dow] > 0 ? "bg-sky-300" : "bg-gray-100"}`}
+                      style={{ height: `${Math.max((a.perDow[dow] / maxPerDow) * 82, a.perDow[dow] > 0 ? 6 : 3)}%` }}
+                    />
+                    <span className="text-[10px] text-gray-400 mt-1">{dowLabels[dow]}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Popular items */}
             <div className="bg-white rounded-xl border border-gray-100 p-5">
               <div className="flex items-center justify-between mb-4">
@@ -277,25 +324,45 @@ export default async function OverviewTab({
               )}
             </div>
 
-            {/* Day of week */}
+            {/* Top callers — phone-keyed, drills into the caller history page.
+                Loman can't build this: they don't own the order money. */}
             <div className="bg-white rounded-xl border border-gray-100 p-5">
-              <h3 className="text-sm font-semibold text-gray-900 mb-4">{t("chartDayOfWeek")}</h3>
-              <div className="flex items-end gap-2 h-28">
-                {dowOrder.map((dow) => (
-                  <div key={dow} className="flex-1 flex flex-col items-center justify-end h-full">
-                    <span className="text-xs font-medium text-gray-700 mb-1 tabular-nums">{a.perDow[dow]}</span>
-                    <div
-                      className={`w-full rounded-t ${a.perDow[dow] > 0 ? "bg-sky-300" : "bg-gray-100"}`}
-                      style={{ height: `${Math.max((a.perDow[dow] / maxPerDow) * 82, a.perDow[dow] > 0 ? 6 : 3)}%` }}
-                    />
-                    <span className="text-[10px] text-gray-400 mt-1">{dowLabels[dow]}</span>
-                  </div>
-                ))}
-              </div>
+              <h3 className="text-sm font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <Users className="w-4 h-4 text-gray-400" />
+                {t("chartTopCallers")}
+              </h3>
+              {a.topCallers.length === 0 ? (
+                <p className="text-sm text-gray-400">{t("topCallersEmpty")}</p>
+              ) : (
+                <div className="space-y-1">
+                  {a.topCallers.map((c, i) => (
+                    <Link
+                      key={c.digits}
+                      href={`/admin/phone-ordering/callers/${c.digits}`}
+                      className="flex items-center gap-3 -mx-2 px-2 py-1.5 rounded-lg hover:bg-gray-50 transition"
+                    >
+                      <span className="w-7 h-7 rounded-full bg-amber-100 text-amber-700 text-xs font-bold flex items-center justify-center flex-shrink-0">
+                        {c.name ? c.name.charAt(0).toUpperCase() : i + 1}
+                      </span>
+                      <span className="flex-1 min-w-0">
+                        <span className={`block truncate text-sm ${c.name ? "font-medium text-gray-900" : "font-mono text-gray-700"}`}>
+                          {c.name ?? c.fromNumber}
+                        </span>
+                        <span className="block text-[11px] text-gray-400">
+                          {t("topCallersCalls", { count: c.calls })} · {t("topCallersOrders", { count: c.orders })}
+                        </span>
+                      </span>
+                      <span className="text-sm font-semibold text-gray-900 tabular-nums">{c.spend > 0 ? fmt(c.spend) : "—"}</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-gray-300" />
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Recent activity */}
+          {/* Recent activity — type icon, a clickable caller, and the call
+              itself. Two separate links per row (anchors can't nest). */}
           <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100">
               <h3 className="text-sm font-semibold text-gray-900">{t("recentActivity")}</h3>
@@ -304,25 +371,43 @@ export default async function OverviewTab({
               </Link>
             </div>
             <div className="divide-y divide-gray-50">
-              {a.recent.map((c) => (
-                <Link
-                  key={c.id}
-                  href={`/admin/phone-ordering/calls/${c.id}`}
-                  className="flex items-center gap-3 py-2.5 px-5 hover:bg-gray-50/80 transition"
-                >
-                  <div className="w-28 flex-shrink-0 text-xs text-gray-400 tabular-nums">
-                    {formatTzDateTime(c.startedAt, scope.timezone)}
+              {a.recent.map((c) => {
+                const digits = phoneDigitsKey(c.fromNumber);
+                const callHref = `/admin/phone-ordering/calls/${c.id}`;
+                const kind = c.outcome === "order_placed" ? "order" : c.outcome === "reservation_booked" ? "reservation" : "call";
+                const KindIcon = kind === "order" ? ShoppingBag : kind === "reservation" ? CalendarDays : PhoneCall;
+                const kindAccent = kind === "order" ? "bg-amber-50 text-amber-600" : kind === "reservation" ? "bg-sky-50 text-sky-600" : "bg-gray-100 text-gray-500";
+                const kindLabel = kind === "order" ? t("activityOrder") : kind === "reservation" ? t("activityReservation") : t("activityCall");
+                return (
+                  <div key={c.id} className="flex items-center gap-3 py-2.5 px-5 hover:bg-gray-50/80 transition">
+                    <Link href={callHref} title={kindLabel} className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${kindAccent}`}>
+                      <KindIcon className="w-4 h-4" />
+                    </Link>
+                    <Link href={callHref} className="w-28 flex-shrink-0 text-xs text-gray-400 tabular-nums hover:text-gray-600">
+                      {formatTzDateTime(c.startedAt, scope.timezone)}
+                    </Link>
+                    <div className="flex-1 min-w-0 text-sm text-gray-800 truncate">
+                      {digits ? (
+                        <CallerLink digits={digits} title={tCalls("callerHistoryHint")} className={c.customerName ? "" : "font-mono text-xs"} showIcon>
+                          {c.customerName || c.fromNumber}
+                        </CallerLink>
+                      ) : c.customerName ? (
+                        c.customerName
+                      ) : (
+                        <span className="text-gray-400">{tCalls("anonymousCaller")}</span>
+                      )}
+                    </div>
+                    <Link href={callHref} className="flex items-center gap-3 flex-shrink-0">
+                      <OutcomeChip outcome={c.outcome} label={outcomeLabel(c.outcome)} />
+                      <span className="w-12 text-right text-xs text-gray-400 tabular-nums">{formatDuration(c.durationSeconds)}</span>
+                      <span className="w-20 text-right text-sm font-semibold text-gray-900 tabular-nums">
+                        {c.total != null ? fmt(c.total) : "—"}
+                      </span>
+                      <ArrowRight className="w-3.5 h-3.5 text-gray-300" />
+                    </Link>
                   </div>
-                  <div className="flex-1 min-w-0 text-sm text-gray-800 truncate">
-                    {c.customerName || (c.fromNumber ? <span className="font-mono text-xs">{c.fromNumber}</span> : tCalls("anonymousCaller"))}
-                  </div>
-                  <OutcomeChip outcome={c.outcome} label={outcomeLabel(c.outcome)} />
-                  <span className="w-12 text-right text-xs text-gray-400 tabular-nums flex-shrink-0">{formatDuration(c.durationSeconds)}</span>
-                  <span className="w-20 text-right text-sm font-semibold text-gray-900 tabular-nums flex-shrink-0">
-                    {c.total != null ? fmt(c.total) : "—"}
-                  </span>
-                </Link>
-              ))}
+                );
+              })}
             </div>
           </div>
         </>

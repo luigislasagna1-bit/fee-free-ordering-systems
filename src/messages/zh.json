@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} 分钟包含在 {minimum}/月最低消费中（{rate}/分钟）",
         "meterAiNote": "仅 AI 处理时间 — 不含转接时间",
         "meterProgress": "已使用包含额度的 {pct}%",
-        "meterUsedOf": "{used} / {total} 秒"
+        "meterUsedOf": "{used} / {total} 秒",
+        "greetingMorning": "早上好，{name}",
+        "greetingAfternoon": "下午好，{name}",
+        "greetingEvening": "晚上好，{name}",
+        "greetingNight": "晚安，{name}",
+        "nowLine": "现在是 {when}",
+        "monthHeadlineRich": "本月您通过 Nabil AI 已赚取 <amt>{amount}</amt>",
+        "chartTopCallers": "常来电客户",
+        "topCallersEmpty": "此时间段内暂无重复来电客户。",
+        "topCallersCalls": "{count, plural, other {# 次来电}}",
+        "topCallersOrders": "{count, plural, other {# 笔订单}}",
+        "activityCall": "来电",
+        "activityOrder": "订单",
+        "activityReservation": "预订"
       },
       "callLog": {
         "searchPlaceholder": "搜索电话、姓名或摘要…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "第 {current} 页，共 {total} 页",
         "paginationPrevious": "上一页",
-        "paginationNext": "下一页"
+        "paginationNext": "下一页",
+        "callerHistoryHint": "查看来电客户历史",
+        "clearFilters": "清除筛选",
+        "filterSearchChip": "搜索：{q}"
       },
       "callDetail": {
         "backToCalls": "返回通话列表",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Fee Free 团队",
           "fromYou": "您",
           "justNow": "刚刚"
-        }
+        },
+        "viewCallerHistory": "来电客户历史",
+        "historySeeAll": "查看此号码的所有来电和订单"
       },
       "upsells": {
         "title": "精选加购推荐",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "无法保存提示语。",
         "chipOne": "{service}暂停至 {time}",
         "chipMany": "{count} 项服务已暂停"
+      },
+      "caller": {
+        "title": "来电客户历史",
+        "unknownName": "未知来电客户",
+        "firstCall": "首次来电 {date}",
+        "notFound": "此号码暂无来电记录。",
+        "kpiCalls": "来电",
+        "reservationsSub": "{count, plural, other {# 次预订}}",
+        "kpiOrders": "电话订单",
+        "avgOrderSub": "平均 {amount}",
+        "kpiSpend": "累计消费",
+        "spendSub": "电话订单实收金额",
+        "kpiLastCall": "最近来电",
+        "kpiMood": "通话情绪",
+        "moodValue": "{pct}% 正面",
+        "moodSub": "{count, plural, other {基于 # 次已评分通话}}",
+        "moodEmpty": "暂无已评分通话",
+        "callsTitle": "全部来电",
+        "callsCount": "{count, plural, other {# 次来电}}",
+        "moreCalls": "显示最近 {shown} 次来电（共 {total} 次）",
+        "favoritesTitle": "常点菜品",
+        "favoritesEmpty": "首笔电话订单完成后，这里会显示常点菜品。",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "来电结果",
+        "ordersTitle": "电话订单",
+        "ordersEmpty": "暂无电话订单。",
+        "itemCount": "{count, plural, other {# 件商品}}"
       }
     },
     "customerDetailPage": {

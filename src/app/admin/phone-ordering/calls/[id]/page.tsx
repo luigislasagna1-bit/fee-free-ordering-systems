@@ -3,10 +3,11 @@ import { totalsMismatch } from "@/lib/voice/totals-mismatch";
 import { BoostedAudio } from "@/components/BoostedAudio";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { AlertTriangle, ArrowRight, Ban, CalendarDays, ListTree, MessageSquareText, Mic, PhoneForwarded, ShoppingBag } from "lucide-react";
+import { AlertTriangle, ArrowRight, Ban, CalendarDays, History, ListTree, MessageSquareText, Mic, PhoneForwarded, ShoppingBag } from "lucide-react";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { hasFeature } from "@/lib/entitlements";
+import { phoneDigitsKey } from "@/lib/phone";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { collectedOf } from "@/lib/reports/collected";
@@ -166,6 +167,10 @@ export default async function CallDetailPage({
 
   const transcript: TranscriptTurn[] = Array.isArray(call.transcript) ? (call.transcript as TranscriptTurn[]) : [];
   const callerDisplay = customer?.name || call.fromNumber || tCalls("anonymousCaller");
+  // Phone-keyed caller history (never the online customer profile — the two
+  // stay separate by design). Null for anonymous / unparseable numbers.
+  const callerDigits = phoneDigitsKey(call.fromNumber);
+  const callerHref = callerDigits ? `/admin/phone-ordering/callers/${callerDigits}` : null;
   const startedLabel = formatTzDateTime(call.startedAt, tz, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
   const reportViews: CallReportView[] = reportRows.map((r) => ({
     id: r.id,
@@ -195,7 +200,13 @@ export default async function CallDetailPage({
         <div className="mt-2 flex items-start justify-between gap-3 flex-wrap">
           <div>
             <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-3 flex-wrap">
-              {callerDisplay}
+              {callerHref ? (
+                <Link href={callerHref} title={t("viewCallerHistory")} className="hover:text-amber-700 hover:underline decoration-amber-300 underline-offset-4 transition">
+                  {callerDisplay}
+                </Link>
+              ) : (
+                callerDisplay
+              )}
               <OutcomeChip
                 outcome={call.outcome}
                 label={outcomeLabel(call.outcome)}
@@ -217,6 +228,15 @@ export default async function CallDetailPage({
             </div>
           </div>
           <div className="flex items-center gap-2 flex-wrap">
+            {callerHref && (
+              <Link
+                href={callerHref}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-800 hover:border-amber-300"
+              >
+                <History className="w-3.5 h-3.5" />
+                {t("viewCallerHistory")}
+              </Link>
+            )}
             {/* Timeline toggle — a plain link flipping ?debug=1, so it works
                 without client JS and the URL is shareable with support. */}
             <Link
@@ -455,9 +475,16 @@ export default async function CallDetailPage({
         />
       )}
 
-      {/* Caller history. */}
+      {/* Caller history (last 10 here; the caller page has all of it). */}
       <div className="rounded-xl border border-gray-200 bg-white p-5">
-        <h3 className="font-semibold text-gray-900 mb-3">{t("historyTitle")}</h3>
+        <div className="flex items-center justify-between gap-3 mb-3">
+          <h3 className="font-semibold text-gray-900">{t("historyTitle")}</h3>
+          {callerHref && (
+            <Link href={callerHref} className="text-xs font-medium text-amber-700 hover:text-amber-800 inline-flex items-center gap-1">
+              {t("historySeeAll")} <ArrowRight className="w-3 h-3" />
+            </Link>
+          )}
+        </div>
         {history.length === 0 ? (
           <p className="text-sm text-gray-500">{t("historyEmpty")}</p>
         ) : (

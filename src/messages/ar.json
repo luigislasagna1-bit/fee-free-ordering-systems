@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} دقيقة مشمولة في الحد الأدنى {minimum}/شهر ({rate}/دقيقة)",
         "meterAiNote": "وقت معالجة AI فقط — لا يشمل وقت التحويل",
         "meterProgress": "{pct}% من الحصة المشمولة",
-        "meterUsedOf": "{used} من {total} ثانية"
+        "meterUsedOf": "{used} من {total} ثانية",
+        "greetingMorning": "صباح الخير، {name}",
+        "greetingAfternoon": "طاب نهارك، {name}",
+        "greetingEvening": "مساء الخير، {name}",
+        "greetingNight": "تصبح على خير، {name}",
+        "nowLine": "الوقت الآن {when}",
+        "monthHeadlineRich": "لقد حققت <amt>{amount}</amt> هذا الشهر مع Nabil AI",
+        "chartTopCallers": "أكثر المتصلين",
+        "topCallersEmpty": "لا يوجد متصلون متكررون في هذه الفترة بعد.",
+        "topCallersCalls": "{count, plural, zero {لا مكالمات} one {مكالمة واحدة} two {مكالمتان} few {# مكالمات} many {# مكالمة} other {# مكالمة}}",
+        "topCallersOrders": "{count, plural, zero {لا طلبات} one {طلب واحد} two {طلبان} few {# طلبات} many {# طلبًا} other {# طلب}}",
+        "activityCall": "مكالمة",
+        "activityOrder": "طلب",
+        "activityReservation": "حجز"
       },
       "callLog": {
         "searchPlaceholder": "ابحث برقم الهاتف أو الاسم أو الملخص…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "الصفحة {current} من {total}",
         "paginationPrevious": "السابق",
-        "paginationNext": "التالي"
+        "paginationNext": "التالي",
+        "callerHistoryHint": "عرض سجل المتصل",
+        "clearFilters": "مسح عوامل التصفية",
+        "filterSearchChip": "بحث: {q}"
       },
       "callDetail": {
         "backToCalls": "العودة إلى المكالمات",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "فريق Fee Free",
           "fromYou": "أنت",
           "justNow": "الآن"
-        }
+        },
+        "viewCallerHistory": "سجل المتصل",
+        "historySeeAll": "عرض كل المكالمات والطلبات من هذا الرقم"
       },
       "upsells": {
         "title": "عروض البيع الإضافي المميّزة",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "تعذّر حفظ الرسالة.",
         "chipOne": "{service} متوقف مؤقتًا حتى {time}",
         "chipMany": "{count} خدمات متوقفة مؤقتًا"
+      },
+      "caller": {
+        "title": "سجل المتصل",
+        "unknownName": "متصل غير معروف",
+        "firstCall": "أول مكالمة {date}",
+        "notFound": "لا توجد مكالمات من هذا الرقم بعد.",
+        "kpiCalls": "المكالمات",
+        "reservationsSub": "{count, plural, zero {لا حجوزات} one {حجز واحد} two {حجزان} few {# حجوزات} many {# حجزًا} other {# حجز}}",
+        "kpiOrders": "الطلبات الهاتفية",
+        "avgOrderSub": "المتوسط {amount}",
+        "kpiSpend": "إجمالي الإنفاق",
+        "spendSub": "المحصَّل من الطلبات الهاتفية",
+        "kpiLastCall": "آخر مكالمة",
+        "kpiMood": "المزاج في المكالمات",
+        "moodValue": "{pct}% إيجابي",
+        "moodSub": "{count, plural, zero {من دون مكالمات مقيَّمة} one {من مكالمة مقيَّمة واحدة} two {من مكالمتين مقيَّمتين} few {من # مكالمات مقيَّمة} many {من # مكالمة مقيَّمة} other {من # مكالمة مقيَّمة}}",
+        "moodEmpty": "لا توجد مكالمات مقيَّمة بعد",
+        "callsTitle": "كل المكالمات",
+        "callsCount": "{count, plural, zero {لا مكالمات} one {مكالمة واحدة} two {مكالمتان} few {# مكالمات} many {# مكالمة} other {# مكالمة}}",
+        "moreCalls": "عرض أحدث {shown} مكالمة من أصل {total}",
+        "favoritesTitle": "يطلب عادةً",
+        "favoritesEmpty": "تظهر الأصناف المفضلة بعد اكتمال أول طلب هاتفي.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "نتائج المكالمات",
+        "ordersTitle": "الطلبات الهاتفية",
+        "ordersEmpty": "لا توجد طلبات هاتفية بعد.",
+        "itemCount": "{count, plural, zero {لا أصناف} one {صنف واحد} two {صنفان} few {# أصناف} many {# صنفًا} other {# صنف}}"
       }
     },
     "customerDetailPage": {

@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} хв включено в мінімум {minimum}/міс. ({rate}/хв)",
         "meterAiNote": "Лише час обробки AI — час переадресації не враховується",
         "meterProgress": "{pct}% включеного ліміту",
-        "meterUsedOf": "{used} із {total} секунд"
+        "meterUsedOf": "{used} із {total} секунд",
+        "greetingMorning": "Доброго ранку, {name}",
+        "greetingAfternoon": "Доброго дня, {name}",
+        "greetingEvening": "Доброго вечора, {name}",
+        "greetingNight": "Добраніч, {name}",
+        "nowLine": "Зараз {when}",
+        "monthHeadlineRich": "Цього місяця ви заробили <amt>{amount}</amt> з Nabil AI",
+        "chartTopCallers": "Найчастіші абоненти",
+        "topCallersEmpty": "За цей період повторних абонентів поки немає.",
+        "topCallersCalls": "{count, plural, one {# дзвінок} few {# дзвінки} many {# дзвінків} other {# дзвінка}}",
+        "topCallersOrders": "{count, plural, one {# замовлення} few {# замовлення} many {# замовлень} other {# замовлення}}",
+        "activityCall": "Дзвінок",
+        "activityOrder": "Замовлення",
+        "activityReservation": "Бронювання"
       },
       "callLog": {
         "searchPlaceholder": "Пошук за телефоном, іменем або підсумком…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Сторінка {current} з {total}",
         "paginationPrevious": "Попередня",
-        "paginationNext": "Наступна"
+        "paginationNext": "Наступна",
+        "callerHistoryHint": "Переглянути історію абонента",
+        "clearFilters": "Скинути фільтри",
+        "filterSearchChip": "Пошук: {q}"
       },
       "callDetail": {
         "backToCalls": "Назад до дзвінків",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Команда Fee Free",
           "fromYou": "Ви",
           "justNow": "щойно"
-        }
+        },
+        "viewCallerHistory": "Історія абонента",
+        "historySeeAll": "Усі дзвінки та замовлення з цього номера"
       },
       "upsells": {
         "title": "Рекомендовані допродажі",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Не вдалося зберегти повідомлення.",
         "chipOne": "{service} призупинено до {time}",
         "chipMany": "Призупинено послуг: {count}"
+      },
+      "caller": {
+        "title": "Історія абонента",
+        "unknownName": "Невідомий абонент",
+        "firstCall": "Перший дзвінок {date}",
+        "notFound": "З цього номера ще не дзвонили.",
+        "kpiCalls": "Дзвінки",
+        "reservationsSub": "{count, plural, one {# бронювання} few {# бронювання} many {# бронювань} other {# бронювання}}",
+        "kpiOrders": "Замовлення телефоном",
+        "avgOrderSub": "{amount} у середньому",
+        "kpiSpend": "Витрачено за весь час",
+        "spendSub": "Отримано за телефонними замовленнями",
+        "kpiLastCall": "Останній дзвінок",
+        "kpiMood": "Настрій у дзвінках",
+        "moodValue": "{pct}% позитивних",
+        "moodSub": "{count, plural, one {за # оціненим дзвінком} few {за # оціненими дзвінками} many {за # оціненими дзвінками} other {за # оціненого дзвінка}}",
+        "moodEmpty": "Оцінених дзвінків ще немає",
+        "callsTitle": "Усі дзвінки",
+        "callsCount": "{count, plural, one {# дзвінок} few {# дзвінки} many {# дзвінків} other {# дзвінка}}",
+        "moreCalls": "Показано {shown} останніх із {total} дзвінків",
+        "favoritesTitle": "Зазвичай замовляє",
+        "favoritesEmpty": "Улюблені страви з'являться після першого виконаного замовлення телефоном.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Результати дзвінків",
+        "ordersTitle": "Замовлення телефоном",
+        "ordersEmpty": "Замовлень телефоном ще немає.",
+        "itemCount": "{count, plural, one {# позиція} few {# позиції} many {# позицій} other {# позиції}}"
       }
     },
     "customerDetailPage": {

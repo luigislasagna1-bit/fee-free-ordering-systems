@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} min zahrnutých v minime {minimum}/mes. ({rate}/min)",
         "meterAiNote": "Iba čas spracovania AI — čas presmerovania nie je zahrnutý",
         "meterProgress": "{pct} % zahrnutého limitu",
-        "meterUsedOf": "{used} z {total} sekúnd"
+        "meterUsedOf": "{used} z {total} sekúnd",
+        "greetingMorning": "Dobré ráno, {name}",
+        "greetingAfternoon": "Dobré popoludnie, {name}",
+        "greetingEvening": "Dobrý večer, {name}",
+        "greetingNight": "Dobrú noc, {name}",
+        "nowLine": "Je {when}",
+        "monthHeadlineRich": "Tento mesiac vám Nabil AI zarobil <amt>{amount}</amt>",
+        "chartTopCallers": "Najčastejší volajúci",
+        "topCallersEmpty": "V tomto období zatiaľ žiadni opakovaní volajúci.",
+        "topCallersCalls": "{count, plural, one {# hovor} few {# hovory} many {# hovoru} other {# hovorov}}",
+        "topCallersOrders": "{count, plural, one {# objednávka} few {# objednávky} many {# objednávky} other {# objednávok}}",
+        "activityCall": "Hovor",
+        "activityOrder": "Objednávka",
+        "activityReservation": "Rezervácia"
       },
       "callLog": {
         "searchPlaceholder": "Hľadať telefón, meno alebo zhrnutie…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Strana {current} z {total}",
         "paginationPrevious": "Predchádzajúce",
-        "paginationNext": "Ďalšie"
+        "paginationNext": "Ďalšie",
+        "callerHistoryHint": "Zobraziť históriu volajúceho",
+        "clearFilters": "Vymazať filtre",
+        "filterSearchChip": "Hľadať: {q}"
       },
       "callDetail": {
         "backToCalls": "Späť na hovory",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Tím Fee Free",
           "fromYou": "Vy",
           "justNow": "práve teraz"
-        }
+        },
+        "viewCallerHistory": "História volajúceho",
+        "historySeeAll": "Zobraziť všetky hovory a objednávky z tohto čísla"
       },
       "upsells": {
         "title": "Vybrané doplnkové ponuky",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Správu sa nepodarilo uložiť.",
         "chipOne": "{service} pozastavené do {time}",
         "chipMany": "Pozastavené služby: {count}"
+      },
+      "caller": {
+        "title": "História volajúceho",
+        "unknownName": "Neznámy volajúci",
+        "firstCall": "Prvý hovor {date}",
+        "notFound": "Z tohto čísla zatiaľ žiadne hovory.",
+        "kpiCalls": "Hovory",
+        "reservationsSub": "{count, plural, one {# rezervácia} few {# rezervácie} many {# rezervácie} other {# rezervácií}}",
+        "kpiOrders": "Telefonické objednávky",
+        "avgOrderSub": "Priemerne {amount}",
+        "kpiSpend": "Celkové výdavky",
+        "spendSub": "Prijaté z telefonických objednávok",
+        "kpiLastCall": "Posledný hovor",
+        "kpiMood": "Nálada hovorov",
+        "moodValue": "{pct} % pozitívnych",
+        "moodSub": "{count, plural, one {z # hodnoteného hovoru} few {z # hodnotených hovorov} many {z # hodnoteného hovoru} other {z # hodnotených hovorov}}",
+        "moodEmpty": "Zatiaľ žiadne hodnotené hovory",
+        "callsTitle": "Všetky hovory",
+        "callsCount": "{count, plural, one {# hovor} few {# hovory} many {# hovoru} other {# hovorov}}",
+        "moreCalls": "Zobrazených {shown} najnovších z {total} hovorov",
+        "favoritesTitle": "Zvyčajne objednáva",
+        "favoritesEmpty": "Obľúbené položky sa zobrazia po prvej dokončenej telefonickej objednávke.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Výsledky hovorov",
+        "ordersTitle": "Telefonické objednávky",
+        "ordersEmpty": "Zatiaľ žiadne telefonické objednávky.",
+        "itemCount": "{count, plural, one {# položka} few {# položky} many {# položky} other {# položiek}}"
       }
     },
     "customerDetailPage": {

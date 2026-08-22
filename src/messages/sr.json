@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} мин укључено у минимум {minimum}/мес. ({rate}/мин)",
         "meterAiNote": "Само AI време обраде — време преусмеравања искључено",
         "meterProgress": "{pct}% укључене квоте",
-        "meterUsedOf": "{used} од {total} секунди"
+        "meterUsedOf": "{used} од {total} секунди",
+        "greetingMorning": "Добро јутро, {name}",
+        "greetingAfternoon": "Добар дан, {name}",
+        "greetingEvening": "Добро вече, {name}",
+        "greetingNight": "Лаку ноћ, {name}",
+        "nowLine": "Сада је {when}",
+        "monthHeadlineRich": "Овог месеца сте зарадили <amt>{amount}</amt> уз Nabil AI",
+        "chartTopCallers": "Најчешћи позиваоци",
+        "topCallersEmpty": "У овом периоду још нема поновљених позивалаца.",
+        "topCallersCalls": "{count, plural, one {# позив} few {# позива} many {# позива} other {# позива}}",
+        "topCallersOrders": "{count, plural, one {# поруџбина} few {# поруџбине} many {# поруџбина} other {# поруџбина}}",
+        "activityCall": "Позив",
+        "activityOrder": "Поруџбина",
+        "activityReservation": "Резервација"
       },
       "callLog": {
         "searchPlaceholder": "Pretražite telefon, ime ili rezime…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Stranica {current} od {total}",
         "paginationPrevious": "Prethodna",
-        "paginationNext": "Sledeća"
+        "paginationNext": "Sledeća",
+        "callerHistoryHint": "Прикажи историју позиваоца",
+        "clearFilters": "Обриши филтере",
+        "filterSearchChip": "Претрага: {q}"
       },
       "callDetail": {
         "backToCalls": "Nazad na pozive",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Tim Fee Free",
           "fromYou": "Vi",
           "justNow": "upravo sada"
-        }
+        },
+        "viewCallerHistory": "Историја позиваоца",
+        "historySeeAll": "Погледајте све позиве и поруџбине са овог броја"
       },
       "upsells": {
         "title": "Istaknute preporuke",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Порука није могла да се сачува.",
         "chipOne": "{service} паузирано до {time}",
         "chipMany": "Паузиране услуге: {count}"
+      },
+      "caller": {
+        "title": "Историја позиваоца",
+        "unknownName": "Непознати позивалац",
+        "firstCall": "Први позив {date}",
+        "notFound": "Још нема позива са овог броја.",
+        "kpiCalls": "Позиви",
+        "reservationsSub": "{count, plural, one {# резервација} few {# резервације} many {# резервација} other {# резервација}}",
+        "kpiOrders": "Телефонске поруџбине",
+        "avgOrderSub": "{amount} у просеку",
+        "kpiSpend": "Укупна потрошња",
+        "spendSub": "Наплаћено на телефонским поруџбинама",
+        "kpiLastCall": "Последњи позив",
+        "kpiMood": "Расположење у позивима",
+        "moodValue": "{pct}% позитивно",
+        "moodSub": "{count, plural, one {на основу # оцењеног позива} few {на основу # оцењена позива} many {на основу # оцењених позива} other {на основу # оцењених позива}}",
+        "moodEmpty": "Још нема оцењених позива",
+        "callsTitle": "Сви позиви",
+        "callsCount": "{count, plural, one {# позив} few {# позива} many {# позива} other {# позива}}",
+        "moreCalls": "Приказано је {shown} најновијих од укупно {total} позива",
+        "favoritesTitle": "Обично наручује",
+        "favoritesEmpty": "Омиљене ставке се појављују након прве завршене телефонске поруџбине.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Исходи позива",
+        "ordersTitle": "Телефонске поруџбине",
+        "ordersEmpty": "Још нема телефонских поруџбина.",
+        "itemCount": "{count, plural, one {# ставка} few {# ставке} many {# ставки} other {# ставки}}"
       }
     },
     "customerDetailPage": {

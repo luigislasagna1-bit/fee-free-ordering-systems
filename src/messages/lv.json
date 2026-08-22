@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} min iekļautas {minimum}/mēnesī minimumā ({rate}/min)",
         "meterAiNote": "Tikai AI apstrādes laiks — pāradresēšanas laiks nav iekļauts",
         "meterProgress": "{pct}% no iekļautā apjoma",
-        "meterUsedOf": "{used} no {total} sekundēm"
+        "meterUsedOf": "{used} no {total} sekundēm",
+        "greetingMorning": "Labrīt, {name}",
+        "greetingAfternoon": "Labdien, {name}",
+        "greetingEvening": "Labvakar, {name}",
+        "greetingNight": "Ar labu nakti, {name}",
+        "nowLine": "Šobrīd ir {when}",
+        "monthHeadlineRich": "Šomēnes ar Nabil AI esat nopelnījis <amt>{amount}</amt>",
+        "chartTopCallers": "Biežākie zvanītāji",
+        "topCallersEmpty": "Šajā periodā vēl nav atkārtotu zvanītāju.",
+        "topCallersCalls": "{count, plural, zero {# zvanu} one {# zvans} other {# zvani}}",
+        "topCallersOrders": "{count, plural, zero {# pasūtījumu} one {# pasūtījums} other {# pasūtījumi}}",
+        "activityCall": "Zvans",
+        "activityOrder": "Pasūtījums",
+        "activityReservation": "Rezervācija"
       },
       "callLog": {
         "searchPlaceholder": "Meklēt pēc tālruņa, vārda vai kopsavilkuma…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Lapa {current} no {total}",
         "paginationPrevious": "Iepriekšējais",
-        "paginationNext": "Nākamais"
+        "paginationNext": "Nākamais",
+        "callerHistoryHint": "Skatīt zvanītāja vēsturi",
+        "clearFilters": "Notīrīt filtrus",
+        "filterSearchChip": "Meklēšana: {q}"
       },
       "callDetail": {
         "backToCalls": "Atpakaļ pie zvaniem",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Fee Free komanda",
           "fromYou": "Jūs",
           "justNow": "tikko"
-        }
+        },
+        "viewCallerHistory": "Zvanītāja vēsture",
+        "historySeeAll": "Skatiet visus zvanus un pasūtījumus no šī numura"
       },
       "upsells": {
         "title": "Izceltie papildpiedāvājumi",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Neizdevās saglabāt ziņu.",
         "chipOne": "{service} apturēts līdz {time}",
         "chipMany": "Apturēti pakalpojumi: {count}"
+      },
+      "caller": {
+        "title": "Zvanītāja vēsture",
+        "unknownName": "Nezināms zvanītājs",
+        "firstCall": "Pirmais zvans {date}",
+        "notFound": "No šī numura vēl nav zvanu.",
+        "kpiCalls": "Zvani",
+        "reservationsSub": "{count, plural, zero {# rezervāciju} one {# rezervācija} other {# rezervācijas}}",
+        "kpiOrders": "Telefona pasūtījumi",
+        "avgOrderSub": "Vidēji {amount}",
+        "kpiSpend": "Kopējie tēriņi",
+        "spendSub": "Saņemts no telefona pasūtījumiem",
+        "kpiLastCall": "Pēdējais zvans",
+        "kpiMood": "Noskaņojums zvanos",
+        "moodValue": "{pct}% pozitīvs",
+        "moodSub": "{count, plural, zero {no # novērtētiem zvaniem} one {no # novērtēta zvana} other {no # novērtētiem zvaniem}}",
+        "moodEmpty": "Vēl nav novērtētu zvanu",
+        "callsTitle": "Visi zvani",
+        "callsCount": "{count, plural, zero {# zvanu} one {# zvans} other {# zvani}}",
+        "moreCalls": "Rādīti {shown} jaunākie no {total} zvaniem",
+        "favoritesTitle": "Parasti pasūta",
+        "favoritesEmpty": "Iecienītākie ēdieni parādās pēc pirmā pabeigtā telefona pasūtījuma.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Zvanu iznākumi",
+        "ordersTitle": "Telefona pasūtījumi",
+        "ordersEmpty": "Telefona pasūtījumu vēl nav.",
+        "itemCount": "{count, plural, zero {# preču} one {# prece} other {# preces}}"
       }
     },
     "customerDetailPage": {

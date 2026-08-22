@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} phút bao gồm trong tối thiểu {minimum}/tháng ({rate}/phút)",
         "meterAiNote": "Chỉ tính thời gian xử lý AI — thời gian chuyển tiếp không tính",
         "meterProgress": "{pct}% định mức bao gồm",
-        "meterUsedOf": "{used} trong {total} giây"
+        "meterUsedOf": "{used} trong {total} giây",
+        "greetingMorning": "Chào buổi sáng, {name}",
+        "greetingAfternoon": "Chào buổi chiều, {name}",
+        "greetingEvening": "Chào buổi tối, {name}",
+        "greetingNight": "Chúc ngủ ngon, {name}",
+        "nowLine": "Bây giờ là {when}",
+        "monthHeadlineRich": "Tháng này bạn đã kiếm được <amt>{amount}</amt> với Nabil AI",
+        "chartTopCallers": "Khách gọi nhiều nhất",
+        "topCallersEmpty": "Chưa có khách gọi lại trong khoảng thời gian này.",
+        "topCallersCalls": "{count, plural, other {# cuộc gọi}}",
+        "topCallersOrders": "{count, plural, other {# đơn hàng}}",
+        "activityCall": "Cuộc gọi",
+        "activityOrder": "Đơn hàng",
+        "activityReservation": "Đặt bàn"
       },
       "callLog": {
         "searchPlaceholder": "Tìm số điện thoại, tên hoặc tóm tắt…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Trang {current} / {total}",
         "paginationPrevious": "Trước",
-        "paginationNext": "Tiếp"
+        "paginationNext": "Tiếp",
+        "callerHistoryHint": "Xem lịch sử người gọi",
+        "clearFilters": "Xóa bộ lọc",
+        "filterSearchChip": "Tìm kiếm: {q}"
       },
       "callDetail": {
         "backToCalls": "Quay lại danh sách cuộc gọi",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Đội ngũ Fee Free",
           "fromYou": "Bạn",
           "justNow": "vừa xong"
-        }
+        },
+        "viewCallerHistory": "Lịch sử người gọi",
+        "historySeeAll": "Xem mọi cuộc gọi và đơn hàng từ số này"
       },
       "upsells": {
         "title": "Gợi ý bán thêm nổi bật",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Không thể lưu lời nhắn.",
         "chipOne": "{service} tạm dừng đến {time}",
         "chipMany": "{count} dịch vụ đang tạm dừng"
+      },
+      "caller": {
+        "title": "Lịch sử người gọi",
+        "unknownName": "Người gọi không xác định",
+        "firstCall": "Cuộc gọi đầu tiên {date}",
+        "notFound": "Chưa có cuộc gọi nào từ số này.",
+        "kpiCalls": "Cuộc gọi",
+        "reservationsSub": "{count, plural, other {# lượt đặt bàn}}",
+        "kpiOrders": "Đơn qua điện thoại",
+        "avgOrderSub": "Trung bình {amount}",
+        "kpiSpend": "Tổng chi tiêu",
+        "spendSub": "Thu từ đơn qua điện thoại",
+        "kpiLastCall": "Cuộc gọi gần nhất",
+        "kpiMood": "Tâm trạng khi gọi",
+        "moodValue": "{pct}% tích cực",
+        "moodSub": "{count, plural, other {trên # cuộc gọi được đánh giá}}",
+        "moodEmpty": "Chưa có cuộc gọi nào được đánh giá",
+        "callsTitle": "Tất cả cuộc gọi",
+        "callsCount": "{count, plural, other {# cuộc gọi}}",
+        "moreCalls": "Đang hiển thị {shown} cuộc gọi gần nhất trong tổng số {total}",
+        "favoritesTitle": "Thường gọi món",
+        "favoritesEmpty": "Món yêu thích sẽ hiện sau đơn qua điện thoại đầu tiên hoàn tất.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Kết quả cuộc gọi",
+        "ordersTitle": "Đơn qua điện thoại",
+        "ordersEmpty": "Chưa có đơn qua điện thoại.",
+        "itemCount": "{count, plural, other {# món}}"
       }
     },
     "customerDetailPage": {

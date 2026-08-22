@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} min inkludert i {minimum}/måned minimum ({rate}/min)",
         "meterAiNote": "Kun AI-håndteringstid — viderekoblingstid ikke inkludert",
         "meterProgress": "{pct} % av inkludert kvote",
-        "meterUsedOf": "{used} av {total} sekunder"
+        "meterUsedOf": "{used} av {total} sekunder",
+        "greetingMorning": "God morgen, {name}",
+        "greetingAfternoon": "God ettermiddag, {name}",
+        "greetingEvening": "God kveld, {name}",
+        "greetingNight": "God natt, {name}",
+        "nowLine": "Det er {when}",
+        "monthHeadlineRich": "Du har tjent <amt>{amount}</amt> denne måneden med Nabil AI",
+        "chartTopCallers": "Toppinnringere",
+        "topCallersEmpty": "Ingen gjentatte innringere i dette tidsrommet ennå.",
+        "topCallersCalls": "{count, plural, one {# samtale} other {# samtaler}}",
+        "topCallersOrders": "{count, plural, one {# bestilling} other {# bestillinger}}",
+        "activityCall": "Samtale",
+        "activityOrder": "Bestilling",
+        "activityReservation": "Reservasjon"
       },
       "callLog": {
         "searchPlaceholder": "Søk etter telefon, navn eller sammendrag…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Side {current} av {total}",
         "paginationPrevious": "Forrige",
-        "paginationNext": "Neste"
+        "paginationNext": "Neste",
+        "callerHistoryHint": "Vis innringerhistorikk",
+        "clearFilters": "Fjern filtre",
+        "filterSearchChip": "Søk: {q}"
       },
       "callDetail": {
         "backToCalls": "Tilbake til samtaler",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Fee Free-teamet",
           "fromYou": "Deg",
           "justNow": "akkurat nå"
-        }
+        },
+        "viewCallerHistory": "Innringerhistorikk",
+        "historySeeAll": "Se alle samtaler og bestillinger fra dette nummeret"
       },
       "upsells": {
         "title": "Utvalgte mersalg",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Kunne ikke lagre meldingen.",
         "chipOne": "{service} på pause til {time}",
         "chipMany": "{count} tjenester på pause"
+      },
+      "caller": {
+        "title": "Innringerhistorikk",
+        "unknownName": "Ukjent innringer",
+        "firstCall": "Første samtale {date}",
+        "notFound": "Ingen samtaler fra dette nummeret ennå.",
+        "kpiCalls": "Samtaler",
+        "reservationsSub": "{count, plural, one {# reservasjon} other {# reservasjoner}}",
+        "kpiOrders": "Telefonbestillinger",
+        "avgOrderSub": "{amount} i snitt",
+        "kpiSpend": "Totalt brukt",
+        "spendSub": "Innbetalt på telefonbestillinger",
+        "kpiLastCall": "Siste samtale",
+        "kpiMood": "Stemning på samtaler",
+        "moodValue": "{pct} % positiv",
+        "moodSub": "{count, plural, one {fra # vurdert samtale} other {fra # vurderte samtaler}}",
+        "moodEmpty": "Ingen vurderte samtaler ennå",
+        "callsTitle": "Alle samtaler",
+        "callsCount": "{count, plural, one {# samtale} other {# samtaler}}",
+        "moreCalls": "Viser de {shown} nyeste av {total} samtaler",
+        "favoritesTitle": "Bestiller vanligvis",
+        "favoritesEmpty": "Favoritter vises etter den første fullførte telefonbestillingen.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Samtaleutfall",
+        "ordersTitle": "Telefonbestillinger",
+        "ordersEmpty": "Ingen telefonbestillinger ennå.",
+        "itemCount": "{count, plural, one {# vare} other {# varer}}"
       }
     },
     "customerDetailPage": {

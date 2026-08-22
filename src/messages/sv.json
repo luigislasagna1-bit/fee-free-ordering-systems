@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} min inkluderade i {minimum}/månad minimum ({rate}/min)",
         "meterAiNote": "Enbart AI-hanteringstid — vidarekopplingstid exkluderad",
         "meterProgress": "{pct} % av inkluderad kvot",
-        "meterUsedOf": "{used} av {total} sekunder"
+        "meterUsedOf": "{used} av {total} sekunder",
+        "greetingMorning": "God morgon, {name}",
+        "greetingAfternoon": "God eftermiddag, {name}",
+        "greetingEvening": "God kväll, {name}",
+        "greetingNight": "God natt, {name}",
+        "nowLine": "Det är {when}",
+        "monthHeadlineRich": "Du har tjänat <amt>{amount}</amt> den här månaden med Nabil AI",
+        "chartTopCallers": "Flitigaste uppringare",
+        "topCallersEmpty": "Inga återkommande uppringare under den här perioden ännu.",
+        "topCallersCalls": "{count, plural, one {# samtal} other {# samtal}}",
+        "topCallersOrders": "{count, plural, one {# beställning} other {# beställningar}}",
+        "activityCall": "Samtal",
+        "activityOrder": "Beställning",
+        "activityReservation": "Bordsbokning"
       },
       "callLog": {
         "searchPlaceholder": "Sök telefon, namn eller sammanfattning…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Sida {current} av {total}",
         "paginationPrevious": "Föregående",
-        "paginationNext": "Nästa"
+        "paginationNext": "Nästa",
+        "callerHistoryHint": "Visa uppringarens historik",
+        "clearFilters": "Rensa filter",
+        "filterSearchChip": "Sök: {q}"
       },
       "callDetail": {
         "backToCalls": "Tillbaka till samtal",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Fee Free-teamet",
           "fromYou": "Du",
           "justNow": "just nu"
-        }
+        },
+        "viewCallerHistory": "Uppringarens historik",
+        "historySeeAll": "Se alla samtal och beställningar från det här numret"
       },
       "upsells": {
         "title": "Utvalda merförsäljningar",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Kunde inte spara meddelandet.",
         "chipOne": "{service} pausad till {time}",
         "chipMany": "{count} tjänster pausade"
+      },
+      "caller": {
+        "title": "Uppringarens historik",
+        "unknownName": "Okänd uppringare",
+        "firstCall": "Första samtalet {date}",
+        "notFound": "Inga samtal från det här numret ännu.",
+        "kpiCalls": "Samtal",
+        "reservationsSub": "{count, plural, one {# bordsbokning} other {# bordsbokningar}}",
+        "kpiOrders": "Telefonbeställningar",
+        "avgOrderSub": "{amount} i snitt",
+        "kpiSpend": "Totalt spenderat",
+        "spendSub": "Inkasserat på telefonbeställningar",
+        "kpiLastCall": "Senaste samtal",
+        "kpiMood": "Stämning i samtalen",
+        "moodValue": "{pct} % positiv",
+        "moodSub": "{count, plural, one {över # bedömt samtal} other {över # bedömda samtal}}",
+        "moodEmpty": "Inga bedömda samtal ännu",
+        "callsTitle": "Alla samtal",
+        "callsCount": "{count, plural, one {# samtal} other {# samtal}}",
+        "moreCalls": "Visar de {shown} senaste av {total} samtal",
+        "favoritesTitle": "Beställer oftast",
+        "favoritesEmpty": "Favoriter visas efter den första slutförda telefonbeställningen.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Samtalsresultat",
+        "ordersTitle": "Telefonbeställningar",
+        "ordersEmpty": "Inga telefonbeställningar ännu.",
+        "itemCount": "{count, plural, one {# artikel} other {# artiklar}}"
       }
     },
     "customerDetailPage": {

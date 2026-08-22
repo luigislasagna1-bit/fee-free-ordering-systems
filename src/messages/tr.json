@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} dk {minimum}/ay minimuma dahil ({rate}/dk)",
         "meterAiNote": "Yalnızca AI işlem süresi — aktarma süresi hariç",
         "meterProgress": "Dahil kotanın {pct}%'i",
-        "meterUsedOf": "{total} saniyeden {used} kullanıldı"
+        "meterUsedOf": "{total} saniyeden {used} kullanıldı",
+        "greetingMorning": "Günaydın, {name}",
+        "greetingAfternoon": "İyi günler, {name}",
+        "greetingEvening": "İyi akşamlar, {name}",
+        "greetingNight": "İyi geceler, {name}",
+        "nowLine": "Şu an {when}",
+        "monthHeadlineRich": "Bu ay Nabil AI ile <amt>{amount}</amt> kazandınız",
+        "chartTopCallers": "En çok arayanlar",
+        "topCallersEmpty": "Bu aralıkta henüz tekrar arayan yok.",
+        "topCallersCalls": "{count, plural, one {# arama} other {# arama}}",
+        "topCallersOrders": "{count, plural, one {# sipariş} other {# sipariş}}",
+        "activityCall": "Arama",
+        "activityOrder": "Sipariş",
+        "activityReservation": "Rezervasyon"
       },
       "callLog": {
         "searchPlaceholder": "Telefon, ad veya özet arayın…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Sayfa {current} / {total}",
         "paginationPrevious": "Önceki",
-        "paginationNext": "Sonraki"
+        "paginationNext": "Sonraki",
+        "callerHistoryHint": "Arayan geçmişini görüntüle",
+        "clearFilters": "Filtreleri temizle",
+        "filterSearchChip": "Aranan: {q}"
       },
       "callDetail": {
         "backToCalls": "Aramalara dön",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Fee Free ekibi",
           "fromYou": "Siz",
           "justNow": "az önce"
-        }
+        },
+        "viewCallerHistory": "Arayan geçmişi",
+        "historySeeAll": "Bu numaradan gelen tüm aramaları ve siparişleri görün"
       },
       "upsells": {
         "title": "Öne Çıkan Ek Satışlar",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Mesaj kaydedilemedi.",
         "chipOne": "{service} {time} saatine kadar duraklatıldı",
         "chipMany": "{count} hizmet duraklatıldı"
+      },
+      "caller": {
+        "title": "Arayan geçmişi",
+        "unknownName": "Bilinmeyen arayan",
+        "firstCall": "İlk arama {date}",
+        "notFound": "Bu numaradan henüz arama yok.",
+        "kpiCalls": "Aramalar",
+        "reservationsSub": "{count, plural, one {# rezervasyon} other {# rezervasyon}}",
+        "kpiOrders": "Telefon siparişleri",
+        "avgOrderSub": "Ortalama {amount}",
+        "kpiSpend": "Toplam harcama",
+        "spendSub": "Telefon siparişlerinden tahsil edilen",
+        "kpiLastCall": "Son arama",
+        "kpiMood": "Aramalardaki ruh hali",
+        "moodValue": "%{pct} olumlu",
+        "moodSub": "{count, plural, one {# puanlanmış arama üzerinden} other {# puanlanmış arama üzerinden}}",
+        "moodEmpty": "Henüz puanlanmış arama yok",
+        "callsTitle": "Tüm aramalar",
+        "callsCount": "{count, plural, one {# arama} other {# arama}}",
+        "moreCalls": "{total} aramanın en son {shown} tanesi gösteriliyor",
+        "favoritesTitle": "Genellikle sipariş ettikleri",
+        "favoritesEmpty": "Favoriler, ilk tamamlanan telefon siparişinden sonra görünür.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Arama sonuçları",
+        "ordersTitle": "Telefon siparişleri",
+        "ordersEmpty": "Henüz telefon siparişi yok.",
+        "itemCount": "{count, plural, one {# ürün} other {# ürün}}"
       }
     },
     "customerDetailPage": {

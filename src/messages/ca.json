@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} min inclosos en el mínim de {minimum}/mes ({rate}/min)",
         "meterAiNote": "Només temps de gestió AI — temps de transferència exclòs",
         "meterProgress": "{pct}% de la quota inclosa",
-        "meterUsedOf": "{used} de {total} segons"
+        "meterUsedOf": "{used} de {total} segons",
+        "greetingMorning": "Bon dia, {name}",
+        "greetingAfternoon": "Bona tarda, {name}",
+        "greetingEvening": "Bon vespre, {name}",
+        "greetingNight": "Bona nit, {name}",
+        "nowLine": "Ara és {when}",
+        "monthHeadlineRich": "Aquest mes has guanyat <amt>{amount}</amt> amb Nabil AI",
+        "chartTopCallers": "Qui truca més",
+        "topCallersEmpty": "Encara no hi ha trucades repetides en aquest període.",
+        "topCallersCalls": "{count, plural, one {# trucada} other {# trucades}}",
+        "topCallersOrders": "{count, plural, one {# comanda} other {# comandes}}",
+        "activityCall": "Trucada",
+        "activityOrder": "Comanda",
+        "activityReservation": "Reserva"
       },
       "callLog": {
         "searchPlaceholder": "Cerca per telèfon, nom o resum…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Pàgina {current} de {total}",
         "paginationPrevious": "Anterior",
-        "paginationNext": "Següent"
+        "paginationNext": "Següent",
+        "callerHistoryHint": "Veure l'historial del número",
+        "clearFilters": "Esborra els filtres",
+        "filterSearchChip": "Cerca: {q}"
       },
       "callDetail": {
         "backToCalls": "Torna a les trucades",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Equip de Fee Free",
           "fromYou": "Tu",
           "justNow": "ara mateix"
-        }
+        },
+        "viewCallerHistory": "Historial del número",
+        "historySeeAll": "Mostra totes les trucades i comandes d'aquest número"
       },
       "upsells": {
         "title": "Vendes addicionals destacades",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "No s'ha pogut desar el missatge.",
         "chipOne": "{service} en pausa fins a les {time}",
         "chipMany": "{count} serveis en pausa"
+      },
+      "caller": {
+        "title": "Historial del número",
+        "unknownName": "Persona desconeguda",
+        "firstCall": "Primera trucada {date}",
+        "notFound": "Encara no hi ha trucades d'aquest número.",
+        "kpiCalls": "Trucades",
+        "reservationsSub": "{count, plural, one {# reserva} other {# reserves}}",
+        "kpiOrders": "Comandes per telèfon",
+        "avgOrderSub": "{amount} de mitjana",
+        "kpiSpend": "Despesa total",
+        "spendSub": "Cobrat en comandes per telèfon",
+        "kpiLastCall": "Última trucada",
+        "kpiMood": "Estat d'ànim a les trucades",
+        "moodValue": "{pct}% positiu",
+        "moodSub": "{count, plural, one {en # trucada valorada} other {en # trucades valorades}}",
+        "moodEmpty": "Encara no hi ha trucades valorades",
+        "callsTitle": "Totes les trucades",
+        "callsCount": "{count, plural, one {# trucada} other {# trucades}}",
+        "moreCalls": "Es mostren les {shown} més recents de {total} trucades",
+        "favoritesTitle": "Sol demanar",
+        "favoritesEmpty": "Els preferits apareixen després de la primera comanda per telèfon completada.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Resultats de les trucades",
+        "ordersTitle": "Comandes per telèfon",
+        "ordersEmpty": "Encara no hi ha comandes per telèfon.",
+        "itemCount": "{count, plural, one {# article} other {# articles}}"
       }
     },
     "customerDetailPage": {

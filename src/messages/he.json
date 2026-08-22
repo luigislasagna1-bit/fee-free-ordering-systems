@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} דקות כלולות במינימום של {minimum}/חודש ({rate}/דקה)",
         "meterAiNote": "זמן טיפול AI בלבד — זמן העברה לא נכלל",
         "meterProgress": "{pct}% מהמכסה הכלולה",
-        "meterUsedOf": "{used} מתוך {total} שניות"
+        "meterUsedOf": "{used} מתוך {total} שניות",
+        "greetingMorning": "בוקר טוב, {name}",
+        "greetingAfternoon": "צהריים טובים, {name}",
+        "greetingEvening": "ערב טוב, {name}",
+        "greetingNight": "לילה טוב, {name}",
+        "nowLine": "השעה {when}",
+        "monthHeadlineRich": "הרווחת <amt>{amount}</amt> החודש עם Nabil AI",
+        "chartTopCallers": "המתקשרים המובילים",
+        "topCallersEmpty": "עדיין אין מתקשרים חוזרים בטווח הזה.",
+        "topCallersCalls": "{count, plural, one {שיחה אחת} two {# שיחות} many {# שיחות} other {# שיחות}}",
+        "topCallersOrders": "{count, plural, one {הזמנה אחת} two {# הזמנות} many {# הזמנות} other {# הזמנות}}",
+        "activityCall": "שיחה",
+        "activityOrder": "הזמנה",
+        "activityReservation": "הזמנת מקום"
       },
       "callLog": {
         "searchPlaceholder": "חיפוש לפי טלפון, שם או סיכום…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "עמוד {current} מתוך {total}",
         "paginationPrevious": "הקודם",
-        "paginationNext": "הבא"
+        "paginationNext": "הבא",
+        "callerHistoryHint": "הצגת היסטוריית המתקשר",
+        "clearFilters": "ניקוי מסננים",
+        "filterSearchChip": "חיפוש: {q}"
       },
       "callDetail": {
         "backToCalls": "חזרה לשיחות",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "צוות Fee Free",
           "fromYou": "אתם",
           "justNow": "הרגע"
-        }
+        },
+        "viewCallerHistory": "היסטוריית המתקשר",
+        "historySeeAll": "הצגת כל השיחות וההזמנות מהמספר הזה"
       },
       "upsells": {
         "title": "מנות נבחרות למכירה נוספת",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "לא ניתן היה לשמור את ההודעה.",
         "chipOne": "{service} מושהה עד {time}",
         "chipMany": "{count} שירותים מושהים"
+      },
+      "caller": {
+        "title": "היסטוריית המתקשר",
+        "unknownName": "מתקשר לא ידוע",
+        "firstCall": "שיחה ראשונה {date}",
+        "notFound": "עדיין אין שיחות מהמספר הזה.",
+        "kpiCalls": "שיחות",
+        "reservationsSub": "{count, plural, one {הזמנת מקום אחת} two {# הזמנות מקום} many {# הזמנות מקום} other {# הזמנות מקום}}",
+        "kpiOrders": "הזמנות טלפוניות",
+        "avgOrderSub": "ממוצע {amount}",
+        "kpiSpend": "סך ההוצאות",
+        "spendSub": "נגבה מהזמנות טלפוניות",
+        "kpiLastCall": "שיחה אחרונה",
+        "kpiMood": "מצב הרוח בשיחות",
+        "moodValue": "{pct}% חיובי",
+        "moodSub": "{count, plural, one {על בסיס שיחה מדורגת אחת} two {על בסיס # שיחות מדורגות} many {על בסיס # שיחות מדורגות} other {על בסיס # שיחות מדורגות}}",
+        "moodEmpty": "עדיין אין שיחות מדורגות",
+        "callsTitle": "כל השיחות",
+        "callsCount": "{count, plural, one {שיחה אחת} two {# שיחות} many {# שיחות} other {# שיחות}}",
+        "moreCalls": "מוצגות {shown} השיחות האחרונות מתוך {total}",
+        "favoritesTitle": "בדרך כלל מזמין",
+        "favoritesEmpty": "המועדפים יופיעו אחרי ההזמנה הטלפונית הראשונה שהושלמה.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "תוצאות השיחות",
+        "ordersTitle": "הזמנות טלפוניות",
+        "ordersEmpty": "עדיין אין הזמנות טלפוניות.",
+        "itemCount": "{count, plural, one {פריט אחד} two {# פריטים} many {# פריטים} other {# פריטים}}"
       }
     },
     "customerDetailPage": {

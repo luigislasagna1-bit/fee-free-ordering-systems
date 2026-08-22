@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} λεπτά συμπεριλαμβάνονται στο ελάχιστο {minimum}/μήνα ({rate}/λεπτό)",
         "meterAiNote": "Μόνο χρόνος διαχείρισης AI — ο χρόνος μεταβίβασης εξαιρείται",
         "meterProgress": "{pct}% του συμπεριλαμβανόμενου ορίου",
-        "meterUsedOf": "{used} από {total} δευτερόλεπτα"
+        "meterUsedOf": "{used} από {total} δευτερόλεπτα",
+        "greetingMorning": "Καλημέρα, {name}",
+        "greetingAfternoon": "Καλό απόγευμα, {name}",
+        "greetingEvening": "Καλησπέρα, {name}",
+        "greetingNight": "Καληνύχτα, {name}",
+        "nowLine": "Είναι {when}",
+        "monthHeadlineRich": "Αυτόν τον μήνα κερδίσατε <amt>{amount}</amt> με το Nabil AI",
+        "chartTopCallers": "Κορυφαίοι καλούντες",
+        "topCallersEmpty": "Δεν υπάρχουν ακόμη επαναλαμβανόμενοι καλούντες σε αυτό το διάστημα.",
+        "topCallersCalls": "{count, plural, one {# κλήση} other {# κλήσεις}}",
+        "topCallersOrders": "{count, plural, one {# παραγγελία} other {# παραγγελίες}}",
+        "activityCall": "Κλήση",
+        "activityOrder": "Παραγγελία",
+        "activityReservation": "Κράτηση"
       },
       "callLog": {
         "searchPlaceholder": "Αναζήτηση τηλεφώνου, ονόματος ή περίληψης…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Σελίδα {current} από {total}",
         "paginationPrevious": "Προηγούμενο",
-        "paginationNext": "Επόμενο"
+        "paginationNext": "Επόμενο",
+        "callerHistoryHint": "Προβολή ιστορικού καλούντος",
+        "clearFilters": "Καθαρισμός φίλτρων",
+        "filterSearchChip": "Αναζήτηση: {q}"
       },
       "callDetail": {
         "backToCalls": "Πίσω στις κλήσεις",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Ομάδα Fee Free",
           "fromYou": "Εσείς",
           "justNow": "μόλις τώρα"
-        }
+        },
+        "viewCallerHistory": "Ιστορικό καλούντος",
+        "historySeeAll": "Δείτε κάθε κλήση και παραγγελία από αυτόν τον αριθμό"
       },
       "upsells": {
         "title": "Επιλεγμένες προτάσεις πώλησης",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Δεν ήταν δυνατή η αποθήκευση του μηνύματος.",
         "chipOne": "{service} σε παύση έως {time}",
         "chipMany": "{count} υπηρεσίες σε παύση"
+      },
+      "caller": {
+        "title": "Ιστορικό καλούντος",
+        "unknownName": "Άγνωστος καλών",
+        "firstCall": "Πρώτη κλήση {date}",
+        "notFound": "Δεν υπάρχουν ακόμη κλήσεις από αυτόν τον αριθμό.",
+        "kpiCalls": "Κλήσεις",
+        "reservationsSub": "{count, plural, one {# κράτηση} other {# κρατήσεις}}",
+        "kpiOrders": "Τηλεφωνικές παραγγελίες",
+        "avgOrderSub": "{amount} κατά μέσο όρο",
+        "kpiSpend": "Συνολικές δαπάνες",
+        "spendSub": "Εισπράχθηκαν από τηλεφωνικές παραγγελίες",
+        "kpiLastCall": "Τελευταία κλήση",
+        "kpiMood": "Διάθεση στις κλήσεις",
+        "moodValue": "{pct}% θετική",
+        "moodSub": "{count, plural, one {σε # αξιολογημένη κλήση} other {σε # αξιολογημένες κλήσεις}}",
+        "moodEmpty": "Δεν υπάρχουν ακόμη αξιολογημένες κλήσεις",
+        "callsTitle": "Όλες οι κλήσεις",
+        "callsCount": "{count, plural, one {# κλήση} other {# κλήσεις}}",
+        "moreCalls": "Εμφανίζονται οι {shown} πιο πρόσφατες από {total} κλήσεις",
+        "favoritesTitle": "Συνήθως παραγγέλνει",
+        "favoritesEmpty": "Τα αγαπημένα εμφανίζονται μετά την πρώτη ολοκληρωμένη τηλεφωνική παραγγελία.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Αποτελέσματα κλήσεων",
+        "ordersTitle": "Τηλεφωνικές παραγγελίες",
+        "ordersEmpty": "Δεν υπάρχουν ακόμη τηλεφωνικές παραγγελίες.",
+        "itemCount": "{count, plural, one {# προϊόν} other {# προϊόντα}}"
       }
     },
     "customerDetailPage": {

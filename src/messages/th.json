@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} นาที รวมในขั้นต่ำ {minimum}/เดือน ({rate}/นาที)",
         "meterAiNote": "เฉพาะเวลาจัดการ AI — ไม่รวมเวลาโอนสาย",
         "meterProgress": "{pct}% ของโควต้าที่รวมไว้",
-        "meterUsedOf": "{used} จาก {total} วินาที"
+        "meterUsedOf": "{used} จาก {total} วินาที",
+        "greetingMorning": "สวัสดีตอนเช้า {name}",
+        "greetingAfternoon": "สวัสดีตอนบ่าย {name}",
+        "greetingEvening": "สวัสดีตอนเย็น {name}",
+        "greetingNight": "ราตรีสวัสดิ์ {name}",
+        "nowLine": "ตอนนี้ {when}",
+        "monthHeadlineRich": "เดือนนี้คุณทำรายได้ <amt>{amount}</amt> กับ Nabil AI",
+        "chartTopCallers": "ผู้โทรบ่อยที่สุด",
+        "topCallersEmpty": "ยังไม่มีผู้โทรซ้ำในช่วงเวลานี้",
+        "topCallersCalls": "{count, plural, other {# สาย}}",
+        "topCallersOrders": "{count, plural, other {# ออเดอร์}}",
+        "activityCall": "สายโทร",
+        "activityOrder": "ออเดอร์",
+        "activityReservation": "การจอง"
       },
       "callLog": {
         "searchPlaceholder": "ค้นหาเบอร์โทร ชื่อ หรือข้อความสรุป…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "หน้า {current} จาก {total}",
         "paginationPrevious": "ก่อนหน้า",
-        "paginationNext": "ถัดไป"
+        "paginationNext": "ถัดไป",
+        "callerHistoryHint": "ดูประวัติผู้โทร",
+        "clearFilters": "ล้างตัวกรอง",
+        "filterSearchChip": "ค้นหา: {q}"
       },
       "callDetail": {
         "backToCalls": "กลับไปยังรายการสาย",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "ทีม Fee Free",
           "fromYou": "คุณ",
           "justNow": "เมื่อสักครู่"
-        }
+        },
+        "viewCallerHistory": "ประวัติผู้โทร",
+        "historySeeAll": "ดูทุกสายและทุกออเดอร์จากเบอร์นี้"
       },
       "upsells": {
         "title": "อัปเซลล์แนะนำ",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "บันทึกข้อความไม่สำเร็จ",
         "chipOne": "{service}หยุดชั่วคราวถึง {time}",
         "chipMany": "หยุดชั่วคราว {count} บริการ"
+      },
+      "caller": {
+        "title": "ประวัติผู้โทร",
+        "unknownName": "ผู้โทรไม่ทราบชื่อ",
+        "firstCall": "โทรครั้งแรก {date}",
+        "notFound": "ยังไม่มีสายจากเบอร์นี้",
+        "kpiCalls": "สายโทร",
+        "reservationsSub": "{count, plural, other {# การจอง}}",
+        "kpiOrders": "ออเดอร์ทางโทรศัพท์",
+        "avgOrderSub": "เฉลี่ย {amount}",
+        "kpiSpend": "ยอดใช้จ่ายรวม",
+        "spendSub": "เก็บได้จากออเดอร์ทางโทรศัพท์",
+        "kpiLastCall": "สายล่าสุด",
+        "kpiMood": "อารมณ์ในการโทร",
+        "moodValue": "เชิงบวก {pct}%",
+        "moodSub": "{count, plural, other {จาก # สายที่ได้รับการประเมิน}}",
+        "moodEmpty": "ยังไม่มีสายที่ได้รับการประเมิน",
+        "callsTitle": "ทุกสาย",
+        "callsCount": "{count, plural, other {# สาย}}",
+        "moreCalls": "แสดง {shown} สายล่าสุดจากทั้งหมด {total} สาย",
+        "favoritesTitle": "มักจะสั่ง",
+        "favoritesEmpty": "เมนูโปรดจะแสดงหลังจากออเดอร์ทางโทรศัพท์แรกเสร็จสมบูรณ์",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "ผลของสาย",
+        "ordersTitle": "ออเดอร์ทางโทรศัพท์",
+        "ordersEmpty": "ยังไม่มีออเดอร์ทางโทรศัพท์",
+        "itemCount": "{count, plural, other {# รายการ}}"
       }
     },
     "customerDetailPage": {

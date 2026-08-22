@@ -4618,7 +4618,20 @@
         "meterIncluded": "{included} मिनट {minimum}/माह न्यूनतम में शामिल ({rate}/मिनट)",
         "meterAiNote": "केवल AI प्रोसेसिंग समय — ट्रांसफ़र समय शामिल नहीं",
         "meterProgress": "शामिल सीमा का {pct}%",
-        "meterUsedOf": "{total} सेकंड में से {used}"
+        "meterUsedOf": "{total} सेकंड में से {used}",
+        "greetingMorning": "सुप्रभात, {name}",
+        "greetingAfternoon": "नमस्ते, {name}",
+        "greetingEvening": "शुभ संध्या, {name}",
+        "greetingNight": "शुभ रात्रि, {name}",
+        "nowLine": "अभी {when} बजे हैं",
+        "monthHeadlineRich": "इस महीने आपने Nabil AI के साथ <amt>{amount}</amt> कमाए हैं",
+        "chartTopCallers": "शीर्ष कॉलर",
+        "topCallersEmpty": "इस अवधि में अभी तक कोई दोबारा कॉल करने वाला नहीं है।",
+        "topCallersCalls": "{count, plural, one {# कॉल} other {# कॉल}}",
+        "topCallersOrders": "{count, plural, one {# ऑर्डर} other {# ऑर्डर}}",
+        "activityCall": "कॉल",
+        "activityOrder": "ऑर्डर",
+        "activityReservation": "रिज़र्वेशन"
       },
       "callLog": {
         "searchPlaceholder": "फ़ोन, नाम या सारांश खोजें…",
@@ -4653,7 +4666,10 @@
         },
         "paginationPage": "{total} में से पृष्ठ {current}",
         "paginationPrevious": "पिछला",
-        "paginationNext": "अगला"
+        "paginationNext": "अगला",
+        "callerHistoryHint": "कॉलर का इतिहास देखें",
+        "clearFilters": "फ़िल्टर हटाएँ",
+        "filterSearchChip": "खोज: {q}"
       },
       "callDetail": {
         "backToCalls": "कॉल पर वापस जाएँ",
@@ -4803,7 +4819,9 @@
           "fromPlatform": "Fee Free टीम",
           "fromYou": "आप",
           "justNow": "अभी-अभी"
-        }
+        },
+        "viewCallerHistory": "कॉलर का इतिहास",
+        "historySeeAll": "इस नंबर से हर कॉल और ऑर्डर देखें"
       },
       "upsells": {
         "title": "चुनिंदा अपसेल",
@@ -5044,6 +5062,33 @@
         "greetingSaveError": "संदेश सहेजा नहीं जा सका।",
         "chipOne": "{service} {time} तक रुका है",
         "chipMany": "{count} सेवाएँ रुकी हैं"
+      },
+      "caller": {
+        "title": "कॉलर का इतिहास",
+        "unknownName": "अज्ञात कॉलर",
+        "firstCall": "पहली कॉल {date}",
+        "notFound": "इस नंबर से अभी तक कोई कॉल नहीं आई है।",
+        "kpiCalls": "कॉल",
+        "reservationsSub": "{count, plural, one {# रिज़र्वेशन} other {# रिज़र्वेशन}}",
+        "kpiOrders": "फ़ोन ऑर्डर",
+        "avgOrderSub": "औसत {amount}",
+        "kpiSpend": "कुल खर्च",
+        "spendSub": "फ़ोन ऑर्डर से प्राप्त राशि",
+        "kpiLastCall": "आख़िरी कॉल",
+        "kpiMood": "कॉल पर मूड",
+        "moodValue": "{pct}% सकारात्मक",
+        "moodSub": "{count, plural, one {# रेटेड कॉल के आधार पर} other {# रेटेड कॉल के आधार पर}}",
+        "moodEmpty": "अभी तक कोई रेटेड कॉल नहीं",
+        "callsTitle": "सभी कॉल",
+        "callsCount": "{count, plural, one {# कॉल} other {# कॉल}}",
+        "moreCalls": "कुल {total} कॉल में से सबसे हाल की {shown} दिखाई जा रही हैं",
+        "favoritesTitle": "आमतौर पर ऑर्डर करते हैं",
+        "favoritesEmpty": "पहला फ़ोन ऑर्डर पूरा होने के बाद पसंदीदा आइटम दिखेंगे।",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "कॉल के नतीजे",
+        "ordersTitle": "फ़ोन ऑर्डर",
+        "ordersEmpty": "अभी तक कोई फ़ोन ऑर्डर नहीं।",
+        "itemCount": "{count, plural, one {# आइटम} other {# आइटम}}"
       }
     },
     "reportOrdersList": {

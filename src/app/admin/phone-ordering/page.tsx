@@ -203,7 +203,7 @@ export default async function PhoneOrderingPage({
           })}
         </div>
 
-        {tab === "overview" && (awaitingLine ? setupCard : <OverviewTab restaurantId={restaurantId} sp={sp} />)}
+        {tab === "overview" && (awaitingLine ? setupCard : <OverviewTab restaurantId={restaurantId} sp={sp} greetingName={user.name} />)}
         {tab === "calls" && <CallsTab restaurantId={restaurantId} sp={sp} />}
         {tab === "menu" && <MenuTab restaurantId={restaurantId} sp={sp} />}
         {tab === "settings" && <SettingsTab restaurantId={restaurantId} />}

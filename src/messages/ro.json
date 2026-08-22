@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included} min incluse în minimul de {minimum}/lună ({rate}/min)",
         "meterAiNote": "Doar timp de gestionare AI — timpul de transfer exclus",
         "meterProgress": "{pct}% din volumul inclus",
-        "meterUsedOf": "{used} din {total} secunde"
+        "meterUsedOf": "{used} din {total} secunde",
+        "greetingMorning": "Bună dimineața, {name}",
+        "greetingAfternoon": "Bună ziua, {name}",
+        "greetingEvening": "Bună seara, {name}",
+        "greetingNight": "Noapte bună, {name}",
+        "nowLine": "Este {when}",
+        "monthHeadlineRich": "Ai încasat <amt>{amount}</amt> luna aceasta cu Nabil AI",
+        "chartTopCallers": "Cei mai frecvenți apelanți",
+        "topCallersEmpty": "Încă nu există apelanți recurenți în această perioadă.",
+        "topCallersCalls": "{count, plural, one {# apel} few {# apeluri} other {# de apeluri}}",
+        "topCallersOrders": "{count, plural, one {# comandă} few {# comenzi} other {# de comenzi}}",
+        "activityCall": "Apel",
+        "activityOrder": "Comandă",
+        "activityReservation": "Rezervare"
       },
       "callLog": {
         "searchPlaceholder": "Caută telefon, nume sau rezumat…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "Pagina {current} din {total}",
         "paginationPrevious": "Anterior",
-        "paginationNext": "Următor"
+        "paginationNext": "Următor",
+        "callerHistoryHint": "Vezi istoricul apelantului",
+        "clearFilters": "Șterge filtrele",
+        "filterSearchChip": "Căutare: {q}"
       },
       "callDetail": {
         "backToCalls": "Înapoi la apeluri",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Echipa Fee Free",
           "fromYou": "Dvs.",
           "justNow": "chiar acum"
-        }
+        },
+        "viewCallerHistory": "Istoricul apelantului",
+        "historySeeAll": "Vezi toate apelurile și comenzile de la acest număr"
       },
       "upsells": {
         "title": "Upsell-uri promovate",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "Mesajul nu a putut fi salvat.",
         "chipOne": "{service} în pauză până la {time}",
         "chipMany": "{count} servicii în pauză"
+      },
+      "caller": {
+        "title": "Istoricul apelantului",
+        "unknownName": "Apelant necunoscut",
+        "firstCall": "Primul apel pe {date}",
+        "notFound": "Încă nu există apeluri de la acest număr.",
+        "kpiCalls": "Apeluri",
+        "reservationsSub": "{count, plural, one {# rezervare} few {# rezervări} other {# de rezervări}}",
+        "kpiOrders": "Comenzi telefonice",
+        "avgOrderSub": "{amount} în medie",
+        "kpiSpend": "Total cheltuit",
+        "spendSub": "Încasat din comenzi telefonice",
+        "kpiLastCall": "Ultimul apel",
+        "kpiMood": "Dispoziția în apeluri",
+        "moodValue": "{pct}% pozitiv",
+        "moodSub": "{count, plural, one {din # apel evaluat} few {din # apeluri evaluate} other {din # de apeluri evaluate}}",
+        "moodEmpty": "Încă nu există apeluri evaluate",
+        "callsTitle": "Toate apelurile",
+        "callsCount": "{count, plural, one {# apel} few {# apeluri} other {# de apeluri}}",
+        "moreCalls": "Se afișează cele mai recente {shown} apeluri din {total}",
+        "favoritesTitle": "Comandă de obicei",
+        "favoritesEmpty": "Favoritele apar după prima comandă telefonică finalizată.",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "Rezultatele apelurilor",
+        "ordersTitle": "Comenzi telefonice",
+        "ordersEmpty": "Încă nu există comenzi telefonice.",
+        "itemCount": "{count, plural, one {# articol} few {# articole} other {# de articole}}"
       }
     },
     "customerDetailPage": {

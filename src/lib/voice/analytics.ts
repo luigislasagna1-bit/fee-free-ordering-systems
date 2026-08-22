@@ -27,6 +27,7 @@ import {
 } from "@/lib/restaurant-hours";
 import { collectedOf, type MoneyRow } from "@/lib/reports/collected";
 import { REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
+import { phoneDigitsKey } from "@/lib/phone";
 
 // ── Types ─────────────────────────────────────────────────────────────
 
@@ -69,6 +70,22 @@ export type RecentCall = {
   total: number | null;
 };
 
+/** One row of the Overview "Top callers" card — a phone number, never an
+ *  online customer (phone history is a separate world by design). */
+export type TopCaller = {
+  /** phoneDigitsKey(fromNumber) — the caller-page route key. */
+  digits: string;
+  fromNumber: string;
+  customerId: string | null;
+  /** Display name when the voice session resolved one, else null. */
+  name: string | null;
+  calls: number;
+  orders: number;
+  /** Collected money across the caller's linked orders in range. */
+  spend: number;
+  lastCallAt: Date;
+};
+
 export type VoiceAnalytics = {
   calls: number;
   durationSeconds: number;
@@ -92,6 +109,7 @@ export type VoiceAnalytics = {
   avgOrderValue: number;
   upsellCents: number;
   recent: RecentCall[];
+  topCallers: TopCaller[];
 };
 
 // ── Pure helpers (unit-tested) ────────────────────────────────────────
@@ -217,6 +235,49 @@ export function isAfterHours(dow: number, hhmm: string, byDay: HoursInterval[][]
 }
 
 /**
+ * Group calls by phone number and rank callers by collected spend, then call
+ * count. Anonymous / unparseable numbers are skipped — there is nothing to
+ * click through to. `collectedByNumber` must already be REPORT_ORDER_STATUS
+ * filtered so a rejected order contributes nothing (same rule as `revenue`).
+ */
+export function topCallersFrom(
+  calls: ReadonlyArray<Pick<AnalyticsCall, "fromNumber" | "customerId" | "orderNumber" | "startedAt">>,
+  collectedByNumber: ReadonlyMap<string, number>,
+  limit = 5,
+): Omit<TopCaller, "name">[] {
+  const byDigits = new Map<string, Omit<TopCaller, "name">>();
+  for (const c of calls) {
+    const digits = phoneDigitsKey(c.fromNumber);
+    if (!digits) continue;
+    const collected = c.orderNumber ? collectedByNumber.get(c.orderNumber) : undefined;
+    const cur = byDigits.get(digits);
+    if (cur) {
+      cur.calls++;
+      if (collected != null) {
+        cur.orders++;
+        cur.spend += collected;
+      }
+      if (!cur.customerId && c.customerId) cur.customerId = c.customerId;
+      if (c.startedAt > cur.lastCallAt) cur.lastCallAt = c.startedAt;
+    } else {
+      byDigits.set(digits, {
+        digits,
+        fromNumber: c.fromNumber,
+        customerId: c.customerId,
+        calls: 1,
+        orders: collected != null ? 1 : 0,
+        spend: collected ?? 0,
+        lastCallAt: c.startedAt,
+      });
+    }
+  }
+  return [...byDigits.values()]
+    .map((r) => ({ ...r, spend: Math.round(r.spend * 100) / 100 }))
+    .sort((a, b) => b.spend - a.spend || b.calls - a.calls || b.lastCallAt.getTime() - a.lastCallAt.getTime())
+    .slice(0, limit);
+}
+
+/**
  * PURE compositor: everything on the Overview tab except the recent-activity
  * feed (which needs customer-name rows the fetcher joins separately).
  */
@@ -226,7 +287,7 @@ export function computeVoiceAnalytics(input: {
   orders: Array<MoneyRow & { orderNumber: string }>;
   range: { from: Date; to: Date };
   timezone: string | null;
-}): Omit<VoiceAnalytics, "recent"> {
+}): Omit<VoiceAnalytics, "recent" | "topCallers"> {
   const { calls, hoursRows, orders, range, timezone } = input;
   const tz = timezone ?? undefined;
   const byDay = buildIntervalsByDow(hoursRows);
@@ -335,23 +396,28 @@ export async function fetchVoiceAnalytics(
       })
     : [];
 
+  const collectedByNumber = new Map(orders.map((o) => [o.orderNumber, collectedOf(o)]));
   const recentCalls = calls.slice(0, 8);
-  const recentCustomerIds = Array.from(
-    new Set(recentCalls.map((c) => c.customerId).filter((id): id is string => !!id)),
+  const topCallers = topCallersFrom(calls, collectedByNumber);
+  // One name lookup for both the feed and the top-callers card. Read-only:
+  // the name on file is shown, but phone history never links INTO the online
+  // customer area — the two stay separate by design (Luigi 2026-08-22).
+  const nameCustomerIds = Array.from(
+    new Set([...recentCalls, ...topCallers].map((c) => c.customerId).filter((id): id is string => !!id)),
   );
-  const customers = recentCustomerIds.length
+  const customers = nameCustomerIds.length
     ? await prisma.customer.findMany({
-        where: { restaurantId, id: { in: recentCustomerIds } },
+        where: { restaurantId, id: { in: nameCustomerIds } },
         select: { id: true, name: true },
       })
     : [];
   const customerName = new Map(customers.map((c) => [c.id, c.name]));
-  const collectedByNumber = new Map(orders.map((o) => [o.orderNumber, collectedOf(o)]));
 
   const summary = computeVoiceAnalytics({ calls, hoursRows, orders, range, timezone });
 
   return {
     ...summary,
+    topCallers: topCallers.map((r) => ({ ...r, name: r.customerId ? customerName.get(r.customerId) ?? null : null })),
     recent: recentCalls.map((c) => ({
       id: c.id,
       startedAt: c.startedAt,

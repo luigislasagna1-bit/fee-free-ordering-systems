@@ -4393,7 +4393,20 @@
         "meterIncluded": "{included}分が{minimum}/月の最低料金に含まれています（{rate}/分）",
         "meterAiNote": "AI対応時間のみ — 転送時間は除外",
         "meterProgress": "含まれる枠の{pct}%",
-        "meterUsedOf": "{total}秒中{used}秒"
+        "meterUsedOf": "{total}秒中{used}秒",
+        "greetingMorning": "おはようございます、{name}さん",
+        "greetingAfternoon": "こんにちは、{name}さん",
+        "greetingEvening": "こんばんは、{name}さん",
+        "greetingNight": "おやすみなさい、{name}さん",
+        "nowLine": "現在 {when}",
+        "monthHeadlineRich": "今月は Nabil AI で <amt>{amount}</amt> の売上を達成しました",
+        "chartTopCallers": "よく電話をくださるお客様",
+        "topCallersEmpty": "この期間にリピート発信者はまだいません。",
+        "topCallersCalls": "{count, plural, other {# 件の通話}}",
+        "topCallersOrders": "{count, plural, other {# 件の注文}}",
+        "activityCall": "通話",
+        "activityOrder": "注文",
+        "activityReservation": "予約"
       },
       "callLog": {
         "searchPlaceholder": "電話番号、名前、または要約で検索…",
@@ -4428,7 +4441,10 @@
         },
         "paginationPage": "{current} / {total} ページ",
         "paginationPrevious": "前へ",
-        "paginationNext": "次へ"
+        "paginationNext": "次へ",
+        "callerHistoryHint": "発信者履歴を見る",
+        "clearFilters": "フィルターをクリア",
+        "filterSearchChip": "検索：{q}"
       },
       "callDetail": {
         "backToCalls": "通話一覧に戻る",
@@ -4578,7 +4594,9 @@
           "fromPlatform": "Fee Free チーム",
           "fromYou": "あなた",
           "justNow": "たった今"
-        }
+        },
+        "viewCallerHistory": "発信者履歴",
+        "historySeeAll": "この番号からのすべての通話と注文を見る"
       },
       "upsells": {
         "title": "おすすめアップセル",
@@ -4819,6 +4837,33 @@
         "greetingSaveError": "メッセージを保存できませんでした。",
         "chipOne": "{service}は{time}まで一時停止中",
         "chipMany": "{count}件のサービスが一時停止中"
+      },
+      "caller": {
+        "title": "発信者履歴",
+        "unknownName": "不明な発信者",
+        "firstCall": "初回通話 {date}",
+        "notFound": "この番号からの通話はまだありません。",
+        "kpiCalls": "通話",
+        "reservationsSub": "{count, plural, other {# 件の予約}}",
+        "kpiOrders": "電話注文",
+        "avgOrderSub": "平均 {amount}",
+        "kpiSpend": "累計利用額",
+        "spendSub": "電話注文での回収額",
+        "kpiLastCall": "最終通話",
+        "kpiMood": "通話時の雰囲気",
+        "moodValue": "{pct}% ポジティブ",
+        "moodSub": "{count, plural, other {評価済み # 件の通話に基づく}}",
+        "moodEmpty": "評価済みの通話はまだありません",
+        "callsTitle": "すべての通話",
+        "callsCount": "{count, plural, other {# 件の通話}}",
+        "moreCalls": "全 {total} 件のうち最新 {shown} 件を表示中",
+        "favoritesTitle": "よく注文する品",
+        "favoritesEmpty": "お気に入りは最初の電話注文が完了すると表示されます。",
+        "favoriteTimes": "{count}×",
+        "outcomesTitle": "通話の結果",
+        "ordersTitle": "電話注文",
+        "ordersEmpty": "電話注文はまだありません。",
+        "itemCount": "{count, plural, other {# 品}}"
       }
     },
     "customerDetailPage": {
