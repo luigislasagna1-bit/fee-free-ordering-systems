@@ -11,7 +11,9 @@ COPY . .
 # The build this image was made from — stamped on every call record as
 # `agentVersion` so a behaviour change can be tied to a release (directive §27).
 # `scripts/nabil-release.ts` passes the git SHA: fly deploy --build-arg AGENT_VERSION=<sha>
-ARG AGENT_VERSION=dev
+# Empty by default (A3): an unset stamp falls through to FLY_IMAGE_REF in
+# versions.ts instead of masking it with "dev".
+ARG AGENT_VERSION=
 ENV NABIL_AGENT_VERSION=$AGENT_VERSION
 
 ENV NODE_ENV=production

@@ -61,5 +61,10 @@ export type Versions = {
 
 /** The build the container was made from (Fly build arg → env), else a dev marker. */
 export function agentVersion(): string {
-  return process.env.NABIL_AGENT_VERSION || process.env.FLY_IMAGE_REF || `dev-${process.env.npm_package_version ?? "0"}`;
+  // A3: an explicit build stamp wins; the Dockerfile's ARG default used to be
+  // "dev", which beat FLY_IMAGE_REF on every bare `fly deploy` and stamped
+  // every production call `agentVersion:"dev"` (52/52 on 2026-08-21).
+  const explicit = (process.env.NABIL_AGENT_VERSION || "").trim();
+  if (explicit && explicit !== "dev") return explicit;
+  return process.env.FLY_IMAGE_REF || `dev-${process.env.npm_package_version ?? "0"}`;
 }

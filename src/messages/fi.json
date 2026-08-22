@@ -4442,7 +4442,9 @@
           "spam": "Roskapuhelu",
           "error": "Vaatii huomiota",
           "unknown": "Käynnissä",
-          "message_taken": "Viesti otettu vastaan"
+          "message_taken": "Viesti otettu vastaan",
+          "abandoned_with_cart": "Lopetti kesken tilauksen",
+          "dropped": "Katkesi (palvelu)"
         },
         "sentiment": {
           "positive": "Positiivinen",

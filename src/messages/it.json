@@ -4442,7 +4442,9 @@
           "spam": "Spam",
           "error": "Richiede attenzione",
           "unknown": "In corso",
-          "message_taken": "Messaggio preso"
+          "message_taken": "Messaggio preso",
+          "abandoned_with_cart": "Interrotta a metà ordine",
+          "dropped": "Persa (servizio)"
         },
         "sentiment": {
           "positive": "Positivo",

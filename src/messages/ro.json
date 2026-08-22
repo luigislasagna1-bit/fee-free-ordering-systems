@@ -4442,7 +4442,9 @@
           "spam": "Spam",
           "error": "Necesită atenție",
           "unknown": "În desfășurare",
-          "message_taken": "Mesaj preluat"
+          "message_taken": "Mesaj preluat",
+          "abandoned_with_cart": "Abandonat în timpul comenzii",
+          "dropped": "Pierdut (serviciu)"
         },
         "sentiment": {
           "positive": "Pozitiv",

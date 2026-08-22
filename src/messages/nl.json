@@ -4442,7 +4442,9 @@
           "spam": "Spam",
           "error": "Aandacht vereist",
           "unknown": "In behandeling",
-          "message_taken": "Bericht aangenomen"
+          "message_taken": "Bericht aangenomen",
+          "abandoned_with_cart": "Halverwege de bestelling opgehangen",
+          "dropped": "Weggevallen (dienst)"
         },
         "sentiment": {
           "positive": "Positief",

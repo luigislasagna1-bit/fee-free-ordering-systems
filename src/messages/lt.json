@@ -4442,7 +4442,9 @@
           "spam": "Šlamštas",
           "error": "Reikia dėmesio",
           "unknown": "Vyksta",
-          "message_taken": "Žinutė priimta"
+          "message_taken": "Žinutė priimta",
+          "abandoned_with_cart": "Nutraukta užsakymo viduryje",
+          "dropped": "Prarasta (paslauga)"
         },
         "sentiment": {
           "positive": "Teigiama",

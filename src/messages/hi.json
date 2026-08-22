@@ -4667,7 +4667,9 @@
           "spam": "स्पैम",
           "error": "ध्यान देने की आवश्यकता",
           "unknown": "प्रगति में",
-          "message_taken": "संदेश लिया गया"
+          "message_taken": "संदेश लिया गया",
+          "abandoned_with_cart": "ऑर्डर के बीच में फ़ोन काट दिया",
+          "dropped": "कट गई (सेवा)"
         },
         "sentiment": {
           "positive": "सकारात्मक",

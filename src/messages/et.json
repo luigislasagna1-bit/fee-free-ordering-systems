@@ -4442,7 +4442,9 @@
           "spam": "Rämpskõne",
           "error": "Vajab tähelepanu",
           "unknown": "Pooleli",
-          "message_taken": "Sõnum vastu võetud"
+          "message_taken": "Sõnum vastu võetud",
+          "abandoned_with_cart": "Katkestas keset tellimust",
+          "dropped": "Kadunud (teenus)"
         },
         "sentiment": {
           "positive": "Positiivne",

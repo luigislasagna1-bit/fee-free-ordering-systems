@@ -97,7 +97,20 @@ export type CallEvent = CallEventBase &
         /** The bookkeeping merge ended the turn after hop 1 (no second model request). */
         mergedBookkeeping?: boolean;
       }
-    | { type: "call_end"; outcome: string; latency: unknown; usage: unknown; costCents: number; droppedAfterEnd?: number }
+    | {
+        type: "call_end";
+        outcome: string;
+        latency: unknown;
+        usage: unknown;
+        costCents: number;
+        droppedAfterEnd?: number;
+        /** A3: how the socket closed (Twilio close code/reason) and what was
+         *  left in the cart — the difference between "abandoned" and
+         *  "abandoned with a cart" / "dropped". */
+        closeCode?: number;
+        closeReason?: string;
+        cartLines?: number;
+      }
     | { type: "error"; where: string; message: string }
     /** The session decided to hand the caller to a person (A1, 2026-08-22).
      *  `outcome`: handoff_written = the reason reached the app BEFORE the
@@ -115,8 +128,13 @@ export type CallEventInput = CallEvent extends infer E ? (E extends CallEventBas
 /** Where events go. The session buffers and the app persists; tests inspect. */
 export interface EventSink {
   emit(ev: CallEventInput): void;
-  /** Everything emitted so far (the session drains this into call-log flushes). */
+  /** Everything emitted so far, REMOVED from the buffer (tests; legacy). */
   drain(): CallEvent[];
+  /** A3: everything not yet acknowledged, left in the buffer — a flush peeks,
+   *  posts, and acks only on success, so a failed flush loses nothing. */
+  peek(): CallEvent[];
+  /** Drop everything with seq ≤ `uptoSeq` (the flush that carried them landed). */
+  ack(uptoSeq: number): void;
   size(): number;
 }
 
@@ -162,6 +180,14 @@ export function createEventSink(now: () => number = Date.now): EventSink {
     },
     drain() {
       return buf.splice(0);
+    },
+    peek() {
+      return buf.slice();
+    },
+    ack(uptoSeq) {
+      let n = 0;
+      while (n < buf.length && buf[n].seq <= uptoSeq) n++;
+      if (n > 0) buf.splice(0, n);
     },
     size() {
       return buf.length;

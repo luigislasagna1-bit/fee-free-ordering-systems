@@ -4442,7 +4442,9 @@
           "spam": "Spam",
           "error": "Requereix atenció",
           "unknown": "En curs",
-          "message_taken": "Missatge pres"
+          "message_taken": "Missatge pres",
+          "abandoned_with_cart": "Ha penjat a mitja comanda",
+          "dropped": "Perduda (servei)"
         },
         "sentiment": {
           "positive": "Positiu",

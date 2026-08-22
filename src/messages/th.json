@@ -4442,7 +4442,9 @@
           "spam": "สแปม",
           "error": "ต้องตรวจสอบ",
           "unknown": "กำลังดำเนินการ",
-          "message_taken": "รับฝากข้อความแล้ว"
+          "message_taken": "รับฝากข้อความแล้ว",
+          "abandoned_with_cart": "วางสายกลางคันขณะสั่ง",
+          "dropped": "สายหลุด (ระบบ)"
         },
         "sentiment": {
           "positive": "เชิงบวก",

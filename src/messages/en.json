@@ -4770,7 +4770,9 @@
           "spam": "Spam",
           "error": "Needs attention",
           "unknown": "In progress",
-          "message_taken": "Message taken"
+          "message_taken": "Message taken",
+          "abandoned_with_cart": "Left mid-order",
+          "dropped": "Dropped (service)"
         },
         "sentiment": {
           "positive": "Positive",

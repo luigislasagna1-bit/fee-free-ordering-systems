@@ -4442,7 +4442,9 @@
           "spam": "Spam",
           "error": "Zahteva pažnju",
           "unknown": "U toku",
-          "message_taken": "Poruka primljena"
+          "message_taken": "Poruka primljena",
+          "abandoned_with_cart": "Prekinuto usred porudžbine",
+          "dropped": "Izgubljeno (usluga)"
         },
         "sentiment": {
           "positive": "Pozitivno",

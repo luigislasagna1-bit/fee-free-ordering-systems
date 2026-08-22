@@ -4442,7 +4442,9 @@
           "spam": "Neželeni klic",
           "error": "Zahteva pozornost",
           "unknown": "V teku",
-          "message_taken": "Sporočilo sprejeto"
+          "message_taken": "Sporočilo sprejeto",
+          "abandoned_with_cart": "Prekinjeno sredi naročila",
+          "dropped": "Izgubljeno (storitev)"
         },
         "sentiment": {
           "positive": "Pozitivno",

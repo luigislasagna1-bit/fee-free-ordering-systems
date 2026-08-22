@@ -4442,7 +4442,9 @@
           "spam": "Spam",
           "error": "Kræver opmærksomhed",
           "unknown": "I gang",
-          "message_taken": "Besked modtaget"
+          "message_taken": "Besked modtaget",
+          "abandoned_with_cart": "Lagde på midt i bestillingen",
+          "dropped": "Tabt (tjenesten)"
         },
         "sentiment": {
           "positive": "Positiv",

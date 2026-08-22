@@ -4442,7 +4442,9 @@
           "spam": "مكالمة مزعجة",
           "error": "يحتاج إلى متابعة",
           "unknown": "قيد التنفيذ",
-          "message_taken": "تم أخذ رسالة"
+          "message_taken": "تم أخذ رسالة",
+          "abandoned_with_cart": "أغلق في منتصف الطلب",
+          "dropped": "انقطعت (الخدمة)"
         },
         "sentiment": {
           "positive": "إيجابي",

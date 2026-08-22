@@ -4442,7 +4442,9 @@
           "spam": "스팸",
           "error": "확인 필요",
           "unknown": "진행 중",
-          "message_taken": "메시지 접수"
+          "message_taken": "메시지 접수",
+          "abandoned_with_cart": "주문 도중 끊음",
+          "dropped": "끊김 (서비스)"
         },
         "sentiment": {
           "positive": "긍정적",

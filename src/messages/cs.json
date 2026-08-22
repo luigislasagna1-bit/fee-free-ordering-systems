@@ -4442,7 +4442,9 @@
           "spam": "Spam",
           "error": "Vyžaduje pozornost",
           "unknown": "Probíhá",
-          "message_taken": "Vzkaz přijat"
+          "message_taken": "Vzkaz přijat",
+          "abandoned_with_cart": "Zavěšeno uprostřed objednávky",
+          "dropped": "Ztraceno (služba)"
         },
         "sentiment": {
           "positive": "Pozitivní",

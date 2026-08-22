@@ -4442,7 +4442,9 @@
           "spam": "Spam",
           "error": "Figyelmet igényel",
           "unknown": "Folyamatban",
-          "message_taken": "Üzenet felvéve"
+          "message_taken": "Üzenet felvéve",
+          "abandoned_with_cart": "Rendelés közben letette",
+          "dropped": "Megszakadt (szolgáltatás)"
         },
         "sentiment": {
           "positive": "Pozitív",

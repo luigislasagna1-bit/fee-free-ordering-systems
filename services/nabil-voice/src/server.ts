@@ -9,6 +9,8 @@ import Anthropic from "@anthropic-ai/sdk";
 import { WebSocketServer } from "ws";
 import { CONFIG, verifyCallToken, type CallToken } from "./config";
 import { agentVersion } from "./versions";
+import { postInternal } from "./api";
+import { drainSpool, startSpoolPump } from "./telemetry-spool";
 import { flagOn } from "./feature-flags";
 import { CallSession } from "./session";
 import { fallbackMapStatus, fallbackTwiml, handleFallback, startFallbackRefresh } from "./fallback";
@@ -216,7 +218,7 @@ wss.on("connection", (ws, req) => {
   ws.on("close", (code, reason) => {
     console.log(`[nabil-voice] /call closed: ${payload.callSid} code=${code} reason=${reason?.toString() ?? ""} after=${Date.now() - connectedAt}ms active=${active.size - 1}`);
     active.delete(session);
-    session.onClose();
+    session.onClose(code, reason?.toString());
   });
   ws.on("error", (e) => {
     console.error("[nabil-voice] ws error", e);
@@ -398,7 +400,7 @@ mediaWss.on("connection", (ws, req) => {
       onEnd: () => {
         if (session) {
           active.delete(session);
-          session.onClose();
+          session.onClose(undefined, "media_end");
           session = null;
         }
         // Close the Twilio leg ourselves (a hand-off, the time cap, a pipeline
@@ -470,6 +472,11 @@ async function drain(signal: string): Promise<void> {
     await sleep(3000); // let the finalize() writes land before the process goes
   }
 
+  // A3: call records that failed to write are parked in the spool — give them
+  // one bounded pass before the process goes away.
+  const spooled = await drainSpool(postInternal, 8000);
+  if (spooled.sent || spooled.remaining) console.warn("[nabil-voice] telemetry spool drained", spooled);
+
   console.log("[nabil-voice] drain complete");
   await flushObservability(2000);
   server.close(() => process.exit(0));
@@ -508,4 +515,6 @@ server.listen(CONFIG.port, () => {
   // so the first caller after a deploy or a quiet hour gets a warm prefix.
   // Same policy: fire-and-forget, warn-never-crash (warmup.ts).
   startCacheWarm(anthropic);
+  // A3: retry parked call records every 30 s (telemetry-spool.ts).
+  startSpoolPump(postInternal);
 });

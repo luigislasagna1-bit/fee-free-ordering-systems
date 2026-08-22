@@ -4442,7 +4442,9 @@
           "spam": "ספאם",
           "error": "דורש טיפול",
           "unknown": "בתהליך",
-          "message_taken": "נלקחה הודעה"
+          "message_taken": "נלקחה הודעה",
+          "abandoned_with_cart": "ניתק באמצע ההזמנה",
+          "dropped": "נותקה (שירות)"
         },
         "sentiment": {
           "positive": "חיובי",

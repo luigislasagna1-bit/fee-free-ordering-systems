@@ -20,6 +20,11 @@ const OUTCOMES = new Set([
   // refused by policy, or something only staff can do).
   "message_taken",
   "abandoned",
+  // A3 (2026-08-22): the caller hung up with food in the cart (was mislabelled
+  // faq_answered), and a call whose session died without an end event (stale
+  // sweep; was "error", which blamed the caller-facing agent for an infra loss).
+  "abandoned_with_cart",
+  "dropped",
   "spam",
   "error",
 ]);

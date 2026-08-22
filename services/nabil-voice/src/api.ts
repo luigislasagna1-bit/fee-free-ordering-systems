@@ -1,4 +1,5 @@
 import { CONFIG } from "./config";
+import { postWithRetry, type PostFn, type PostResult } from "./retry";
 
 /**
  * Thin client for the Fee Free app. The voice service NEVER touches the DB —
@@ -30,6 +31,10 @@ const PLACE_TIMEOUT_MS = 20_000;
  *  this the session ends anyway (after-stream then dials the store from the row
  *  that exists, or falls back) — never hold a caller for a log line. */
 const HANDOFF_TIMEOUT_MS = 2_500;
+/** The end-of-call record carries the transcript + the event tail; it is
+ *  written after the caller is gone, so it may take its time — and it is
+ *  retried (A3), then spooled (telemetry-spool.ts) if it still fails. */
+const END_TIMEOUT_MS = 15_000;
 
 async function getInternal<T = any>(path: string): Promise<T> {
   const res = await fetch(`${CONFIG.appBaseUrl}${path}`, {
@@ -55,6 +60,9 @@ async function post(
   const json = await res.json().catch(() => ({}));
   return { ok: res.ok, status: res.status, json };
 }
+
+/** Internal-key POST in the shape the retry/spool helpers take (A3). */
+export const postInternal: PostFn = (path, body, timeoutMs) => post(path, body, true, timeoutMs ?? READ_TIMEOUT_MS);
 
 export const api = {
   // Reads (internal, single-sourced on existing libs)
@@ -96,11 +104,11 @@ export const api = {
   // Nabil-only internal endpoints (built in task #13 / call-log follow-up)
   sendSms: (body: unknown) => post(`/api/internal/voice/send-sms`, body, true),
   /** event:"start" — creates the VoiceCall stub (real startedAt, triggers recording). */
-  logCallStart: (body: unknown) => post(`/api/internal/voice/call-log`, body, true),
+  logCallStart: (body: unknown): Promise<PostResult> => postWithRetry(postInternal, `/api/internal/voice/call-log`, body, { attempts: 3, timeoutMs: READ_TIMEOUT_MS }),
   /** event:"end" — merges outcome/ids/transcript at hangup. */
-  logCall: (body: unknown) => post(`/api/internal/voice/call-log`, body, true),
+  logCall: (body: unknown): Promise<PostResult> => postWithRetry(postInternal, `/api/internal/voice/call-log`, body, { attempts: 3, timeoutMs: END_TIMEOUT_MS }),
   /** event:"events" — a mid-call flush of the event log (crash-safe observability). */
-  logEvents: (body: unknown) => post(`/api/internal/voice/call-log`, body, true),
+  logEvents: (body: unknown): Promise<PostResult> => postWithRetry(postInternal, `/api/internal/voice/call-log`, body, { attempts: 3, timeoutMs: READ_TIMEOUT_MS }),
   /** event:"handoff" — the transfer reason, written BEFORE the relay session is
    *  ended so the <Connect action> route never races the end record (A1,
    *  2026-08-22: two callers sat for minutes while "still connecting"). Tight

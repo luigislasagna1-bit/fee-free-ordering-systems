@@ -54,6 +54,8 @@ export const CALL_OUTCOMES = [
   "transferred",
   "message_taken",
   "abandoned",
+  "abandoned_with_cart",
+  "dropped",
   "spam",
   "error",
 ] as const;

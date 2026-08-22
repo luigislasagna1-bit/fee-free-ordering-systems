@@ -4442,7 +4442,9 @@
           "spam": "Spam",
           "error": "Requer atenção",
           "unknown": "Em andamento",
-          "message_taken": "Recado anotado"
+          "message_taken": "Recado anotado",
+          "abandoned_with_cart": "Desistiu no meio do pedido",
+          "dropped": "Perdida (serviço)"
         },
         "sentiment": {
           "positive": "Positivo",

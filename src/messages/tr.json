@@ -4442,7 +4442,9 @@
           "spam": "Spam",
           "error": "Dikkat gerektiriyor",
           "unknown": "Devam ediyor",
-          "message_taken": "Mesaj alındı"
+          "message_taken": "Mesaj alındı",
+          "abandoned_with_cart": "Sipariş ortasında kapattı",
+          "dropped": "Düştü (servis)"
         },
         "sentiment": {
           "positive": "Olumlu",

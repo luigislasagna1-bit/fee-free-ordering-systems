@@ -4442,7 +4442,9 @@
           "spam": "スパム",
           "error": "要対応",
           "unknown": "通話中",
-          "message_taken": "伝言あり"
+          "message_taken": "伝言あり",
+          "abandoned_with_cart": "注文の途中で切断",
+          "dropped": "切断（サービス側）"
         },
         "sentiment": {
           "positive": "ポジティブ",

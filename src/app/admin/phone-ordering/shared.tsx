@@ -36,6 +36,8 @@ const OUTCOME_STYLES: Record<string, string> = {
   transferred: "bg-purple-100 text-purple-800",
   message_taken: "bg-amber-100 text-amber-800",
   abandoned: "bg-gray-100 text-gray-600",
+  abandoned_with_cart: "bg-orange-100 text-orange-800",
+  dropped: "bg-rose-100 text-rose-700",
   spam: "bg-slate-200 text-slate-600",
   error: "bg-red-100 text-red-700",
 };

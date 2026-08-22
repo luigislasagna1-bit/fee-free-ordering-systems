@@ -96,6 +96,12 @@ export function createRecordingSink(now: () => number = Date.now): { sink: Event
       pending.push(full);
     },
     drain: () => pending.splice(0),
+    peek: () => pending.slice(),
+    ack: (uptoSeq: number) => {
+      let n = 0;
+      while (n < pending.length && pending[n].seq <= uptoSeq) n++;
+      if (n > 0) pending.splice(0, n);
+    },
     size: () => pending.length,
   };
   return { sink, all };

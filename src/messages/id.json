@@ -4442,7 +4442,9 @@
           "spam": "Spam",
           "error": "Perlu perhatian",
           "unknown": "Sedang berlangsung",
-          "message_taken": "Pesan dicatat"
+          "message_taken": "Pesan dicatat",
+          "abandoned_with_cart": "Menutup telepon di tengah pesanan",
+          "dropped": "Terputus (layanan)"
         },
         "sentiment": {
           "positive": "Positif",

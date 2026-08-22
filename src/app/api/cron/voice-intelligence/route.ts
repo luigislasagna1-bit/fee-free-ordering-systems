@@ -18,7 +18,7 @@ import prisma from "@/lib/db";
 import { Prisma } from "@/generated/prisma/client";
 import { requireCronAuth } from "@/lib/cron-auth";
 import { generateCallIntelligence } from "@/lib/voice/call-intelligence";
-import { sweepStaleCalls } from "@/lib/voice/stale-calls";
+import { reconcileOrphanVoiceOrders, sweepStaleCalls } from "@/lib/voice/stale-calls";
 
 export const runtime = "nodejs";
 export const maxDuration = 55;
@@ -46,6 +46,16 @@ export async function GET(req: NextRequest) {
   } catch (e) {
     console.error("[voice-intelligence] stale-call sweep failed", e);
   }
+  // Third arm (A3, 2026-08-22): a voice order whose call record never got its
+  // end event → stamp the call from the order. RECONCILED in the logs = the
+  // primary path failed; fix that, don't rely on this.
+  let reconciled = 0;
+  try {
+    const r = await reconcileOrphanVoiceOrders(new Date(startedAt));
+    reconciled = r.reconciled;
+  } catch (e) {
+    console.error("[voice-intelligence] orphan-order reconciliation failed", e);
+  }
 
   const candidates = await prisma.voiceCall.findMany({
     where: {
@@ -72,9 +82,9 @@ export async function GET(req: NextRequest) {
   }
 
   console.log(
-    `[voice-intelligence] candidates=${candidates.length} generated=${generated} skipped=${skipped} deferred=${deferred} staleClosed=${stale}`,
+    `[voice-intelligence] candidates=${candidates.length} generated=${generated} skipped=${skipped} deferred=${deferred} staleClosed=${stale} reconciled=${reconciled}`,
   );
-  return NextResponse.json({ candidates: candidates.length, generated, skipped, deferred, staleClosed: stale });
+  return NextResponse.json({ candidates: candidates.length, generated, skipped, deferred, staleClosed: stale, reconciled });
 }
 
 export async function POST(req: NextRequest) {

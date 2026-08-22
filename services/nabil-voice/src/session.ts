@@ -21,6 +21,7 @@ import { isNarrationLeak } from "./narration-filter";
 import { verbalizeNumbersEn } from "./spoken-numbers";
 import { voicePhrase, voiceFillers } from "./voice-i18n";
 import { applyTransferPolicy } from "./transfer-policy";
+import { spoolTelemetry } from "./telemetry-spool";
 import { captureError } from "./observability";
 import { noteStoreRequest } from "./warmup";
 
@@ -202,6 +203,7 @@ const HANDOFF_WRITE_MS = 2_500;
 const END_HARD_CLOSE_MS = 6_000;
 /** How often the event log is flushed to the app mid-call (crash-safety). */
 const EVENT_FLUSH_EVERY_TURNS = 10;
+const EVENT_FLUSH_INTERVAL_MS = 45_000;
 
 /** Menu hashes already upserted by THIS process — the app dedupes by hash too,
  *  this only saves the 1 MB round trip on every call. */
@@ -233,6 +235,8 @@ export type SessionDeps = {
   api?: VoiceApi;
   now?: () => number;
   events?: EventSink;
+  /** A3: where a call record that failed to write is parked (tests inject). */
+  spool?: typeof spoolTelemetry;
   /** Test seam: the sim harness's scripted caller answers within milliseconds
    *  of a reply because there is no TTS to hear — real timing can't exist
    *  there. 0 disables the early-fragment hold. Default EARLY_FRAGMENT_MS. */
@@ -375,6 +379,11 @@ export class CallSession {
   private endingPromise: Promise<void> | null = null;
   private hardCloseTimer: ReturnType<typeof setTimeout> | undefined;
   private ttfaMsList: number[] = [];
+  /** A3 — how the socket closed + the periodic event flush + the spool hook. */
+  private closeCode?: number;
+  private closeReason?: string;
+  private eventFlushTimer?: NodeJS.Timeout;
+  private readonly spool: typeof spoolTelemetry;
   private eventFlushInFlight: Promise<unknown> | null = null;
 
   constructor(
@@ -384,6 +393,7 @@ export class CallSession {
     deps: SessionDeps = {},
   ) {
     this.api = deps.api ?? defaultApi;
+    this.spool = deps.spool ?? spoolTelemetry;
     this.now = deps.now ?? Date.now;
     this.earlyFragmentMs = deps.earlyFragmentMs ?? EARLY_FRAGMENT_MS;
     this.thinkingFillerMs = deps.thinkingFillerMs ?? THINKING_FILLER_AFTER_MS;
@@ -693,6 +703,13 @@ export class CallSession {
     this.tools = toolsForConfig(this.ctx.cfg);
     this.versions.toolsVersion = quickHash(this.tools);
     this.events.emit({ type: "call_start", turn: 0, versions: this.versions as any, from: this.token.from ?? null, to: this.token.to ?? null });
+    // A3: time-based flush as well as every-N-turns — a long, slow call with
+    // few turns used to hold everything until hangup.
+    clearInterval(this.eventFlushTimer);
+    this.eventFlushTimer = setInterval(() => {
+      if (this.phase === "live") this.flushEvents();
+    }, EVENT_FLUSH_INTERVAL_MS);
+    this.eventFlushTimer.unref?.();
     this.startMaxCallTimers();
     this.ready = true;
     const pending = this.queued.splice(0);
@@ -1039,6 +1056,12 @@ export class CallSession {
         final = await stream.finalMessage();
       } catch (e) {
         this.controller = null;
+        if (!this.interrupted && (this.finalized || this.phase !== "live")) {
+          // A3: the socket closed (or the session is ending) and we aborted
+          // our own stream — the call is over. Not a model error, not a retry,
+          // no sentence into a dead line.
+          return;
+        }
         if (this.interrupted) {
           // Record what the caller actually HEARD (the interrupt payload
           // truncated currentStreamText to the heard prefix when available).
@@ -1165,7 +1188,12 @@ export class CallSession {
             const st = stateOf(out);
             this.events.emit({ type: "cart", turn, hash: after, lines: st?.lines ?? null, problems: st?.problems ?? null, fulfilment: st?.fulfilment ?? null });
           }
-          if ((block.name === "place_order" || block.name === "book_reservation" || block.name === "quote_order") && (out as any)?.ok) stateChanged = true;
+          if ((block.name === "place_order" || block.name === "book_reservation" || block.name === "quote_order") && (out as any)?.ok) {
+            stateChanged = true;
+            // A3: a quote/placement is the moment the record matters most —
+            // get the events out now, not at hangup.
+            this.flushEvents();
+          }
           this.noteStruggle(block.name, out);
           this.noteOutcome(block.name, out);
           results.push({ type: "tool_result", tool_use_id: block.id, content: JSON.stringify(out) });
@@ -1680,22 +1708,53 @@ export class CallSession {
     await this.finalize();
   }
 
-  private flushEvents() {
-    if (this.events.size() === 0 || this.eventFlushInFlight) return;
-    const events = this.events.drain();
+  /**
+   * A3 — an honest outcome when nothing decisive happened (no order, booking,
+   * transfer or message). The old fall-through labelled every abandoned
+   * order-in-progress "faq_answered" (13 wrong labels on 2026-08-21, 6 of
+   * them with food in the cart).
+   */
+  private classifyOutcome(): string {
+    if (this.outcome) return this.outcome;
+    if (this.ctx.cart.lines().length > 0) return "abandoned_with_cart";
+    const fulfilment = this.ctx.cart.fulfilment() as { type?: string | null } | null | undefined;
+    const orderStarted = !!fulfilment?.type;
+    if (this.userTurns >= 2 && !orderStarted) return "faq_answered";
+    return "abandoned";
+  }
+
+  /**
+   * A3: peek → post → ack. Events stay in the buffer until the app has
+   * acknowledged them, so a failed flush loses nothing — they ride the next
+   * flush or the end record. The app inserts with skipDuplicates on
+   * (callId, seq), so a duplicate after a lost response is a no-op.
+   */
+  private flushEvents(): Promise<unknown> | null {
+    if (this.events.size() === 0 || this.eventFlushInFlight) return this.eventFlushInFlight;
+    const events = this.events.peek();
+    const lastSeq = events[events.length - 1].seq;
     this.eventFlushInFlight = this.api
       .logEvents({ event: "events", restaurantId: this.token.restaurantId, callSid: this.token.callSid, events })
+      .then((r) => {
+        // `undefined` = a backend without a result shape (tests/sim stubs) — treat as landed.
+        if (r == null || r.ok) this.events.ack(lastSeq);
+        else console.warn("[nabil-voice] event flush rejected — kept for the next flush", { callSid: this.token.callSid, status: r.status, count: events.length });
+      })
       .catch((e) => {
-        console.error("[nabil-voice] event flush failed", e);
+        console.error("[nabil-voice] event flush failed — kept for the next flush", e);
         captureError(e, { where: "events", callSid: this.token.callSid, restaurantId: this.token.restaurantId });
       })
       .finally(() => {
         this.eventFlushInFlight = null;
       });
+    return this.eventFlushInFlight;
   }
 
-  onClose() {
+  onClose(code?: number, reason?: string) {
+    if (code !== undefined) this.closeCode = code;
+    if (reason) this.closeReason = reason.slice(0, 120);
     this.controller?.abort();
+    clearInterval(this.eventFlushTimer);
     clearTimeout(this.resumeTimer);
     clearTimeout(this.wrapUpTimer);
     clearTimeout(this.hangUpTimer);
@@ -1718,7 +1777,8 @@ export class CallSession {
     }
     this.phase = "ended";
     clearTimeout(this.hardCloseTimer);
-    const outcome = this.outcome ?? (this.userTurns >= 2 ? "faq_answered" : "abandoned");
+    clearInterval(this.eventFlushTimer);
+    const outcome = this.classifyOutcome();
     const latency = this.latencySummary();
     const usage = { tokensIn: this.usageIn, tokensOut: this.usageOut, cacheRead: this.usageCacheRead, cacheWrite: this.usageCacheWrite };
     this.events.emit({
@@ -1729,11 +1789,17 @@ export class CallSession {
       usage,
       costCents: this.costCents(),
       ...(this.droppedAfterEnd ? { droppedAfterEnd: this.droppedAfterEnd } : {}),
+      ...(this.closeCode !== undefined ? { closeCode: this.closeCode } : {}),
+      ...(this.closeReason ? { closeReason: this.closeReason } : {}),
+      cartLines: this.ctx.cart.lines().length,
     });
     if (this.eventFlushInFlight) await this.eventFlushInFlight.catch(() => undefined);
-    const events = this.events.drain();
-    try {
-      const r = await this.api.logCall({
+    // A3: everything not yet acknowledged rides the end record; acked only
+    // when the record lands (else the whole payload is spooled and retried
+    // by the process, outliving this session).
+    const events = this.events.peek();
+    const lastSeq = events.length ? events[events.length - 1].seq : 0;
+    const endPayload = {
         event: "end",
         restaurantId: this.token.restaurantId,
         callSid: this.token.callSid,
@@ -1768,14 +1834,23 @@ export class CallSession {
         versions: this.versions,
         menuSnapshotHash: this.menuHash,
         events,
-      });
-      if (!r.ok) {
+    };
+    let landed = false;
+    try {
+      const r = await this.api.logCall(endPayload);
+      landed = r == null || !!r.ok;
+      if (!landed) {
         console.error("[nabil-voice] logCall rejected", r.status);
         captureError(new Error(`logCall rejected ${r.status}`), { where: "logCall", callSid: this.token.callSid, restaurantId: this.token.restaurantId, orderNumber: this.orderNumber, extra: { status: r.status } });
       }
     } catch (e) {
       console.error("[nabil-voice] logCall failed", e);
       captureError(e, { where: "logCall", callSid: this.token.callSid, restaurantId: this.token.restaurantId, orderNumber: this.orderNumber });
+    }
+    if (landed) {
+      if (lastSeq) this.events.ack(lastSeq);
+    } else {
+      this.spool("end", this.token.callSid, "/api/internal/voice/call-log", endPayload);
     }
 
     const engaged = this.userTurns >= 2;

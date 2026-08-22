@@ -4442,7 +4442,9 @@
           "spam": "Surogātzvans",
           "error": "Nepieciešama uzmanība",
           "unknown": "Notiek",
-          "message_taken": "Ziņa pieņemta"
+          "message_taken": "Ziņa pieņemta",
+          "abandoned_with_cart": "Pārtraukts pasūtījuma vidū",
+          "dropped": "Zaudēts (pakalpojums)"
         },
         "sentiment": {
           "positive": "Pozitīvs",

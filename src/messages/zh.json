@@ -4442,7 +4442,9 @@
           "spam": "骚扰电话",
           "error": "需要关注",
           "unknown": "进行中",
-          "message_taken": "已留言"
+          "message_taken": "已留言",
+          "abandoned_with_cart": "下单中途挂断",
+          "dropped": "掉线（服务）"
         },
         "sentiment": {
           "positive": "正面",

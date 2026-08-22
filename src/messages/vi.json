@@ -4442,7 +4442,9 @@
           "spam": "Cuộc gọi rác",
           "error": "Cần chú ý",
           "unknown": "Đang diễn ra",
-          "message_taken": "Đã ghi lời nhắn"
+          "message_taken": "Đã ghi lời nhắn",
+          "abandoned_with_cart": "Cúp máy giữa đơn hàng",
+          "dropped": "Mất kết nối (dịch vụ)"
         },
         "sentiment": {
           "positive": "Tích cực",

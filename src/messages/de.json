@@ -4442,7 +4442,9 @@
           "spam": "Spam",
           "error": "Erfordert Aufmerksamkeit",
           "unknown": "In Bearbeitung",
-          "message_taken": "Nachricht aufgenommen"
+          "message_taken": "Nachricht aufgenommen",
+          "abandoned_with_cart": "Mitten in der Bestellung aufgelegt",
+          "dropped": "Abgebrochen (Dienst)"
         },
         "sentiment": {
           "positive": "Positiv",
