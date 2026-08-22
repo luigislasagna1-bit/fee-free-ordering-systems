@@ -38,7 +38,7 @@ const evalRow = (over: Record<string, unknown> = {}) => ({
     quotedTotal: 20,
     chargedTotal: 20,
     transferReason: null,
-    restaurant: { defaultLanguage: "en" },
+    restaurant: { defaultLanguage: "en", name: "Luigi's", voiceAgentConfig: { agentName: "Luna", transferPolicy: "immediate" } },
     orderId: "o1",
     restaurantId: "r1",
   },

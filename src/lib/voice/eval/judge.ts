@@ -45,7 +45,7 @@ export const ISSUE_CATEGORIES = [
   "other",
 ] as const;
 
-const SYSTEM_PROMPT = `You are a strict quality reviewer for a restaurant's AI phone agent ("Nabil"). You are given a redacted transcript of one finished phone call, the system-recorded outcome, and the automatic detector's findings. Judge the call the way an experienced restaurant employee on a Friday rush would be judged: did the caller get what they wanted, accurately, without friction?
+const SYSTEM_PROMPT = `You are a strict quality reviewer for a restaurant's AI phone agent (the product is "Nabil"; each store gives it its own name, stated in the facts). You are given a redacted transcript of one finished phone call, the system-recorded outcome, and the automatic detector's findings. Judge the call the way an experienced restaurant employee on a Friday rush would be judged: did the caller get what they wanted, accurately, without friction?
 
 Rules:
 - Score only from the transcript and facts given. Never assume what the menu contains.
@@ -176,7 +176,7 @@ export async function judgeStoredCall(callId: string, opts: { now?: Date; client
           transferReason: true,
           orderId: true,
           restaurantId: true,
-          restaurant: { select: { defaultLanguage: true } },
+          restaurant: { select: { defaultLanguage: true, name: true, voiceAgentConfig: { select: { agentName: true, transferPolicy: true } } } },
         },
       },
     },
@@ -205,7 +205,10 @@ export async function judgeStoredCall(callId: string, opts: { now?: Date; client
   const model = process.env.NABIL_JUDGE_MODEL || DEFAULT_MODEL;
 
   const detFindings = (Array.isArray(ev.findings) ? ev.findings : []) as Array<{ code: string; severity: string; turn: number | null; detail: string }>;
+  const agentName = call.restaurant?.voiceAgentConfig?.agentName?.trim() || "Nabil";
+  const policy = call.restaurant?.voiceAgentConfig?.transferPolicy || "immediate";
   const sections = [
+    `Restaurant: ${call.restaurant?.name ?? "?"}. The agent introduces itself as "${agentName}" — that IS its configured name, not an inconsistency. Store transfer policy: ${policy} (never = the agent must deflect transfer requests; reluctant = deflect once, then transfer; immediate = transfer when asked).`,
     `Call outcome (system-recorded): ${call.outcome ?? "unknown"}${call.transferReason ? ` (end reason: ${call.transferReason})` : ""}`,
     call.durationSeconds != null ? `Duration: ${call.durationSeconds}s` : "",
     order?.items?.length ? `ORDER AS PLACED (${call.orderNumber ?? "?"}):\n${order.items.map((i) => `- ${i.quantity}× ${i.name}${i.variantName ? ` (${i.variantName})` : ""}`).join("\n")}` : "No order was placed on this call.",

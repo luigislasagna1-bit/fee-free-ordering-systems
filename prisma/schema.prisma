@@ -3299,6 +3299,8 @@ model VoiceCall {
   provenance       VoiceCallProvenance?
   /// Phase D: the automatic evaluation (deterministic score, later the judge).
   evaluation       VoiceCallEvaluation?
+  /// Phase D: the human review by platform staff.
+  review           VoiceCallReview?
 
   createdAt       DateTime   @default(now())
 
@@ -3453,6 +3455,37 @@ model VoiceCallEvaluation {
   @@index([needsReview, evaluatedAt])
   @@index([coreVersion])
   @@index([judgeStatus, judgeNextAt])
+}
+
+/// Phase D (2026-08-22) — a HUMAN review of one call by platform staff
+/// (directive §31): good/bad, the owner's failure taxonomy as tags, notes,
+/// and later the eval scenario it became / the Core version that fixed it.
+/// PII: notes/failureReason are staff-typed text that can name the caller —
+/// anonymized with the parent VoiceCall (PII_ERASURE_MAP).
+model VoiceCallReview {
+  id                 String    @id @default(cuid())
+  callId             String    @unique
+  call               VoiceCall @relation(fields: [callId], references: [id], onDelete: Cascade)
+  restaurantId       String
+  /// good | bad | unsure
+  verdict            String
+  /// From the review taxonomy: wrong_item, wrong_modifier, missed_correction,
+  /// unnecessary_clarification, failed_to_clarify, hallucination, bad_transfer,
+  /// tool_failure, rigid_flow, robotic, dead_air, audio, other
+  tags               String[]  @default([])
+  notes              String?
+  /// Did the caller get what they wanted? (null = not judged)
+  completed          Boolean?
+  failureReason      String?
+  reviewerId         String?
+  reviewerEmail      String?
+  evalScenarioId     String?
+  fixedInCoreVersion String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  @@index([restaurantId, createdAt])
+  @@index([verdict, createdAt])
 }
 
 /// Phase B (2026-08-22) — everything that shaped ONE call, so a metric that

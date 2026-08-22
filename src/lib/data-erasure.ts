@@ -71,7 +71,8 @@ export const PII_ERASURE_MAP = {
   VoiceCallEvent: { scope: "restaurant", action: "delete", exported: false, fields: ["payload"] }, // Nabil AI event log (what the caller said, tool inputs/outputs, cart, address — redacted at write but still speech). DELETED (not anonymized) via the parent VoiceCall's fromDigits, BEFORE that row's fromDigits is nulled. Timings/versions live on VoiceCall, so nothing analytic is lost. Not exported: it is the same speech as VoiceCall.transcript, which IS exported, plus internal tool payloads.
   VoiceCallReport: { scope: "restaurant", action: "anonymize", exported: false, fields: ["description", "resolution"] }, // Nabil AI "Report this call" (2026-08-16): STAFF-typed text about a caller's call, can name the caller. Scrubbed via the parent VoiceCall's fromDigits BEFORE that row is nulled; topic/status/timestamps stay for the platform's own defect history. Not exported: written by the restaurant about its own system, not by or to the caller.
   VoiceCallReportComment: { scope: "restaurant", action: "anonymize", exported: false, fields: ["body"] }, // the notes thread on a call report — same rule, same key; not exported for the same reason.
-  VoiceCallbackRequest: { scope: "restaurant", action: "anonymize", exported: "voiceMessages", fields: ["phoneDigits", "callerName", "message"] }, // Nabil AI "take a message" (A1b, 2026-08-22): the caller's own words for the store + their number/name. Matched on phoneDigits (same key as VoiceCall.fromDigits). Exported: it is the subject's own message.
+  VoiceCallbackRequest: { scope: "restaurant", action: "anonymize", exported: "voiceMessages", fields: ["phoneDigits", "callerName", "message"] }, // Nabil AI "take a message" (A1b, 2026-08-22): the caller's own words for the store + their number/name. Matched on its own phoneDigits (the callback number — same key as VoiceCall.fromDigits). Exported: it is the subject's own message.
+  VoiceCallReview: { scope: "restaurant", action: "anonymize", exported: false, fields: ["notes", "failureReason"] }, // Phase D (2026-08-22): platform-staff review notes about a call — staff-typed text that can name the caller; scrubbed via the parent VoiceCall's fromDigits, verdict/tags/dates kept as the platform's own quality history. Not exported: written by the platform about its own system.
   // VoiceMenuSnapshot: NOT listed on purpose — it is the menu payload keyed by
   // content hash (items, prices, options). Restaurant data, no customer PII.
   BlockedCaller: { scope: "restaurant", action: "keep", exported: false, fields: [] }, // kept: do-not-serve record, same principle as EmailSuppression
@@ -294,6 +295,18 @@ export async function anonymizeCustomerByEmail(
         where: { report: { restaurantId, call: { fromDigits: { in: phoneKeys } } } },
         data: { body: REDACTED_REPORT_TEXT },
       })).count;
+      // Phase D: platform-staff review notes on this caller's calls — same rule.
+      counts.VoiceCallReview = (await tx.voiceCallReview.updateMany({
+        where: { restaurantId, call: { fromDigits: { in: phoneKeys } } },
+        data: { notes: REDACTED_REPORT_TEXT, failureReason: null },
+      })).count;
+      // A1b: messages the caller left for the store ("take a message") — the
+      // caller's own words + number + name. Keyed on its own phoneDigits
+      // (the callback number), the same key as VoiceCall.fromDigits.
+      counts.VoiceCallbackRequest = (await tx.voiceCallbackRequest.updateMany({
+        where: { restaurantId, phoneDigits: { in: phoneKeys } },
+        data: { phoneDigits: null, callerName: null, message: REDACTED_REPORT_TEXT },
+      })).count;
 
       // Rows whose audio Twilio would NOT delete: scrub every PII field EXCEPT
       // recordingSid. The playable URL still goes (nothing in the admin can
@@ -475,6 +488,8 @@ export type DsarBundle = {
   orderRatings: unknown[];
   reservations: unknown[];
   voiceCalls: unknown[];
+  /** A1b: messages the caller left for the store via Nabil (their own words). */
+  voiceMessages: unknown[];
   truncated: boolean;
 };
 
@@ -579,6 +594,16 @@ export async function exportPersonData(scope: { restaurantId?: string; email: st
         })
       : Promise.resolve([]),
   ]);
+  // A1b: messages left for the store through Nabil — matched on the callback
+  // number's digits (the erasure key), bounded.
+  const voiceMessages = phoneKeys.length
+    ? await prisma.voiceCallbackRequest.findMany({
+        where: { ...restWhere, phoneDigits: { in: phoneKeys } },
+        select: { restaurantId: true, createdAt: true, callerName: true, message: true, status: true },
+        orderBy: { createdAt: "desc" },
+        take: 500,
+      })
+    : [];
 
   return {
     generatedAt: new Date().toISOString(),
@@ -595,6 +620,7 @@ export async function exportPersonData(scope: { restaurantId?: string; email: st
     // credentials and meaningless to the subject. Hand back the FACT that a
     // recording exists and how long it runs, never the pointer to it.
     voiceCalls: voiceCalls.map(({ recordingSid, ...call }) => ({ ...call, hasRecording: !!recordingSid })),
+    voiceMessages,
     truncated,
   };
 }

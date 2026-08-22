@@ -36,6 +36,8 @@ const items = [
   // Twilio webhook / fallback URLs on every Nabil number, checked + repaired
   // from here (the creds live only in this deployment's env).
   { href: "/superadmin/settings/nabil", label: "Nabil Phone Lines", icon: PhoneCall, adminOnly: true },
+  // Phase D (2026-08-22): automatic evaluation of every call + the review queue.
+  { href: "/superadmin/nabil-quality", label: "Nabil Quality", icon: Sparkles },
 ];
 
 export function SuperadminNav({ reportsNewCount = 0, notificationsCount = 0, restaurantReportsNewCount = 0, restricted = false }: { reportsNewCount?: number; notificationsCount?: number; restaurantReportsNewCount?: number; restricted?: boolean }) {

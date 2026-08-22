@@ -34,6 +34,8 @@ const { prismaMock, calls, deleteRecordingMock } = vi.hoisted(() => {
     voiceCallEvent: { deleteMany: rec("voiceCallEvent.deleteMany", { count: 57 }) },
     voiceCallReport: { updateMany: rec("voiceCallReport.updateMany", { count: 3 }) },
     voiceCallReportComment: { updateMany: rec("voiceCallReportComment.updateMany", { count: 5 }) },
+    voiceCallReview: { updateMany: rec("voiceCallReview.updateMany", { count: 1 }) },
+    voiceCallbackRequest: { updateMany: rec("voiceCallbackRequest.updateMany", { count: 1 }), findMany: rec("voiceCallbackRequest.findMany", []) },
     restaurantCustomerAddress: { findMany: vi.fn(async () => []), deleteMany: rec("rca.deleteMany", { count: 0 }) },
     customerPushToken: { deleteMany: rec("cpt.deleteMany", { count: 0 }) },
     giftWalletPass: { updateMany: rec("gwp.updateMany", { count: 0 }) },
