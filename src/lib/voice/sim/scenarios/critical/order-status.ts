@@ -109,7 +109,7 @@ export const S01: Scenario = base(
     mustSay: ["being prepared", "(about|around|roughly) (nine|9|ten|10) minutes"],
     // "ready for pickup IN about nine minutes" is right; "is ready for pickup" (now) would be a guess.
     mustNotSay: ["on its way", "any minute", "(is|it's) ready for pickup(?! in)", "ready now", "pick ?up or delivery"],
-    allowedTools: ["lookup_recent_orders", "send_sms_link"],
+    allowedTools: ["lookup_recent_orders", "send_sms_link", "end_call"],
     maxToolErrors: 0,
   },
 );
@@ -124,7 +124,7 @@ export const S02: Scenario = base(
     mustPlace: false,
     mustSay: ["out for delivery|on its way to you"],
     mustNotSay: ["(two|three|four|five|ten|fifteen|twenty) minutes away", "pick ?up or delivery"],
-    allowedTools: ["lookup_recent_orders", "send_sms_link"],
+    allowedTools: ["lookup_recent_orders", "send_sms_link", "end_call"],
     maxToolErrors: 0,
   },
 );
@@ -141,7 +141,7 @@ export const S03: Scenario = base(
     // (Offering to start a fresh order here is allowed — only a guessed driver
     // position or ETA is forbidden.)
     mustNotSay: ["on its way", "(five|ten|fifteen) minutes away"],
-    allowedTools: ["lookup_recent_orders", "send_sms_link", "transfer_to_human", "leave_message"],
+    allowedTools: ["lookup_recent_orders", "send_sms_link", "transfer_to_human", "leave_message", "end_call"],
     maxToolErrors: 0,
   },
 );
