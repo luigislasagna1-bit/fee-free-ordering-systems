@@ -1,5 +1,7 @@
 import { CONFIG } from "./config";
 import { postWithRetry, type PostFn, type PostResult } from "./retry";
+import { CORE_VERSION } from "./core-version";
+import { agentVersion } from "./versions";
 
 /**
  * Thin client for the Fee Free app. The voice service NEVER touches the DB —
@@ -8,7 +10,15 @@ import { postWithRetry, type PostFn, type PostResult } from "./retry";
  * pricing stays single-sourced (preview==charge, money path unchanged).
  */
 const jsonHeaders = { "content-type": "application/json" };
-const internalHeaders = { ...jsonHeaders, "x-internal-key": CONFIG.internalSecret };
+// Phase B handshake: every internal call says which Core + build is talking,
+// so the app can stamp provenance and flag a contract drift between lanes.
+const internalHeaders = {
+  ...jsonHeaders,
+  "x-internal-key": CONFIG.internalSecret,
+  "x-nabil-core": CORE_VERSION,
+  "x-nabil-agent": agentVersion(),
+  "x-nabil-channel": CONFIG.channel,
+};
 
 /**
  * 🚨 EVERY call here happens inside a tool hop, and a tool hop emits NO audio.

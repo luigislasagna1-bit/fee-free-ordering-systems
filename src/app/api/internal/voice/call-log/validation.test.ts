@@ -289,10 +289,10 @@ describe("parseEventsBody", () => {
 });
 
 describe("parseVersions + end-body versions/events", () => {
-  it("maps the four stored version fields and ignores the rest", () => {
+  it("maps the four column fields and keeps the provenance block (Phase B) as nullable extras", () => {
     expect(
       parseVersions({ agentVersion: "fly-abc", promptVersion: "p7", toolsVersion: "t3", menuSnapshotHash: "8baa73198470c7bb", model: "claude", modelConfig: {} }),
-    ).toEqual({ agentVersion: "fly-abc", promptVersion: "p7", toolsVersion: "t3", menuSnapshotHash: "8baa73198470c7bb" });
+    ).toMatchObject({ agentVersion: "fly-abc", promptVersion: "p7", toolsVersion: "t3", menuSnapshotHash: "8baa73198470c7bb" });
     expect(parseVersions(null)).toBeNull();
     expect(parseVersions({})).toBeNull();
     expect(parseVersions("v1")).toBeNull();

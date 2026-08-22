@@ -41,6 +41,13 @@ export function quickHash(v: unknown): string {
 
 export type Versions = {
   agentVersion: string;
+  /** Phase B: Nabil Core semver + sha of the core source at boot, the git sha
+   *  the image was built from, and where it ran. */
+  coreVersion: string;
+  coreContentHash: string;
+  gitSha: string | null;
+  flyMachineId: string | null;
+  flyRegion: string | null;
   /** Which LANE served the call — "current" (live app) or "staging"
    *  (nabil-voice-staging). Staging and live calls must never share a quality
    *  cohort (Luigi 2026-08-22). */

@@ -12,6 +12,7 @@ const { prismaMock } = vi.hoisted(() => ({
   prismaMock: {
     voiceCall: { upsert: vi.fn(), findUnique: vi.fn() },
     voiceCallEvent: { createMany: vi.fn() },
+    voiceCallProvenance: { upsert: vi.fn() },
     voiceMenuSnapshot: { upsert: vi.fn() },
     voiceAgentConfig: { findUnique: vi.fn() },
     $executeRaw: vi.fn(),
@@ -208,5 +209,71 @@ describe('event:"handoff" (A1 — written before the relay is ended)', () => {
     const arg = prismaMock.voiceCall.upsert.mock.calls[0][0];
     expect(arg.update.transferReason).toBe("caller request");
     expect(arg.update.transferredAt).toBeInstanceOf(Date);
+  });
+});
+
+/* ───────────────────────── Phase B — provenance side table ───────────────────────── */
+
+describe("end event → VoiceCallProvenance (Phase B)", () => {
+  it("writes one idempotent provenance row from the versions block + handshake headers, never blocking the end record", async () => {
+    prismaMock.voiceCall.upsert.mockResolvedValue({ id: "call_1" });
+    prismaMock.voiceCallProvenance.upsert.mockResolvedValue({ id: "prov_1" });
+    const res = await POST(
+      post({
+        event: "end",
+        callSid: "CA1",
+        restaurantId: "r1",
+        outcome: "order_placed",
+        versions: {
+          agentVersion: "abc1234",
+          channel: "staging",
+          gitSha: "abc1234",
+          coreVersion: "1.1.0",
+          coreContentHash: "deadbeef0001",
+          promptVersion: "p1",
+          toolsVersion: "t1",
+          systemStableHash: "s1",
+          cfgHash: "c1",
+          model: "claude-sonnet-5",
+          modelConfig: { thinking: "adaptive", effort: "low", maxTokens: 800, nested: { dropped: true } },
+          sttModel: "nova-3-general",
+          ttsVoice: "voice-1",
+          flyMachineId: "m1",
+          flyRegion: "yyz",
+          menuSnapshotHash: "36922ccf53ddf9f3",
+        },
+      }),
+    );
+    expect(res.status).toBe(200);
+    expect(prismaMock.voiceCallProvenance.upsert).toHaveBeenCalledTimes(1);
+    const arg = prismaMock.voiceCallProvenance.upsert.mock.calls[0][0];
+    expect(arg.where).toEqual({ callId: "call_1" });
+    expect(arg.update).toMatchObject({
+      restaurantId: "r1",
+      channel: "staging",
+      agentVersion: "abc1234",
+      gitSha: "abc1234",
+      coreVersion: "1.1.0",
+      coreContentHash: "deadbeef0001",
+      promptVersion: "p1",
+      toolsVersion: "t1",
+      menuSnapshotHash: "36922ccf53ddf9f3",
+      model: "claude-sonnet-5",
+      modelConfig: { thinking: "adaptive", effort: "low", maxTokens: 800 },
+      audioProfile: { pipeline: "mediastreams", sttModel: "nova-3-general", ttsVoice: "voice-1" },
+      flyMachineId: "m1",
+      flyRegion: "yyz",
+    });
+    expect(JSON.stringify(arg.update)).not.toMatch(/nested/);
+  });
+
+  it("a provenance failure is logged, the end record still succeeds; no versions → no row", async () => {
+    prismaMock.voiceCall.upsert.mockResolvedValue({ id: "call_2" });
+    prismaMock.voiceCallProvenance.upsert.mockRejectedValueOnce(new Error("db down"));
+    const res = await POST(post({ event: "end", callSid: "CA2", restaurantId: "r1", outcome: "abandoned", versions: { agentVersion: "v1" } }));
+    expect(res.status).toBe(200);
+    prismaMock.voiceCallProvenance.upsert.mockClear();
+    await POST(post({ event: "end", callSid: "CA3", restaurantId: "r1", outcome: "abandoned" }));
+    expect(prismaMock.voiceCallProvenance.upsert).not.toHaveBeenCalled();
   });
 });

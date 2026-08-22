@@ -23,6 +23,7 @@ import { voicePhrase, voiceFillers } from "./voice-i18n";
 import { applyTransferPolicy } from "./transfer-policy";
 import { spoolTelemetry } from "./telemetry-spool";
 import { createRobocallDetector } from "./robocall-detect";
+import { CORE_VERSION, coreContentHash, gitSha } from "./core-version";
 import { captureError } from "./observability";
 import { noteStoreRequest } from "./warmup";
 
@@ -502,6 +503,11 @@ export class CallSession {
     };
     this.versions = {
       agentVersion: agentVersion(),
+      coreVersion: CORE_VERSION,
+      coreContentHash: coreContentHash(),
+      gitSha: gitSha(),
+      flyMachineId: process.env.FLY_MACHINE_ID || null,
+      flyRegion: process.env.FLY_REGION || null,
       channel: CONFIG.channel,
       promptVersion: quickHash([PLAYBOOK_STYLE, PLAYBOOK_PROTOCOL]),
       toolsVersion: quickHash(TOOLS),

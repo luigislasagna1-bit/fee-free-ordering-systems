@@ -101,6 +101,20 @@ export interface VersionsData {
   promptVersion: string | null;
   toolsVersion: string | null;
   menuSnapshotHash: string | null;
+  /** Phase B (2026-08-22): the rest of the service's `versions` block, kept
+   *  for the VoiceCallProvenance side table (no PII). */
+  channel: string | null;
+  gitSha: string | null;
+  coreVersion: string | null;
+  coreContentHash: string | null;
+  systemStableHash: string | null;
+  cfgHash: string | null;
+  model: string | null;
+  modelConfig: { [k: string]: JsonValue } | null;
+  sttModel: string | null;
+  ttsVoice: string | null;
+  flyMachineId: string | null;
+  flyRegion: string | null;
 }
 
 /** One validated event, ready for the VoiceCallEvent row (minus callId). */
@@ -383,11 +397,32 @@ export function parseEndBody(b: unknown): ParseResult<EndData> {
 export function parseVersions(v: unknown): VersionsData | null {
   if (!v || typeof v !== "object" || Array.isArray(v)) return null;
   const o = v as Record<string, unknown>;
+  const mc = o.modelConfig && typeof o.modelConfig === "object" && !Array.isArray(o.modelConfig) ? (o.modelConfig as Record<string, unknown>) : null;
+  const modelConfig: { [k: string]: JsonValue } | null = mc
+    ? Object.fromEntries(
+        Object.entries(mc)
+          .filter(([, v]) => v === null || ["string", "number", "boolean"].includes(typeof v))
+          .slice(0, 20)
+          .map(([k, v]) => [k.slice(0, 40), (typeof v === "string" ? v.slice(0, 80) : v) as JsonValue]),
+      )
+    : null;
   const out: VersionsData = {
     agentVersion: str(o.agentVersion, 120),
     promptVersion: str(o.promptVersion, 120),
     toolsVersion: str(o.toolsVersion, 120),
     menuSnapshotHash: str(o.menuSnapshotHash, 64),
+    channel: str(o.channel, 16),
+    gitSha: str(o.gitSha, 64),
+    coreVersion: str(o.coreVersion, 32),
+    coreContentHash: str(o.coreContentHash, 32),
+    systemStableHash: str(o.systemStableHash, 64),
+    cfgHash: str(o.cfgHash, 64),
+    model: str(o.model, 80),
+    modelConfig,
+    sttModel: str(o.sttModel, 80),
+    ttsVoice: str(o.ttsVoice, 120),
+    flyMachineId: str(o.flyMachineId, 40),
+    flyRegion: str(o.flyRegion, 16),
   };
   return out.agentVersion || out.promptVersion || out.toolsVersion || out.menuSnapshotHash ? out : null;
 }

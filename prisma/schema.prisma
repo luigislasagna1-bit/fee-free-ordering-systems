@@ -3295,6 +3295,8 @@ model VoiceCall {
   /// Restaurant-filed issue reports on this call (superadmin "Restaurant
   /// Reports › Nabil AI reports"). Cascade: a deleted call takes them along.
   reports          VoiceCallReport[]
+  /// Phase B: versions/build/audio profile that served this call (no PII).
+  provenance       VoiceCallProvenance?
 
   createdAt       DateTime   @default(now())
 
@@ -3392,6 +3394,43 @@ model VoiceCallbackRequest {
   @@index([restaurantId, status, createdAt])
   @@index([callSid])
   @@index([phoneDigits])
+}
+
+/// Phase B (2026-08-22) — everything that shaped ONE call, so a metric that
+/// moves can be tied to WHICH release / prompt / tools / menu / model / audio
+/// profile it moved with (directive §27). Side table, 1:1 with VoiceCall, NO
+/// PII (it survives erasure untouched). Written by the call-log end event.
+model VoiceCallProvenance {
+  id               String    @id @default(cuid())
+  callId           String    @unique
+  call             VoiceCall @relation(fields: [callId], references: [id], onDelete: Cascade)
+  restaurantId     String
+  /// "current" | "staging" — the lane that served the call.
+  channel          String?
+  /// Fly build stamp (git sha when built by nabil-release.ts, else the image ref).
+  agentVersion     String?
+  gitSha           String?
+  /// Nabil Core semver (core-version.ts) + sha of the core source at boot.
+  coreVersion      String?
+  coreContentHash  String?
+  promptVersion    String?
+  systemStableHash String?
+  toolsVersion     String?
+  cfgHash          String?
+  menuSnapshotHash String?
+  model            String?
+  modelConfig      Json?
+  /// { pipeline, sttModel, ttsVoice }
+  audioProfile     Json?
+  flyMachineId     String?
+  flyRegion        String?
+  /// Vercel build serving the app side (VERCEL_GIT_COMMIT_SHA).
+  appVersion       String?
+  createdAt        DateTime  @default(now())
+
+  @@index([restaurantId, createdAt])
+  @@index([coreVersion])
+  @@index([agentVersion])
 }
 
 /// One entry of the per-call EVENT LOG the voice service emits (directive

@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { requireSuperadmin } from "@/lib/platform-auth";
 import { NabilLinesClient } from "./NabilLinesClient";
+import { LaneVersionsClient } from "./LaneVersionsClient";
 import { NabilSetupRequestsClient } from "./NabilSetupRequestsClient";
 
 /**
@@ -29,6 +30,7 @@ export default async function NabilLinesPage() {
   return (
     <>
       <NabilLinesClient />
+      <LaneVersionsClient />
       <div className="max-w-6xl mx-auto px-6 pb-10">
         <NabilSetupRequestsClient />
       </div>

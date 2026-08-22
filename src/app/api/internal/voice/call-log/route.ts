@@ -221,6 +221,42 @@ export async function POST(req: NextRequest) {
     await persistEvents(row.id, d.events);
   }
 
+  // Phase B: provenance — everything that shaped this call, no PII, 1:1,
+  // idempotent (an end retry rewrites the same row). Never blocks the end
+  // record: a failure here is logged and the response still says ok.
+  if (d.versions) {
+    const v = d.versions;
+    const prov = {
+      restaurantId: d.restaurantId,
+      channel: v.channel ?? req.headers.get("x-nabil-channel"),
+      agentVersion: v.agentVersion ?? req.headers.get("x-nabil-agent"),
+      gitSha: v.gitSha,
+      coreVersion: v.coreVersion ?? req.headers.get("x-nabil-core"),
+      coreContentHash: v.coreContentHash,
+      promptVersion: v.promptVersion,
+      systemStableHash: v.systemStableHash,
+      toolsVersion: v.toolsVersion,
+      cfgHash: v.cfgHash,
+      menuSnapshotHash: d.menuSnapshotHash ?? v.menuSnapshotHash,
+      model: v.model,
+      modelConfig: (v.modelConfig ?? undefined) as Prisma.InputJsonValue | undefined,
+      audioProfile: { pipeline: v.sttModel ? "mediastreams" : "conversationrelay", sttModel: v.sttModel, ttsVoice: v.ttsVoice } as Prisma.InputJsonValue,
+      flyMachineId: v.flyMachineId,
+      flyRegion: v.flyRegion,
+      appVersion: (process.env.VERCEL_GIT_COMMIT_SHA || "").slice(0, 12) || null,
+    };
+    try {
+      await prisma.voiceCallProvenance.upsert({
+        where: { callId: row.id },
+        create: { callId: row.id, ...prov },
+        update: prov,
+        select: { id: true },
+      });
+    } catch (err) {
+      console.error("[call-log] provenance write failed for", row.id, err);
+    }
+  }
+
   // Fire-and-forget AFTER the response is sent (Vercel keeps the function
   // alive for `after` callbacks). generateCallIntelligence never throws, but
   // belt-and-suspenders: a rejection here must never surface anywhere.

@@ -180,7 +180,7 @@ if (deploying) {
   // Run from the service directory so flyctl picks up the toml + Dockerfile itself.
   const deployArgs = image
     ? ["deploy", "--app", app, ...configArgs, "--image", image]
-    : ["deploy", "--app", app, ...configArgs, "--build-arg", `AGENT_VERSION=${sha}`];
+    : ["deploy", "--app", app, ...configArgs, "--build-arg", `AGENT_VERSION=${sha}`, "--build-arg", `GIT_SHA=${sha}`];
   const ok = run(`fly deploy (${target})`, fly, deployArgs, join(process.cwd(), "services", "nabil-voice"));
   if (!ok) process.exit(1);
 

@@ -8,7 +8,9 @@ import http from "node:http";
 import Anthropic from "@anthropic-ai/sdk";
 import { WebSocketServer } from "ws";
 import { CONFIG, verifyCallToken, type CallToken } from "./config";
-import { agentVersion } from "./versions";
+import { agentVersion, quickHash } from "./versions";
+import { CORE_VERSION, coreContentHash, gitSha } from "./core-version";
+import { TOOLS } from "./tools";
 import { postInternal } from "./api";
 import { drainSpool, startSpoolPump } from "./telemetry-spool";
 import { flagOn } from "./feature-flags";
@@ -104,6 +106,26 @@ const capacityAlert = createRefractory(30 * 60_000);
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 const server = http.createServer((req, res) => {
+  if (req.method === "GET" && req.url === "/version") {
+    // Phase B: "which build is this lane running?" as JSON — what a
+    // promotion / rollback has to settle before anyone places a test call.
+    res.writeHead(200, { "content-type": "application/json", "cache-control": "no-store" });
+    res.end(
+      JSON.stringify({
+        channel: CONFIG.channel,
+        agentVersion: agentVersion(),
+        gitSha: gitSha(),
+        coreVersion: CORE_VERSION,
+        coreContentHash: coreContentHash(),
+        toolsVersion: quickHash(TOOLS),
+        model: CONFIG.model,
+        flyMachineId: process.env.FLY_MACHINE_ID || null,
+        flyRegion: process.env.FLY_REGION || null,
+        node: process.version,
+      }),
+    );
+    return;
+  }
   if (req.method === "GET" && (req.url === "/health" || req.url === "/")) {
     // Three states, each with its own body so an uptime monitor can say WHICH.
     // An invalid key means the service cannot do its ONE job — say so loudly
@@ -126,7 +148,9 @@ const server = http.createServer((req, res) => {
     // `channel` + `agent` answer "which lane is this, and which build is it
     // running?" from a curl — the question a promotion/rollback has to settle
     // before anyone places a test call (Luigi 2026-08-22).
-    res.end(`ok calls=${active.size}/${CONFIG.maxSessions} fallback=${m.live}+${m.env} age=${m.ageSeconds ?? "never"} sentry=${hasErrorSink() ? "on" : "off"} channel=${CONFIG.channel} agent=${agentVersion()}`);
+    res.end(
+      `ok calls=${active.size}/${CONFIG.maxSessions} fallback=${m.live}+${m.env} age=${m.ageSeconds ?? "never"} sentry=${hasErrorSink() ? "on" : "off"} channel=${CONFIG.channel} agent=${agentVersion()} core=${CORE_VERSION}+${coreContentHash()}`,
+    );
     return;
   }
 

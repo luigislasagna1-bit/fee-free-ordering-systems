@@ -9,7 +9,7 @@ import type { Scenario } from "../../scenario-types";
 import { L } from "../luigis-ids";
 import { PLACE_IF_DONE } from "../../harness";
 
-const ORDER_TOOLS = ["find_menu_item", "get_item_options", "add_to_order", "update_line", "remove_line", "set_fulfilment", "set_customer", "get_order_state", "quote_order", "place_order", "transfer_to_human", "send_sms_link"];
+const ORDER_TOOLS = ["find_menu_item", "get_item_options", "add_to_order", "update_line", "remove_line", "set_fulfilment", "set_customer", "get_order_state", "quote_order", "place_order", "transfer_to_human", "send_sms_link", "end_call"]; // A9: the agent may close the finished call itself
 const A: Record<string, string> = {
   "(your|the|a) name|name for the order|who('s| is) (this|it) for": "It's Riley.",
   "(best|good|right|correct) number|callback|reach you|call you back|number (i have|on file)|\\d{3} \\d{3} \\d{4}": "Yes.",

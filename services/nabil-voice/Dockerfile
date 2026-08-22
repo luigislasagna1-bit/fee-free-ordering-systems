@@ -15,6 +15,9 @@ COPY . .
 # versions.ts instead of masking it with "dev".
 ARG AGENT_VERSION=
 ENV NABIL_AGENT_VERSION=$AGENT_VERSION
+# Phase B: the git sha the image was built from (provenance + /version).
+ARG GIT_SHA=
+ENV NABIL_GIT_SHA=$GIT_SHA
 
 ENV NODE_ENV=production
 ENV PORT=8080
