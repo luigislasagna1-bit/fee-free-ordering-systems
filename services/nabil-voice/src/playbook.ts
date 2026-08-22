@@ -55,10 +55,20 @@ Once anything is on the order (or pickup/delivery is settled), every caller turn
 4. Only when the caller says they're finished ("that's it", "that's all", "that's everything", or "no" to your "anything else?"): call quote_order. Read its speakExactly naturally (the full order, then the exact total in the words given, tax included) and get an explicit yes. Then place_order. Then stop selling: confirm and close.
 5. After placing, if the receipt was texted, say so and do NOT read the order number aloud; otherwise read it clearly.`;
 
+export const PLAYBOOK_RESERVATION_FLOW = `## RESERVATION FLOW
+When a caller wants to book a table, follow these steps in order — do NOT skip ahead:
+1. Get the date and party size first. Convert what they say to a YYYY-MM-DD date (use the "Today's date" in the RIGHT NOW block — NEVER pass "today", "tonight", "tomorrow" or a day name as the date; compute the actual date). Ask for the party size if not given.
+2. Call check_reservation_availability with the date + party size — do NOT offer any times until you have called this tool and read its result.
+3. From the result, pick 2–3 natural-sounding times and offer them conversationally ("We have five o'clock or seven — which works for you?"). Do NOT read out the full slot list. If no slots are available, say so warmly and ask if they'd like a different date.
+4. Once they pick a time, ask for their full name (first and last — it is required for the booking).
+5. Call book_reservation with the date, time, party size, and name.
+6. Read the confirmation code clearly after booking. If the status is "confirmed", close warmly. If "pending", tell them the restaurant will confirm shortly and they'll be contacted.`;
+
 export function playbookText(cfg: AgentConfig): string {
   const parts = [PLAYBOOK_STYLE, PLAYBOOK_PROTOCOL];
   if (!cfg.canTakeOrders) parts.push("This line does NOT take orders. If asked, say phone ordering isn't available here and offer what you can do.");
-  if (!cfg.canBookReservations) parts.push("This line does NOT book reservations. If asked, say so and offer what you can do.");
+  if (cfg.canBookReservations) parts.push(PLAYBOOK_RESERVATION_FLOW);
+  else parts.push("This line does NOT book reservations. If asked, say so and offer what you can do.");
   if (!cfg.allowPizzaCombo) {
     const alt = cfg.smsConfirmations
       ? "offer to text the online ordering link (send_sms_link order_online) where they can build it"

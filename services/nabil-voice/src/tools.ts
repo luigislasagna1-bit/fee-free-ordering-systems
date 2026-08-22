@@ -1322,8 +1322,30 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       };
     }
 
-    case "check_reservation_availability":
-      return api.availability(slug, input.date, input.partySize);
+    case "check_reservation_availability": {
+      const avail = await api.availability(slug, input.date, input.partySize);
+      if ((avail as any)?.error) return avail;
+      if (!(avail as any)?.available || !(avail as any)?.slots?.length) {
+        return {
+          ...(avail as any),
+          instruction: "No slots are available for that date and party size. Acknowledge it warmly and ask if they'd like to try a different date or party size — do NOT guess alternative times.",
+        };
+      }
+      const slots: string[] = (avail as any).slots ?? [];
+      const spoken = slots
+        .slice(0, 6)
+        .map((t: string) => {
+          const [h, m] = t.split(":").map(Number);
+          const ampm = h < 12 ? "AM" : "PM";
+          const h12 = h % 12 || 12;
+          return m ? `${h12}:${String(m).padStart(2, "0")} ${ampm}` : `${h12} ${ampm}`;
+        })
+        .join(", ");
+      return {
+        ...(avail as any),
+        instruction: `Offer these available times naturally: ${spoken}. Pick 2–3 and say them conversationally ("We have five o'clock or seven — which works for you?"). Do NOT read out all times as a list. If they want a time not shown, check a different date or say those slots are taken.`,
+      };
+    }
 
     case "book_reservation": {
       if (ctx.token.isDemo) {
@@ -1343,8 +1365,34 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         time: input.time,
         notes: input.notes,
       });
-      if (!res.ok) return { error: true, code: res.json?.code, message: res.json?.error || "Could not book." };
-      return { ok: true, confirmationCode: res.json?.confirmationCode, status: res.json?.status };
+      if (!res.ok) {
+        const code = res.json?.code ?? "";
+        const msgMap: Record<string, string> = {
+          service_paused: "Reservations are paused right now — apologize and offer to note their number for a callback, or suggest they check the website.",
+          full_name_required: "A full name is required to book. Ask for their first and last name.",
+          party_too_small: `The minimum party size is ${res.json?.min ?? "2"}. Ask if they have at least that many guests.`,
+          party_too_large: `The maximum party size is ${res.json?.max ?? "the limit"}. Ask if they can split into smaller groups or call back.`,
+          slot_unavailable: "That slot was just taken — check availability again and offer the next open time.",
+          monthly_cap_reached: "The restaurant is fully booked for the month. Apologize and suggest they try again next month or check back.",
+        };
+        return {
+          error: true,
+          code,
+          message: res.json?.error || "Could not book.",
+          instruction: msgMap[code] ?? "The booking couldn't be completed — apologize briefly and ask if they'd like to try a different time.",
+        };
+      }
+      const status = res.json?.status ?? "confirmed";
+      const confirmationCode = res.json?.confirmationCode ?? "";
+      return {
+        ok: true,
+        confirmationCode,
+        status,
+        instruction:
+          status === "confirmed"
+            ? `The reservation is confirmed. Read the confirmation code "${confirmationCode}" clearly — spell it out if it has letters. Then close warmly.`
+            : `The reservation request is pending — the restaurant will confirm it shortly. Let the caller know and mention they'll be contacted. ${confirmationCode ? `Their reference is ${confirmationCode}.` : ""}`,
+      };
     }
 
     case "transfer_to_human":

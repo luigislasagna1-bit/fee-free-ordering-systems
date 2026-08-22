@@ -79,7 +79,16 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ available: false, reason: "not_offered", slots: [] });
   }
   const now = new Date();
-  if (r.reservationsPausedUntil && r.reservationsPausedUntil.getTime() > now.getTime()) {
+  // Check the phone-specific pause first (phoneReservationsPausedUntil on
+  // VoiceAgentConfig), then fall back to the website-level pause. The voice
+  // context prompt already uses the phone-specific field — using a different
+  // field here would make the prompt say "paused" while the tool returns slots.
+  const voiceCfg = await prisma.voiceAgentConfig.findUnique({
+    where: { restaurantId: r.id },
+    select: { phoneReservationsPausedUntil: true },
+  });
+  const effectivePause = voiceCfg?.phoneReservationsPausedUntil ?? r.reservationsPausedUntil;
+  if (effectivePause && effectivePause.getTime() > now.getTime()) {
     return NextResponse.json({ available: false, reason: "paused", slots: [] });
   }
 

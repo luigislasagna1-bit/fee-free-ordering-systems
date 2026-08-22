@@ -315,7 +315,9 @@ ${menuText(menu, cfg.allowPizzaCombo)}`;
   // VOLATILE half — the live tail. It renders AFTER the menu, so the OVERRIDES
   // framing matters: when closed/paused state conflicts with anything above
   // (including the ordering flow), this section wins.
+  const localDate: string = context?.open?.localDate || new Date().toISOString().slice(0, 10);
   const volatile = `## RIGHT NOW (live — this section OVERRIDES anything above when they conflict)
+- Today's date: ${localDate} — always use this YYYY-MM-DD format when calling date parameters (never pass "today" or "tonight" as a date string)
 - Services available: ${servicesText(context)}
 - Open now: ${openNow ? "yes" : "no"}${todayHours ? ` (today: ${todayHours})` : ""}
 ${liveEtaLine ? `${liveEtaLine}\n` : ""}${afterHoursSection(context, cfg)}${pauseSection(context, cfg)}${isDemo ? `\n## DEMO MODE\nThis is a DEMO line for prospective restaurant owners. Take the order completely naturally — the caller should experience exactly what their own customers would. After placing, the tool will tell you it's a demo; relay that warmly and mention feefreeordering.com/nabil-ai. Keep the call under 4 minutes.\n` : ""}${isTestOrder ? `\n## TEST MODE\nThe restaurant owner is testing the agent while it is turned off for customers. Take the order completely naturally — they should experience exactly what a real caller would. The place_order tool will confirm it as a test (no kitchen ticket, no printer). After placing, let them know it was a test order and nothing was sent to the kitchen.\n` : ""}`;

@@ -7,6 +7,7 @@ import {
 } from "@/lib/restaurant-hours";
 import { holidayEffectToday } from "@/lib/holiday-rules";
 import { shouldDispatchToShipday, shipdayPayAtDoorEnabled } from "@/lib/shipday";
+import { localDayKey } from "@/lib/voice/analytics";
 
 /**
  * The `check_hours_and_services` tool payload — extracted verbatim from
@@ -76,6 +77,8 @@ export type VoiceContextPayload = {
      *  (timezone + hoursFormat aware) so the model never does timezone
      *  arithmetic. Null when nextOpenAt is null or the restaurant is open. */
     nextOpenLocal: string | null;
+    /** YYYY-MM-DD in the restaurant's timezone — passed to reservation tools. */
+    localDate: string;
   };
   services: {
     pickup: VoiceServiceStatus;
@@ -280,6 +283,10 @@ export async function buildVoiceContextPayload(rawSlug: string): Promise<VoiceCo
         nextOpenAt: nextOpen ? nextOpen.toISOString() : null,
         // Only meaningful while closed: nextOpenAt() returns `now` when open.
         nextOpenLocal: nextOpen && live.kind !== "open" ? describeNextOpen(nextOpen, now, tz, fmt) : null,
+        // YYYY-MM-DD in the restaurant's timezone — the model needs this to call
+        // reservation tools correctly (passing "today" as a date string causes
+        // the availability route's regex validation to return 400).
+        localDate: localDayKey(now, tz),
       },
       services: {
         pickup: svc(r.acceptsPickup, cfg?.phonePickupPausedUntil ?? null),
