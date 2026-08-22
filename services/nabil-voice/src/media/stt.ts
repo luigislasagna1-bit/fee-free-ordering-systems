@@ -80,8 +80,13 @@ export function createDeepgramStt(opts: DeepgramSttOpts, events: SttEvents): Stt
   }
 
   if (opts.hints?.length) {
+    // A8 (2026-08-22): nova-3 takes `keyterm` (phrase prompting); `keywords`
+    // is the nova-2 boost parameter and is ignored by nova-3 — the menu terms
+    // never reached the recogniser on the Media Streams path.
+    const nova3 = (opts.model ?? "nova-3-general").startsWith("nova-3");
     for (const h of opts.hints.slice(0, 100)) {
-      params.append("keywords", `${h}:2`);
+      if (nova3) params.append("keyterm", h);
+      else params.append("keywords", `${h}:2`);
     }
   }
 

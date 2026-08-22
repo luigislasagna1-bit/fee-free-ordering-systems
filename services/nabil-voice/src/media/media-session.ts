@@ -17,6 +17,11 @@ import { mulawDecode } from "./mulaw";
 
 const BARGE_MIN_WORDS = 2;
 const BACKCHANNEL_RE = /^(?:mm-?hmm|yeah|okay|right|uh-?huh|sure|mhm|yep)[.!,]?$/i;
+/** A7: one word that IS a barge-in — the caller stopping us. Multilingual on
+ *  purpose (the recogniser runs `language=multi`); anything not here still
+ *  needs BARGE_MIN_WORDS. */
+const INTERJECTION_RE =
+  /^(?:no|nope|wait|stop|hold on|hang on|sorry|actually|excuse me|pardon|non|nein|nee|nej|nie|ne|não|nao|nu|όχι|нет|ні|لا|לא|不|不是|不对|いいえ|違う|아니|아니요|espera|espere|attends|attendez|warte|aspetta|alto|arrête|arrete|stopp|para|fermati|halt)[.!,?]*$/i;
 
 /**
  * A8b — BACKGROUND-SPEECH REJECTION (Luigi 2026-08-22: "the AI is listening to
@@ -277,11 +282,23 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
 
     if (isSpeaking) {
       const words = t.text.split(/\s+/).filter(Boolean);
+      if (cls.background || BACKCHANNEL_RE.test(t.text) || isEchoOfOwnSpeech(t.text)) return;
       // A radio ad can never cut the agent off (cmt4peul: four barge-ins).
-      if (words.length >= BARGE_MIN_WORDS && !BACKCHANNEL_RE.test(t.text) && !cls.background) {
-        if (!isEchoOfOwnSpeech(t.text)) {
-          bargeIn(t.text);
-        }
+      // A7: one word cuts us off only when it is an interjection ("no",
+      // "wait", "stop") and a FINAL — an interim "no" is too often "no
+      // problem" still being said.
+      const interjection = words.length === 1 && t.isFinal && INTERJECTION_RE.test(t.text.trim());
+      if (words.length >= BARGE_MIN_WORDS || interjection) {
+        bargeIn(t.text);
+        return;
+      }
+      // A7 (C27: "Pickup." over the tail of the question was LOST): a short
+      // final that is not a barge-in is still the caller's answer — keep it
+      // and hand it over the moment we stop speaking.
+      if (t.isFinal) {
+        pendingTranscript += (pendingTranscript ? " " : "") + t.text;
+        mergeMeta(cls, t.confidence);
+        if (cls.rmsDb !== null) noteCallerSegment(cls.rmsDb);
       }
       return;
     }
@@ -324,6 +341,7 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
             currentSpokenText = "";
             sendMark(`speech_${markSeq++}`);
             drainTimer = null;
+            flushHeldAfterSpeech();
           } else {
             check();
           }
@@ -362,6 +380,21 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
     isSpeaking = false;
     currentSpokenText = "";
     sendMark(`speech_${markSeq++}`);
+    flushHeldAfterSpeech();
+  }
+
+  /** A7: a final kept while we were speaking goes to the session as soon as
+   *  the line is the caller's again (a short beat so a continuation that is
+   *  mid-flight joins it). */
+  let heldFlushTimer: ReturnType<typeof setTimeout> | null = null;
+  function flushHeldAfterSpeech() {
+    if (heldFlushTimer) clearTimeout(heldFlushTimer);
+    if (!pendingTranscript) return;
+    heldFlushTimer = setTimeout(() => {
+      heldFlushTimer = null;
+      if (destroyed || ending || isSpeaking || !pendingTranscript) return;
+      emitPrompt(pendingTranscript);
+    }, 250);
   }
 
   // ── Barge-in ────────────────────────────────────────────────────────
@@ -371,20 +404,35 @@ export function createMediaSession(opts: MediaSessionOpts): MediaSessionHandle {
     pacer.clearVoice();
     isSpeaking = false;
     tts.interrupt();
+    // A7: Twilio buffers audio we already sent — tell it to drop that too, or
+    // the caller hears another second of us after they cut in.
+    sendClear();
 
     const utteranceUntilInterrupt = currentSpokenText;
     currentSpokenText = "";
 
     opts.onInterrupt(utteranceUntilInterrupt);
-    pendingTranscript = callerText;
+    // Anything short we held while speaking belongs to the same utterance.
+    pendingTranscript = pendingTranscript && !callerText.startsWith(pendingTranscript) ? `${pendingTranscript} ${callerText}` : callerText;
   }
 
+  /** A7: an ECHO is our own sentence coming back off a speakerphone — a
+   *  prefix of what we are saying, at least three words (or twelve
+   *  characters) long. A one-word "no" is never an echo. */
   function isEchoOfOwnSpeech(text: string): boolean {
     if (!currentSpokenText) return false;
-    const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9\s]/g, "").trim();
+    const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g, " ").trim();
     const spoken = norm(currentSpokenText);
     const heard = norm(text);
-    return spoken.startsWith(heard) || heard.length <= 3;
+    if (!heard) return true; // punctuation-only noise
+    const words = heard.split(" ").length;
+    if (words < 3 && heard.length < 12) return false;
+    return spoken.startsWith(heard);
+  }
+
+  function sendClear() {
+    if (twilioWs.readyState !== WebSocket.OPEN || !streamSid) return;
+    twilioWs.send(JSON.stringify({ event: "clear", streamSid }));
   }
 
   // ── Twilio outbound helpers ─────────────────────────────────────────

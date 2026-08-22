@@ -323,13 +323,24 @@ mediaWss.on("connection", (ws, req) => {
       }
     }
 
+    // A8: the same packed menu/topping/vocabulary hints ConversationRelay gets
+    // (TwiML <Parameter name="hints">) — before this the Media Streams path
+    // ran nova-3 with no store vocabulary at all (C31: "Veloque", "cornbread").
+    const hints = String(params?.hints || "")
+      .split(/\s*,\s*/)
+      .map((h) => h.trim())
+      .filter((h) => h.length >= 2 && h.length <= 40)
+      .slice(0, 100);
     const stt = createDeepgramStt(
-      { apiKey: deepgramKey!, language: payload.lang ?? undefined },
+      { apiKey: deepgramKey!, language: payload.lang ?? undefined, hints },
       {
         onTranscript: (t) => mediaHandle?.handleTranscript(t),
         onUtteranceEnd: () => mediaHandle?.handleUtteranceEnd(),
-        onOpen: () => console.log(`[nabil-voice] STT open for ${payload.callSid}`),
-        onError: (err) => captureError(err, { where: "media-stt", callSid: payload.callSid }),
+        onOpen: () => console.log(`[nabil-voice] STT open for ${payload.callSid} (${hints.length} hints)`),
+        onError: (err) => {
+          captureError(err, { where: "media-stt", callSid: payload.callSid });
+          session?.notePipelineError("stt", String((err as Error)?.message ?? err));
+        },
         onClose: () => {},
       },
     );
@@ -342,7 +353,10 @@ mediaWss.on("connection", (ws, req) => {
       {
         onAudio: (chunk) => mediaHandle?.handleTtsAudio(chunk),
         onDone: () => mediaHandle?.handleTtsDone(),
-        onError: (err) => captureError(err, { where: "media-tts", callSid: payload.callSid }),
+        onError: (err) => {
+          captureError(err, { where: "media-tts", callSid: payload.callSid });
+          session?.notePipelineError("tts", String((err as Error)?.message ?? err));
+        },
       },
     );
 

@@ -153,3 +153,49 @@ describe("rejection (flag on)", () => {
     handle.destroy();
   });
 });
+
+/* ═══════════════════ A7 — speech-during-speech, barge-in, echo, clear ═══════════════════ */
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+describe("A7 — speech-during-speech, barge-in, echo, clear", () => {
+  it("a one-word final while Nabil speaks is KEPT and handed over once the line is the caller's (C27: 'Pickup.' was lost)", async () => {
+    const { handle, prompts, interrupts } = build({ backgroundRejection: false });
+    handle.sendText("Is that for pickup or delivery?", true); // isSpeaking = true (fake TTS, no audio → drains)
+    handle.handleTranscript(final("Pickup.", 2.0, 0.6));
+    expect(prompts).toHaveLength(0);
+    expect(interrupts).toHaveLength(0);
+    await sleep(1_100); // drain (400 + 200) + hold (250)
+    expect(prompts.map((p) => p.text)).toEqual(["Pickup."]);
+    handle.destroy();
+  });
+
+  it("a one-word INTERJECTION final cuts Nabil off, and Twilio is told to clear its buffer", () => {
+    const { ws, handle, interrupts } = build({ backgroundRejection: false });
+    handle.sendText("So that's one large pepperoni and a two-litre Coke, coming to", true);
+    handle.handleTranscript(final("No!", 2.0, 0.4));
+    expect(interrupts).toHaveLength(1);
+    expect(interrupts[0]).toMatch(/one large pepperoni/);
+    expect(ws.sent.some((m) => (m as { event?: string }).event === "clear")).toBe(true);
+    handle.destroy();
+  });
+
+  it("a backchannel never barges in; a one-word non-interjection never barges in", () => {
+    const { handle, interrupts } = build({ backgroundRejection: false });
+    handle.sendText("Let me read that back to you.", true);
+    handle.handleTranscript(final("Okay.", 2.0, 0.4));
+    handle.handleTranscript(final("Large", 2.5, 0.4));
+    expect(interrupts).toHaveLength(0);
+    handle.destroy();
+  });
+
+  it("an ECHO of our own sentence (≥3-word prefix) is ignored; the caller's own words are not", () => {
+    const { handle, interrupts } = build({ backgroundRejection: false });
+    handle.sendText("Sure thing, one large pepperoni pizza coming right up.", true);
+    handle.handleTranscript({ text: "Sure thing, one large", isFinal: false, speechFinal: false, confidence: 0.8, start: 2.0, duration: 0.8 });
+    expect(interrupts).toHaveLength(0);
+    handle.handleTranscript({ text: "No wait, make that medium", isFinal: false, speechFinal: false, confidence: 0.8, start: 2.2, duration: 0.8 });
+    expect(interrupts).toHaveLength(1);
+    handle.destroy();
+  });
+});

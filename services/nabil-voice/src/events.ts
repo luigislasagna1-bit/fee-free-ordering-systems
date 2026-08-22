@@ -37,7 +37,18 @@ export type CallEvent = CallEventBase &
     /** A8b: a Deepgram final the media session classified as BACKGROUND
      *  (radio/TV/another room) and did NOT hand to the model. The text stays
      *  so a wrongly dropped caller utterance is visible in the timeline. */
-    | { type: "asr_dropped"; text: string; reason: "low_energy" | "low_confidence" | "other_speaker"; confidence: number; rmsDb: number | null; noiseFloorDb: number | null; callerLevelDb: number | null }
+    | {
+        type: "asr_dropped";
+        text: string;
+        /** A8b energy/confidence reasons, plus A7's session-level drops: the
+         *  caller repeating themselves (or "hello?") while the reply is
+         *  already being generated. */
+        reason: "low_energy" | "low_confidence" | "other_speaker" | "repeat_during_turn" | "hello_during_turn";
+        confidence: number;
+        rmsDb: number | null;
+        noiseFloorDb: number | null;
+        callerLevelDb: number | null;
+      }
     | { type: "model_text"; text: string; hop: number; interrupted: boolean }
     | { type: "tool_use"; hop: number; toolUseId: string; name: string; input: unknown; cartHashBefore: string | null }
     | {
@@ -72,7 +83,7 @@ export type CallEvent = CallEventBase &
      *  turn's `model_text` (redacted app-side), the pass is deterministic, and
      *  a phone number in WORDS would slip past the digit-shaped redaction. */
     | { type: "numbers_verbalized"; count: number }
-    | { type: "tail_fragment"; text: string; early?: boolean }
+    | { type: "tail_fragment"; text: string; early?: boolean; leading?: boolean }
     | { type: "greeting_echo_dropped"; text: string }
     | { type: "compaction"; droppedMessages: number; bytesBefore: number; bytesAfter: number }
     | { type: "cache_miss"; request: number; uncached: number }

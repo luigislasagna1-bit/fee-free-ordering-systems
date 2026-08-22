@@ -595,6 +595,8 @@ async function handle(req: NextRequest, params: Record<string, string>) {
         `<Stream url="${xml(mediaWssUrl)}" mode="bidirectional">` +
         `<Parameter name="token" value="${xml(token)}"/>` +
         `<Parameter name="greeting" value="${xml(greeting)}"/>` +
+        // A8: the same packed menu hints ConversationRelay gets → Deepgram keyterms.
+        (hints ? `<Parameter name="hints" value="${xml(hints)}"/>` : "") +
         `</Stream>` +
         `</Connect>` +
         `<Redirect>${xml(afterStreamUrl)}</Redirect>` +

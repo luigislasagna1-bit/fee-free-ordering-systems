@@ -208,7 +208,7 @@ describe("a due filler HOLDS while the caller's mic still shows speech", () => {
 
   async function holdSession(anthropic: ReturnType<typeof fakeAnthropic>, callerActiveHoldMs: number) {
     const ws = fakeWs();
-    const s = new CallSession(ws as never, TOKEN, anthropic as never, { thinkingFillerMs: 30, callerActiveHoldMs } as never);
+    const s = new CallSession(ws as never, TOKEN, anthropic as never, { thinkingFillerMs: 30, callerActiveHoldMs, leadingHoldMs: 0 } as never); // "I want" below is a leading fragment (A7) — this test is about the filler hold, not fragments
     s.onMessage(JSON.stringify({ type: "setup" }));
     await settle();
     await settle();

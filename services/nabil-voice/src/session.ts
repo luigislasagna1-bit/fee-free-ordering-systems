@@ -198,6 +198,30 @@ export function isTailFragment(text: string): boolean {
  */
 const EARLY_FRAGMENT_MS = 1_500;
 const EARLY_FRAGMENT_MAX_WORDS = 3;
+/**
+ * A7 (C27, call cmt3ie48z): a direct ANSWER to a question we just asked
+ * ("Marco." 1.2 s after "Can I get a name?") was held for six seconds as an
+ * early fragment. Once the reply has had this long to start playing, a short
+ * utterance after a QUESTION is an answer, not a tail — run it.
+ */
+const EARLY_ANSWER_MIN_MS = 600;
+/**
+ * A7 (C27): a LEADING fragment — "It's", "I'll get", "Can I have a" — is the
+ * start of a sentence the endpointer cut early. Hold it briefly for its
+ * continuation instead of answering "It's" on its own.
+ */
+const LEADING_HOLD_MS = 1_200;
+const LEADING_TAIL_RE =
+  /(?:^|\s)(?:it's|its|i'll|i'd|i'm|i|the|a|an|and|with|for|to|of|my|me|can|could|get|want|like|need|have|some|plus|also|then|so|um|uh|er|let me|give me|i want|i need|we'll|we'd)[.,]?$/i;
+export function isLeadingFragment(text: string): boolean {
+  const t = String(text ?? "").trim();
+  if (!t || /^\(/.test(t)) return false;
+  if (t.split(/\s+/).length > 4) return false;
+  return LEADING_TAIL_RE.test(t);
+}
+/** "Hello?" / "are you there?" while the reply is already being generated. */
+const HELLO_RE = /^(?:hello|hi|hey|hello there|are you there|you there|anyone there|still there|you still there)[?.!,\s]*$/i;
+const normUtterance = (s: string) => String(s ?? "").toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, "").replace(/\s+/g, " ").trim();
 /** Silence after the reply is estimated to have finished playing before the held fragment runs on its own. */
 const EARLY_FRAGMENT_SILENCE_MS = 7_000;
 /** ~150 wpm ≈ 15 chars/s at 1.0×, plus first-audio latency. */
@@ -267,6 +291,8 @@ export type SessionDeps = {
   noInputCloseMs?: number;
   /** Playout estimate for our own speech (A4). Default SPEECH_MS_PER_CHAR. */
   speechMsPerChar?: number;
+  /** A7: how long a leading fragment ("It's") waits for its continuation. 0 disables. */
+  leadingHoldMs?: number;
   /** Test seam: the sim harness's scripted caller answers within milliseconds
    *  of a reply because there is no TTS to hear — real timing can't exist
    *  there. 0 disables the early-fragment hold. Default EARLY_FRAGMENT_MS. */
@@ -422,6 +448,11 @@ export class CallSession {
   private readonly speechMsPerChar: number;
   private secondStageTimer?: NodeJS.Timeout;
   private idleTimer?: NodeJS.Timeout;
+  /** A7 */
+  private readonly leadingHoldMs: number;
+  private leadingFragment = "";
+  private leadingTimer?: NodeJS.Timeout;
+  private currentTurnUserText = "";
   private idleArmedAt = 0;
   private noInputReprompts = 0;
   private eventFlushInFlight: Promise<unknown> | null = null;
@@ -439,6 +470,7 @@ export class CallSession {
     this.noInputRepromptMs = deps.noInputRepromptMs ?? NO_INPUT_REPROMPT_MS;
     this.noInputCloseMs = deps.noInputCloseMs ?? NO_INPUT_CLOSE_MS;
     this.speechMsPerChar = deps.speechMsPerChar ?? SPEECH_MS_PER_CHAR;
+    this.leadingHoldMs = deps.leadingHoldMs ?? LEADING_HOLD_MS;
     this.now = deps.now ?? Date.now;
     this.earlyFragmentMs = deps.earlyFragmentMs ?? EARLY_FRAGMENT_MS;
     this.thinkingFillerMs = deps.thinkingFillerMs ?? THINKING_FILLER_AFTER_MS;
@@ -838,7 +870,10 @@ export class CallSession {
       // a barge-in in the last few seconds means the caller is talking over us —
       // their words are a real utterance, not the tail of an earlier one
       this.now() - this.lastBargeInAt > 5_000 &&
-      isEarlyFragment(text, this.now() - this.lastTurnEndedAt, this.earlyFragmentMs)
+      isEarlyFragment(text, this.now() - this.lastTurnEndedAt, this.earlyFragmentMs) &&
+      // A7: after a QUESTION, a short utterance that lands once the reply has
+      // started playing is the answer — see EARLY_ANSWER_MIN_MS.
+      !(/\?\s*$/.test(this.lastSpokenText.trim()) && this.now() - this.lastTurnEndedAt >= EARLY_ANSWER_MIN_MS)
     ) {
       this.tailFragments.push(text.trim());
       this.transcript.push({ role: "user", text, ts: new Date(this.now()).toISOString(), turn: this.turnIndex });
@@ -859,10 +894,50 @@ export class CallSession {
     // during one turn are almost always one utterance split by endpointing
     // ("Yeah." + "Yes." made two orders on 2026-08-10).
     if (this.turnRunning) {
+      // A7 (C26): the caller saying the SAME thing again — or "hello?" —
+      // while the reply is already being generated is impatience with our
+      // silence, not new information. Answering it made a second, duplicate
+      // turn (and a re-greeting) on 8 calls.
+      if (!synthetic) {
+        const n = normUtterance(text);
+        const repeat = n && n === normUtterance(this.currentTurnUserText);
+        const hello = n && HELLO_RE.test(text.trim());
+        if (repeat || hello) {
+          this.events.emit({ type: "asr_dropped", turn: this.turnIndex, text, reason: repeat ? "repeat_during_turn" : "hello_during_turn", confidence: 1, rmsDb: null, noiseFloorDb: null, callerLevelDb: null });
+          return;
+        }
+      }
       this.pendingPrompts.push(text);
       return;
     }
+    // A7 (C27): a LEADING fragment waits briefly for the rest of its sentence.
+    if (!synthetic && this.leadingHoldMs > 0 && isLeadingFragment(text)) {
+      clearTimeout(this.leadingTimer);
+      this.leadingFragment = this.leadingFragment ? `${this.leadingFragment} ${text.trim()}` : text.trim();
+      this.events.emit({ type: "tail_fragment", turn: this.turnIndex, text, early: false, leading: true });
+      this.leadingTimer = setTimeout(() => {
+        this.leadingTimer = undefined;
+        const held = this.leadingFragment;
+        this.leadingFragment = "";
+        if (!held || this.finalized || this.phase !== "live") return;
+        if (this.turnRunning) this.pendingPrompts.push(held);
+        else void this.runTurn(held, false);
+      }, this.leadingHoldMs);
+      return;
+    }
+    if (this.leadingFragment) {
+      clearTimeout(this.leadingTimer);
+      this.leadingTimer = undefined;
+      text = `${this.leadingFragment} ${text}`;
+      this.leadingFragment = "";
+    }
     await this.runTurn(text, synthetic);
+  }
+
+  /** A7/A8: the media layer's STT/TTS failures, visible on the timeline. */
+  notePipelineError(where: "stt" | "tts", message: string) {
+    console.error(`[nabil-voice] ${where} error`, { callSid: this.token.callSid, message });
+    this.events.emit({ type: "error", turn: this.turnIndex, where, message: String(message).slice(0, 200) });
   }
 
   private async runTurn(userText: string, synthetic = false, mode: "normal" | "early_fragment_alone" = "normal") {
@@ -981,6 +1056,7 @@ export class CallSession {
     dialogueBeginTurn(this.dialogue, turn);
     this.ctx.speakExactlyThisTurn = [];
     this.ctx.lastUserText = synthetic ? undefined : userText;
+    this.currentTurnUserText = synthetic ? "" : userText;
     // The caller's own words, last three turns — what halfRecipes must be
     // justified against (a recipe named two turns ago, added now, is fine).
     if (!synthetic) this.ctx.recentUserTexts = [...(this.ctx.recentUserTexts ?? []), userText].slice(-3);
@@ -1826,6 +1902,7 @@ export class CallSession {
     clearTimeout(this.earlyFragmentTimer);
     clearTimeout(this.secondStageTimer);
     clearTimeout(this.idleTimer);
+    clearTimeout(this.leadingTimer);
     this.endingPromise = this.runEndTransfer(reason);
   }
 
@@ -1955,6 +2032,7 @@ export class CallSession {
     clearTimeout(this.hardCloseTimer);
     clearTimeout(this.secondStageTimer);
     clearTimeout(this.idleTimer);
+    clearTimeout(this.leadingTimer);
     void this.finalize();
   }
 
