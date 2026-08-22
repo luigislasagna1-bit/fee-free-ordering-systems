@@ -1,0 +1,46 @@
+# fly.staging.toml — the STAGING lane of the Nabil voice service (2026-08-22).
+#
+# Luigi's rule: nothing reaches the live line untested. Every code change is
+# deployed HERE first (`npx tsx scripts/nabil-release.ts --target staging`),
+# exercised on the staging phone number (VoiceNumber.voiceChannel = "staging",
+# routed by NABIL_VOICE_STAGING_WSS_URL on Vercel), and only then promoted to
+# the live app by deploying the SAME image (`--target current --image <ref>`).
+#
+# Identical to fly.toml except: the app name, NABIL_CHANNEL (stamped on every
+# call record and shown in /health), and a single machine (no live callers to
+# protect — the staging line is ours). Secrets are cloned from the live app.
+app = 'nabil-voice-staging'
+primary_region = 'iad'
+
+kill_signal = 'SIGTERM'
+kill_timeout = '5m'
+
+[env]
+  NABIL_CHANNEL = 'staging'
+
+[deploy]
+  strategy = 'immediate'
+
+[build]
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'off'
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [http_service.concurrency]
+    type = 'connections'
+    soft_limit = 5
+    hard_limit = 25
+
+  [[http_service.checks]]
+    interval = '15s'
+    timeout = '2s'
+    grace_period = '5s'
+    method = 'get'
+    path = '/health'
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = '512mb'

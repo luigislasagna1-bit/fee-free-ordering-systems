@@ -35,6 +35,11 @@ export type NabilCallPayload = {
   /** Owner test call — agent is disabled but the owner called to test. Orders
    *  go through the full flow but place_order fakes the placement. */
   isTestOrder?: boolean;
+  /** Voice-service LANE this call was routed to ("current" | "staging") —
+   *  src/lib/voice/voice-channel.ts. The service echoes it on the call record
+   *  so staging and live calls are never mixed in one cohort. Optional: older
+   *  tokens omit it (= current). */
+  ch?: "current" | "staging";
 };
 
 function getSecret(): string {
@@ -53,7 +58,7 @@ export function verifyNabilCallToken(token: string): NabilCallPayload | null {
   try {
     const d = jwt.verify(token, getSecret()) as Record<string, unknown>;
     if (d?.t !== "nabilcall") return null;
-    const { restaurantId, slug, callSid, to, from, sttModel, ttsVoice, lang, isDemo, isTestOrder } = d;
+    const { restaurantId, slug, callSid, to, from, sttModel, ttsVoice, lang, isDemo, isTestOrder, ch } = d;
     if ([restaurantId, slug, callSid, to, from].every((v) => typeof v === "string")) {
       void sttModel;
       void ttsVoice;
@@ -66,6 +71,7 @@ export function verifyNabilCallToken(token: string): NabilCallPayload | null {
         from: from as string,
         ...(isDemo === true ? { isDemo: true } : {}),
         ...(isTestOrder === true ? { isTestOrder: true } : {}),
+        ...(ch === "staging" || ch === "current" ? { ch } : {}),
       };
     }
     return null;

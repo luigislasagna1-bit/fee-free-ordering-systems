@@ -17,6 +17,11 @@ export const CONFIG = {
   /** Verifies the short-lived call token minted by /api/twilio/voice. */
   jwtSecret: need("NABIL_VOICE_JWT_SECRET"),
   anthropicKey: need("ANTHROPIC_API_KEY"),
+  /** Which LANE this process is: "current" = the live app (nabil-voice), "staging"
+   *  = nabil-voice-staging (fly.staging.toml sets NABIL_CHANNEL). Shown in
+   *  /health and stamped on every call so staging and live calls never share a
+   *  cohort (Luigi 2026-08-22: nothing reaches the live line untested). */
+  channel: (process.env.NABIL_CHANNEL === "staging" ? "staging" : "current") as "current" | "staging",
   /** Fast tier for the real-time turn loop (see plan: latency gates first audio). */
   model: process.env.NABIL_MODEL || "claude-sonnet-5",
   /** Reasoning mode for the turn loop. Sonnet 5 defaults to ADAPTIVE thinking
@@ -95,6 +100,10 @@ export type CallToken = {
   isDemo?: boolean;
   /** Owner test call — agent disabled but owner is testing. place_order fakes. */
   isTestOrder?: boolean;
+  /** The lane the TwiML route chose for this call ("current" | "staging"); null
+   *  on older tokens. Compared against CONFIG.channel at connect time — a token
+   *  for the other lane is refused, so a mis-pointed wss URL is loud, not silent. */
+  ch?: "current" | "staging" | null;
 };
 
 /** Verify a call token (mirrors src/lib/voice/session-token.ts on the app side). */
@@ -102,7 +111,7 @@ export function verifyCallToken(token: string): CallToken | null {
   try {
     const d = jwt.verify(token, CONFIG.jwtSecret) as Record<string, unknown>;
     if (d?.t !== "nabilcall") return null;
-    const { restaurantId, slug, callSid, to, from, sttModel, ttsVoice, lang, isDemo, isTestOrder } = d;
+    const { restaurantId, slug, callSid, to, from, sttModel, ttsVoice, lang, isDemo, isTestOrder, ch } = d;
     if ([restaurantId, slug, callSid, to, from].every((v) => typeof v === "string")) {
       return {
         restaurantId,
@@ -115,6 +124,7 @@ export function verifyCallToken(token: string): CallToken | null {
         lang: typeof lang === "string" ? lang : null,
         ...(isDemo === true ? { isDemo: true } : {}),
         ...(isTestOrder === true ? { isTestOrder: true } : {}),
+        ch: ch === "staging" || ch === "current" ? ch : null,
       } as CallToken;
     }
     return null;

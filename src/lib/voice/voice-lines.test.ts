@@ -54,7 +54,11 @@ describe("voiceLinesEnv — presence only, never values", () => {
     vi.stubEnv("FFOS_TWILIO_AUTH_TOKEN", "t");
     vi.stubEnv("NABIL_VOICE_WSS_URL", "wss://nabil-voice.fly.dev/call");
     const env = voiceLinesEnv();
-    expect(env).toEqual({ twilioCredentials: true, fallbackMap: false, fallbackDefaultNumber: false, voiceWssUrl: true });
+    expect(env).toEqual({ twilioCredentials: true, fallbackMap: false, fallbackDefaultNumber: false, voiceWssUrl: true, voiceStagingWssUrl: false });
     for (const v of Object.values(env)) expect(typeof v).toBe("boolean");
+  });
+  it("reports the staging lane URL's presence", () => {
+    vi.stubEnv("NABIL_VOICE_STAGING_WSS_URL", "wss://nabil-voice-staging.fly.dev/call");
+    expect(voiceLinesEnv().voiceStagingWssUrl).toBe(true);
   });
 });

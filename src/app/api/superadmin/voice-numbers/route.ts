@@ -10,6 +10,7 @@ import {
   type NumberConfig,
 } from "@/lib/voice/twilio-number-config";
 import { describeLayers, voiceLinesEnv, type VoiceLineRow, type VoiceLinesResponse } from "@/lib/voice/voice-lines";
+import { isVoiceChannel, VOICE_CHANNELS } from "@/lib/voice/voice-channel";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -31,6 +32,13 @@ export const dynamic = "force-dynamic";
  *          fallback layer would ring. Read-only: one Twilio GET per number.
  *   POST { id } → repair ONE number (idempotent), backfill twilioNumberSid,
  *          write an audit row, return what changed.
+ *   PATCH { id, voiceChannel } → move ONE number between the live lane
+ *          ("current") and the staging lane ("staging", nabil-voice-staging).
+ *          This is the switch behind Luigi's 2026-08-22 rule that nothing
+ *          reaches the live line untested: only the staging test line(s) ever
+ *          point at an unpromoted build. Refuses "staging" when this
+ *          deployment has no NABIL_VOICE_STAGING_WSS_URL (the call would
+ *          silently fall back to live). Audited.
  *
  * Never returns credentials or env VALUES — only presence booleans.
  */
@@ -41,6 +49,7 @@ const NUMBER_SELECT = {
   status: true,
   enabled: true,
   isDemo: true,
+  voiceChannel: true,
   twilioNumberSid: true,
   restaurant: {
     select: {
@@ -85,6 +94,7 @@ export async function GET() {
       status: row.status,
       enabled: row.enabled,
       isDemo: row.isDemo,
+      voiceChannel: row.voiceChannel,
       twilioNumberSid: row.twilioNumberSid,
       restaurant: { id: row.restaurant.id, name: row.restaurant.name, slug: row.restaurant.slug },
       twilioState,
@@ -147,4 +157,44 @@ export async function POST(req: NextRequest) {
   });
 
   return NextResponse.json({ ...result, sidBackfilled }, { status: result.ok ? 200 : 502 });
+}
+
+export async function PATCH(req: NextRequest) {
+  const user = await requireSuperadmin();
+  if (!user) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+
+  const b = (await req.json().catch(() => ({}))) as { id?: unknown; voiceChannel?: unknown };
+  const id = typeof b.id === "string" ? b.id.trim() : "";
+  if (!id) return NextResponse.json({ error: "id is required" }, { status: 400 });
+  if (!isVoiceChannel(b.voiceChannel)) {
+    return NextResponse.json({ error: `voiceChannel must be one of: ${VOICE_CHANNELS.join(", ")}` }, { status: 400 });
+  }
+  const voiceChannel = b.voiceChannel;
+  if (voiceChannel === "staging" && !(process.env.NABIL_VOICE_STAGING_WSS_URL || "").trim()) {
+    return NextResponse.json(
+      { error: "NABIL_VOICE_STAGING_WSS_URL is not set on this deployment — a staging number would fall back to the live lane. Set it first." },
+      { status: 409 },
+    );
+  }
+
+  const row = await prisma.voiceNumber.findUnique({
+    where: { id },
+    select: { id: true, phoneNumber: true, status: true, voiceChannel: true, restaurantId: true },
+  });
+  if (!row) return NextResponse.json({ error: "Number not found" }, { status: 404 });
+  if (row.status === "released") {
+    return NextResponse.json({ error: "This number has been released" }, { status: 409 });
+  }
+  if (row.voiceChannel === voiceChannel) {
+    return NextResponse.json({ ok: true, changed: false, voiceChannel });
+  }
+
+  await prisma.voiceNumber.update({ where: { id: row.id }, data: { voiceChannel } });
+  await writeAuditLog({
+    actor: user,
+    action: "voice_number.set_channel",
+    entity: `voiceNumber:${row.id}`,
+    detail: { phoneNumber: row.phoneNumber, restaurantId: row.restaurantId, from: row.voiceChannel, to: voiceChannel },
+  });
+  return NextResponse.json({ ok: true, changed: true, voiceChannel });
 }

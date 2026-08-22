@@ -2955,6 +2955,13 @@ model VoiceNumber {
   enabled         Boolean    @default(true)
   /// Marketing demo line — orders are faked, calls capped at 4 min.
   isDemo          Boolean    @default(false)
+  /// Which voice-service LANE this number's calls go to (Luigi 2026-08-22:
+  /// nothing reaches the live line untested). "current" = the live Fly app
+  /// (NABIL_VOICE_WSS_URL); "staging" = nabil-voice-staging
+  /// (NABIL_VOICE_STAGING_WSS_URL) — only the staging test line(s) point there,
+  /// so real customers never meet an unpromoted build. Superadmin-only
+  /// (Phone Lines page). Resolved by src/lib/voice/voice-channel.ts.
+  voiceChannel    String     @default("current")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

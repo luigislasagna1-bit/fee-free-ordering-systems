@@ -8,6 +8,7 @@ import http from "node:http";
 import Anthropic from "@anthropic-ai/sdk";
 import { WebSocketServer } from "ws";
 import { CONFIG, verifyCallToken, type CallToken } from "./config";
+import { agentVersion } from "./versions";
 import { CallSession } from "./session";
 import { fallbackMapStatus, fallbackTwiml, handleFallback, startFallbackRefresh } from "./fallback";
 import { startCacheWarm } from "./warmup";
@@ -119,7 +120,10 @@ const server = http.createServer((req, res) => {
       return;
     }
     res.writeHead(200, { "content-type": "text/plain" });
-    res.end(`ok calls=${active.size}/${CONFIG.maxSessions} fallback=${m.live}+${m.env} age=${m.ageSeconds ?? "never"} sentry=${hasErrorSink() ? "on" : "off"}`);
+    // `channel` + `agent` answer "which lane is this, and which build is it
+    // running?" from a curl — the question a promotion/rollback has to settle
+    // before anyone places a test call (Luigi 2026-08-22).
+    res.end(`ok calls=${active.size}/${CONFIG.maxSessions} fallback=${m.live}+${m.env} age=${m.ageSeconds ?? "never"} sentry=${hasErrorSink() ? "on" : "off"} channel=${CONFIG.channel} agent=${agentVersion()}`);
     return;
   }
 
@@ -187,6 +191,15 @@ wss.on("connection", (ws, req) => {
   const payload = verifyCallToken(token);
   if (!payload) {
     ws.close(1008, "unauthorized");
+    return;
+  }
+  // LANE CHECK (2026-08-22): a token minted for the other lane means a
+  // NABIL_VOICE_*_WSS_URL points at the wrong app. Refuse loudly — Twilio's
+  // <Connect action> then rings the store — rather than let a staging build
+  // answer a live customer (or vice versa) in silence.
+  if (payload.ch && payload.ch !== CONFIG.channel) {
+    console.warn(`[nabil-voice] /call token for lane "${payload.ch}" reached the "${CONFIG.channel}" app — refusing callSid=${payload.callSid}`);
+    ws.close(1008, "wrong lane");
     return;
   }
   const connectedAt = Date.now();
@@ -267,6 +280,14 @@ mediaWss.on("connection", (ws, req) => {
       console.warn(`[nabil-voice] /media token rejected (param-len=${tokenStr.length})`);
       ws.close(1008, "unauthorized");
       clearTimeout(authTimer);
+      return;
+    }
+    // LANE CHECK — same rule as /call (see above).
+    if (callPayload.ch && callPayload.ch !== CONFIG.channel) {
+      console.warn(`[nabil-voice] /media token for lane "${callPayload.ch}" reached the "${CONFIG.channel}" app — refusing callSid=${callPayload.callSid}`);
+      ws.close(1008, "wrong lane");
+      clearTimeout(authTimer);
+      callPayload = null;
       return;
     }
 

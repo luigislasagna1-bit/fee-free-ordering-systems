@@ -81,6 +81,35 @@ export function NabilLinesClient() {
     void load();
   }, [load]);
 
+  // Lane switch (Luigi 2026-08-22: nothing reaches the live line untested).
+  // "staging" sends this number's calls to nabil-voice-staging — only ever a
+  // test line. Moving the PUBLIC number to staging is the one thing this
+  // control must make hard, hence the explicit confirm naming the number.
+  const [switching, setSwitching] = useState<string | null>(null);
+  const setLane = async (row: VoiceLineRow, voiceChannel: "current" | "staging") => {
+    if (voiceChannel === row.voiceChannel) return;
+    const warn =
+      voiceChannel === "staging"
+        ? `Send ALL calls to ${row.phoneNumber} (${row.restaurant.name}) to the STAGING build?\n\nOnly do this for a test line — real customers on this number would reach unpromoted code.`
+        : `Move ${row.phoneNumber} back to the LIVE lane?`;
+    if (!window.confirm(warn)) return;
+    setSwitching(row.id);
+    try {
+      const res = await fetch("/api/superadmin/voice-numbers", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: row.id, voiceChannel }),
+      });
+      const body = (await res.json().catch(() => ({}))) as { ok?: boolean; changed?: boolean; error?: string };
+      if (!res.ok || !body.ok) throw new Error(body.error || `HTTP ${res.status}`);
+      toast.success(body.changed ? `${row.phoneNumber} → ${voiceChannel} lane` : "No change");
+      await load();
+    } catch (e: any) {
+      toast.error(e?.message || "Lane change failed");
+    }
+    setSwitching(null);
+  };
+
   const repair = async (row: VoiceLineRow) => {
     const what = row.drift.length ? row.drift.join(", ") : "nothing (already correct — this just re-checks)";
     if (!window.confirm(`Repair ${row.phoneNumber} on Twilio?\n\nThis writes: ${what}.\nOnly the two voice URLs + methods are touched.`)) return;
@@ -129,6 +158,7 @@ export function NabilLinesClient() {
           <span className="text-gray-500 font-semibold mr-1">This deployment:</span>
           <EnvChip label="Twilio credentials" present={data.env.twilioCredentials} />
           <EnvChip label="NABIL_VOICE_WSS_URL" present={data.env.voiceWssUrl} />
+          <EnvChip label="NABIL_VOICE_STAGING_WSS_URL (staging lane)" present={data.env.voiceStagingWssUrl} />
           <EnvChip label="NABIL_FALLBACK_MAP" present={data.env.fallbackMap} />
           <EnvChip label="NABIL_FALLBACK_DEFAULT_NUMBER" present={data.env.fallbackDefaultNumber} />
           <span className="text-gray-400 ml-2">checked {new Date(data.generatedAt).toLocaleTimeString()}</span>
@@ -183,8 +213,22 @@ export function NabilLinesClient() {
                       <Chip tone={row.status === "active" ? "ok" : "muted"}>{row.status}</Chip>
                       <Chip tone={row.enabled ? "ok" : "muted"}>{row.enabled ? "agent on" : "agent off"}</Chip>
                       {row.isDemo && <Chip tone="warn">DEMO</Chip>}
+                      <Chip tone={row.voiceChannel === "staging" ? "warn" : "ok"}>{row.voiceChannel === "staging" ? "STAGING lane" : "live lane"}</Chip>
                       <Chip tone={row.twilioNumberSid ? "muted" : "warn"}>{row.twilioNumberSid ? row.twilioNumberSid : "no SID yet"}</Chip>
                     </div>
+                    <label className="mt-2 flex items-center gap-1.5 text-[11px] text-gray-500">
+                      lane
+                      <select
+                        value={row.voiceChannel === "staging" ? "staging" : "current"}
+                        disabled={switching === row.id || (row.voiceChannel !== "staging" && !data?.env.voiceStagingWssUrl)}
+                        onChange={(e) => void setLane(row, e.target.value === "staging" ? "staging" : "current")}
+                        className="text-[11px] border border-gray-200 rounded px-1 py-0.5 bg-white"
+                        title={!data?.env.voiceStagingWssUrl ? "Set NABIL_VOICE_STAGING_WSS_URL on this deployment to enable the staging lane" : undefined}
+                      >
+                        <option value="current">live (nabil-voice)</option>
+                        <option value="staging">staging (nabil-voice-staging)</option>
+                      </select>
+                    </label>
                   </td>
                   <td className="px-3 py-3">
                     <div className="font-medium text-gray-900">{row.restaurant.name}</div>

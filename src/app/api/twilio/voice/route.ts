@@ -4,6 +4,7 @@ import { shouldEnforceTwilioSignature, verifyTwilioSignatureAny, twilioUrlCandid
 import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { signNabilCallToken } from "@/lib/voice/session-token";
+import { resolveVoiceLane } from "@/lib/voice/voice-channel";
 import { packHints, storeVocabHints } from "@/lib/voice/speech-hints";
 import { buildVoiceAttrValue, ttsTuningFromEnv } from "@/lib/voice/elevenlabs-voices";
 import { liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
@@ -239,14 +240,15 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   const from = (params.From || "").trim();
   const callSid = (params.CallSid || "").trim();
 
-  const wss = (process.env.NABIL_VOICE_WSS_URL || "").trim();
-
   const line = to
     ? await prisma.voiceNumber.findUnique({
         where: { phoneNumber: to },
         select: {
           enabled: true,
           isDemo: true,
+          // Which voice-service lane answers this number (live vs staging) —
+          // Luigi 2026-08-22: nothing reaches the live line untested.
+          voiceChannel: true,
           restaurant: {
             select: {
               id: true, slug: true, name: true, defaultLanguage: true,
@@ -274,6 +276,22 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   // No mapping at all → polite message; there is nobody to hand the call to.
   if (!line || !restaurant) {
     return twiml(`<Response><Say voice="Polly.Joanna-Neural">${xml(GENERIC_MSG)}</Say></Response>`);
+  }
+
+  // ── LANE ──────────────────────────────────────────────────────────────
+  // The public line stays on the live app ("current"); only a number marked
+  // "staging" on the superadmin Phone Lines page reaches nabil-voice-staging,
+  // and only when this deployment knows its URL. A staging number on a
+  // deployment without NABIL_VOICE_STAGING_WSS_URL falls back to the live lane
+  // (logged) — never to dead air.
+  const lane = resolveVoiceLane({
+    requested: line.voiceChannel,
+    currentWss: process.env.NABIL_VOICE_WSS_URL,
+    stagingWss: process.env.NABIL_VOICE_STAGING_WSS_URL,
+  });
+  const wss = lane.wss;
+  if (lane.channel === "staging" || lane.fellBack) {
+    console.log(`[twilio/voice] lane=${lane.channel}${lane.fellBack ? " (staging requested, NABIL_VOICE_STAGING_WSS_URL unset)" : ""} for ${callSid} to=${to}`);
   }
 
   // Teach the no-DB safety net who this number's human is (same precedence as
@@ -538,6 +556,9 @@ async function handle(req: NextRequest, params: Record<string, string>) {
     lang: bcp47(lang),
     ...(line.isDemo ? { isDemo: true } : {}),
     ...(isTestOrder ? { isTestOrder: true } : {}),
+    // The lane this call was routed to — the service refuses a token for the
+    // other lane and stamps it on the call record.
+    ch: lane.channel,
   });
   const url = `${wss}${wss.includes("?") ? "&" : "?"}t=${encodeURIComponent(token)}`;
   // On session end — a transfer, OR the voice service being unreachable — Twilio

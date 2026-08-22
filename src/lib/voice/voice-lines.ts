@@ -17,6 +17,9 @@ export type VoiceLineRow = {
   status: string;
   enabled: boolean;
   isDemo: boolean;
+  /** "current" (live Fly app) | "staging" (nabil-voice-staging) — which lane
+   *  answers this number. src/lib/voice/voice-channel.ts. */
+  voiceChannel: string;
   twilioNumberSid: string | null;
   restaurant: { id: string; name: string; slug: string };
   /** "ok" = Twilio answered; "not_configured" = FFOS_TWILIO_* missing on this
@@ -41,6 +44,9 @@ export type VoiceLinesEnv = {
   fallbackMap: boolean;
   fallbackDefaultNumber: boolean;
   voiceWssUrl: boolean;
+  /** NABIL_VOICE_STAGING_WSS_URL present — without it a "staging" number falls
+   *  back to the live lane, so the page must say so before anyone flips one. */
+  voiceStagingWssUrl: boolean;
 };
 
 export type VoiceLinesResponse = {
@@ -83,5 +89,6 @@ export function voiceLinesEnv(): VoiceLinesEnv {
     fallbackMap: !!(process.env.NABIL_FALLBACK_MAP || "").trim(),
     fallbackDefaultNumber: !!(process.env.NABIL_FALLBACK_DEFAULT_NUMBER || "").trim(),
     voiceWssUrl: !!(process.env.NABIL_VOICE_WSS_URL || "").trim(),
+    voiceStagingWssUrl: !!(process.env.NABIL_VOICE_STAGING_WSS_URL || "").trim(),
   };
 }

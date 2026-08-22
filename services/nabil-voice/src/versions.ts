@@ -41,6 +41,10 @@ export function quickHash(v: unknown): string {
 
 export type Versions = {
   agentVersion: string;
+  /** Which LANE served the call — "current" (live app) or "staging"
+   *  (nabil-voice-staging). Staging and live calls must never share a quality
+   *  cohort (Luigi 2026-08-22). */
+  channel: "current" | "staging";
   promptVersion: string;
   toolsVersion: string;
   model: string;

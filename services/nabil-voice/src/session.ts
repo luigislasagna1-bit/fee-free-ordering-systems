@@ -387,6 +387,7 @@ export class CallSession {
     };
     this.versions = {
       agentVersion: agentVersion(),
+      channel: CONFIG.channel,
       promptVersion: quickHash([PLAYBOOK_STYLE, PLAYBOOK_PROTOCOL]),
       toolsVersion: quickHash(TOOLS),
       model: CONFIG.model,
