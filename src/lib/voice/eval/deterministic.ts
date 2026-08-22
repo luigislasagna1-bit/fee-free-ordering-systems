@@ -109,6 +109,9 @@ export function evaluateCall(events: EvalEvent[], facts: CallFacts): Evaluation 
 
   // ── Walk the log ───────────────────────────────────────────────────────
   let handoffSeq: number | null = null;
+  /** The TURN the hand-off happened in — its own closing `turn` event (the
+   *  "connecting you now" sentence) is not "stuck"; a later turn is. */
+  let handoffTurn: number | null = null;
   let quoteOk = false;
   let placeOk = false;
   let lastTtfa: number | null = null;
@@ -127,7 +130,7 @@ export function evaluateCall(events: EvalEvent[], facts: CallFacts): Evaluation 
         if (PROBE_RE.test(text.trim()) && lastTtfa !== null && lastTtfa >= DEAD_AIR_MS) {
           findings.push({ code: "caller_probe_after_silence", severity: "high", turn: e.turn, detail: `Caller said "${text.trim()}" after ${Math.round(lastTtfa / 1000)} s of silence.` });
         }
-        if (handoffSeq !== null && e.seq > handoffSeq) {
+        if (handoffTurn !== null && (e.turn ?? 0) > handoffTurn) {
           findings.push({ code: "speech_after_handoff", severity: "info", turn: e.turn, detail: "Caller speech arrived after the hand-off (ignored by the session)." });
         }
         break;
@@ -143,7 +146,7 @@ export function evaluateCall(events: EvalEvent[], facts: CallFacts): Evaluation 
         const before = str(p.cartHashBefore, 64);
         const after = str(p.cartHashAfter, 64);
         if (/\?\s*$/.test(spoken.trim()) && before === after && p.synthetic !== true) counters.clarifications++;
-        if (handoffSeq !== null && e.seq > handoffSeq && p.synthetic !== true) {
+        if (handoffTurn !== null && (e.turn ?? 0) > handoffTurn && p.synthetic !== true) {
           findings.push({ code: "transfer_stuck", severity: "critical", turn: e.turn, detail: "A model turn ran AFTER the hand-off — the caller was told they were being connected and then kept talking to the agent." });
         }
         break;
@@ -152,7 +155,10 @@ export function evaluateCall(events: EvalEvent[], facts: CallFacts): Evaluation 
         const name = str(p.name, 40);
         const ok = p.ok !== false;
         const code = str(p.code, 40);
-        if (name === "transfer_to_human" && ok && (p.output as { transferred?: unknown })?.transferred !== false) handoffSeq = e.seq;
+        if (name === "transfer_to_human" && ok && (p.output as { transferred?: unknown })?.transferred !== false) {
+          handoffSeq = e.seq;
+          handoffTurn = e.turn ?? handoffTurn ?? 0;
+        }
         if (name === "quote_order" && ok) quoteOk = true;
         if (name === "place_order" && ok && (p.output as { alreadyPlaced?: unknown })?.alreadyPlaced !== true) placeOk = true;
         if (!ok) {
@@ -172,6 +178,7 @@ export function evaluateCall(events: EvalEvent[], facts: CallFacts): Evaluation 
       }
       case "transfer_handoff": {
         if (handoffSeq === null) handoffSeq = e.seq;
+        if (handoffTurn === null) handoffTurn = e.turn ?? 0;
         if (p.outcome === "hard_closed") findings.push({ code: "handoff_hard_closed", severity: "medium", turn: e.turn, detail: "Twilio never tore the socket down after the hand-off; the session closed itself." });
         if (p.outcome === "handoff_write_failed") findings.push({ code: "handoff_write_failed", severity: "medium", turn: e.turn, detail: "The hand-off reason did not reach the app before the relay ended." });
         break;

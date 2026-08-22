@@ -40,6 +40,7 @@ import { toCanonicalFromCart, toCanonicalFromPlaced } from "./canonical";
 import { compareCarts } from "./compare-carts";
 import { DEFAULT_CALLER_MODEL, HANGUP, nextCallerUtterance, type AnthropicLike, type CallerTranscriptEntry } from "./caller-sim";
 import { seededRandom } from "./asr-noise";
+import { evaluateCall } from "../eval/deterministic";
 
 export type { AnthropicLike } from "./caller-sim";
 
@@ -519,11 +520,28 @@ export async function runScenario(scn: Scenario, opts: RunScenarioOpts): Promise
     });
   }
 
+  // Phase D: the SAME deterministic evaluator that scores production calls
+  // grades this run from the recorded event log — every production detector
+  // is a sim assertion for free (shown as the `det` column in the report).
+  const evaluation = evaluateCall(
+    events.map((e) => ({ seq: e.seq, turn: (e as { turn?: number | null }).turn ?? null, type: e.type, payload: e as unknown as Record<string, unknown> })),
+    {
+      outcome: callEnd?.outcome ?? null,
+      orderId: placed ? "placed" : null,
+      quotedTotal: backend.quotes.length ? (((backend.quotes[backend.quotes.length - 1].result as { total?: number })?.total as number | undefined) ?? null) : null,
+      chargedTotal: placed ? (lastPlaced?.total ?? null) : null,
+      transferReason: ws.ended && ws.endReason && ws.endReason !== "end" ? ws.endReason : null,
+      durationSeconds: Math.round((Date.now() - startedAt) / 1000),
+      sentiment: null,
+    },
+  );
+
   return {
     id: scn.id,
     run,
     pass: reasons.length === 0,
     reasons,
+    evaluation,
     cartDiff,
     actualCart,
     placed,

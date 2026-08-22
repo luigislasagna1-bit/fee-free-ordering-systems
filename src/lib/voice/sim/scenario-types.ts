@@ -6,6 +6,8 @@
  * offline backend built from a menu snapshot and compares the final cart —
  * never the transcript — against `expected`.
  */
+import type { Evaluation } from "../eval/deterministic";
+
 export type CallerTurn =
   | string
   | {
@@ -168,4 +170,7 @@ export type ScenarioReport = {
   durationMs: number;
   versions: Record<string, unknown>;
   transcript: Array<{ role: string; text: string }>;
+  /** Phase D: the deterministic evaluator's verdict on this run (same scorer
+   *  as production calls). */
+  evaluation?: Evaluation;
 };

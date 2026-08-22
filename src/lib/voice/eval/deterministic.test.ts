@@ -139,3 +139,20 @@ describe("the 2026-08-21 failure classes", () => {
     expect(bot.needsReview).toBe(false);
   });
 });
+
+describe("a CLEAN transfer is not 'stuck'", () => {
+  it("the hand-off turn's own closing sentence and a caller 'thanks' in the same turn are fine; only a LATER turn counts", () => {
+    reset();
+    const events = [
+      ev("asr", { text: "Can I talk to a person?" }, 1),
+      ev("tool_result", { name: "transfer_to_human", ok: true, output: { ok: true, transferred: true } }, 1),
+      ev("transfer_handoff", { reason: "caller asked for a person", outcome: "handoff_written" }, 1),
+      ev("turn", { ttfaMs: 1200, spoken: "Connecting you to a team member now.", cartHashBefore: "a", cartHashAfter: "a" }, 1),
+      ev("call_end", { outcome: "transferred", cartLines: 0, droppedAfterEnd: 1 }, 1),
+    ];
+    const r = evaluateCall(events, facts({ outcome: "transferred", orderId: null, quotedTotal: null, chargedTotal: null, transferReason: "caller asked for a person" }));
+    expect(r.transferStuck).toBe(false);
+    expect(r.findings.map((f) => f.code)).not.toContain("transfer_stuck");
+    expect(r.detScore).toBeGreaterThanOrEqual(85);
+  });
+});

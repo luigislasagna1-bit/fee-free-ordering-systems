@@ -81,11 +81,12 @@ export function renderMarkdown(input: ReportInput): string {
 
   lines.push(`## Per scenario`);
   lines.push("");
-  lines.push(`| id | run | pass | placed | cart | turns | TTFA p95 | cost | first reason |`);
-  lines.push(`|---|---|---|---|---|---|---|---|---|`);
+  lines.push(`| id | run | pass | placed | cart | turns | TTFA p95 | det | cost | first reason |`);
+  lines.push(`|---|---|---|---|---|---|---|---|---|---|`);
   for (const r of [...reports].sort((a, b) => a.id.localeCompare(b.id) || a.run - b.run)) {
+    const det = r.evaluation ? (r.evaluation.detScore === null ? "—" : String(r.evaluation.detScore)) + (r.evaluation.findings.length ? ` (${r.evaluation.findings.filter((f) => f.severity === "critical" || f.severity === "high").length}!)` : "") : "";
     lines.push(
-      `| ${r.id} | ${r.run} | ${r.pass ? "✅" : "❌"} | ${r.placed ? "yes" : "no"} | ${r.cartDiff.exact ? "exact" : `${r.cartDiff.matched}/${r.cartDiff.items.total} +${r.cartDiff.extra.length}`} | ${r.turns.length} | ${ms(r.latency.ttftP95)} | ${cents(r.costCents)} | ${esc(r.reasons[0] ?? "")} |`,
+      `| ${r.id} | ${r.run} | ${r.pass ? "✅" : "❌"} | ${r.placed ? "yes" : "no"} | ${r.cartDiff.exact ? "exact" : `${r.cartDiff.matched}/${r.cartDiff.items.total} +${r.cartDiff.extra.length}`} | ${r.turns.length} | ${ms(r.latency.ttftP95)} | ${det} | ${cents(r.costCents)} | ${esc(r.reasons[0] ?? "")} |`,
     );
   }
   lines.push("");
