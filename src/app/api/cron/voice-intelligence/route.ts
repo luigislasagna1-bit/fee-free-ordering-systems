@@ -19,6 +19,7 @@ import { Prisma } from "@/generated/prisma/client";
 import { requireCronAuth } from "@/lib/cron-auth";
 import { generateCallIntelligence } from "@/lib/voice/call-intelligence";
 import { reconcileOrphanVoiceOrders, sweepStaleCalls } from "@/lib/voice/stale-calls";
+import { evaluateMissingCalls } from "@/lib/voice/eval/evaluate-call";
 
 export const runtime = "nodejs";
 export const maxDuration = 55;
@@ -45,6 +46,14 @@ export async function GET(req: NextRequest) {
     if (stale > 0) console.warn(`[voice-intelligence] closed ${stale} stale in-progress call(s):`, swept.ids.join(","));
   } catch (e) {
     console.error("[voice-intelligence] stale-call sweep failed", e);
+  }
+  // Fourth arm (Phase D): catch-up evaluation of ended calls the after()
+  // hook missed (cold start, timeout), oldest first, 20 per run.
+  let evaluated = 0;
+  try {
+    evaluated = (await evaluateMissingCalls({ hours: 48, cap: 20, now: new Date(startedAt) })).evaluated;
+  } catch (e) {
+    console.error("[voice-intelligence] catch-up evaluation failed", e);
   }
   // Third arm (A3, 2026-08-22): a voice order whose call record never got its
   // end event → stamp the call from the order. RECONCILED in the logs = the
@@ -82,9 +91,9 @@ export async function GET(req: NextRequest) {
   }
 
   console.log(
-    `[voice-intelligence] candidates=${candidates.length} generated=${generated} skipped=${skipped} deferred=${deferred} staleClosed=${stale} reconciled=${reconciled}`,
+    `[voice-intelligence] candidates=${candidates.length} generated=${generated} skipped=${skipped} deferred=${deferred} staleClosed=${stale} reconciled=${reconciled} evaluated=${evaluated}`,
   );
-  return NextResponse.json({ candidates: candidates.length, generated, skipped, deferred, staleClosed: stale, reconciled });
+  return NextResponse.json({ candidates: candidates.length, generated, skipped, deferred, staleClosed: stale, reconciled, evaluated });
 }
 
 export async function POST(req: NextRequest) {

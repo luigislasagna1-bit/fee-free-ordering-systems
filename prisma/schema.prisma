@@ -3297,6 +3297,8 @@ model VoiceCall {
   reports          VoiceCallReport[]
   /// Phase B: versions/build/audio profile that served this call (no PII).
   provenance       VoiceCallProvenance?
+  /// Phase D: the automatic evaluation (deterministic score, later the judge).
+  evaluation       VoiceCallEvaluation?
 
   createdAt       DateTime   @default(now())
 
@@ -3394,6 +3396,58 @@ model VoiceCallbackRequest {
   @@index([restaurantId, status, createdAt])
   @@index([callSid])
   @@index([phoneDigits])
+}
+
+/// Phase D (2026-08-22) — the automatic post-call EVALUATION of one call
+/// (directive §32–§35): a deterministic score computed from the event log by
+/// a separate evaluator (src/lib/voice/eval), later joined by an LLM judge.
+/// Side table, 1:1 with VoiceCall, no PII: findings carry turn numbers,
+/// codes and ≤80-char evidence cut from already-redacted event payloads.
+/// Grouping keys are denormalised so the quality dashboard is one GROUP BY.
+model VoiceCallEvaluation {
+  id               String    @id @default(cuid())
+  callId           String    @unique
+  call             VoiceCall @relation(fields: [callId], references: [id], onDelete: Cascade)
+  restaurantId     String
+  channel          String?
+  coreVersion      String?
+  agentVersion     String?
+  promptVersion    String?
+  /// 0–100 model-free composite (null = not scorable: record lost / robocall).
+  detScore         Int?
+  /// agent | infra | null — whose fault a bad call was.
+  failureClass     String?
+  /// hangup_at_greeting | silent_caller | info_only | abandon_during_dead_air |
+  /// abandon_mid_order | abandon_after_quote | after_transfer_attempt |
+  /// cap_hangup | null
+  abandonClass     String?
+  /// [{ code, severity, turn, detail, evidence }]
+  findings         Json
+  deadAirTurns     Int       @default(0)
+  toolErrors       Int       @default(0)
+  clarifications   Int       @default(0)
+  interrupts       Int       @default(0)
+  fillers          Int       @default(0)
+  hallucinationFlags Int     @default(0)
+  transferStuck    Boolean   @default(false)
+  totalsMismatch   Boolean   @default(false)
+  needsReview      Boolean   @default(false)
+  reviewReasons    Json?
+  /// LLM judge (Phase D part 2): pending | done | skipped | failed
+  judgeStatus      String    @default("pending")
+  judgeModel       String?
+  judgeScore       Int?
+  judgeFindings    Json?
+  judgedAt         DateTime?
+  evaluatorVersion String
+  evaluatedAt      DateTime  @default(now())
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([restaurantId, evaluatedAt])
+  @@index([needsReview, evaluatedAt])
+  @@index([coreVersion])
+  @@index([judgeStatus, evaluatedAt])
 }
 
 /// Phase B (2026-08-22) — everything that shaped ONE call, so a metric that

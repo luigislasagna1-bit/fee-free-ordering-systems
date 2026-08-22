@@ -25,6 +25,7 @@ vi.mock("next/server", async (orig) => {
 });
 vi.mock("@/lib/voice/twilio-recording", () => ({ startCallRecording: vi.fn(async () => undefined) }));
 vi.mock("@/lib/voice/call-intelligence", () => ({ generateCallIntelligence: vi.fn(async () => undefined) }));
+vi.mock("@/lib/voice/eval/evaluate-call", () => ({ evaluateStoredCall: vi.fn(async () => null) }));
 // The alarm module imports ops-messages (server-only + Prisma) — mocked here;
 // its own behaviour is pinned in src/lib/voice/totals-mismatch-alarm.test.ts.
 const { alarmMock } = vi.hoisted(() => ({ alarmMock: vi.fn(async () => "skipped" as const) }));

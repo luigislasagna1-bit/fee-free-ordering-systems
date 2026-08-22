@@ -5,6 +5,7 @@ import { Prisma } from "@/generated/prisma/client";
 import { requireInternalKey } from "@/lib/voice/internal-auth";
 import { startCallRecording } from "@/lib/voice/twilio-recording";
 import { generateCallIntelligence } from "@/lib/voice/call-intelligence";
+import { evaluateStoredCall } from "@/lib/voice/eval/evaluate-call";
 import { alertTotalsMismatch } from "@/lib/voice/totals-mismatch-alarm";
 import { redactEventPayload } from "@/lib/voice/event-redaction";
 import { parseStartBody, parseEndBody, parseEventsBody, parseMenuSnapshotBody, parseHandoffBody, type ParsedEvent } from "./validation";
@@ -263,6 +264,11 @@ export async function POST(req: NextRequest) {
   after(() => {
     void generateCallIntelligence(row.id).catch((err) => {
       console.error("[call-log] intelligence pass failed for", row.id, err);
+    });
+    // Phase D: the deterministic evaluator scores EVERY call from its event
+    // log (model-free; the judge is a separate, later pass).
+    void evaluateStoredCall(row.id).catch((err) => {
+      console.error("[call-log] evaluation failed for", row.id, err);
     });
     // 🚨 quoted ≠ charged on a PLACED order → one ops alarm per call, ever
     // (the helper skips refusals that stored both totals but billed nobody,
