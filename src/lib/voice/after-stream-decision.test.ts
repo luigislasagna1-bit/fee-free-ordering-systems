@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { decideAfterStream } from "./after-stream-decision";
+import { HANGUP_REASONS, decideAfterStream } from "./after-stream-decision";
 
 describe("decideAfterStream", () => {
   it("time limit → goodbye + hangup regardless of flags", () => {
@@ -7,6 +7,13 @@ describe("decideAfterStream", () => {
   });
   it("spam/IVR → polite hangup", () => {
     expect(decideAfterStream({ reason: "spam", rowExists: true, decisionTableOn: true })).toEqual({ action: "hangup_spam" });
+  });
+  it("no_input (A4: the silent line Nabil already said goodbye to) → hangup, never the store", () => {
+    expect(decideAfterStream({ reason: "no_input", rowExists: true, decisionTableOn: true })).toEqual({ action: "hangup_no_input" });
+    expect(decideAfterStream({ reason: "no_input", rowExists: true, decisionTableOn: false })).toEqual({ action: "hangup_no_input" });
+    // Every hangup reason is known to the dashboard so it never draws a transfer arrow for one.
+    for (const r of ["call_time_limit", "spam", "no_input"]) expect(HANGUP_REASONS.has(r)).toBe(true);
+    expect(HANGUP_REASONS.has("caller asked for a person")).toBe(false);
   });
   it("any other reason → dial the store", () => {
     for (const reason of ["caller asked for a person", "agent struggling (3 failed attempts)", "pipeline_failed", "service_restart"]) {

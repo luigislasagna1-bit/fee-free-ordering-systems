@@ -52,7 +52,14 @@ export type CallEvent = CallEventBase &
         cartHashAfter: string | null;
       }
     | { type: "cart"; hash: string; lines: unknown; problems: unknown; fulfilment: unknown }
-    | { type: "filler"; hop: number; tool: string | null; afterMs: number; phrase: string; kind?: "tool" | "thinking" }
+    | { type: "filler"; hop: number; tool: string | null; afterMs: number; phrase: string; kind?: "tool" | "thinking" | "second_stage" }
+    /** A2: a hop produced no first token/block by the watchdog deadline and was
+     *  aborted + retried once. */
+    | { type: "model_retry"; hop: number; afterMs: number }
+    /** A4: the line stayed silent after the greeting / a question — one
+     *  re-prompt, then a polite close. `afterMs` = silence after our own
+     *  (estimated) playout. */
+    | { type: "no_input"; stage: "reprompt" | "close"; after: "greeting" | "question"; afterMs: number }
     | { type: "interrupt"; heard: string | null; stale: boolean; duringProtected: boolean }
     | { type: "protected_respoken"; text: string }
     | { type: "narration_dropped"; text: string }

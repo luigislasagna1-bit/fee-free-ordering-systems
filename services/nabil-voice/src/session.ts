@@ -55,6 +55,29 @@ const FILLER_AFTER_TOOL_MS = 1_000;
  */
 const THINKING_FILLER_AFTER_MS = 2_500;
 /**
+ * A2 (2026-08-22, 29 of 52 calls had ≥8 s of dead air): ONE deadline from the
+ * end of the caller's speech, whatever the hop structure. The thinking filler
+ * above is no longer cancelled when hop 1 turns out to be a tool call (that
+ * cancellation left 3.5–5 s of silence on every fast tool turn); a SECOND
+ * cue fires if the model still has not produced text by SECOND_STAGE_AFTER_MS
+ * (the 6–17 s first-token stalls); and a hop with no first token or block by
+ * HOP_TTFT_WATCHDOG_MS is aborted and retried once (`model_retry` event).
+ */
+const SECOND_STAGE_AFTER_MS = 6_000;
+const HOP_TTFT_WATCHDOG_MS = 8_000;
+/**
+ * A4 no-input watchdog (calls cmt3k83k6 33 s, cmt302xi6 126 s of silence):
+ * after the greeting or after a question Nabil asked, a silent line gets ONE
+ * re-prompt at +NO_INPUT_REPROMPT_MS of silence and a polite close at
+ * +NO_INPUT_CLOSE_MS. Playout of our own speech is estimated from its length
+ * (SPEECH_MS_PER_CHAR; the relay gives no "finished speaking" signal) so the
+ * clock starts when the caller could actually answer.
+ */
+const NO_INPUT_REPROMPT_MS = 8_000;
+const NO_INPUT_CLOSE_MS = 30_000;
+const SPEECH_MS_PER_CHAR = 65;
+const DEFAULT_GREETING_PLAYOUT_MS = 12_000;
+/**
  * FILLER TALK-OVER HOLD (calls cmt237qmr + cmt24gemw, 2026-08-20): a due
  * filler fired into the caller's CONTINUED speech 4 times across two calls —
  * fragmented cadence (worst with heavy accents) means the 2.5 s timer lands
@@ -237,6 +260,13 @@ export type SessionDeps = {
   events?: EventSink;
   /** A3: where a call record that failed to write is parked (tests inject). */
   spool?: typeof spoolTelemetry;
+  /** A2/A4 test seams (0 disables). Defaults: the constants of the same name. */
+  secondStageMs?: number;
+  hopTtftWatchdogMs?: number;
+  noInputRepromptMs?: number;
+  noInputCloseMs?: number;
+  /** Playout estimate for our own speech (A4). Default SPEECH_MS_PER_CHAR. */
+  speechMsPerChar?: number;
   /** Test seam: the sim harness's scripted caller answers within milliseconds
    *  of a reply because there is no TTS to hear — real timing can't exist
    *  there. 0 disables the early-fragment hold. Default EARLY_FRAGMENT_MS. */
@@ -384,6 +414,16 @@ export class CallSession {
   private closeReason?: string;
   private eventFlushTimer?: NodeJS.Timeout;
   private readonly spool: typeof spoolTelemetry;
+  /** A2/A4 */
+  private readonly secondStageMs: number;
+  private readonly hopTtftWatchdogMs: number;
+  private readonly noInputRepromptMs: number;
+  private readonly noInputCloseMs: number;
+  private readonly speechMsPerChar: number;
+  private secondStageTimer?: NodeJS.Timeout;
+  private idleTimer?: NodeJS.Timeout;
+  private idleArmedAt = 0;
+  private noInputReprompts = 0;
   private eventFlushInFlight: Promise<unknown> | null = null;
 
   constructor(
@@ -394,6 +434,11 @@ export class CallSession {
   ) {
     this.api = deps.api ?? defaultApi;
     this.spool = deps.spool ?? spoolTelemetry;
+    this.secondStageMs = deps.secondStageMs ?? SECOND_STAGE_AFTER_MS;
+    this.hopTtftWatchdogMs = deps.hopTtftWatchdogMs ?? HOP_TTFT_WATCHDOG_MS;
+    this.noInputRepromptMs = deps.noInputRepromptMs ?? NO_INPUT_REPROMPT_MS;
+    this.noInputCloseMs = deps.noInputCloseMs ?? NO_INPUT_CLOSE_MS;
+    this.speechMsPerChar = deps.speechMsPerChar ?? SPEECH_MS_PER_CHAR;
     this.now = deps.now ?? Date.now;
     this.earlyFragmentMs = deps.earlyFragmentMs ?? EARLY_FRAGMENT_MS;
     this.thinkingFillerMs = deps.thinkingFillerMs ?? THINKING_FILLER_AFTER_MS;
@@ -511,6 +556,9 @@ export class CallSession {
           this.resumeTimer = undefined;
           clearTimeout(this.silentTurnTimer);
           this.silentTurnTimer = undefined;
+          clearTimeout(this.idleTimer);
+          this.idleTimer = undefined;
+          this.noInputReprompts = 0;
           this.userTurns++;
           void this.handlePrompt(String(text));
         }
@@ -573,6 +621,9 @@ export class CallSession {
           this.lastPromptAt = this.now();
           clearTimeout(this.resumeTimer);
           this.resumeTimer = undefined;
+          clearTimeout(this.idleTimer);
+          this.idleTimer = undefined;
+          this.noInputReprompts = 0;
           this.userTurns++;
           const pressed = String(msg.digit ?? msg.digits);
           // "0" = the universal "get me a person" (call cmt3n3qfm, 2026-08-21:
@@ -711,6 +762,8 @@ export class CallSession {
     }, EVENT_FLUSH_INTERVAL_MS);
     this.eventFlushTimer.unref?.();
     this.startMaxCallTimers();
+    // A4: a caller who says nothing after the greeting gets one nudge.
+    this.armIdle("greeting", this.greetingText);
     this.ready = true;
     const pending = this.queued.splice(0);
     for (const t of pending) await this.runTurn(t);
@@ -746,14 +799,12 @@ export class CallSession {
   }
 
   private endCapped() {
-    if (this.finalized) return;
-    this.interrupted = true;
-    this.controller?.abort();
-    try {
-      this.ws.send(JSON.stringify({ type: "end", handoffData: JSON.stringify({ reason: "call_time_limit" }) }));
-    } catch {
-      /* ignore */
-    }
+    if (this.finalized || this.phase !== "live") return;
+    // A2/A4: through the ordered end path, so Media Streams (no handoffData)
+    // finds `call_time_limit` on the row and hangs up instead of dialing the
+    // store or re-greeting (same race the transfer had before A1).
+    this.ctx.pendingTransfer ??= "call_time_limit";
+    this.endTransfer("call_time_limit");
   }
 
   private async handlePrompt(text: string, synthetic = false) {
@@ -835,6 +886,8 @@ export class CallSession {
       this.fillerTimer = undefined;
       clearTimeout(this.thinkingFillerTimer);
       this.thinkingFillerTimer = undefined;
+      clearTimeout(this.secondStageTimer);
+      this.secondStageTimer = undefined;
     }
     if (this.pendingPrompts.length) {
       const joined = this.pendingPrompts.splice(0).join(" ");
@@ -846,6 +899,62 @@ export class CallSession {
       this.endCapped();
     }
     if (this.turnIndex % EVENT_FLUSH_EVERY_TURNS === 0) this.flushEvents();
+    // A4: Nabil just spoke and the line is the caller's — if what it said was
+    // a question (or a re-prompt), a silent line gets one nudge, then a close.
+    const spokenTurn = this.turnSpokenSoFar.trim();
+    if (this.phase === "live" && !this.pendingPrompts.length && !this.hangUpRequested && /\?\s*$/.test(spokenTurn)) {
+      this.armIdle("question", spokenTurn);
+    } else {
+      clearTimeout(this.idleTimer);
+      this.idleTimer = undefined;
+    }
+  }
+
+  /** A4 — no-input watchdog. `spokenText` = what we just said (its playout is
+   *  estimated so the silence clock starts when the caller could answer). */
+  private armIdle(stage: "greeting" | "question", spokenText: string) {
+    clearTimeout(this.idleTimer);
+    this.idleTimer = undefined;
+    if (this.noInputRepromptMs <= 0 || this.phase !== "live" || this.finalized) return;
+    const playoutMs = spokenText ? Math.min(20_000, spokenText.length * this.speechMsPerChar) : stage === "greeting" ? DEFAULT_GREETING_PLAYOUT_MS : 0;
+    this.idleArmedAt = this.now();
+    const closeStage = this.noInputReprompts >= 1;
+    const delay = closeStage ? playoutMs + Math.max(100, this.noInputCloseMs - this.noInputRepromptMs) : playoutMs + this.noInputRepromptMs;
+    const check = () => {
+      this.idleTimer = undefined;
+      if (this.phase !== "live" || this.finalized || this.turnRunning || this.pendingPrompts.length) return;
+      if (this.lastPromptAt > this.idleArmedAt) return; // the caller spoke — a turn is (or was) running
+      if (this.now() - this.lastCallerAudioAt < this.callerActiveHoldMs) {
+        // Mic energy right now (Media Streams) — they may be mid-sentence; hold.
+        this.idleTimer = setTimeout(check, 1_000);
+        return;
+      }
+      const afterMs = Math.max(0, this.now() - this.idleArmedAt - playoutMs);
+      if (!closeStage) {
+        this.noInputReprompts++;
+        this.events.emit({ type: "no_input", turn: this.turnIndex, stage: "reprompt", after: stage, afterMs });
+        const ask =
+          stage === "greeting"
+            ? "(The caller hasn't said anything since the greeting. Ask once, briefly and warmly, how you can help — one short sentence, ending with a question.)"
+            : "(The caller has been silent since your last question. Ask it once more, briefly and warmly, in different words — one short sentence, ending with a question.)";
+        void this.handlePrompt(ask, true);
+        return;
+      }
+      this.events.emit({ type: "no_input", turn: this.turnIndex, stage: "close", after: stage, afterMs });
+      this.endNoInput();
+    };
+    this.idleTimer = setTimeout(check, delay);
+    this.idleTimer.unref?.();
+  }
+
+  /** A4 — a line that stayed silent through the re-prompt: say goodbye and
+   *  end through the ORDERED end path (reason `no_input` → the after-stream
+   *  table hangs up; it never dials the store). */
+  private endNoInput() {
+    if (this.finalized || this.phase !== "live") return;
+    this.ctx.pendingTransfer ??= "no_input";
+    this.speak(` ${voicePhrase(this.language ?? this.token.lang, "noInputGoodbye")}`, true);
+    this.endTransfer("no_input");
   }
 
   private pushMessage(msg: any, meta: MessageMeta) {
@@ -910,6 +1019,8 @@ export class CallSession {
     this.currentStreamText = "";
     this.turnSpokenSoFar = "";
     let spokeAnything = false;
+    /** A2: a real model text token has streamed this turn (fillers don't count). */
+    let anyModelText = false;
     let spokenThisTurn = "";
     let ttfaMs: number | null = null;
     let fillerUsed: { phrase: string; afterMs: number } | null = null;
@@ -949,6 +1060,7 @@ export class CallSession {
         this.lastFillerPhrase = phrase;
         this.fillerCount++;
         fillerUsed = { phrase, afterMs: this.now() - armedAt };
+        if (ttfaMs === null) ttfaMs = this.now() - turnStarted; // first AUDIO, filler included (A3)
         ackStripArmed = true;
         spokeAnything = true;
         this.speak(`${phrase} `, false);
@@ -956,8 +1068,37 @@ export class CallSession {
       };
       this.thinkingFillerTimer = setTimeout(fire, this.thinkingFillerMs);
     }
+    // A2 SECOND-STAGE cue — see SECOND_STAGE_AFTER_MS. Fires once per turn
+    // when the model still has not produced a single text token by the
+    // deadline (a filler may already have played); never over the caller.
+    let secondStageUsed = false;
+    if (this.secondStageMs > 0 && !synthetic) {
+      clearTimeout(this.secondStageTimer);
+      const fire = () => {
+        this.secondStageTimer = undefined;
+        if (anyModelText || secondStageUsed || this.interrupted || this.phase !== "live" || this.now() < this.protectedUntil) return;
+        if (this.now() - this.lastCallerAudioAt < this.callerActiveHoldMs) {
+          this.secondStageTimer = setTimeout(fire, 500);
+          return;
+        }
+        const phrases = voiceFillers(this.language ?? this.token.lang, "stillThereFillers");
+        const phrase = phrases[(this.fillerCount + turn) % phrases.length];
+        this.lastFillerPhrase = phrase;
+        this.fillerCount++;
+        secondStageUsed = true;
+        spokeAnything = true;
+        if (ttfaMs === null) ttfaMs = this.now() - turnStarted;
+        this.speak(`${phrase} `, false);
+        this.events.emit({ type: "filler", turn, hop: 0, tool: null, afterMs: this.now() - turnStarted, phrase, kind: "second_stage" });
+      };
+      this.secondStageTimer = setTimeout(fire, this.secondStageMs);
+    }
     const armFiller = (toolName: string, hop: number) => {
-      stopFiller();
+      // A2: only the TOOL timer restarts here. The thinking deadline keeps
+      // running across the hop boundary — cancelling it when hop 1 turned out
+      // to be a tool call is what left every fast tool turn silent.
+      clearTimeout(this.fillerTimer);
+      this.fillerTimer = undefined;
       const armedAt = this.now();
       const fire = () => {
         // No "let me check that" while merely saving a name or "pickup" — the
@@ -973,6 +1114,7 @@ export class CallSession {
         this.lastFillerPhrase = phrase;
         this.fillerCount++;
         fillerUsed = { phrase, afterMs: this.now() - armedAt };
+        if (ttfaMs === null) ttfaMs = this.now() - turnStarted; // first AUDIO, filler included (A3)
         ackStripArmed = true;
         spokeAnything = true;
         this.speak(`${phrase} `, false);
@@ -983,6 +1125,8 @@ export class CallSession {
 
     let hops = 0;
     let continuations = 0;
+    /** A2: one same-hop retry per turn after a first-token stall. */
+    let hopRetries = 0;
     while (hops < MAX_TOOL_HOPS && !this.interrupted) {
       hops++;
       const controller = new AbortController();
@@ -1015,6 +1159,26 @@ export class CallSession {
       /** Reply opening held by the post-filler ack de-dup; null once decided. */
       let ackHold: string | null = null;
       let ackDecided = false;
+      // A2 hop TTFT watchdog — see HOP_TTFT_WATCHDOG_MS. A tool-only hop has
+      // no text token, so the first content block (any type) also counts.
+      let hopTimedOut = false;
+      let firstBlockAt: number | null = null;
+      try {
+        (stream as unknown as { on?: (evt: string, cb: (ev: unknown) => void) => void }).on?.("streamEvent", (ev) => {
+          if (firstBlockAt === null && (ev as { type?: string })?.type === "content_block_start") firstBlockAt = this.now();
+        });
+      } catch {
+        /* test stubs without streamEvent */
+      }
+      const hopWatchdog =
+        this.hopTtftWatchdogMs > 0
+          ? setTimeout(() => {
+              if (ttftMs === null && firstBlockAt === null && !this.interrupted && this.phase === "live") {
+                hopTimedOut = true;
+                controller.abort();
+              }
+            }, this.hopTtftWatchdogMs)
+          : undefined;
       stream.on("text", (delta: string) => {
         if (this.interrupted) return;
         if (ttftMs === null) ttftMs = this.now() - requestStartedAt;
@@ -1022,6 +1186,9 @@ export class CallSession {
         // stopFiller BEFORE any hold-return: a timer firing mid-hold would
         // speak a second filler on top of the reply we are about to play.
         stopFiller();
+        anyModelText = true;
+        clearTimeout(this.secondStageTimer);
+        this.secondStageTimer = undefined;
         if (ackStripArmed && !ackDecided) {
           // A filler already acknowledged the caller — hold the first deltas
           // and drop a duplicated leading bare ack ("Got it, delivering…" →
@@ -1056,11 +1223,24 @@ export class CallSession {
         final = await stream.finalMessage();
       } catch (e) {
         this.controller = null;
+        clearTimeout(hopWatchdog);
         if (!this.interrupted && (this.finalized || this.phase !== "live")) {
           // A3: the socket closed (or the session is ending) and we aborted
           // our own stream — the call is over. Not a model error, not a retry,
           // no sentence into a dead line.
           return;
+        }
+        if (hopTimedOut && !this.interrupted && hopRetries < 1) {
+          // A2: first-token stall — abort was ours. Retry the same hop once
+          // (nothing of it reached history or the caller); fillers keep
+          // covering the silence meanwhile.
+          hopRetries++;
+          const afterMs = this.now() - requestStartedAt;
+          console.warn("[nabil-voice] hop TTFT watchdog — retrying the hop", { callSid: this.token.callSid, turn, hop: hops, afterMs });
+          this.events.emit({ type: "model_retry", turn, hop: hops, afterMs });
+          hops--;
+          await new Promise((r) => setTimeout(r, 200 + Math.floor(Math.random() * 300)));
+          continue;
         }
         if (this.interrupted) {
           // Record what the caller actually HEARD (the interrupt payload
@@ -1094,6 +1274,7 @@ export class CallSession {
         return;
       }
       this.controller = null;
+      clearTimeout(hopWatchdog);
       this.streamFailures = 0;
 
       // A reply still held by the ack de-dup at stream end is a bare ack and
@@ -1636,6 +1817,8 @@ export class CallSession {
     clearTimeout(this.fillerTimer);
     clearTimeout(this.thinkingFillerTimer);
     clearTimeout(this.earlyFragmentTimer);
+    clearTimeout(this.secondStageTimer);
+    clearTimeout(this.idleTimer);
     this.endingPromise = this.runEndTransfer(reason);
   }
 
@@ -1763,6 +1946,8 @@ export class CallSession {
     clearTimeout(this.thinkingFillerTimer);
     clearTimeout(this.earlyFragmentTimer);
     clearTimeout(this.hardCloseTimer);
+    clearTimeout(this.secondStageTimer);
+    clearTimeout(this.idleTimer);
     void this.finalize();
   }
 

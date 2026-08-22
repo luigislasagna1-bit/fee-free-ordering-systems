@@ -21,9 +21,10 @@ type PhraseKey =
   | "fallbackError"
   | "transferDeflect"
   | "transferMessageOffer"
-  | "transferMessageTaken";
+  | "transferMessageTaken"
+  | "noInputGoodbye";
 
-type VoicePhrases = { fillers: string[]; thinkingFillers: string[] } & Record<PhraseKey, string>;
+type VoicePhrases = { fillers: string[]; thinkingFillers: string[]; stillThereFillers: string[] } & Record<PhraseKey, string>;
 
 /* eslint-disable @typescript-eslint/naming-convention */
 const P: Record<string, VoicePhrases> = {
@@ -34,6 +35,7 @@ const P: Record<string, VoicePhrases> = {
     // Got it, delivering to…" (Luigi call review 2026-08-20). Keep these
     // distinct from `fillers` too — the two timers can fire back to back.
     thinkingFillers: ["Sure thing.", "Alright.", "Let's see.", "Okay then."],
+    stillThereFillers: ["Still with you — one second.", "Almost there."],
     errorTransfer: "I'm really sorry — I'm having trouble on my end, not with anything you said. Let me put you through to someone.",
     errorDropped: "Sorry — that dropped on my end. Go ahead.",
     errorRestart: "— sorry, let me start that again.",
@@ -42,6 +44,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "One moment — connecting you to the restaurant.",
     fallbackUnreachable: "Sorry, we couldn't reach anyone. Please try again shortly.",
     fallbackError: "Sorry, we're having trouble taking your call right now. Please try again in a few minutes.",
+    noInputGoodbye: "I haven't heard anything, so I'll let you go — call back any time.",
     transferDeflect: "Our staff are busy preparing orders and can't take calls right now, but I can help with anything about the restaurant.",
     transferMessageOffer: "I can take a message and have someone call you back — what would you like me to pass on?",
     transferMessageTaken: "I've passed that on to the team, and they'll call you back.",
@@ -49,6 +52,7 @@ const P: Record<string, VoicePhrases> = {
   fr: {
     fillers: ["Un instant.", "Un moment.", "Attendez.", "Une seconde."],
     thinkingFillers: ["Bien sûr.", "Compris.", "D'accord.", "Entendu."],
+    stillThereFillers: ["Je suis toujours là — une seconde.", "J'y suis presque."],
     errorTransfer: "Je suis vraiment désolé — j'ai un problème de mon côté, pas avec ce que vous avez dit. Je vous mets en relation avec quelqu'un.",
     errorDropped: "Désolé — il y a eu un problème de mon côté. Allez-y.",
     errorRestart: "— désolé, laissez-moi reprendre.",
@@ -57,6 +61,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Un moment — je vous mets en relation avec le restaurant.",
     fallbackUnreachable: "Désolé, nous n'avons pas pu joindre quelqu'un. Veuillez réessayer dans quelques instants.",
     fallbackError: "Désolé, nous avons un problème technique en ce moment. Veuillez réessayer dans quelques minutes.",
+    noInputGoodbye: "Je n'entends rien, alors je vous laisse — rappelez quand vous voulez.",
     transferDeflect: "Notre équipe est occupée à préparer les commandes et ne peut pas prendre d'appels pour le moment, mais je peux vous aider pour tout ce qui concerne le restaurant.",
     transferMessageOffer: "Je peux prendre un message et faire en sorte que quelqu'un vous rappelle — que souhaitez-vous que je transmette ?",
     transferMessageTaken: "J'ai transmis votre message à l'équipe, et on vous rappellera.",
@@ -64,6 +69,7 @@ const P: Record<string, VoicePhrases> = {
   es: {
     fillers: ["Un momento.", "Un instante.", "Espere.", "Un segundo."],
     thinkingFillers: ["Claro.", "Entendido.", "De acuerdo.", "Vale."],
+    stillThereFillers: ["Sigo aquí — un segundo.", "Ya casi."],
     errorTransfer: "Lo siento mucho — tengo un problema de mi parte, no con lo que dijo. Voy a pasarle con alguien.",
     errorDropped: "Disculpe — hubo un problema de mi parte. Adelante.",
     errorRestart: "— disculpe, déjeme empezar de nuevo.",
@@ -72,6 +78,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Un momento — le estamos conectando con el restaurante.",
     fallbackUnreachable: "Disculpe, no pudimos contactar a nadie. Por favor intente de nuevo en breve.",
     fallbackError: "Disculpe, estamos teniendo dificultades técnicas en este momento. Por favor intente de nuevo en unos minutos.",
+    noInputGoodbye: "No oigo nada, así que le dejo — llame cuando quiera.",
     transferDeflect: "Nuestro personal está ocupado preparando pedidos y no puede atender llamadas ahora mismo, pero puedo ayudarle con cualquier cosa sobre el restaurante.",
     transferMessageOffer: "Puedo tomar un mensaje y hacer que alguien le devuelva la llamada — ¿qué quiere que les transmita?",
     transferMessageTaken: "Ya se lo he pasado al equipo, y le devolverán la llamada.",
@@ -79,6 +86,7 @@ const P: Record<string, VoicePhrases> = {
   it: {
     fillers: ["Un momento.", "Un attimo.", "Attenda.", "Un secondo."],
     thinkingFillers: ["Certo.", "Capito.", "Va bene.", "D'accordo."],
+    stillThereFillers: ["Sono ancora qui — un secondo.", "Ci sono quasi."],
     errorTransfer: "Mi scuso molto — ho un problema dalla mia parte, non dipende da lei. La metto in contatto con qualcuno.",
     errorDropped: "Scusi — c'è stato un problema dalla mia parte. Prego, continui.",
     errorRestart: "— scusi, ricomincio.",
@@ -87,6 +95,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Un momento — la mettiamo in contatto con il ristorante.",
     fallbackUnreachable: "Ci scusi, non siamo riusciti a contattare nessuno. Per favore riprovi tra poco.",
     fallbackError: "Ci scusi, stiamo avendo delle difficoltà tecniche al momento. Per favore riprovi tra qualche minuto.",
+    noInputGoodbye: "Non sento nulla, quindi la lascio — richiami quando vuole.",
     transferDeflect: "Il nostro staff è impegnato a preparare gli ordini e al momento non può rispondere alle chiamate, ma posso aiutarla con qualsiasi cosa riguardi il ristorante.",
     transferMessageOffer: "Posso prendere un messaggio e farla richiamare da qualcuno — cosa vuole che riferisca?",
     transferMessageTaken: "Ho riferito il messaggio al team, e la richiameranno.",
@@ -94,6 +103,7 @@ const P: Record<string, VoicePhrases> = {
   pt: {
     fillers: ["Um momento.", "Um instante.", "Aguarde.", "Um segundo."],
     thinkingFillers: ["Claro.", "Entendido.", "Certo.", "Ok."],
+    stillThereFillers: ["Continuo aqui — um segundo.", "Está quase."],
     errorTransfer: "Peço muita desculpa — estou com um problema do meu lado, não com o que disse. Vou passá-lo a alguém.",
     errorDropped: "Desculpe — houve um problema do meu lado. Continue.",
     errorRestart: "— desculpe, deixe-me recomeçar.",
@@ -102,6 +112,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Um momento — estamos a ligá-lo ao restaurante.",
     fallbackUnreachable: "Desculpe, não conseguimos contactar ninguém. Por favor tente novamente em breve.",
     fallbackError: "Desculpe, estamos com dificuldades técnicas de momento. Por favor tente novamente em alguns minutos.",
+    noInputGoodbye: "Não ouço nada, por isso vou desligar — ligue de volta quando quiser.",
     transferDeflect: "A nossa equipa está ocupada a preparar pedidos e não pode atender chamadas neste momento, mas posso ajudar com qualquer assunto sobre o restaurante.",
     transferMessageOffer: "Posso anotar uma mensagem e pedir que alguém lhe ligue de volta — o que quer que eu transmita?",
     transferMessageTaken: "Já transmiti a mensagem à equipa, e vão ligar-lhe de volta.",
@@ -109,6 +120,7 @@ const P: Record<string, VoicePhrases> = {
   "pt-BR": {
     fillers: ["Um momento.", "Um instante.", "Aguarde.", "Um segundo."],
     thinkingFillers: ["Claro.", "Entendido.", "Certo.", "Ok."],
+    stillThereFillers: ["Ainda estou aqui — um segundo.", "Quase lá."],
     errorTransfer: "Sinto muito — estou com um problema do meu lado, não com o que você disse. Vou transferir você para alguém.",
     errorDropped: "Desculpe — houve um problema do meu lado. Pode continuar.",
     errorRestart: "— desculpe, deixa eu recomeçar.",
@@ -117,6 +129,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Um momento — estamos conectando você ao restaurante.",
     fallbackUnreachable: "Desculpe, não conseguimos contatar ninguém. Por favor tente novamente em breve.",
     fallbackError: "Desculpe, estamos com dificuldades técnicas no momento. Por favor tente novamente em alguns minutos.",
+    noInputGoodbye: "Não estou ouvindo nada, então vou encerrar — ligue de volta quando quiser.",
     transferDeflect: "Nossa equipe está ocupada preparando pedidos e não pode atender ligações agora, mas posso ajudar com qualquer coisa sobre o restaurante.",
     transferMessageOffer: "Posso anotar um recado e pedir para alguém te ligar de volta — o que você quer que eu passe?",
     transferMessageTaken: "Já passei o recado para a equipe, e eles vão te ligar de volta.",
@@ -124,6 +137,7 @@ const P: Record<string, VoicePhrases> = {
   de: {
     fillers: ["Einen Moment.", "Einen Augenblick.", "Moment bitte.", "Eine Sekunde."],
     thinkingFillers: ["Klar.", "Verstanden.", "Alles klar.", "In Ordnung."],
+    stillThereFillers: ["Ich bin noch da — eine Sekunde.", "Gleich so weit."],
     errorTransfer: "Es tut mir wirklich leid — ich habe ein technisches Problem, es liegt nicht an Ihnen. Ich verbinde Sie mit jemandem.",
     errorDropped: "Entschuldigung — da gab es ein Problem auf meiner Seite. Bitte fahren Sie fort.",
     errorRestart: "— Entschuldigung, ich fange nochmal von vorne an.",
@@ -132,6 +146,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Einen Moment — wir verbinden Sie mit dem Restaurant.",
     fallbackUnreachable: "Entschuldigung, wir konnten niemanden erreichen. Bitte versuchen Sie es in Kürze erneut.",
     fallbackError: "Entschuldigung, wir haben im Moment technische Schwierigkeiten. Bitte versuchen Sie es in ein paar Minuten erneut.",
+    noInputGoodbye: "Ich höre nichts, daher beende ich das Gespräch — rufen Sie jederzeit wieder an.",
     transferDeflect: "Unser Team ist gerade mit der Zubereitung von Bestellungen beschäftigt und kann im Moment keine Anrufe annehmen, aber ich helfe gern bei allem rund um das Restaurant.",
     transferMessageOffer: "Ich kann eine Nachricht aufnehmen und Sie zurückrufen lassen — was soll ich ausrichten?",
     transferMessageTaken: "Ich habe das an das Team weitergegeben, und Sie werden zurückgerufen.",
@@ -139,6 +154,7 @@ const P: Record<string, VoicePhrases> = {
   nl: {
     fillers: ["Een moment.", "Een ogenblik.", "Even wachten.", "Een seconde."],
     thinkingFillers: ["Zeker.", "Begrepen.", "Oké.", "Goed."],
+    stillThereFillers: ["Ik ben er nog — momentje.", "Bijna klaar."],
     errorTransfer: "Het spijt me echt — ik heb een probleem aan mijn kant, het ligt niet aan u. Ik verbind u door met iemand.",
     errorDropped: "Sorry — er ging iets mis aan mijn kant. Ga gerust verder.",
     errorRestart: "— sorry, ik begin opnieuw.",
@@ -147,6 +163,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Een moment — we verbinden u door met het restaurant.",
     fallbackUnreachable: "Sorry, we konden niemand bereiken. Probeer het zo opnieuw.",
     fallbackError: "Sorry, we hebben op dit moment technische problemen. Probeer het over een paar minuten opnieuw.",
+    noInputGoodbye: "Ik hoor niets, dus ik hang op — bel gerust terug wanneer u wilt.",
     transferDeflect: "Ons team is druk met het bereiden van bestellingen en kan op dit moment geen telefoontjes aannemen, maar ik kan u helpen met alles over het restaurant.",
     transferMessageOffer: "Ik kan een bericht aannemen en u laten terugbellen — wat wilt u dat ik doorgeef?",
     transferMessageTaken: "Ik heb het doorgegeven aan het team, en ze bellen u terug.",
@@ -154,6 +171,7 @@ const P: Record<string, VoicePhrases> = {
   ro: {
     fillers: ["Un moment.", "O clipă.", "Așteptați.", "O secundă."],
     thinkingFillers: ["Desigur.", "Am înțeles.", "Bine.", "În regulă."],
+    stillThereFillers: ["Sunt încă aici — o secundă.", "Aproape gata."],
     errorTransfer: "Îmi pare foarte rău — am o problemă din partea mea, nu ține de dumneavoastră. Vă transfer la cineva.",
     errorDropped: "Scuzați — a apărut o problemă din partea mea. Continuați.",
     errorRestart: "— scuzați, o iau de la capăt.",
@@ -162,6 +180,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Un moment — vă conectăm la restaurant.",
     fallbackUnreachable: "Ne scuzați, nu am putut contacta pe nimeni. Vă rugăm încercați din nou în curând.",
     fallbackError: "Ne scuzați, avem dificultăți tehnice în acest moment. Vă rugăm încercați din nou în câteva minute.",
+    noInputGoodbye: "Nu aud nimic, așa că închei — sunați oricând.",
     transferDeflect: "Personalul nostru este ocupat cu pregătirea comenzilor și nu poate prelua apeluri acum, dar vă pot ajuta cu orice legat de restaurant.",
     transferMessageOffer: "Pot prelua un mesaj și să vă sune cineva înapoi — ce doriți să transmit?",
     transferMessageTaken: "Am transmis mesajul echipei, și vă vor suna înapoi.",
@@ -169,6 +188,7 @@ const P: Record<string, VoicePhrases> = {
   sv: {
     fillers: ["Ett ögonblick.", "En stund.", "Vänta lite.", "En sekund."],
     thinkingFillers: ["Absolut.", "Uppfattat.", "Okej.", "Jag förstår."],
+    stillThereFillers: ["Jag är kvar — ett ögonblick.", "Nästan klart."],
     errorTransfer: "Jag är verkligen ledsen — jag har ett tekniskt problem, det beror inte på dig. Jag kopplar dig vidare till någon.",
     errorDropped: "Förlåt — det blev ett problem på min sida. Fortsätt gärna.",
     errorRestart: "— förlåt, jag börjar om.",
@@ -177,6 +197,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Ett ögonblick — vi kopplar dig till restaurangen.",
     fallbackUnreachable: "Tyvärr kunde vi inte nå någon. Vänligen försök igen om en stund.",
     fallbackError: "Tyvärr har vi tekniska problem just nu. Vänligen försök igen om några minuter.",
+    noInputGoodbye: "Jag hör ingenting, så jag avslutar — ring gärna igen när som helst.",
     transferDeflect: "Vår personal är upptagen med att förbereda beställningar och kan inte ta samtal just nu, men jag kan hjälpa till med allt som rör restaurangen.",
     transferMessageOffer: "Jag kan ta ett meddelande och se till att någon ringer upp dig — vad vill du att jag ska framföra?",
     transferMessageTaken: "Jag har framfört det till teamet, och de ringer upp dig.",
@@ -184,6 +205,7 @@ const P: Record<string, VoicePhrases> = {
   da: {
     fillers: ["Et øjeblik.", "Et moment.", "Vent lige.", "Et sekund."],
     thinkingFillers: ["Selvfølgelig.", "Forstået.", "Okay.", "Fint."],
+    stillThereFillers: ["Jeg er her stadig — et øjeblik.", "Næsten færdig."],
     errorTransfer: "Jeg beklager virkelig — jeg har et teknisk problem, det er ikke noget du har gjort. Jeg stiller dig om til nogen.",
     errorDropped: "Undskyld — der opstod et problem hos mig. Fortsæt endelig.",
     errorRestart: "— undskyld, lad mig starte forfra.",
@@ -192,6 +214,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Et øjeblik — vi forbinder dig til restauranten.",
     fallbackUnreachable: "Beklager, vi kunne ikke få fat i nogen. Prøv venligst igen om lidt.",
     fallbackError: "Beklager, vi har tekniske problemer lige nu. Prøv venligst igen om et par minutter.",
+    noInputGoodbye: "Jeg kan ikke høre noget, så jeg lægger på — ring gerne igen når som helst.",
     transferDeflect: "Vores personale har travlt med at tilberede ordrer og kan ikke tage imod opkald lige nu, men jeg kan hjælpe med alt om restauranten.",
     transferMessageOffer: "Jeg kan tage imod en besked og få nogen til at ringe tilbage — hvad vil du have, jeg giver videre?",
     transferMessageTaken: "Jeg har givet det videre til teamet, og de ringer tilbage til dig.",
@@ -199,6 +222,7 @@ const P: Record<string, VoicePhrases> = {
   nb: {
     fillers: ["Et øyeblikk.", "Et lite øyeblikk.", "Vent litt.", "Et sekund."],
     thinkingFillers: ["Selvfølgelig.", "Forstått.", "Greit.", "Ok."],
+    stillThereFillers: ["Jeg er her fortsatt — et øyeblikk.", "Nesten ferdig."],
     errorTransfer: "Beklager virkelig — jeg har et teknisk problem, det er ingenting du sa feil. Jeg setter deg over til noen.",
     errorDropped: "Beklager — det oppstod et problem på min side. Bare fortsett.",
     errorRestart: "— beklager, la meg begynne på nytt.",
@@ -207,6 +231,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Et øyeblikk — vi kobler deg til restauranten.",
     fallbackUnreachable: "Beklager, vi fikk ikke tak i noen. Vennligst prøv igjen om litt.",
     fallbackError: "Beklager, vi har tekniske problemer akkurat nå. Vennligst prøv igjen om noen minutter.",
+    noInputGoodbye: "Jeg hører ingenting, så jeg avslutter — ring gjerne igjen når som helst.",
     transferDeflect: "Personalet vårt er opptatt med å forberede bestillinger og kan ikke ta telefonen akkurat nå, men jeg kan hjelpe med alt som gjelder restauranten.",
     transferMessageOffer: "Jeg kan ta imot en beskjed og få noen til å ringe deg tilbake — hva vil du at jeg skal videreformidle?",
     transferMessageTaken: "Jeg har gitt beskjeden videre til teamet, og de ringer deg tilbake.",
@@ -214,6 +239,7 @@ const P: Record<string, VoicePhrases> = {
   fi: {
     fillers: ["Hetkinen.", "Pieni hetki.", "Odottakaa.", "Sekunti."],
     thinkingFillers: ["Selvä.", "Ymmärretty.", "Okei.", "Hyvä."],
+    stillThereFillers: ["Olen yhä täällä — hetki vain.", "Melkein valmis."],
     errorTransfer: "Olen todella pahoillani — minulla on tekninen ongelma, se ei johdu teistä. Yhdistän teidät jollekulle.",
     errorDropped: "Anteeksi — minulla tuli tekninen ongelma. Jatkakaa.",
     errorRestart: "— anteeksi, aloitetaan alusta.",
@@ -222,6 +248,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Hetkinen — yhdistämme teidät ravintolaan.",
     fallbackUnreachable: "Valitettavasti emme tavoittaneet ketään. Yritä uudelleen hetken kuluttua.",
     fallbackError: "Valitettavasti meillä on juuri nyt teknisiä ongelmia. Yritä uudelleen muutaman minuutin kuluttua.",
+    noInputGoodbye: "En kuule mitään, joten lopetan — soita uudelleen milloin vain.",
     transferDeflect: "Henkilökuntamme valmistaa parhaillaan tilauksia eikä voi vastata puheluihin juuri nyt, mutta voin auttaa kaikessa ravintolaan liittyvässä.",
     transferMessageOffer: "Voin ottaa viestin ja pyytää jotakuta soittamaan sinulle takaisin — mitä haluat minun välittävän?",
     transferMessageTaken: "Välitin viestin tiimille, ja he soittavat sinulle takaisin.",
@@ -229,6 +256,7 @@ const P: Record<string, VoicePhrases> = {
   pl: {
     fillers: ["Chwileczkę.", "Moment.", "Proszę czekać.", "Sekundkę."],
     thinkingFillers: ["Jasne.", "Rozumiem.", "Dobrze.", "Okej."],
+    stillThereFillers: ["Wciąż tu jestem — sekundkę.", "Już prawie."],
     errorTransfer: "Bardzo przepraszam — mam problem techniczny po mojej stronie, to nie jest nic, co Pan powiedział. Przekieruję do kogoś.",
     errorDropped: "Przepraszam — wystąpił problem po mojej stronie. Proszę kontynuować.",
     errorRestart: "— przepraszam, zacznę od nowa.",
@@ -237,6 +265,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Chwileczkę — łączymy z restauracją.",
     fallbackUnreachable: "Przepraszamy, nie udało się połączyć z nikim. Proszę spróbować ponownie za chwilę.",
     fallbackError: "Przepraszamy, mamy obecnie problemy techniczne. Proszę spróbować ponownie za kilka minut.",
+    noInputGoodbye: "Nic nie słyszę, więc kończę — proszę zadzwonić ponownie w dowolnej chwili.",
     transferDeflect: "Nasz personel jest zajęty przygotowywaniem zamówień i nie może teraz odbierać telefonów, ale mogę pomóc we wszystkim, co dotyczy restauracji.",
     transferMessageOffer: "Mogę przyjąć wiadomość i poprosić, żeby ktoś oddzwonił — co mam przekazać?",
     transferMessageTaken: "Przekazałem wiadomość zespołowi, oddzwonią do Pana/Pani.",
@@ -244,6 +273,7 @@ const P: Record<string, VoicePhrases> = {
   cs: {
     fillers: ["Moment.", "Okamžik.", "Počkejte prosím.", "Vteřinku."],
     thinkingFillers: ["Jasně.", "Rozumím.", "Dobře.", "V pořádku."],
+    stillThereFillers: ["Jsem stále tady — vteřinku.", "Už to skoro je."],
     errorTransfer: "Moc se omlouvám — mám technický problém na mé straně, neudělali jste nic špatně. Přepojím vás na někoho.",
     errorDropped: "Promiňte — nastal problém na mé straně. Pokračujte prosím.",
     errorRestart: "— promiňte, začnu znovu.",
@@ -252,6 +282,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Moment — propojujeme vás s restaurací.",
     fallbackUnreachable: "Omlouváme se, nikoho jsme nezastihli. Zkuste to prosím znovu za chvíli.",
     fallbackError: "Omlouváme se, máme právě technické potíže. Zkuste to prosím znovu za pár minut.",
+    noInputGoodbye: "Nic neslyším, tak se rozloučím — zavolejte kdykoli znovu.",
     transferDeflect: "Náš personál právě připravuje objednávky a nemůže teď přijímat hovory, ale mohu vám pomoci s čímkoli ohledně restaurace.",
     transferMessageOffer: "Mohu vzít vzkaz a zařídit, aby vám někdo zavolal zpět — co mám vyřídit?",
     transferMessageTaken: "Vzkaz jsem předal týmu, zavolají vám zpět.",
@@ -259,6 +290,7 @@ const P: Record<string, VoicePhrases> = {
   sk: {
     fillers: ["Momentík.", "Chvíľočku.", "Počkajte prosím.", "Sekundku."],
     thinkingFillers: ["Jasné.", "Rozumiem.", "Dobre.", "V poriadku."],
+    stillThereFillers: ["Som stále tu — sekundu.", "Už je to takmer."],
     errorTransfer: "Veľmi sa ospravedlňujem — mám technický problém na mojej strane, nie je to nič, čo ste povedali. Prepojím vás na niekoho.",
     errorDropped: "Prepáčte — nastal problém na mojej strane. Pokračujte prosím.",
     errorRestart: "— prepáčte, začnem odznova.",
@@ -267,6 +299,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Momentík — prepájame vás s reštauráciou.",
     fallbackUnreachable: "Prepáčte, nepodarilo sa nám nikoho zastihnúť. Skúste to prosím znova o chvíľu.",
     fallbackError: "Prepáčte, momentálne máme technické problémy. Skúste to prosím znova o pár minút.",
+    noInputGoodbye: "Nič nepočujem, tak sa rozlúčim — zavolajte kedykoľvek znova.",
     transferDeflect: "Náš personál práve pripravuje objednávky a momentálne nemôže prijímať hovory, ale môžem vám pomôcť s čímkoľvek ohľadom reštaurácie.",
     transferMessageOffer: "Môžem prevziať odkaz a zariadiť, aby vám niekto zavolal späť — čo mám odovzdať?",
     transferMessageTaken: "Odkaz som odovzdal tímu, zavolajú vám späť.",
@@ -274,6 +307,7 @@ const P: Record<string, VoicePhrases> = {
   hu: {
     fillers: ["Egy pillanat.", "Egy másodperc.", "Várjon kérem.", "Egy perc."],
     thinkingFillers: ["Persze.", "Értem.", "Rendben.", "Oké."],
+    stillThereFillers: ["Még itt vagyok — egy pillanat.", "Mindjárt kész."],
     errorTransfer: "Nagyon sajnálom — technikai problémám van az én oldalamon, nem az ön hibája. Átkapcsolom valakit.",
     errorDropped: "Elnézést — technikai hiba volt nálam. Tessék, folytassa.",
     errorRestart: "— elnézést, kezdem elölről.",
@@ -282,6 +316,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Egy pillanat — összekötjük az étteremmel.",
     fallbackUnreachable: "Sajnáljuk, nem értünk el senkit. Kérjük, próbálja újra hamarosan.",
     fallbackError: "Sajnáljuk, jelenleg technikai problémáink vannak. Kérjük, próbálja újra néhány perc múlva.",
+    noInputGoodbye: "Nem hallok semmit, úgyhogy elköszönök — hívjon bármikor újra.",
     transferDeflect: "A személyzet éppen a rendeléseket készíti, és most nem tud hívást fogadni, de bármiben segítek, ami az étteremmel kapcsolatos.",
     transferMessageOffer: "Felvehetek egy üzenetet, és visszahívatom valakivel — mit adjak át?",
     transferMessageTaken: "Átadtam az üzenetet a csapatnak, vissza fogják hívni.",
@@ -289,6 +324,7 @@ const P: Record<string, VoicePhrases> = {
   el: {
     fillers: ["Μια στιγμή.", "Ένα λεπτό.", "Περιμένετε.", "Ένα δευτερόλεπτο."],
     thinkingFillers: ["Βεβαίως.", "Κατάλαβα.", "Εντάξει.", "Ωραία."],
+    stillThereFillers: ["Είμαι ακόμα εδώ — ένα δευτερόλεπτο.", "Σχεδόν έτοιμο."],
     errorTransfer: "Λυπάμαι πολύ — έχω ένα τεχνικό πρόβλημα από τη δική μου πλευρά, δεν φταίτε εσείς. Θα σας συνδέσω με κάποιον.",
     errorDropped: "Συγγνώμη — υπήρξε πρόβλημα στο σύστημά μου. Συνεχίστε.",
     errorRestart: "— συγγνώμη, ας ξεκινήσω πάλι από την αρχή.",
@@ -297,6 +333,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Μια στιγμή — σας συνδέουμε με το εστιατόριο.",
     fallbackUnreachable: "Λυπούμαστε, δεν μπορέσαμε να βρούμε κάποιον. Παρακαλώ δοκιμάστε ξανά σύντομα.",
     fallbackError: "Λυπούμαστε, αντιμετωπίζουμε τεχνικά προβλήματα αυτή τη στιγμή. Παρακαλώ δοκιμάστε ξανά σε λίγα λεπτά.",
+    noInputGoodbye: "Δεν ακούω τίποτα, οπότε θα κλείσω — καλέστε ξανά όποτε θέλετε.",
     transferDeflect: "Το προσωπικό μας ετοιμάζει παραγγελίες και δεν μπορεί να απαντήσει σε κλήσεις αυτή τη στιγμή, αλλά μπορώ να βοηθήσω με οτιδήποτε αφορά το εστιατόριο.",
     transferMessageOffer: "Μπορώ να κρατήσω ένα μήνυμα και να σας καλέσει κάποιος πίσω — τι θέλετε να μεταφέρω;",
     transferMessageTaken: "Το μετέφερα στην ομάδα, και θα σας καλέσουν πίσω.",
@@ -304,6 +341,7 @@ const P: Record<string, VoicePhrases> = {
   bg: {
     fillers: ["Един момент.", "Една секунда.", "Изчакайте.", "Моля, изчакайте."],
     thinkingFillers: ["Разбира се.", "Разбрах.", "Добре.", "Окей."],
+    stillThereFillers: ["Още съм тук — секунда.", "Почти готово."],
     errorTransfer: "Много съжалявам — имам технически проблем от моя страна, не е заради нещо, което казахте. Ще ви свържа с някого.",
     errorDropped: "Извинете — имаше проблем от моя страна. Моля, продължете.",
     errorRestart: "— извинете, ще започна отначало.",
@@ -312,6 +350,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Един момент — свързваме ви с ресторанта.",
     fallbackUnreachable: "Съжаляваме, не успяхме да се свържем с никого. Моля, опитайте отново след малко.",
     fallbackError: "Съжаляваме, в момента имаме технически затруднения. Моля, опитайте отново след няколко минути.",
+    noInputGoodbye: "Не чувам нищо, затова ще затворя — обадете се отново по всяко време.",
     transferDeflect: "Персоналът ни е зает с приготвянето на поръчки и в момента не може да приема обаждания, но мога да помогна с всичко, свързано с ресторанта.",
     transferMessageOffer: "Мога да приема съобщение и някой да ви се обади обратно — какво да предам?",
     transferMessageTaken: "Предадох съобщението на екипа, ще ви се обадят обратно.",
@@ -319,6 +358,7 @@ const P: Record<string, VoicePhrases> = {
   hr: {
     fillers: ["Jedan trenutak.", "Malo strpljenja.", "Pričekajte.", "Sekundu."],
     thinkingFillers: ["Naravno.", "Razumijem.", "U redu.", "Dobro."],
+    stillThereFillers: ["Još sam tu — trenutak.", "Skoro gotovo."],
     errorTransfer: "Jako mi je žao — imam tehnički problem na mojoj strani, nije ništa što ste vi rekli. Povezat ću vas s nekim.",
     errorDropped: "Oprostite — došlo je do problema na mojoj strani. Nastavite.",
     errorRestart: "— oprostite, počet ću ispočetka.",
@@ -327,6 +367,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Jedan trenutak — povezujemo vas s restoranom.",
     fallbackUnreachable: "Ispričavamo se, nismo uspjeli dobiti nikoga. Molimo pokušajte ponovno uskoro.",
     fallbackError: "Ispričavamo se, trenutno imamo tehničke poteškoće. Molimo pokušajte ponovno za nekoliko minuta.",
+    noInputGoodbye: "Ništa ne čujem, pa ću prekinuti — nazovite ponovno kad god želite.",
     transferDeflect: "Naše osoblje trenutno priprema narudžbe i ne može preuzimati pozive, ali mogu pomoći sa svime što se tiče restorana.",
     transferMessageOffer: "Mogu uzeti poruku i netko će vas nazvati — što želite da prenesem?",
     transferMessageTaken: "Prenio sam poruku timu i nazvat će vas.",
@@ -334,6 +375,7 @@ const P: Record<string, VoicePhrases> = {
   sr: {
     fillers: ["Један тренутак.", "Мало стрпљења.", "Сачекајте.", "Секунду."],
     thinkingFillers: ["Наравно.", "Разумем.", "У реду.", "Добро."],
+    stillThereFillers: ["Još sam tu — trenutak.", "Skoro gotovo."],
     errorTransfer: "Заиста ми је жао — имам технички проблем на мојој страни, не зависи од вас. Повезаћу вас са неким.",
     errorDropped: "Извините — дошло је до проблема на мојој страни. Наставите.",
     errorRestart: "— извините, почећу испочетка.",
@@ -342,6 +384,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Један тренутак — повезујемо вас са рестораном.",
     fallbackUnreachable: "Извините, нисмо успели да добијемо никога. Молимо покушајте поново ускоро.",
     fallbackError: "Извините, тренутно имамо техничке потешкоће. Молимо покушајте поново за неколико минута.",
+    noInputGoodbye: "Ništa ne čujem, pa ću prekinuti — pozovite ponovo kad god želite.",
     transferDeflect: "Naše osoblje trenutno priprema porudžbine i ne može da preuzima pozive, ali mogu da pomognem sa svime u vezi sa restoranom.",
     transferMessageOffer: "Mogu da primim poruku i neko će vas pozvati — šta želite da prenesem?",
     transferMessageTaken: "Preneo sam poruku timu i pozvaće vas.",
@@ -349,6 +392,7 @@ const P: Record<string, VoicePhrases> = {
   sl: {
     fillers: ["Trenutek.", "En trenutek.", "Počakajte.", "Sekundo."],
     thinkingFillers: ["Seveda.", "Razumem.", "V redu.", "Prav."],
+    stillThereFillers: ["Še sem tu — trenutek.", "Skoraj končano."],
     errorTransfer: "Res mi je žal — imam tehnično težavo na moji strani, ni nič takega, kar ste vi rekli. Povezal vas bom z nekom.",
     errorDropped: "Oprostite — prišlo je do težave na moji strani. Nadaljujte.",
     errorRestart: "— oprostite, začel bom znova.",
@@ -357,6 +401,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Trenutek — vas povezujemo z restavracijo.",
     fallbackUnreachable: "Oprostite, nismo uspeli doseči nikogar. Prosimo, poskusite znova čez nekaj časa.",
     fallbackError: "Oprostite, trenutno imamo tehnične težave. Prosimo, poskusite znova čez nekaj minut.",
+    noInputGoodbye: "Nič ne slišim, zato bom prekinil — pokličite znova kadar koli.",
     transferDeflect: "Naše osebje trenutno pripravlja naročila in ne more sprejemati klicev, lahko pa vam pomagam z vsem v zvezi z restavracijo.",
     transferMessageOffer: "Lahko sprejmem sporočilo in vas bo nekdo poklical nazaj — kaj naj sporočim?",
     transferMessageTaken: "Sporočilo sem predal ekipi in poklicali vas bodo nazaj.",
@@ -364,6 +409,7 @@ const P: Record<string, VoicePhrases> = {
   et: {
     fillers: ["Üks hetk.", "Moment.", "Oodake palun.", "Üks sekund."],
     thinkingFillers: ["Muidugi.", "Sain aru.", "Hästi.", "Okei."],
+    stillThereFillers: ["Olen veel siin — hetk.", "Peaaegu valmis."],
     errorTransfer: "Vabandan väga — mul on tehniline probleem enda poolel, see ei ole teie süü. Ühendan teid kellegagi.",
     errorDropped: "Vabandust — minu poolel tekkis probleem. Palun jätkake.",
     errorRestart: "— vabandust, alustan uuesti.",
@@ -372,6 +418,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Üks hetk — ühendame teid restoraniga.",
     fallbackUnreachable: "Vabandame, me ei saanud kedagi kätte. Palun proovige varsti uuesti.",
     fallbackError: "Vabandame, meil on praegu tehnilisi probleeme. Palun proovige mõne minuti pärast uuesti.",
+    noInputGoodbye: "Ma ei kuule midagi, seega lõpetan — helistage uuesti millal tahes.",
     transferDeflect: "Meie personal valmistab praegu tellimusi ega saa hetkel kõnesid vastu võtta, kuid saan aidata kõiges, mis puudutab restorani.",
     transferMessageOffer: "Võin võtta sõnumi ja lasta kellelgi teile tagasi helistada — mida soovite, et edastaksin?",
     transferMessageTaken: "Edastasin sõnumi meeskonnale ja teile helistatakse tagasi.",
@@ -379,6 +426,7 @@ const P: Record<string, VoicePhrases> = {
   lv: {
     fillers: ["Vienu mirkli.", "Brītiņu.", "Lūdzu, uzgaidiet.", "Vienu sekundi."],
     thinkingFillers: ["Protams.", "Sapratu.", "Labi.", "Okei."],
+    stillThereFillers: ["Es vēl esmu šeit — mirkli.", "Gandrīz gatavs."],
     errorTransfer: "Ļoti atvainojos — man ir tehniska problēma no manas puses, ne jūs esat vainīgs. Es jūs savienošu ar kādu.",
     errorDropped: "Atvainojiet — no manas puses radās problēma. Lūdzu, turpiniet.",
     errorRestart: "— atvainojiet, sākšu no sākuma.",
@@ -387,6 +435,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Vienu mirkli — savienojam jūs ar restorānu.",
     fallbackUnreachable: "Atvainojiet, mēs nevarējām sazināties ne ar vienu. Lūdzu, mēģiniet vēlreiz drīzumā.",
     fallbackError: "Atvainojiet, šobrīd mums ir tehniskas problēmas. Lūdzu, mēģiniet vēlreiz pēc dažām minūtēm.",
+    noInputGoodbye: "Es neko nedzirdu, tāpēc beigšu sarunu — zvaniet vēlreiz jebkurā laikā.",
     transferDeflect: "Mūsu personāls pašlaik gatavo pasūtījumus un nevar atbildēt uz zvaniem, bet es varu palīdzēt ar visu, kas saistīts ar restorānu.",
     transferMessageOffer: "Varu pieņemt ziņu un kāds jums atzvanīs — ko vēlaties, lai nododu?",
     transferMessageTaken: "Esmu nodevis ziņu komandai, un jums atzvanīs.",
@@ -394,6 +443,7 @@ const P: Record<string, VoicePhrases> = {
   lt: {
     fillers: ["Vieną minutėlę.", "Momentėlį.", "Palaukite.", "Sekundėlę."],
     thinkingFillers: ["Žinoma.", "Supratau.", "Gerai.", "Okey."],
+    stillThereFillers: ["Vis dar čia — sekundėlę.", "Beveik baigta."],
     errorTransfer: "Labai atsiprašau — turiu techninę problemą savo pusėje, tai ne dėl to, ką jūs pasakėte. Sujungsiu jus su kuo nors.",
     errorDropped: "Atsiprašau — kilo problema mano pusėje. Prašau tęskite.",
     errorRestart: "— atsiprašau, pradėsiu iš naujo.",
@@ -402,6 +452,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Momentėlį — jungiame jus su restoranu.",
     fallbackUnreachable: "Atsiprašome, nepavyko susisiekti su niekuo. Prašome pabandyti vėliau.",
     fallbackError: "Atsiprašome, šiuo metu turime techninių problemų. Prašome pabandyti po kelių minučių.",
+    noInputGoodbye: "Nieko negirdžiu, todėl baigsiu — paskambinkite vėl bet kada.",
     transferDeflect: "Mūsų personalas šiuo metu ruošia užsakymus ir negali atsiliepti į skambučius, bet galiu padėti viskuo, kas susiję su restoranu.",
     transferMessageOffer: "Galiu priimti žinutę ir kas nors jums perskambins — ką norėtumėte perduoti?",
     transferMessageTaken: "Perdaviau žinutę komandai, jums perskambins.",
@@ -409,6 +460,7 @@ const P: Record<string, VoicePhrases> = {
   tr: {
     fillers: ["Bir saniye.", "Bir dakika.", "Lütfen bekleyin.", "Hemen."],
     thinkingFillers: ["Tabii.", "Anladım.", "Tamam.", "Peki."],
+    stillThereFillers: ["Hâlâ buradayım — bir saniye.", "Neredeyse bitti."],
     errorTransfer: "Çok özür dilerim — bende teknik bir sorun var, sizden kaynaklanmıyor. Sizi biriyle bağlıyorum.",
     errorDropped: "Özür dilerim — bende bir sorun oluştu. Devam edin lütfen.",
     errorRestart: "— özür dilerim, baştan başlıyorum.",
@@ -417,6 +469,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Bir saniye — sizi restoranla bağlıyoruz.",
     fallbackUnreachable: "Üzgünüz, kimseye ulaşamadık. Lütfen birazdan tekrar deneyin.",
     fallbackError: "Üzgünüz, şu anda teknik sorunlar yaşıyoruz. Lütfen birkaç dakika sonra tekrar deneyin.",
+    noInputGoodbye: "Hiçbir şey duymuyorum, o yüzden kapatıyorum — istediğiniz zaman tekrar arayın.",
     transferDeflect: "Ekibimiz şu anda siparişleri hazırlamakla meşgul ve telefonlara bakamıyor, ama restoranla ilgili her konuda yardımcı olabilirim.",
     transferMessageOffer: "Bir mesaj alıp sizi geri aratabilirim — ne iletmemi istersiniz?",
     transferMessageTaken: "Mesajınızı ekibe ilettim, sizi geri arayacaklar.",
@@ -424,6 +477,7 @@ const P: Record<string, VoicePhrases> = {
   ru: {
     fillers: ["Одну секунду.", "Минуточку.", "Подождите.", "Один момент."],
     thinkingFillers: ["Конечно.", "Понял.", "Хорошо.", "Ладно."],
+    stillThereFillers: ["Я всё ещё здесь — секунду.", "Почти готово."],
     errorTransfer: "Мне очень жаль — у меня техническая проблема, дело не в вас. Я переведу вас на кого-нибудь.",
     errorDropped: "Извините — произошла ошибка с моей стороны. Пожалуйста, продолжайте.",
     errorRestart: "— извините, начну сначала.",
@@ -432,6 +486,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Одну секунду — соединяем вас с рестораном.",
     fallbackUnreachable: "Извините, мы не смогли дозвониться. Пожалуйста, перезвоните через некоторое время.",
     fallbackError: "Извините, у нас сейчас технические неполадки. Пожалуйста, перезвоните через несколько минут.",
+    noInputGoodbye: "Я ничего не слышу, поэтому завершаю звонок — перезвоните в любое время.",
     transferDeflect: "Наши сотрудники сейчас заняты приготовлением заказов и не могут ответить на звонок, но я могу помочь со всем, что касается ресторана.",
     transferMessageOffer: "Я могу принять сообщение, и вам перезвонят — что передать?",
     transferMessageTaken: "Я передал сообщение команде, вам перезвонят.",
@@ -439,6 +494,7 @@ const P: Record<string, VoicePhrases> = {
   uk: {
     fillers: ["Одну хвилинку.", "Мить.", "Зачекайте.", "Одну секунду."],
     thinkingFillers: ["Звичайно.", "Зрозумів.", "Добре.", "Гаразд."],
+    stillThereFillers: ["Я все ще тут — секунду.", "Майже готово."],
     errorTransfer: "Мені дуже шкода — у мене технічна проблема, справа не у вас. Я з'єднаю вас з кимось.",
     errorDropped: "Вибачте — сталася помилка з мого боку. Будь ласка, продовжуйте.",
     errorRestart: "— вибачте, почну спочатку.",
@@ -447,6 +503,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Одну хвилинку — з'єднуємо вас з рестораном.",
     fallbackUnreachable: "Вибачте, ми не змогли додзвонитися. Будь ласка, спробуйте пізніше.",
     fallbackError: "Вибачте, зараз у нас технічні проблеми. Будь ласка, спробуйте через кілька хвилин.",
+    noInputGoodbye: "Я нічого не чую, тому завершую дзвінок — телефонуйте знову будь-коли.",
     transferDeflect: "Наші працівники зараз зайняті приготуванням замовлень і не можуть відповісти на дзвінок, але я можу допомогти з усім, що стосується ресторану.",
     transferMessageOffer: "Я можу прийняти повідомлення, і вам передзвонять — що передати?",
     transferMessageTaken: "Я передав повідомлення команді, вам передзвонять.",
@@ -454,6 +511,7 @@ const P: Record<string, VoicePhrases> = {
   ca: {
     fillers: ["Un moment.", "Un instant.", "Espereu.", "Un segon."],
     thinkingFillers: ["Per descomptat.", "Entesos.", "D'acord.", "Molt bé."],
+    stillThereFillers: ["Encara sóc aquí — un segon.", "Ja gairebé."],
     errorTransfer: "Ho sento molt — tinc un problema tècnic per la meva part, no és res que hàgiu dit. Us passo amb algú.",
     errorDropped: "Disculpeu — hi ha hagut un problema per la meva part. Endavant.",
     errorRestart: "— disculpeu, torno a començar.",
@@ -462,6 +520,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Un moment — us connectem amb el restaurant.",
     fallbackUnreachable: "Disculpeu, no hem pogut contactar amb ningú. Si us plau, torneu a provar d'aquí a poc.",
     fallbackError: "Disculpeu, tenim dificultats tècniques en aquest moment. Si us plau, torneu a provar d'aquí a uns minuts.",
+    noInputGoodbye: "No sento res, així que el deixo — truqui quan vulgui.",
     transferDeflect: "El nostre personal està ocupat preparant comandes i ara mateix no pot atendre trucades, però puc ajudar-lo amb qualsevol cosa sobre el restaurant.",
     transferMessageOffer: "Puc prendre nota d'un missatge i fer que algú el truqui — què vol que transmeti?",
     transferMessageTaken: "Ja ho he passat a l'equip, i el trucaran.",
@@ -469,6 +528,7 @@ const P: Record<string, VoicePhrases> = {
   id: {
     fillers: ["Sebentar.", "Satu momen.", "Tunggu sebentar.", "Satu detik."],
     thinkingFillers: ["Tentu.", "Mengerti.", "Baik.", "Oke."],
+    stillThereFillers: ["Saya masih di sini — sebentar.", "Hampir selesai."],
     errorTransfer: "Maaf sekali — saya mengalami masalah teknis, bukan karena sesuatu yang Anda katakan. Saya akan menghubungkan Anda dengan seseorang.",
     errorDropped: "Maaf — ada masalah dari sisi saya. Silakan lanjutkan.",
     errorRestart: "— maaf, saya mulai lagi dari awal.",
@@ -477,6 +537,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Sebentar — kami menghubungkan Anda ke restoran.",
     fallbackUnreachable: "Maaf, kami tidak bisa menghubungi siapa pun. Silakan coba lagi sebentar lagi.",
     fallbackError: "Maaf, kami sedang mengalami masalah teknis saat ini. Silakan coba lagi dalam beberapa menit.",
+    noInputGoodbye: "Saya tidak mendengar apa-apa, jadi saya akhiri dulu — silakan telepon lagi kapan saja.",
     transferDeflect: "Staf kami sedang sibuk menyiapkan pesanan dan tidak bisa menerima telepon saat ini, tetapi saya bisa membantu untuk apa pun tentang restoran.",
     transferMessageOffer: "Saya bisa mencatat pesan dan meminta seseorang menelepon Anda kembali — apa yang ingin Anda sampaikan?",
     transferMessageTaken: "Pesan Anda sudah saya sampaikan ke tim, dan mereka akan menelepon Anda kembali.",
@@ -484,6 +545,7 @@ const P: Record<string, VoicePhrases> = {
   vi: {
     fillers: ["Một chút.", "Một lát.", "Xin đợi.", "Một giây."],
     thinkingFillers: ["Được rồi.", "Tôi hiểu.", "Vâng.", "Ok."],
+    stillThereFillers: ["Tôi vẫn đây — một giây thôi.", "Sắp xong rồi."],
     errorTransfer: "Tôi rất xin lỗi — tôi gặp trục trặc kỹ thuật, không phải do bạn. Tôi sẽ chuyển bạn đến ai đó.",
     errorDropped: "Xin lỗi — đã có trục trặc từ phía tôi. Bạn tiếp tục nhé.",
     errorRestart: "— xin lỗi, tôi bắt đầu lại.",
@@ -492,6 +554,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "Một chút — chúng tôi đang kết nối bạn với nhà hàng.",
     fallbackUnreachable: "Xin lỗi, chúng tôi không liên lạc được với ai. Xin vui lòng thử lại sau.",
     fallbackError: "Xin lỗi, chúng tôi đang gặp trục trặc kỹ thuật. Xin vui lòng thử lại sau vài phút.",
+    noInputGoodbye: "Tôi không nghe thấy gì, nên tôi xin phép kết thúc — bạn gọi lại bất cứ lúc nào nhé.",
     transferDeflect: "Nhân viên của chúng tôi đang bận chuẩn bị đơn hàng và hiện không thể nhận cuộc gọi, nhưng tôi có thể giúp mọi việc liên quan đến nhà hàng.",
     transferMessageOffer: "Tôi có thể ghi lại lời nhắn và nhờ ai đó gọi lại cho bạn — bạn muốn tôi chuyển lời gì?",
     transferMessageTaken: "Tôi đã chuyển lời nhắn cho nhân viên, họ sẽ gọi lại cho bạn.",
@@ -499,6 +562,7 @@ const P: Record<string, VoicePhrases> = {
   th: {
     fillers: ["สักครู่ค่ะ", "รอสักครู่นะคะ", "กรุณารอสักครู่", "แป๊บนึงค่ะ"],
     thinkingFillers: ["ได้เลยค่ะ", "เข้าใจแล้วค่ะ", "ค่ะ", "โอเคค่ะ"],
+    stillThereFillers: ["ยังอยู่นะคะ — สักครู่ค่ะ", "ใกล้เสร็จแล้วค่ะ"],
     errorTransfer: "ขออภัยอย่างยิ่งค่ะ มีปัญหาทางเทคนิคจากฝั่งของเรา ไม่เกี่ยวกับคุณ จะโอนสายให้พนักงานค่ะ",
     errorDropped: "ขอโทษค่ะ มีปัญหาจากฝั่งของเรา กรุณาพูดต่อได้เลยค่ะ",
     errorRestart: "ขอโทษค่ะ ขอเริ่มใหม่นะคะ",
@@ -507,6 +571,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "สักครู่ค่ะ กำลังเชื่อมต่อกับร้านอาหาร",
     fallbackUnreachable: "ขออภัยค่ะ ไม่สามารถติดต่อได้ กรุณาลองใหม่อีกครั้ง",
     fallbackError: "ขออภัยค่ะ ขณะนี้ระบบมีปัญหา กรุณาลองใหม่ในอีกสักครู่",
+    noInputGoodbye: "ไม่ได้ยินเสียงเลยค่ะ ขอวางสายก่อนนะคะ — โทรกลับมาได้ทุกเมื่อค่ะ",
     transferDeflect: "ตอนนี้พนักงานของเรากำลังเตรียมออเดอร์อยู่จึงรับสายไม่ได้ แต่ฉันช่วยเรื่องเกี่ยวกับร้านได้ทุกอย่างค่ะ",
     transferMessageOffer: "ฉันรับฝากข้อความไว้และให้พนักงานโทรกลับได้ค่ะ — ต้องการฝากข้อความว่าอย่างไรคะ",
     transferMessageTaken: "ฉันส่งข้อความให้ทีมงานแล้ว เดี๋ยวจะมีคนโทรกลับนะคะ",
@@ -514,6 +579,7 @@ const P: Record<string, VoicePhrases> = {
   zh: {
     fillers: ["请稍等。", "等一下。", "稍等。", "一秒钟。"],
     thinkingFillers: ["好的。", "明白了。", "没问题。", "了解。"],
+    stillThereFillers: ["我还在——稍等一下。", "马上就好。"],
     errorTransfer: "非常抱歉，我这边出了技术问题，不是您的原因。我帮您转接给工作人员。",
     errorDropped: "抱歉，我这边出了点问题。请继续。",
     errorRestart: "抱歉，我重新开始。",
@@ -522,6 +588,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "请稍等，正在为您连接餐厅。",
     fallbackUnreachable: "抱歉，我们暂时无法联系到工作人员。请稍后再试。",
     fallbackError: "抱歉，我们目前遇到了技术问题。请几分钟后再试。",
+    noInputGoodbye: "我没有听到声音，那我先挂了——随时欢迎再打来。",
     transferDeflect: "我们的员工正忙着准备订单，现在无法接听电话，但关于餐厅的任何事情我都可以帮您。",
     transferMessageOffer: "我可以帮您留言并请人回电——您想让我转达什么？",
     transferMessageTaken: "我已经把留言转给团队了，他们会给您回电。",
@@ -529,6 +596,7 @@ const P: Record<string, VoicePhrases> = {
   ja: {
     fillers: ["少々お待ちください。", "お待ちください。", "しばらくお待ちを。", "一瞬お待ちを。"],
     thinkingFillers: ["かしこまりました。", "承知しました。", "はい。", "了解です。"],
+    stillThereFillers: ["まだおります — 少々お待ちください。", "もう少しです。"],
     errorTransfer: "大変申し訳ございません。こちら側で技術的な問題が発生しております。担当者におつなぎいたします。",
     errorDropped: "申し訳ございません。こちら側で問題が発生しました。どうぞお続けください。",
     errorRestart: "申し訳ございません、最初からやり直します。",
@@ -537,6 +605,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "少々お待ちください。レストランにおつなぎしております。",
     fallbackUnreachable: "申し訳ございませんが、つながりませんでした。しばらくしてからおかけ直しください。",
     fallbackError: "申し訳ございませんが、ただいま技術的な問題が発生しております。数分後にもう一度おかけ直しください。",
+    noInputGoodbye: "お声が聞こえませんので、いったん失礼いたします — いつでもおかけ直しください。",
     transferDeflect: "スタッフはただいま注文の準備で手が離せず、お電話に出ることができませんが、お店に関することでしたら私が対応いたします。",
     transferMessageOffer: "伝言をお預かりして折り返しご連絡いたします — どのようにお伝えしましょうか？",
     transferMessageTaken: "スタッフに伝言をお伝えしました。折り返しご連絡いたします。",
@@ -544,6 +613,7 @@ const P: Record<string, VoicePhrases> = {
   ko: {
     fillers: ["잠시만요.", "잠깐만요.", "기다려 주세요.", "잠시요."],
     thinkingFillers: ["네.", "알겠습니다.", "좋습니다.", "네, 알겠어요."],
+    stillThereFillers: ["아직 듣고 있어요 — 잠시만요.", "거의 다 됐어요."],
     errorTransfer: "정말 죄송합니다. 제 쪽에서 기술적 문제가 발생했어요. 담당자에게 연결해 드리겠습니다.",
     errorDropped: "죄송합니다. 제 쪽에서 문제가 생겼어요. 계속 말씀해 주세요.",
     errorRestart: "죄송합니다, 처음부터 다시 시작하겠습니다.",
@@ -552,6 +622,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "잠시만요, 레스토랑으로 연결 중입니다.",
     fallbackUnreachable: "죄송합니다, 연결되지 않았습니다. 잠시 후 다시 시도해 주세요.",
     fallbackError: "죄송합니다, 현재 기술적 문제가 발생했습니다. 몇 분 후 다시 시도해 주세요.",
+    noInputGoodbye: "아무 소리도 들리지 않아서 이만 끊을게요 — 언제든 다시 전화 주세요.",
     transferDeflect: "직원들이 지금 주문 준비로 바빠서 전화를 받을 수 없지만, 매장에 관한 일은 제가 도와드릴 수 있어요.",
     transferMessageOffer: "메시지를 남겨 주시면 직원이 다시 전화드리도록 할게요 — 어떤 내용을 전달해 드릴까요?",
     transferMessageTaken: "팀에 전달했어요. 다시 전화드릴 거예요.",
@@ -559,6 +630,7 @@ const P: Record<string, VoicePhrases> = {
   ar: {
     fillers: ["لحظة.", "لحظة من فضلك.", "انتظر قليلاً.", "ثانية."],
     thinkingFillers: ["بالتأكيد.", "فهمت.", "حسناً.", "تمام."],
+    stillThereFillers: ["ما زلت معك — لحظة.", "أوشكت على الانتهاء."],
     errorTransfer: "أعتذر بشدة — لديّ مشكلة تقنية من جهتي، ليست بسبب شيء قلته. سأحوّلك لشخص آخر.",
     errorDropped: "آسف — حدثت مشكلة من جهتي. تفضّل أكمل.",
     errorRestart: "— آسف، سأبدأ من جديد.",
@@ -567,6 +639,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "لحظة — نقوم بتوصيلك بالمطعم.",
     fallbackUnreachable: "عذراً، لم نتمكن من الوصول لأحد. يرجى المحاولة مرة أخرى قريباً.",
     fallbackError: "عذراً، نواجه مشاكل تقنية حالياً. يرجى المحاولة مرة أخرى بعد بضع دقائق.",
+    noInputGoodbye: "لا أسمع شيئًا، لذا سأنهي المكالمة — اتصل مجددًا في أي وقت.",
     transferDeflect: "موظفونا مشغولون حاليًا بتحضير الطلبات ولا يمكنهم الرد على المكالمات الآن، لكن يمكنني مساعدتك في أي شيء يخص المطعم.",
     transferMessageOffer: "يمكنني أخذ رسالة وسيعاود أحدهم الاتصال بك — ما الذي تريد أن أنقله؟",
     transferMessageTaken: "لقد نقلت رسالتك إلى الفريق، وسيعاودون الاتصال بك.",
@@ -574,6 +647,7 @@ const P: Record<string, VoicePhrases> = {
   he: {
     fillers: ["רגע.", "רק רגע.", "המתן בבקשה.", "שנייה."],
     thinkingFillers: ["בטח.", "הבנתי.", "בסדר.", "אוקיי."],
+    stillThereFillers: ["אני עדיין כאן — שנייה.", "כמעט סיימתי."],
     errorTransfer: "אני מצטער מאוד — יש לי תקלה טכנית, זה לא בגללך. אעביר אותך למישהו.",
     errorDropped: "סליחה — הייתה תקלה אצלי. תמשיך בבקשה.",
     errorRestart: "— סליחה, אתחיל מחדש.",
@@ -582,6 +656,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "רגע — מחברים אותך למסעדה.",
     fallbackUnreachable: "מצטערים, לא הצלחנו להגיע למישהו. אנא נסו שוב בקרוב.",
     fallbackError: "מצטערים, אנחנו חווים תקלה טכנית כרגע. אנא נסו שוב בעוד מספר דקות.",
+    noInputGoodbye: "אני לא שומע כלום, אז אסיים — התקשרו שוב בכל עת.",
     transferDeflect: "הצוות שלנו עסוק כרגע בהכנת הזמנות ולא יכול לענות לשיחות, אבל אני יכול לעזור בכל דבר שקשור למסעדה.",
     transferMessageOffer: "אני יכול לקחת הודעה ולדאוג שמישהו יחזור אליך — מה תרצה שאעביר?",
     transferMessageTaken: "העברתי את ההודעה לצוות, והם יחזרו אליך.",
@@ -589,6 +664,7 @@ const P: Record<string, VoicePhrases> = {
   hi: {
     fillers: ["एक पल.", "बस एक मिनट.", "रुकिए.", "एक सेकंड."],
     thinkingFillers: ["ज़रूर.", "समझ गया.", "ठीक है.", "अच्छा."],
+    stillThereFillers: ["मैं अभी यहीं हूँ — एक सेकंड।", "बस होने वाला है।"],
     errorTransfer: "बहुत माफ़ी चाहता हूँ — मेरी तरफ़ से तकनीकी समस्या है, आपकी तरफ़ से कुछ नहीं हुआ। मैं आपको किसी से जोड़ता हूँ।",
     errorDropped: "माफ़ कीजिए — मेरी तरफ़ से कोई समस्या आई। कृपया जारी रखें।",
     errorRestart: "— माफ़ कीजिए, मैं फिर से शुरू करता हूँ।",
@@ -597,6 +673,7 @@ const P: Record<string, VoicePhrases> = {
     fallbackConnecting: "एक पल — हम आपको रेस्तरां से जोड़ रहे हैं।",
     fallbackUnreachable: "माफ़ कीजिए, हम किसी से संपर्क नहीं कर पाए। कृपया थोड़ी देर बाद फिर से कोशिश करें।",
     fallbackError: "माफ़ कीजिए, अभी हमें तकनीकी समस्या आ रही है। कृपया कुछ मिनट बाद फिर से कोशिश करें।",
+    noInputGoodbye: "मुझे कुछ सुनाई नहीं दे रहा, इसलिए मैं कॉल समाप्त करता हूँ — कभी भी दोबारा कॉल करें।",
     transferDeflect: "हमारा स्टाफ़ अभी ऑर्डर तैयार करने में व्यस्त है और कॉल नहीं ले सकता, लेकिन रेस्तरां से जुड़ी किसी भी बात में मैं आपकी मदद कर सकता हूँ।",
     transferMessageOffer: "मैं आपका संदेश ले सकता हूँ और किसी से आपको वापस कॉल करवा सकता हूँ — आप क्या कहलवाना चाहेंगे?",
     transferMessageTaken: "मैंने आपका संदेश टीम तक पहुँचा दिया है, वे आपको वापस कॉल करेंगे।",
@@ -616,6 +693,6 @@ export function voicePhrase(lang: string | null | undefined, key: PhraseKey): st
   return (P[resolveVoiceLocale(lang)] ?? P.en)[key];
 }
 
-export function voiceFillers(lang: string | null | undefined, type: "fillers" | "thinkingFillers"): string[] {
+export function voiceFillers(lang: string | null | undefined, type: "fillers" | "thinkingFillers" | "stillThereFillers"): string[] {
   return (P[resolveVoiceLocale(lang)] ?? P.en)[type];
 }

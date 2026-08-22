@@ -156,6 +156,9 @@ export const EVENT_TYPES = new Set([
   // Added 2026-08-22 (A1 transfer invariants): the hand-off decision, its
   // write outcome, and how many caller messages were ignored after it.
   "transfer_handoff",
+  // A2/A4 (2026-08-22): hop first-token watchdog retry; no-input re-prompt/close.
+  "model_retry",
+  "no_input",
   // Added 2026-08-22 (A8b): a transcript the media session classified as
   // background speech (radio/TV) and kept away from the model.
   "asr_dropped",
